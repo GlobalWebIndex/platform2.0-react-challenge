@@ -1,19 +1,32 @@
-# GlobalWebIndex Engineering Challenge
-## Exercise: CatLover
-Create an elm application for cat lovers which is going to build upon thecatapi.com and will have 3 views ... 
-The first view displays a list of 10 random cat images and a button to load more. Clicking on any of those images opens a modal view with the image and the information about the cat’s breed if available. This would be a link to the second view below - the breed detail. The modal should also contain a form to mark the image as your favourite (a part of the third view as well). Make sure you can copy-paste the url of the modal and send it to your friends - they should see the same image as you can see. 
+# GWI Elm
 
-The second view displays a list of cat breeds. Each breed opens a modal again with a list of cat images of that breed. Each of those images must be a link to the image detail from the previous point. 
+We have 3 Pages : Page 1, Page 2 and Page 3 according to the challenge description.
+The Decoders and Contracts modules are used to create Decoders for Json responses as well as Model types 
+Ports is used for local storage to persist favorite cats data
 
-The third view allows you do the following things after providing the necessary information:
-* Display your favourite cats 
-* Mark a specific image as your favourite 
+In order to build the app you have to run the following
+`elm make src/Main.elm --output elm.js`
 
-You can find the API documentation here: https://docs.thecatapi.com/ 
-We give you a lot of freedom in technologies and ways of doing things. We only insist on you using the Elm language. Note that we have omitted a lot of details in this description which we hope you will fill in and thus prove to us that you are aware of industry best practices and that you also follow them. Get creative as much as you want, we WILL appreciate it. You will not be evaluated based on how well you follow these instructions, but based on how sensible your solution will be. In case you are not able to implement something you would normally implement for time reasons, make it clear with a comment. 
+In order to constantly updating current view you have to run the following
+`elm-live src/Main.elm --open -- --output=elm.js`
 
-## Submission
+To save the favorites, a state module is responsible for saving in a Dict structure
 
-Just a make a PR to the current repo!
-Good luck, potential colleague! 
+Used bootstrap (but non overdid it)
 
+Modal was implemented using Tesk9 package
+
+To run the example you have to run on top folder
+`elm reactor`
+and go to http://localhost:8000/index.html to see the application live
+
+### ---Disclaimer--- 
+1. Normally I would split even further the code to Views,Updates,Models,Messages but due to time constraint I was not able to achieve it. 
+2. Internationalization missing
+3. On saving as favorite the following would happen normally:
+   - Initialize the app with actual favorite data from server
+   - Send a post request to server
+4. On second page I believe it is for the better to actually reopen the familiar first page instead of opening a modal on top of the modal
+   - Thus the breedId in Page1 to filter out only cats by breed
+5. Tried not to overengineer but also tried to create a good application architecture infrastructure
+6. Pagination missing
