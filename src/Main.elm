@@ -1,4 +1,4 @@
-module Main exposing (Cat, Model, Msg(..), api_key, catItemDecoder, catListDecoder, getCatList, init, initialModel, main, modalView, renderImages, subscriptions, update, view)
+module Main exposing (Model, Msg(..), api_key, catItemDecoder, catListDecoder, getCatList, init, initialModel, main, modalView, renderImages, subscriptions, update, view)
 
 import Bootstrap.Button as Button
 import Bootstrap.Grid as Grid
@@ -13,7 +13,8 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Http
-import Json.Decode as JD exposing (Decoder, field, int, list, map2, string)
+import Json.Decode as JD exposing (Decoder, field, int, list, map2, maybe, string)
+import Models exposing (..)
 import Url exposing (Url)
 import Url.Parser as Parser exposing ((</>), Parser)
 
@@ -39,7 +40,7 @@ main =
 
 
 type alias Model =
-    { cats : List Cat
+    { cats : List Models.Cat
     , showLoading : Bool
     , showModal : Bool
     , key : Nav.Key
@@ -47,40 +48,14 @@ type alias Model =
     }
 
 
-initialModel :  Url -> Nav.Key -> Model
-initialModel  url key =
+initialModel : Url -> Nav.Key -> Model
+initialModel url key =
     { cats = []
     , showLoading = True
     , showModal = False
     , key = key
     , url = url
     }
-
-
-type alias Cat =
-    { id : String
-    , url : String
-    , width : Int
-    , height : Int
-    }
-
-
-
--- type alias AppStatus =
---   {
---     msg : String
---     ,isModalOpen : Bool
---     ,modalVisibility : Modal.Visibility
---   }
--- initialAppStatus : AppStatus
--- initialAppStatus =
---   { msg = "Loading Cats"
---   , isModalOpen = False
---   ,modalVisibility= Modal.hidden
---   }
--- init : () -> (Model, Cmd Msg)
--- init _=
---   (Loading , getCatList )
 
 
 init : () -> Url -> Nav.Key -> ( Model, Cmd Msg )
@@ -99,7 +74,7 @@ api_key =
 type Msg
     = MorePlease
     | Loading
-    | GotList (Result Http.Error (List Cat))
+    | GotList (Result Http.Error (List Models.Cat))
     | ToggleModal
     | ChangedUrl Url
     | ClickedLink Browser.UrlRequest
@@ -117,7 +92,7 @@ update msg model =
         GotList result ->
             case result of
                 Ok catlist ->
-                    ( { model | showLoading=False, cats = catlist }, Cmd.none )
+                    ( { model | showLoading = False, cats = catlist }, Cmd.none )
 
                 Err _ ->
                     ( { model | cats = [] }, Cmd.none )
@@ -155,7 +130,7 @@ view model =
     if model.showLoading then
         { title = "Cats"
         , body =
-            [ div [] [text "Loading"]]
+            [ div [] [ text "Loading" ] ]
         }
 
     else
@@ -181,22 +156,25 @@ modalView show =
                 [ Html.Attributes.class "modal", Html.Attributes.class "off" ]
     in
     div modal []
-        -- [ Html.button [ Html.Attributes.class "close", onClick ToggleModal ] [ text "x" ]
-        -- , Html.form [ Html.Attributes.id "contactModal", Html.Attributes.method "post", Html.Attributes.action "/process.php" ]
-        --     [ Html.input [ Html.Attributes.required True, Html.Attributes.placeholder "Name", Html.Attributes.type_ "text", Html.Attributes.name "name" ] []
-        --     , Html.input [ Html.Attributes.required True, Html.Attributes.placeholder "Email", Html.Attributes.type_ "email", Html.Attributes.name "email" ] []
-        --     , Html.textarea [ Html.Attributes.required True, Html.Attributes.placeholder "Message", Html.Attributes.spellcheck True, Html.Attributes.rows 4, Html.Attributes.name "message" ] []
-        --     , Html.img [ Html.Attributes.class "img-verify", Html.Attributes.src "/image.php", Html.Attributes.width 80, Html.Attributes.height 30 ] []
-        --     , Html.input [ Html.Attributes.id "verify", Html.Attributes.autocomplete False, Html.Attributes.required True, Html.Attributes.placeholder "Copy the code", Html.Attributes.type_ "text", Html.Attributes.name "verify", Html.Attributes.title "This confirms you are a human user or strong AI and not a spam-bot." ] []
-        --     , div [ Html.Attributes.class "center" ]
-        --         [ Html.input [ Html.Attributes.type_ "submit", Html.Attributes.value "Send Message" ] []
-        --         , div [ Html.Attributes.id "response" ] []
-        --         ]
-        --     ]
-        -- ]
 
 
-renderImages : Cat -> Html Msg
+
+-- [ Html.button [ Html.Attributes.class "close", onClick ToggleModal ] [ text "x" ]
+-- , Html.form [ Html.Attributes.id "contactModal", Html.Attributes.method "post", Html.Attributes.action "/process.php" ]
+--     [ Html.input [ Html.Attributes.required True, Html.Attributes.placeholder "Name", Html.Attributes.type_ "text", Html.Attributes.name "name" ] []
+--     , Html.input [ Html.Attributes.required True, Html.Attributes.placeholder "Email", Html.Attributes.type_ "email", Html.Attributes.name "email" ] []
+--     , Html.textarea [ Html.Attributes.required True, Html.Attributes.placeholder "Message", Html.Attributes.spellcheck True, Html.Attributes.rows 4, Html.Attributes.name "message" ] []
+--     , Html.img [ Html.Attributes.class "img-verify", Html.Attributes.src "/image.php", Html.Attributes.width 80, Html.Attributes.height 30 ] []
+--     , Html.input [ Html.Attributes.id "verify", Html.Attributes.autocomplete False, Html.Attributes.required True, Html.Attributes.placeholder "Copy the code", Html.Attributes.type_ "text", Html.Attributes.name "verify", Html.Attributes.title "This confirms you are a human user or strong AI and not a spam-bot." ] []
+--     , div [ Html.Attributes.class "center" ]
+--         [ Html.input [ Html.Attributes.type_ "submit", Html.Attributes.value "Send Message" ] []
+--         , div [ Html.Attributes.id "response" ] []
+--         ]
+--     ]
+-- ]
+
+
+renderImages : Models.Cat -> Html Msg
 renderImages lst =
     li [ style "list-style" "none" ]
         [ div [ onClick <| ToggleModal ]
@@ -206,30 +184,6 @@ renderImages lst =
 
 
 
--- [text lst.url]
--- viewGif : Model -> Html Msg
--- viewGif model =
---   case model of
---     Failure ->
---       div []
---         [ text "I could not load the catz for some reason. "
---         , button [ onClick MorePlease ] [ text "Try Again!" ]
---         ]
---     Loading ->
---       text "Loading..."
---     Success catlist ->
---       div []
---         [ul [] (List.map renderImages catlist)
---         ,button [ onClick MorePlease ] [ text "More please" ]
---         ]
---     ToggleModal ->
--- viewModal : AppStatus -> Html Msg
--- viewModal model =
---     Modal.config CloseModal
---           |> Modal.small
---           |> Modal.body []
---               [text "body"]
---           |> Modal.view model.modalVisibility
 -- HTTP
 
 
@@ -250,15 +204,43 @@ getCatList =
         }
 
 
-catItemDecoder : Decoder Cat
+catItemDecoder : Decoder Models.Cat
 catItemDecoder =
-    JD.map4 Cat
-        (field "id" string)
+    JD.map6 Cat
         (field "url" string)
         (field "width" int)
         (field "height" int)
+        (field "id" string)
+        (field "breeds" breedListDecoder)
+        (field "categories" categoryListDecoder)
 
 
-catListDecoder : Decoder (List Cat)
+catListDecoder : Decoder (List Models.Cat)
 catListDecoder =
     JD.list catItemDecoder
+
+
+breedItemDecoder : Decoder Models.Breed
+breedItemDecoder =
+    JD.map4 Breed
+        (field "weight_imperial" string)
+        (field "id" string)
+        (field "name" string)
+        (field "description" string)
+
+
+breedListDecoder : Decoder (List Models.Breed)
+breedListDecoder =
+    JD.list breedItemDecoder
+
+
+categoryItemDecoder : Decoder Models.Category
+categoryItemDecoder =
+    JD.map2 Category
+        (field "id" int)
+        (field "name" string)
+
+
+categoryListDecoder : Decoder (List Models.Category)
+categoryListDecoder =
+    JD.list categoryItemDecoder
