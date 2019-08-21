@@ -1,10 +1,5 @@
-module Main exposing (Model, Msg(..), api_key, catItemDecoder, catListDecoder, getCatList, init, initialModel, main, modalView, renderImages, subscriptions, update, view)
+module Main exposing (Model, Msg(..), catItemDecoder, catListDecoder, getCatList, init, initialModel, main, modalView, renderImages, subscriptions, update, view)
 
-import Bootstrap.Button as Button
-import Bootstrap.Grid as Grid
-import Bootstrap.Grid.Col as Col
-import Bootstrap.Grid.Row as Row
-import Bootstrap.Modal as Modal
 import Browser exposing (Document)
 import Browser.Dom exposing (getViewport, getViewportOf, setViewport)
 import Browser.Events
@@ -13,10 +8,11 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Http
-import Json.Decode as JD exposing (Decoder, field, int, list, map2, maybe, string)
+import Json.Decode as JD exposing (Decoder, field, int, list, map2, maybe, nullable, string)
 import Models exposing (..)
 import Url exposing (Url)
-import Url.Parser as Parser exposing ((</>), Parser)
+import Url.Parser as UP exposing ((</>), (<?>), Parser, map, oneOf, s, string)
+import Url.Parser.Query as Query
 
 
 
@@ -41,30 +37,28 @@ main =
 
 type alias Model =
     { cats : List Models.Cat
+    , selectedCat : Maybe Models.Cat
     , showLoading : Bool
     , showModal : Bool
     , key : Nav.Key
-    , url : Url
+    , route : Maybe Route
     }
 
 
 initialModel : Url -> Nav.Key -> Model
 initialModel url key =
     { cats = []
+    , selectedCat = Nothing
     , showLoading = True
     , showModal = False
     , key = key
-    , url = url
+    , route = Just Home
     }
 
 
 init : () -> Url -> Nav.Key -> ( Model, Cmd Msg )
 init flags url key =
     ( initialModel url key, getCatList )
-
-
-api_key =
-    "1197d305-e0e8-4bca-add4-bd778f68c21b"
 
 
 
@@ -75,7 +69,7 @@ type Msg
     = MorePlease
     | Loading
     | GotList (Result Http.Error (List Models.Cat))
-    | ToggleModal
+    | ToggleModal (Maybe Models.Cat)
     | ChangedUrl Url
     | ClickedLink Browser.UrlRequest
 
@@ -97,20 +91,53 @@ update msg model =
                 Err _ ->
                     ( { model | cats = [] }, Cmd.none )
 
-        ToggleModal ->
-            ( { model | showModal = not model.showModal }, Cmd.none )
+        ToggleModal selected ->
+            ( { model | showModal = not model.showModal, selectedCat = selected }, Cmd.none )
 
         ClickedLink urlRequest ->
             case urlRequest of
-                Browser.Internal _ ->
-                    ( model, Cmd.none )
+                Browser.Internal url ->
+                    ( model, Nav.pushUrl model.key (Url.toString url) )
 
-                Browser.External url ->
-                    ( model, Nav.load url )
+                Browser.External href ->
+                    ( model, Nav.load href )
 
         ChangedUrl url ->
-            ( model, Cmd.none )
+            let
+                route =
+                    UP.parse routeParser url
+            in
+            case route of
+                Just (BreedRoute s) ->
+                    ( { model | route = route, showModal = False, selectedCat = Nothing }, getBreedCats s )
 
+                Just Home ->
+                    ( { model | route = route }, getCatList )
+
+                Nothing ->
+                    ( { model | route = route }, Cmd.none )
+
+
+
+-- ROUTE
+
+
+type Page
+    = HomePage
+    | BreedPage (List Models.Cat)
+
+
+type Route
+    = Home
+    | BreedRoute String
+
+
+routeParser : Parser (Route -> a) a
+routeParser =
+    oneOf
+        [ map Home UP.top
+        , map BreedRoute (UP.s "breed" </> UP.string)
+        ]
 
 
 -- SUBSCRIPTIONS
@@ -127,58 +154,84 @@ subscriptions model =
 
 view : Model -> Document Msg
 view model =
+    { title = "Cats"
+    , body =
+        [ app model ]
+    }
+
+
+app : Model -> Html Msg
+app model =
+    div [ id "Cat App" ]
+        [ header [ class "navbar " ]
+            [ a [ href "/", class "navbar-brand" ] [ text "Elm Cat List" ] ]
+        , section [ class "cat-list" ]
+            [ createList model ]
+        ]
+
+
+createList : Model -> Html Msg
+createList model =
     if model.showLoading then
-        { title = "Cats"
-        , body =
-            [ div [] [ text "Loading" ] ]
-        }
+        div [] [ text "Loading" ]
 
     else
-        { title = "Cats"
-        , body =
-            [ div []
-                [ ul [] (List.map renderImages model.cats)
-                , button [ onClick MorePlease ] [ text "More please" ]
-                , modalView model.showModal
-                ]
+        div []
+            [ div [ class "d-flex flex-wrap justify-content-center align-items-stretch" ] (List.map renderImages model.cats)
+            , button [ onClick MorePlease ] [ text "More please" ]
+            , modalView model
             ]
-        }
 
 
-modalView : Bool -> Html Msg
-modalView show =
-    let
-        modal =
-            if show then
-                [ Html.Attributes.class "modal" ]
+modalView : Model -> Html Msg
+modalView model =
+    case model.selectedCat of
+        Nothing ->
+            div [ id "modal", class "close" ]
+                [ div [ class "overlay" ] []
+                , section [ class "content" ] [ text "No selected cat" ]
+                ]
 
-            else
-                [ Html.Attributes.class "modal", Html.Attributes.class "off" ]
-    in
-    div modal []
+        Just newItem ->
+            div [ id "modal", class "open" ]
+                [ div [ class "overlay" ] []
+                , div [ class "modal" ]
+                    [ div [ class "modal-dialog" ]
+                        [ div [ class "modal-content" ]
+                            [ div [ class "modal-header" ]
+                                [ h5 [] [ text "Cat preview" ]
+                                , button [ class "close", onClick <| (ToggleModal <| Nothing) ] [ text "x" ]
+                                ]
+                            , div [ class "modal-body" ]
+                                [ div [ class "d-block" ] [ renderBreeds newItem.breeds ]
+                                , img [ src newItem.url ] []
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
 
 
+renderBreeds : Maybe (List Models.Breed) -> Html Msg
+renderBreeds breed =
+    case breed of
+        Nothing ->
+            span [] []
 
--- [ Html.button [ Html.Attributes.class "close", onClick ToggleModal ] [ text "x" ]
--- , Html.form [ Html.Attributes.id "contactModal", Html.Attributes.method "post", Html.Attributes.action "/process.php" ]
---     [ Html.input [ Html.Attributes.required True, Html.Attributes.placeholder "Name", Html.Attributes.type_ "text", Html.Attributes.name "name" ] []
---     , Html.input [ Html.Attributes.required True, Html.Attributes.placeholder "Email", Html.Attributes.type_ "email", Html.Attributes.name "email" ] []
---     , Html.textarea [ Html.Attributes.required True, Html.Attributes.placeholder "Message", Html.Attributes.spellcheck True, Html.Attributes.rows 4, Html.Attributes.name "message" ] []
---     , Html.img [ Html.Attributes.class "img-verify", Html.Attributes.src "/image.php", Html.Attributes.width 80, Html.Attributes.height 30 ] []
---     , Html.input [ Html.Attributes.id "verify", Html.Attributes.autocomplete False, Html.Attributes.required True, Html.Attributes.placeholder "Copy the code", Html.Attributes.type_ "text", Html.Attributes.name "verify", Html.Attributes.title "This confirms you are a human user or strong AI and not a spam-bot." ] []
---     , div [ Html.Attributes.class "center" ]
---         [ Html.input [ Html.Attributes.type_ "submit", Html.Attributes.value "Send Message" ] []
---         , div [ Html.Attributes.id "response" ] []
---         ]
---     ]
--- ]
+        Just breeds ->
+            div [] (List.map renderABreed breeds)
+
+
+renderABreed : Breed -> Html Msg
+renderABreed breed =
+    a [ href ("/breed/" ++ breed.id), class "d-block" ] [ text breed.name ]
 
 
 renderImages : Models.Cat -> Html Msg
 renderImages lst =
-    li [ style "list-style" "none" ]
-        [ div [ onClick <| ToggleModal ]
-            [ img [ src lst.url, width 300 ] []
+    div [ class "list d-inline-flex m-1 align-self-center" ]
+        [ div [ onClick <| (ToggleModal <| Just lst) ]
+            [ img [ src lst.url, width 300 , class "pointer"] []
             ]
         ]
 
@@ -191,7 +244,7 @@ getCatList : Cmd Msg
 getCatList =
     let
         headers =
-            [ Http.header "x-api-key" api_key ]
+            [ Http.header "x-api-key" Models.api_key ]
     in
     Http.request
         { body = Http.emptyBody
@@ -204,15 +257,32 @@ getCatList =
         }
 
 
+getBreedCats : String -> Cmd Msg
+getBreedCats breedId =
+    let
+        headers =
+            [ Http.header "x-api-key" Models.api_key ]
+    in
+    Http.request
+        { body = Http.emptyBody
+        , method = "GET"
+        , url = "https://api.thecatapi.com/v1/images/search?limit=10&breed_id=" ++ breedId
+        , expect = Http.expectJson GotList catListDecoder
+        , headers = headers
+        , timeout = Nothing
+        , tracker = Nothing
+        }
+
+
 catItemDecoder : Decoder Models.Cat
 catItemDecoder =
     JD.map6 Cat
-        (field "url" string)
+        (field "url" JD.string)
         (field "width" int)
         (field "height" int)
-        (field "id" string)
-        (field "breeds" breedListDecoder)
-        (field "categories" categoryListDecoder)
+        (field "id" JD.string)
+        (maybe (field "breeds" breedListDecoder))
+        (maybe (field "categories" categoryListDecoder))
 
 
 catListDecoder : Decoder (List Models.Cat)
@@ -223,10 +293,10 @@ catListDecoder =
 breedItemDecoder : Decoder Models.Breed
 breedItemDecoder =
     JD.map4 Breed
-        (field "weight_imperial" string)
-        (field "id" string)
-        (field "name" string)
-        (field "description" string)
+        (maybe (field "weight_imperial" JD.string))
+        (field "id" JD.string)
+        (field "name" JD.string)
+        (field "description" JD.string)
 
 
 breedListDecoder : Decoder (List Models.Breed)
@@ -238,7 +308,7 @@ categoryItemDecoder : Decoder Models.Category
 categoryItemDecoder =
     JD.map2 Category
         (field "id" int)
-        (field "name" string)
+        (field "name" JD.string)
 
 
 categoryListDecoder : Decoder (List Models.Category)

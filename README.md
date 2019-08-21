@@ -1,19 +1,14 @@
-# GlobalWebIndex Engineering Challenge
-## Exercise: CatLover
-Create an elm application for cat lovers which is going to build upon thecatapi.com and will have 3 views ... 
-The first view displays a list of 10 random cat images and a button to load more. Clicking on any of those images opens a modal view with the image and the information about the cat’s breed if available. This would be a link to the second view below - the breed detail. The modal should also contain a form to mark the image as your favourite (a part of the third view as well). Make sure you can copy-paste the url of the modal and send it to your friends - they should see the same thing as you can see. 
+# GlobalWebIndex Elm CatLover
 
-The second view displays a list of cat breeds. Each breed opens a modal again with a list of cat images of that breed. Each of those images must be a link to the image detail from the previous point. 
+There are 2 pages developed inside this repository. 
+The home page is the list with the 10 random images from the API. The second one is a breed page which includes a filtered list of the cats according to the breed in the url path.
 
-The third view is a form that allows you do the following things after providing the necessary information:
-Display your favourite cats 
-Mark a specific image as your favourite 
+The project structured initially with the https://github.com/halfzebra/create-elm-app in order to avoid the configuration and use the development server for the app.
 
-You can find the API documentation here: https://docs.thecatapi.com/ 
-We give you a lot of freedom in technologies and ways of doing things. We only insist on you using the Elm language. Note that we have omitted a lot of details in this description which we hope you will fill in and thus prove to us that you are aware of industry best practices and that you also follow them. Get creative as much as you want, we WILL appreciate it. You will not be evaluated based on how well you follow these instructions, but based on how sensible your solution will be. In case you are not able to implement something you would normally implement for time reasons, make it clear with a comment. 
+In order to run the app you have to run the following after installing the create-elm-app
+`elm-app start`
 
-## Submission
-
-Just a make a PR to the current repo!
-Good luck, potential colleague! 
-
+### ---Notes--- 
+1. Due to the lack of time and the steep learning curve I did not implement the third view and the favourite cats functionality. Also the UI is too simple and I use the bootrstrap css  in order to use some css classes for a responsive image list and modal.
+2. Also the second view is a list of the cats of the same breed and not a list of the breeds which will trigger a modal then with the cats list.
+3. I tried to follow the one file approach except of my models. HTTP, routes, decoders are all in the same Main.elm file. 
