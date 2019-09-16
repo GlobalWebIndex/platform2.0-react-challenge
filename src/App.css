@@ -1,0 +1,29 @@
+.App {
+  text-align: center;
+}
+
+.error {
+  color: red;
+}
+
+.thumbnail {
+  margin: auto;
+  display: block;
+  max-width: 400px;
+  max-height: 400px;
+}
+
+.breed {
+  cursor: pointer;
+  font-size: 16px;
+  margin: 15px;
+}
+
+.label {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.button {
+  margin-top: 25px;
+}
