@@ -1,4 +1,3 @@
-//  import axios from "axios";
 import { Store } from "use-global-hook";
 import * as models from '../../constants/models'
 import { AppState, AssociatedActions} from '../index'
@@ -11,7 +10,6 @@ export const fetchFavorites = (
 ) => {
     favorites = {...store.state.favorites};
     favorites.status = models.StatusEnum.REQUESTED;
-    //store.setState( {...store.state, favorites })
     const rq = async () => {
         const res =  await apiBase.get('/v1/favourites');
         favorites.data = res.data as models.IFavorite[];

@@ -12,14 +12,12 @@ export interface ApiListResult<T> {
     data: T[]
     status: StatusEnum
 }
-
 export interface ApiResult<T> {
     data?: T
     status: StatusEnum
 }
 
 // Generated from http://www.json2ts.com/
-/* Breeds */
 export interface ICatBreed {
     weight: ICatBreedWeight
     id: string
@@ -96,16 +94,3 @@ export interface IFavoriteBody {
     sub_id: string
 }
 
-
-
-/* Modal */
-export interface IOverlayState {
-    autoFocus: boolean;
-    canEscapeKeyClose: boolean;
-    canOutsideClickClose: boolean;
-    enforceFocus: boolean;
-    hasBackdrop: boolean;
-    isOpen: boolean;
-    usePortal: boolean;
-    useTallContent: boolean;
-}

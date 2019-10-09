@@ -35,6 +35,11 @@ const Cats: React.FC<RouteComponentProps<MatchParams>> = ( routeProps ) => {
         setSelectedCat( {data: addedCat.data, status: StatusEnum.SUCCESS } );
         setCatModalOpen(true);
       }
+      else {
+        const addedCat = cats.data.filter(o => o.id === routeProps.match.params.image_id)[0];
+        setSelectedCat( {data: addedCat, status: StatusEnum.SUCCESS } );
+        setCatModalOpen(true);
+      }
     }
     if(favorites.data.length === 0 )
       aFavorites.fetchFavorites();

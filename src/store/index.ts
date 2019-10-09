@@ -34,7 +34,6 @@ const initialState = {
 export type AssociatedActions = {
     fetchCats: () => models.ApiListResult<models.ICat>;
     addCat: () => models.ApiListResult<models.ICat>
-    // fetchCat: (image_id: string) => models.ApiResult<models.ICat>;
     fetchMoreCats: () => models.ApiResult<models.ICat>;
     fetchBreeds: () => models.ApiResult<models.ICatBreed>;
     fetchFavorites: () => models.ApiResult<models.IFavorite>;
