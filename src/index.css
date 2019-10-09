@@ -1,0 +1,44 @@
+@import "~normalize.css";
+@import "~@blueprintjs/core/lib/css/blueprint.css";
+@import "~@blueprintjs/icons/lib/css/blueprint-icons.css";
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.v-sp { 
+    margin-bottom: 0.6em;
+}
+
+.img-cat {
+  max-height: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
+.img-cat-details {
+  max-width:50vh;
+  max-height:50vh;
+  height: auto; 
+  width:auto;
+  margin: 0;
+  padding: 0;
+}
+
+.img-loading {
+  background: transparent url('/loader.gif') center no-repeat;
+}
+
