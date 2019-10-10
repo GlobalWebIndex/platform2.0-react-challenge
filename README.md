@@ -12,6 +12,14 @@ Missing features
 - Adding toaster component when user presses share link to copy to clipboard.
 - Since ICat model contains image dimension some custom styling could be applied on modal cat details window to avoid showing the scrollbar.
 
+## How to setup
+
+```bash
+npm install 
+
+npm start
+```
+
 ## UI Components Libraries
 
 - [Blueprint](https://blueprintjs.com)
