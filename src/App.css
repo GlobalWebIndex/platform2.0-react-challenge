@@ -1,0 +1,27 @@
+.app-container {
+  display: grid;
+  height: 100vh;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: 4fr 1fr;
+  grid-template-areas:
+    "catslist breeds"
+    "catslist favourites";
+}
+
+#cats-list-container {
+  grid-area: catslist;
+  overflow: scroll;
+  border: 1px solid rgb(150, 150, 150);
+}
+
+#breeds-container {
+  grid-area: breeds;
+  overflow: scroll;
+  border: 1px solid rgb(150, 150, 150);
+}
+
+#favourites-container {
+  grid-area: favourites;
+  overflow: scroll;
+  border: 1px solid rgb(150, 150, 150);
+}

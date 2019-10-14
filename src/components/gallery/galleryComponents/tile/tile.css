@@ -1,0 +1,9 @@
+.tile {
+  border: 0;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.tile-image {
+  width: 300px;
+}

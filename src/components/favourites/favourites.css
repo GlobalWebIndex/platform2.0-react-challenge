@@ -1,0 +1,14 @@
+#favourites-title {
+  font-size: larger;
+  border-bottom: 1px solid black;
+}
+
+.favourite-preview {
+  border: 0;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.favourite-preview-image {
+  width: 200px;
+}
