@@ -1,0 +1,48 @@
+a .MuiAvatar-root {
+width: 100px;
+border: 5px solid pink;
+cursor: pointer;
+height: 100px;
+margin: 5px;
+border-radius: 50%;
+overflow: hidden;
+}
+a .MuiAvatar-root + svg {
+    width: 80px;
+    height: 80px;
+}
+a .MuiAvatar-root img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    text-align: center;
+    pointer-events: none;
+}
+
+a .MuiAvatar-root:hover {
+    border-color: #bfffbf;
+    /* border-width: 7px; */
+    opacity: 0.8;
+}
+.MuiCardHeader-root + svg {
+    display: flex;
+    width: 200px;
+    margin: auto;
+}
+.favouriteslist svg {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    right: 0;
+}
+
+.dislike{
+    // width: 33px;
+    cursor: pointer;  
+    margin: 10px;;
+}
+.dislike svg{
+    fill: darkred;
+    width: 2em;
+
+}

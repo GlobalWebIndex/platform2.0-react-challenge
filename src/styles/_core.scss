@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css?family=Coming+Soon&display=swap');
+
+body *{
+    font-family: 'Coming Soon', cursive !important; 
+}
+
+
+$base-color: #ffff;
+
+body{
+
+    background-color: $base-color;
+}
+.d-flex{
+    display: flex;
+}
+
+.fl-wrap{
+    flex-wrap: wrap;
+}
+.fl-col{
+    flex-direction: column;
+}
+
+#root{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

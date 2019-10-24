@@ -1,5 +1,14 @@
 # GlobalWebIndex Engineering Challenge
 ## Exercise: CatLover
+
+DEMO : https://catlover-app.firebaseapp.com/
+
+Checking the app:
+* first: yarn install
+* yarn start
+
+Enjoy... :)
+
 Create an Elm or React application for cat lovers which is going to build upon thecatapi.com and will have 3 views. 
 The first view displays a list of 10 random cat images and a button to load more. Clicking on any of those images opens a modal view with the image and the information about the cat’s breed if available. This would be a link to the second view below - the breed detail. The modal should also contain a form to mark the image as your favourite (a part of the third view as well). Make sure you can copy-paste the url of the modal and send it to your friends - they should see the same image as you can see. 
 
