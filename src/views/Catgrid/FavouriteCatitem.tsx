@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   }
 });
 
-const FavouriteCatitem = (data: any) => {
+const FavouriteCatitem = (data:any) => {
   const { deleteFromFavorites } = useCatLoverApp();
 
   const classes = useStyles(makeStyles);

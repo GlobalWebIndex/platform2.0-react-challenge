@@ -82,9 +82,9 @@ const CatDetailsContainer= (props:any) => {
 
   const [stateFavourite, setCatfavourite] = useState(false)
 
-  let IsCatInfavouritesList: any = []
+  let IsCatInfavouritesList:any = []
 
-  function isIsFavoriteList(obj: any, list: any) {
+  function isIsFavoriteList(obj:any, list:any) {
       for (var i = 0; i < list.length; i++) {
         if (list[i].image_id === obj[0].id) {
           IsCatInfavouritesList = [list[i]]

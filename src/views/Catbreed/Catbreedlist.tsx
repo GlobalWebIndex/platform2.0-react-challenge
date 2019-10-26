@@ -21,10 +21,10 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const Catbreedlist = (data: any) => {
+const Catbreedlist = (data:any) => {
   const { breedsList, setSelectedBreed, selectedBreed } = useCatLoverApp()
 
-  let cartsUnique: any = breedsList.filter(function (item: any, index: any) {
+  let cartsUnique:any = breedsList.filter(function (item:any, index:any) {
     return breedsList.indexOf(item) >= index;
   });
   const classes = useStyles();
@@ -67,7 +67,7 @@ const Catbreedlist = (data: any) => {
           <MenuItem value="no">
             <em>Select a Breed</em>
           </MenuItem>
-          {cartsUnique.map((breed: any) => {
+          {cartsUnique.map((breed:any) => {
             return <MenuItem key={breed.id} value={breed.id}>{breed.name}</MenuItem>
           })}
         </Select>

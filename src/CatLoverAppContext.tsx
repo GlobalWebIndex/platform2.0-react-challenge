@@ -50,11 +50,11 @@ const CatLoverAppProvider =({children}:JSX.ElementChildrenAttribute):JSX.Element
     };
     const setCatBreedList = (list:models.IRandomCat[]) => {
       let breedList: models.ICatBreed[] = [];
-      list.map((listitem: any) => {
+      list.map((listitem:any) => {
         console.log(listitem)
         let breedNotEmtpy = isEmtyOrNullArrary(listitem.breeds)
         if (breedNotEmtpy) {
-            breedList.push(listitem.breeds);
+            breedList.push(listitem.breeds[0]);
         }
       });
       let previousCatlist: models.IRandomCat[] = state.catlist;

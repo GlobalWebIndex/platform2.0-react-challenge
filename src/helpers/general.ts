@@ -1,8 +1,8 @@
-export const removeDublicates = (list:any) => {
-  const uniqueArray = list.filter((thing: any, index: number) => {
+export const removeDublicates = (list) => {
+  const uniqueArray = list.filter((thing, index: number) => {
     return (
       index ===
-      list.findIndex((obj: any) => JSON.stringify(obj) === JSON.stringify(thing))
+      list.findIndex((obj) => JSON.stringify(obj) === JSON.stringify(thing))
     );
   });
   return uniqueArray;

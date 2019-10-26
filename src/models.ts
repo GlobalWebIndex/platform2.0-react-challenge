@@ -3,12 +3,12 @@ export interface IState {
   pageNumber: number;
   selectedCat: [];
   selectedBreed: string;
-  favoriteList: any;
+  favoriteList:any;
   dataLoaded: boolean;
   catIdLoaded: string;
   breedsList?: [ICatBreed]|any;
-  state?: any;
-  setstate?: any;
+  state?:any;
+  setstate?:any;
 }
 export interface ICatBreedWeight {
   imperial: string
@@ -127,7 +127,7 @@ export interface IRandomCatList{
 }
 
 export interface IRandomCat {
-  breeds?: ICatBreed[]|undefined;
+  breeds?: ICatBreed[];
   height?: number;
   id?: string;
   url?: string;
