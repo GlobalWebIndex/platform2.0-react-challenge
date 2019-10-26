@@ -25,7 +25,7 @@ const FavouriteCatitem = (data: any) => {
   const classes = useStyles(makeStyles);
   
   let { url, id } = data.data.image;
-  let item = data.data;
+  let item = data;
 
   const handleDeletItemFromFavorites = () => {
     deleteFromFavorites(data.data.id,'')

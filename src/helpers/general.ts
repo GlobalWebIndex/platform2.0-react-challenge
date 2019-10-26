@@ -1,4 +1,4 @@
-export const removeDublicates = (list: []) => {
+export const removeDublicates = (list:any) => {
   const uniqueArray = list.filter((thing: any, index: number) => {
     return (
       index ===

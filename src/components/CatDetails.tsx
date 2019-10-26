@@ -23,8 +23,9 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
-import DirectionsIcon from '@material-ui/icons/Directions';
+// import DirectionsIcon from '@material-ui/icons/Directions';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
+// import RouteComponentProps from "@reach/router"
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -69,7 +70,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const CatDetailsContainer = (props: any) => {
+const CatDetailsContainer= (props:any) => {
   console.log("USE PROPS", props)
   const { selectedCat, setCatAsFavorite, getCatDetails, favoriteList, deleteFromFavorites,getCatFavouriteList ,catIdLoaded } = useCatLoverApp()
   console.log("USE CAT", selectedCat)

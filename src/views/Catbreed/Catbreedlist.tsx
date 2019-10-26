@@ -40,7 +40,8 @@ const Catbreedlist = (data: any) => {
   }, []);
 
   const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
-    setSelectedBreed(event.target.value)
+    let breedValue:string = event.target.value as string
+    setSelectedBreed(breedValue)
     setValues(oldValues => ({
       ...oldValues,
       [event.target.name as string]: event.target.value,

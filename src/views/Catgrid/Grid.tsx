@@ -4,8 +4,9 @@ import FavouriteCatitem from "./FavouriteCatitem";
 import useCatLoverApp from "../../hooks/useCatLoverApp";
 import Catbreedlist from "../Catbreed/Catbreedlist";
 import Button from "@material-ui/core/Button";
+import * as models from "../../models"
 
-const Grid = (props: any) => {
+const Grid = (props) => {
   const {
     catlist,
     favoriteList,
@@ -19,7 +20,7 @@ const Grid = (props: any) => {
   const FavoriteList = () => {
     return (
       <div className="d-flex fl-wrap ">
-        {favoriteList.map((cat: any) => {
+        {favoriteList.map((cat: models.IRandomCat) => {
           return (
          
               <div>
@@ -34,7 +35,7 @@ const Grid = (props: any) => {
   const RandomCatsList = () => {
     return (
       <div className="d-flex fl-wrap ">
-        {catlist.map((cat: any) => {
+        {catlist.map((cat: models.IRandomCat|any) => {
           if (selectedBreed !== "no") {
             if (cat.breeds.length > 0 && cat.breeds[0].id === selectedBreed) {
               return <CatItem key={cat.id} data={cat} />;

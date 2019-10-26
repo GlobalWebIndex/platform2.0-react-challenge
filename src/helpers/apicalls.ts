@@ -19,7 +19,7 @@ const getTenRandomCats = async () => {
       { params: query_params }
     );
 
-    return response;
+    return response.data;
   } catch (err) {
     console.log(err);
   }
@@ -40,7 +40,7 @@ const loadMoreCats = async (pageNumer: number) => {
       { params: query_params }
     );
 
-    return response;
+    return response.data;
   } catch (err) {
     console.log(err);
   }
@@ -61,7 +61,9 @@ const getCAtById = async (id: string) => {
       { params: query_params }
     );
 
-    return response;
+    console.log("getCAtById",response); 
+    return response.data;
+
   } catch (err) {
     console.log(err);
   }
@@ -79,7 +81,7 @@ const getFavouritesList = async () => {
     }
     let response = await axios.get('https://api.thecatapi.com/v1/favourites', { params: query_params })
     //       console.log(response)
-    return response
+    return response.data
     // this.favourites = response.data 
     // this.pagination_count = response.headers['pagination-count'];
     // this.clearError();
@@ -110,7 +112,7 @@ const setCatAsFavorite = async (id: string) => {
 const deleteFromFavorites = async (id: number) => {
   try {
     let response = await axios.delete('https://api.thecatapi.com/v1/favourites/' + id)
-    return response
+    return response.data
 
   } catch (err) {
     return err

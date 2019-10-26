@@ -13,7 +13,8 @@ const MainContainer = () => {
   let IGrid = (props: ICatDetailsProps) => <Grid data={props} />
   let ICatDetails = (props: ICatDetailsProps) => <CatDetailsContainer data={props} />
 
-  function Routes(props:any) {
+  function Routes(props:ICatDetailsProps) {
+    console.log("routeprops",props)
     return (
       <Router {...props}>
           <IGrid path="/" />
@@ -23,7 +24,7 @@ const MainContainer = () => {
         </Router>
     );
   }
-  function Main() {
+  const Main :React.FC =()=> {
     return (
       <Location>
         {({ location, navigate }) => {
