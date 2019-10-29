@@ -7,6 +7,8 @@ import Button from "@material-ui/core/Button";
 import * as models from "../../models"
 
 const Grid = (props) => {
+
+  
   const {
     catlist,
     favoriteList,
@@ -23,7 +25,7 @@ const Grid = (props) => {
         {favoriteList.map((cat: models.IRandomCat) => {
           return (
          
-              <div>
+              <div key={cat.id} >
                 {" "}
                 <FavouriteCatitem key={cat.id} data={cat} />
               </div>

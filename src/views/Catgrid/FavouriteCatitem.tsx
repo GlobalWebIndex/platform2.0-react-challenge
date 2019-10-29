@@ -21,14 +21,12 @@ const useStyles = makeStyles({
 
 const FavouriteCatitem = (data:any) => {
   const { deleteFromFavorites } = useCatLoverApp();
-
   const classes = useStyles(makeStyles);
-  
   let { url, id } = data.data.image;
-  let item = data;
-
-  const handleDeletItemFromFavorites = () => {
-    deleteFromFavorites(data.data.id,'')
+  let item = data.data;
+  const handleDeletItemFromFavorites1 = (e) => {
+    e.preventDefault()
+    deleteFromFavorites(data.data.id,'',false)
   }
  
   return (
@@ -49,7 +47,7 @@ const FavouriteCatitem = (data:any) => {
             <DefaultImage />
           )}
         </Link>
-        <div className={'dislike'} onClick={handleDeletItemFromFavorites}>
+        <div className={'dislike'} onClick={handleDeletItemFromFavorites1}>
           <Dislike/>
         </div>
         </div>

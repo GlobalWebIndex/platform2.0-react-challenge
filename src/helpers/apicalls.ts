@@ -2,7 +2,7 @@ import axios from "axios";
 
 const apiKey: string = "4e8c676c-80e9-4bee-8391-b861cbaad6ce";
 
-const sub_id: string = "my_cat_list_seb_5555"
+const sub_id: string = "my_cat_list_seb_5555";
 
 const getTenRandomCats = async () => {
   try {
@@ -32,7 +32,7 @@ const loadMoreCats = async (pageNumer: number) => {
     let query_params = {
       limit: 20,
       order: "Acs",
-      page: pageNumer,
+      page: pageNumer
     };
 
     let response = await axios.get(
@@ -61,9 +61,8 @@ const getCAtById = async (id: string) => {
       { params: query_params }
     );
 
-    console.log("getCAtById",response); 
-    return response.data;
-
+    console.log("getCAtById", response);
+    return [response.data];
   } catch (err) {
     console.log(err);
   }
@@ -72,22 +71,17 @@ const getCAtById = async (id: string) => {
 const getFavouritesList = async () => {
   try {
     axios.defaults.headers.common["x-api-key"] = apiKey; // Replace this with your API Key
-
-
     let query_params = {
       limit: 10,
-      order: 'DESC',
-      page: 0,
-    }
-    let response = await axios.get('https://api.thecatapi.com/v1/favourites', { params: query_params })
-    //       console.log(response)
-    return response.data
-    // this.favourites = response.data 
-    // this.pagination_count = response.headers['pagination-count'];
-    // this.clearError();
-
+      order: "DESC",
+      page: 0
+    };
+    let response = await axios.get("https://api.thecatapi.com/v1/favourites", {
+      params: query_params
+    });
+    return response.data;
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
 };
 
@@ -98,27 +92,38 @@ const setCatAsFavorite = async (id: string) => {
     let post_body = {
       image_id: id,
       sub_id: sub_id
-    }
-    let response = await axios.post('https://api.thecatapi.com/v1/favourites', post_body)
-    console.log(response)
-    catApis.getFavouritesList().then((data) => {
-      console.log(data)
-
-    })
+    };
+    return await axios
+      .post("https://api.thecatapi.com/v1/favourites", post_body)
+      .then(async response => {
+        console.log("FAV CAT", response);
+        if (response.status === 200) {
+          return await catApis.getFavouritesList().then(response => {
+            console.log(response.data);
+            return response;
+          });
+        }
+      });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 const deleteFromFavorites = async (id: number) => {
   try {
-    let response = await axios.delete('https://api.thecatapi.com/v1/favourites/' + id)
-    return response.data
-
+    return await axios
+      .delete("https://api.thecatapi.com/v1/favourites/" + id)
+      .then(async response => {
+        // if (response.data.message === "SUCCESS") {
+        return await catApis.getFavouritesList().then(response => {
+          return response;
+        });
+        // }
+      });
   } catch (err) {
-    return err
-    console.log(err)
+    return err;
+    console.log(err);
   }
-}
+};
 const catApis = {
   getTenRandomCats: getTenRandomCats,
   loadMoreCats: loadMoreCats,
@@ -126,7 +131,6 @@ const catApis = {
   setCatAsFavorite: setCatAsFavorite,
   getFavouritesList: getFavouritesList,
   deleteFromFavorites: deleteFromFavorites
-
 };
 
 export default catApis;

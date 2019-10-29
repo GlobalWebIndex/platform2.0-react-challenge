@@ -19,9 +19,9 @@ const initialState:IState ={
   selectedBreed: "no",
   favoriteList:[],
   dataLoaded:false,
-  catIdLoaded:"",
+  catItemLoaded:false,
   breedsList:[],
-  
+
 }
 
 

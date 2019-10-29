@@ -5,10 +5,11 @@ export interface IState {
   selectedBreed: string;
   favoriteList:any;
   dataLoaded: boolean;
-  catIdLoaded: string;
+  catItemLoaded: boolean;
   breedsList?: [ICatBreed]|any;
   state?:any;
   setstate?:any;
+  
 }
 export interface ICatBreedWeight {
   imperial: string
