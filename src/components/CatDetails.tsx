@@ -122,21 +122,14 @@ const CatDetailsContainer = (props: any) => {
 
   const handleDeletItemFromFavorites = (e) => {
 
-    let ismodal=false
-
-
-    if(props.data.location.state.oldLocation.pathname=="/favourites"){
-      ismodal=false
-    }{
-      ismodal=true
-    }
+   
 
 
     e.preventDefault()
     isIsFavoriteList(selectedCat,favoriteList)
     console.log("Before DDD",favoriteList)
       if(IsCatInfavouritesList.length>0){
-     deleteFromFavorites(IsCatInfavouritesList[0].id, selectedCat,ismodal).then((data)=>{
+     deleteFromFavorites(IsCatInfavouritesList[0].id, selectedCat,true).then((data)=>{
        console.log(data)
      setCatfavourite('false')
     })
