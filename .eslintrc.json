@@ -1,0 +1,20 @@
+{
+    "extends": ["airbnb", "react-app", "prettier", "prettier/react"],
+    "plugins": ["prettier", "import"],
+    "rules": {
+      "prettier/prettier": "error",
+      "react/prop-types": "off",
+      "react/jsx-filename-extension": "off",
+      "react/jsx-fragments": "off",
+      "react/jsx-props-no-spreading": "off",
+      "react/jsx-curly-newline": "off",
+      "import/prefer-default-export": "off",
+      "react/jsx-uses-react": "off",
+      "react/react-in-jsx-scope": "off",
+      "no-nested-ternary": "off",
+      "no-underscore-dangle": [2, { "allow": [
+        "__REDUX_DEVTOOLS_EXTENSION__"
+      ] } ]
+    }
+  }
+  
