@@ -13,6 +13,14 @@ export const COOL_PROMPTS = [
   "Mew",
   "Oh a catieee"
 ];
+/**
+ * The API handling could be done better.
+ * The idea below is to pass parameters to the useData.
+ * I would do more if I had more time, the API was a bit more consistent
+ * (less random) and returned some metadata like
+ * OKEY, FAVOURITES, 1 PAGE, HOW MANY PAGES ARE THERE
+ *
+ */
 export const ENDPOINTS = {
   GET_ONE_IMAGE: ({ image_id: id }) => `/images/${id}`,
   GET_IMAGE_SEARCH: ({
@@ -37,12 +45,12 @@ export const ENDPOINTS = {
     })}`,
   GET_FAVOURITES: ({ sub_id: subId, limit, page } = {}) =>
     `/favourites?${stringify({ sub_id: subId, limit, page })}`,
-  GET_ONE_FAVOURITE: ({ favourite_id: favoutireId } = {}) =>
-    `/favourites/${favoutireId}`,
-  DELETE_ONE_FAVOURITE: ({ favourite_id: favoutireId } = {}) =>
-    `/favourites/${favoutireId}`,
+  GET_ONE_FAVOURITE: ({ favourite_id: favouriteId } = {}) =>
+    `/favourites/${favouriteId}`,
+  DELETE_ONE_FAVOURITE: ({ favourite_id: favouriteId } = {}) =>
+    `/favourites/${favouriteId}`,
   POST_ONE_FAVOURITE: ({ image_id: imageId, sub_id: subId } = {}) =>
-    `/favourites/?${stringify({ image_id: imageId, sub_id: subId })}`,
+    `/favourites`,
   GET_BREEDS: ({ attach_breed: attachBreed, page, limit } = {}) =>
     `/breeds?${stringify({ attach_breed: attachBreed, page, limit })}`
 };

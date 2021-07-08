@@ -15,6 +15,7 @@ import Error from "./Error";
 import Empty from "./Empty";
 import Progress from "./Progress";
 import BreedTemplate from "./BreedTemplate";
+import Favourite from "./Favourite";
 
 const useStyles = makeStyles((theme) => ({
   cat: {
@@ -51,6 +52,7 @@ export default function CatModal() {
                 alt="your selected cat"
                 className={classes.cat}
               />
+              <Favourite catId={cat.id} />
               <ul className={classes.categoryList}>
                 {cat?.categories?.map(({ id, name }) => (
                   <li key={id}>{name}</li>
