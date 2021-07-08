@@ -19,7 +19,8 @@ localStorage.GIVEN_TOKEN =
   fetch(`${API_BASE_URL}/votes`, {
     headers: { "X-API-KEY": localStorage.GIVEN_TOKEN }
   }).then((status) => {
-    if (status === 200) localStorage.TOKEN = localStorage.GIVEN_TOKEN;
+    if (status === 200 || status === 204)
+      localStorage.TOKEN = localStorage.GIVEN_TOKEN;
   });
 
 // Awesomeness
