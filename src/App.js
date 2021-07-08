@@ -52,7 +52,7 @@ function App() {
             </Route>
             <Route path="/catlady">{/* That's me. Show what I love */}</Route>
             <Route path="/breed/:id">{/** Is this one breed? */}</Route>
-            <Route exact path={["/", "/cat/:id"]}>
+            <Route path="/:id*">
               <CatsList />
               <CatModal />
             </Route>

@@ -14,11 +14,11 @@ import { useAPI } from "../hooks/useData";
 import Error from "./Error";
 import Empty from "./Empty";
 import Progress from "./Progress";
+import BreedTemplate from "./BreedTemplate";
 
 const useStyles = makeStyles((theme) => ({
   cat: {
-    width: "100%",
-    maxHeight: "400px"
+    maxWidth: "100%"
   },
   categoryList: {
     display: "flex"
@@ -34,6 +34,7 @@ export default function CatModal() {
       image_id: catId
     })
   );
+  console.log(catId, params, cat);
   const classes = useStyles();
   const onClose = () => history.push("/");
   if (!catId) return null;
@@ -55,6 +56,16 @@ export default function CatModal() {
                   <li key={id}>{name}</li>
                 ))}
               </ul>
+              <div className={classes.breeds}>
+                {cat?.breeds?.map(({ id, name, ...catprops }) => (
+                  <BreedTemplate
+                    key={id}
+                    id={id}
+                    name={name}
+                    catprops={catprops}
+                  />
+                ))}
+              </div>
             </>
           )}
       </DialogContent>

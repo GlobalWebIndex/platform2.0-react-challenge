@@ -50,7 +50,9 @@ export default function CatsList({ page = 0 }) {
   const [loading, data, error] = useAPI(
     ENDPOINTS.GET_IMAGE_SEARCH({
       limit: PAGE_SIZE_INITIAL,
-      page
+      page,
+      order: "ASC",
+      breed_id: "abys"
     })
   );
   const [isLoading, setIsLoading] = useState(loading);
@@ -91,7 +93,7 @@ export default function CatsList({ page = 0 }) {
           </div>
         )}
         <div className={classes.imageRoot}>
-          <ImageList rowHeight={160} className={classes.imageList} cols={4}>
+          <ImageList rowHeight={300} className={classes.imageList} cols={4}>
             {memoizedCats.map((cat) => (
               // TODO: Pack the list
               <ImageListItem
@@ -99,7 +101,7 @@ export default function CatsList({ page = 0 }) {
                 style={{ cursor: "pointer" }}
                 cols={cat.cols}
               >
-                <Link to={`/cat/${cat.id}`}>
+                <Link to={`/${cat.id}`}>
                   <img src={cat.url} alt="Another cat!" />
                 </Link>
                 <ImageListItemBar
