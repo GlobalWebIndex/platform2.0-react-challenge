@@ -1,17 +1,20 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { useState, useEffect } from "react";
 import { Typography } from "@material-ui/core";
-import { columns } from "./columns";
+import ImageList from "@material-ui/core/ImageList";
+import ImageListItem from "@material-ui/core/ImageListItem";
+import ImageListItemBar from "@material-ui/core/ImageListItemBar";
+import OpenInNewRoundedIcon from "@material-ui/icons/OpenInNewRounded";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
 import { useAPI } from "../hooks/useData";
-import { ENDPOINTS } from "../constants";
+import { COOL_PROMPTS, PAGE_SIZE_INITIAL, ENDPOINTS } from "../constants";
 import Progress from "../components/Progress";
 import Error from "../components/Error";
 import Empty from "../components/Empty";
-import DataGrid from "../components/DataGrid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: 400,
     width: "calc(100% - 2em)",
     padding: "1em"
   },
@@ -20,13 +23,35 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1
+  },
+  imageRoot: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    overflow: "hidden",
+    backgroundColor: theme.palette.background.paper
+  },
+  titleBar: {
+    cursor: "pointer"
+  },
+  fabBar: {
+    "& > *": {
+      margin: theme.spacing(1)
+    },
+    position: "fixed",
+    bottom: "1rem",
+    right: "1rem",
+    zIndex: "1"
   }
 }));
-
-export default function CatsList() {
+export default function CatsList({ page = 0 }) {
   const classes = useStyles();
-  const [loading, data, error, refetch] = useAPI(
-    ENDPOINTS.COMPANY_ENDPOINT_GET_MANY()
+  const [showMoreClicked, onClickShowMore] = useState(false);
+  const [loading, data, error] = useAPI(
+    ENDPOINTS.GET_IMAGE_SEARCH({
+      limit: PAGE_SIZE_INITIAL,
+      page
+    })
   );
   const [isLoading, setIsLoading] = useState(loading);
 
@@ -40,13 +65,65 @@ export default function CatsList() {
 
   if (isLoading) return <Progress />;
   if (error) return <Error />;
-  if (data.length === 0) return <Empty />;
+  if (data?.length === 0) return <Empty />;
   return (
-    <div className={classes.root}>
-      <Typography variant="h4" gutterBottom>
-        Cats for catlovers
-      </Typography>
-      <DataGrid rows={data} columns={columns} pageSize={5} refetch={refetch} />
-    </div>
+    <>
+      <div className={classes.root}>
+        {page === 0 && (
+          <Typography variant="h4" gutterBottom>
+            Cats for catlovers
+          </Typography>
+        )}
+        {!showMoreClicked && (
+          <div className={classes.fabBar}>
+            <Fab
+              onClick={() => onClickShowMore(true)}
+              color="primary"
+              aria-label="more"
+              variant="extended"
+            >
+              <AddIcon style={{ fill: "darkblue" }} />
+              More 😻😽
+            </Fab>
+          </div>
+        )}
+        <div className={classes.imageRoot}>
+          <ImageList rowHeight={160} className={classes.imageList} cols={4}>
+            {data.map((item) => (
+              // TODO: Pack the list
+              <ImageListItem
+                key={item.url}
+                cols={Math.round(Math.random() * 4)}
+              >
+                <img src={item.url} alt="Another cat!" />
+                <ImageListItemBar
+                  title={
+                    COOL_PROMPTS[
+                      Math.round(Math.random() * COOL_PROMPTS.length - 0.5)
+                    ]
+                  }
+                  position="top"
+                  actionIcon={
+                    <OpenInNewRoundedIcon
+                      style={{
+                        paddingLeft: 8,
+                        paddingRight: 4,
+                        marginTop: 4,
+                        height: 16,
+                        width: 16,
+                        fill: "white"
+                      }}
+                    />
+                  }
+                  actionPosition="left"
+                  className={classes.titleBar}
+                />
+              </ImageListItem>
+            ))}
+          </ImageList>
+        </div>
+      </div>
+      {showMoreClicked && <CatsList page={page + 1} />}
+    </>
   );
 }

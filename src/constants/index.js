@@ -3,7 +3,16 @@ import { stringify } from "qs";
 export const API_BASE_URL = "https://api.thecatapi.com/v1";
 
 export const NA_TEXT = "N/A";
-
+export const PAGE_SIZE_INITIAL = 10;
+export const COOL_PROMPTS = [
+  "Isn't it cute?",
+  "Look at this one!",
+  "Isn't this cutie adorable",
+  "Can you get your eyes away",
+  "Oooooh adopt meeee",
+  "Mew",
+  "Oh a catieee"
+];
 export const ENDPOINTS = {
   COMPANY_ENDPOINT_GET_MANY: (id) => ``,
   GET_IMAGE_SEARCH: ({
