@@ -14,7 +14,7 @@ export const COOL_PROMPTS = [
   "Oh a catieee"
 ];
 export const ENDPOINTS = {
-  COMPANY_ENDPOINT_GET_MANY: (id) => ``,
+  GET_ONE_IMAGE: ({ image_id: id }) => `/images/${id}`,
   GET_IMAGE_SEARCH: ({
     size,
     mime_types: mimeTypes,

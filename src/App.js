@@ -4,6 +4,7 @@ import { RestfulProvider } from "restful-react";
 
 import BreedList from "./pages/BreedList";
 import CatsList from "./pages/CatsList";
+import CatModal from "./components/CatModal";
 
 import Header from "./components/Header";
 
@@ -45,15 +46,15 @@ function App() {
         <Router>
           <Header />
           <Switch>
-            <Route path="/cat/:id">{/* Fill with specific cat */}</Route>
             <Route path="/breeds">
               <BreedList />
               {/* Fill with a lot of breeds */}
             </Route>
             <Route path="/catlady">{/* That's me. Show what I love */}</Route>
             <Route path="/breed/:id">{/** Is this one breed? */}</Route>
-            <Route path="/">
+            <Route exact path={["/", "/cat/:id"]}>
               <CatsList />
+              <CatModal />
             </Route>
           </Switch>
         </Router>

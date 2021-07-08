@@ -1,12 +1,12 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { useState, useEffect } from "react";
-import { Typography } from "@material-ui/core";
+import { useState, useEffect, useMemo } from "react";
 import ImageList from "@material-ui/core/ImageList";
 import ImageListItem from "@material-ui/core/ImageListItem";
 import ImageListItemBar from "@material-ui/core/ImageListItemBar";
 import OpenInNewRoundedIcon from "@material-ui/icons/OpenInNewRounded";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
+import { Link } from "react-router-dom";
 import { useAPI } from "../hooks/useData";
 import { COOL_PROMPTS, PAGE_SIZE_INITIAL, ENDPOINTS } from "../constants";
 import Progress from "../components/Progress";
@@ -62,18 +62,21 @@ export default function CatsList({ page = 0 }) {
     }, 700);
     return () => clearTimeout(timeout);
   }, [loading]);
-
+  const memoizedCats = useMemo(
+    // We memoize this because otherwise it flickers
+    () =>
+      data?.map(
+        (cat) => ({ ...cat, cols: Math.round(Math.random() * 4) } || [])
+      ),
+    [data]
+  );
   if (isLoading) return <Progress />;
   if (error) return <Error />;
   if (data?.length === 0) return <Empty />;
+
   return (
     <>
       <div className={classes.root}>
-        {page === 0 && (
-          <Typography variant="h4" gutterBottom>
-            Cats for catlovers
-          </Typography>
-        )}
         {!showMoreClicked && (
           <div className={classes.fabBar}>
             <Fab
@@ -89,14 +92,18 @@ export default function CatsList({ page = 0 }) {
         )}
         <div className={classes.imageRoot}>
           <ImageList rowHeight={160} className={classes.imageList} cols={4}>
-            {data.map((item) => (
+            {memoizedCats.map((cat) => (
               // TODO: Pack the list
               <ImageListItem
-                key={item.url}
-                cols={Math.round(Math.random() * 4)}
+                key={cat.url}
+                style={{ cursor: "pointer" }}
+                cols={cat.cols}
               >
-                <img src={item.url} alt="Another cat!" />
+                <Link to={`/cat/${cat.id}`}>
+                  <img src={cat.url} alt="Another cat!" />
+                </Link>
                 <ImageListItemBar
+                  // We could memoize this but it's also cool that's changing
                   title={
                     COOL_PROMPTS[
                       Math.round(Math.random() * COOL_PROMPTS.length - 0.5)
