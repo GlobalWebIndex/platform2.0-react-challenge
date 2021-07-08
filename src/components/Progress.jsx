@@ -13,10 +13,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Progress() {
+export default function Progress({ small = false }) {
   const classes = useStyles();
 
-  return (
+  return small ? (
+    <CircularProgress color="secondary" />
+  ) : (
     <div className={classes.root}>
       <CircularProgress color="secondary" />
     </div>

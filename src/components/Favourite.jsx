@@ -19,27 +19,30 @@ export default function Favourite({ catId }) {
   const favouriteId = favourites?.find(
     ({ image_id: fId }) => fId === catId
   )?.id;
-  console.log(favourites, favouriteId);
-  // Should handle errors here!
-  const [unfLoading, unfError, unfavourite] = useUnfavourite({
+  // Should handle errors here! let's hope they don't happen 🤞🏽
+  const [unfLoading, , unfavourite] = useUnfavourite({
     favourite_id: favouriteId
   });
-  const [favLoading, favError, favourite] = useFavourite({
+  const [favLoading, , favourite] = useFavourite({
     image_id: catId,
     sub_id: localStorage.SUB_ID
   });
 
-  const [isLoading, setIsLoading] = useState(loading);
+  const [isLoading, setIsLoading] = useState(
+    loading || favLoading || unfLoading
+  );
 
-  // 700ms is about a full circle and much more satisfying if you ask me
+  // 200ms is snappier for this interaction
   useEffect(() => {
+    const nowLoading = loading || favLoading || unfLoading;
+    if (nowLoading) setIsLoading(true);
     const timeout = setTimeout(() => {
-      setIsLoading(loading);
-    }, 700);
+      isLoading !== nowLoading && setIsLoading(nowLoading);
+    }, 200);
     return () => clearTimeout(timeout);
-  }, [loading]);
+  }, [loading, favLoading, unfLoading, setIsLoading, isLoading]);
 
-  if (isLoading) return <Progress />;
+  if (isLoading) return <Progress small />;
   if (error) return <Error />;
 
   if (favouriteId)

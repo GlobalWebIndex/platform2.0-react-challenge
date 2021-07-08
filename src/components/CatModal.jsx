@@ -35,7 +35,6 @@ export default function CatModal() {
       image_id: catId
     })
   );
-  console.log(catId, params, cat);
   const classes = useStyles();
   const onClose = () => history.push("/");
   if (!catId) return null;
