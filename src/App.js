@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import { createTheme, ThemeProvider } from "@material-ui/core";
 import { RestfulProvider } from "restful-react";
 
 import BreedList from "./pages/BreedList";
@@ -9,7 +9,7 @@ import Header from "./components/Header";
 
 import { API_BASE_URL } from "./constants";
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
       // light: will be calculated from palette.primary.main,
@@ -32,10 +32,16 @@ const theme = createMuiTheme({
     tonalOffset: 0.2
   }
 });
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <RestfulProvider base={API_BASE_URL}>
+      <RestfulProvider
+        base={API_BASE_URL}
+        requestOptions={(url, method, requestBody) => ({
+          headers: { "X-API-KEY": localStorage.GIVEN_TOKEN }
+        })}
+      >
         <Router>
           <Header />
           <Switch>
