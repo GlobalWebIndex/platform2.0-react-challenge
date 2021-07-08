@@ -6,7 +6,7 @@ import ImageListItemBar from "@material-ui/core/ImageListItemBar";
 import OpenInNewRoundedIcon from "@material-ui/icons/OpenInNewRounded";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useAPI } from "../hooks/useData";
 import { COOL_PROMPTS, PAGE_SIZE_INITIAL, ENDPOINTS } from "../constants";
 import Progress from "../components/Progress";
@@ -46,13 +46,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function CatsList({ page = 0 }) {
   const classes = useStyles();
+  const { breedid: breedId } = useParams();
   const [showMoreClicked, onClickShowMore] = useState(false);
   const [loading, data, error] = useAPI(
     ENDPOINTS.GET_IMAGE_SEARCH({
       limit: PAGE_SIZE_INITIAL,
       page,
       order: "ASC",
-      breed_id: "abys"
+      breed_id: breedId
     })
   );
   const [isLoading, setIsLoading] = useState(loading);
@@ -101,32 +102,32 @@ export default function CatsList({ page = 0 }) {
                 style={{ cursor: "pointer" }}
                 cols={cat.cols}
               >
-                <Link to={`/${cat.id}`}>
+                <Link to={`/cat/${cat.id}`}>
                   <img src={cat.url} alt="Another cat!" />
+                  <ImageListItemBar
+                    // We could memoize this but it's also cool that's changing
+                    title={
+                      COOL_PROMPTS[
+                        Math.round(Math.random() * COOL_PROMPTS.length - 0.5)
+                      ]
+                    }
+                    position="top"
+                    actionIcon={
+                      <OpenInNewRoundedIcon
+                        style={{
+                          paddingLeft: 8,
+                          paddingRight: 4,
+                          marginTop: 4,
+                          height: 16,
+                          width: 16,
+                          fill: "white"
+                        }}
+                      />
+                    }
+                    actionPosition="left"
+                    className={classes.titleBar}
+                  />
                 </Link>
-                <ImageListItemBar
-                  // We could memoize this but it's also cool that's changing
-                  title={
-                    COOL_PROMPTS[
-                      Math.round(Math.random() * COOL_PROMPTS.length - 0.5)
-                    ]
-                  }
-                  position="top"
-                  actionIcon={
-                    <OpenInNewRoundedIcon
-                      style={{
-                        paddingLeft: 8,
-                        paddingRight: 4,
-                        marginTop: 4,
-                        height: 16,
-                        width: 16,
-                        fill: "white"
-                      }}
-                    />
-                  }
-                  actionPosition="left"
-                  className={classes.titleBar}
-                />
               </ImageListItem>
             ))}
           </ImageList>

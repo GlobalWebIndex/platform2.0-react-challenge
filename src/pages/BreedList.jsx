@@ -25,8 +25,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TableView() {
   const classes = useStyles();
+  const [limit, setLimit] = useState(25);
+  const [page, setPage] = useState(0);
   const [loading, data, error, refetch] = useAPI(
-    ENDPOINTS.COMPANY_ENDPOINT_GET_MANY()
+    ENDPOINTS.GET_BREEDS({ limit, page })
   );
   const [isLoading, setIsLoading] = useState(loading);
 
@@ -46,7 +48,12 @@ export default function TableView() {
       <Typography variant="h4" gutterBottom>
         Cats for catlovers
       </Typography>
-      <DataGrid rows={data} columns={columns} pageSize={5} refetch={refetch} />
+      <DataGrid
+        rows={data.map(({ id, ...rest }) => ({ id, breed_id: id, ...rest }))}
+        columns={columns}
+        pageSize={25}
+        refetch={refetch}
+      />
     </div>
   );
 }

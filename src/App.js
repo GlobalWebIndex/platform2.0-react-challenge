@@ -9,6 +9,7 @@ import CatModal from "./components/CatModal";
 import Header from "./components/Header";
 
 import { API_BASE_URL } from "./constants";
+import BreedModal from "./components/BreedModal";
 
 const theme = createTheme({
   palette: {
@@ -46,13 +47,26 @@ function App() {
         <Router>
           <Header />
           <Switch>
-            <Route path="/breeds">
+            <Route
+              exact
+              path={[
+                "/breeds",
+                "/breeds/cats/:breedinfoid",
+                "/breeds/cats/:breedid"
+              ]}
+            >
+              <BreedModal openOnParams={["breedid"]}>
+                <CatsList />
+              </BreedModal>
+              <BreedModal openOnParams={["breedinfoid"]}>
+                <CatsList />
+              </BreedModal>
               <BreedList />
               {/* Fill with a lot of breeds */}
             </Route>
             <Route path="/catlady">{/* That's me. Show what I love */}</Route>
             <Route path="/breed/:id">{/** Is this one breed? */}</Route>
-            <Route path="/:id*">
+            <Route exact path={["/", "/cat/:id"]}>
               <CatsList />
               <CatModal />
             </Route>
