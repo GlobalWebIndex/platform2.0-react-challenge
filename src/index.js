@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { API_BASE_URL } from "./constants";
+import { uuid } from "./utils/utils";
 
 // This is bad
 // A token here would be worse! #underpressure #leastevil
@@ -23,16 +24,8 @@ localStorage.GIVEN_TOKEN =
       localStorage.TOKEN = localStorage.GIVEN_TOKEN;
   });
 
-// Awesomeness
-// https://codegolf.stackexchange.com/questions/58442/generate-random-uuid#comment413781_170081
-//
-localStorage.SUB_ID =
-  localStorage.SUB_ID ||
-  "8-4-4-4-12".replace(/\d+/g, (n) =>
-    Math.floor(16 ** n * Math.random())
-      .toString(16)
-      .padStart(n, 0)
-  );
+//* * Remember each user of this app as an individual */
+localStorage.SUB_ID = localStorage.SUB_ID || uuid();
 
 ReactDOM.render(
   <React.StrictMode>
