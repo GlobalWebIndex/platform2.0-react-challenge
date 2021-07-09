@@ -15,7 +15,7 @@ const Toolbar = ({ onClick }) => {
   const classes = useStyles();
   return (
     <div className={classes.buttonRight}>
-      <Button color="secondary" onClick={onClick} primary>
+      <Button color="secondary" onClick={onClick}>
         Reload
         <CachedIcon />
       </Button>

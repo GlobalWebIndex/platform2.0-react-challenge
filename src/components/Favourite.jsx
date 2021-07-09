@@ -9,7 +9,7 @@ import { useAPI, useFavourite, useUnfavourite } from "../hooks/useData";
 import Error from "./Error";
 import Progress from "./Progress";
 
-export default function Favourite({ catId }) {
+export default function Favourite({ catId, className }) {
   // WHY CAN'T I TEST AN IMAGE IN FAVOURITES
   const [loading, favourites, error, refetch] = useAPI(
     ENDPOINTS.GET_FAVOURITES({
@@ -48,6 +48,7 @@ export default function Favourite({ catId }) {
   if (favouriteId)
     return (
       <Fab
+        className={className}
         onClick={() => unfavourite().then(refetch)}
         color="primary"
         aria-label="more"
@@ -58,6 +59,7 @@ export default function Favourite({ catId }) {
     );
   return (
     <Fab
+      className={className}
       onClick={() => favourite().then(refetch)}
       color="primary"
       aria-label="more"

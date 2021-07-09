@@ -4,12 +4,14 @@ import { RestfulProvider } from "restful-react";
 
 import BreedList from "./pages/BreedList";
 import CatsList from "./pages/CatsList";
+import FavouriteList from "./pages/FavouriteList";
 import CatModal from "./components/CatModal";
 
 import Header from "./components/Header";
 
 import { API_BASE_URL } from "./constants";
 import BreedModal from "./components/BreedModal";
+import BreedFetcher from "./components/BreedFetcher";
 
 const theme = createTheme({
   palette: {
@@ -51,7 +53,7 @@ function App() {
               exact
               path={[
                 "/breeds",
-                "/breeds/cats/:breedinfoid",
+                "/breeds/breed/:breedinfoid",
                 "/breeds/cats/:breedid"
               ]}
             >
@@ -59,16 +61,17 @@ function App() {
                 <CatsList />
               </BreedModal>
               <BreedModal openOnParams={["breedinfoid"]}>
-                <CatsList />
+                <BreedFetcher />
               </BreedModal>
               <BreedList />
-              {/* Fill with a lot of breeds */}
             </Route>
-            <Route path="/catlady">{/* That's me. Show what I love */}</Route>
-            <Route path="/breed/:id">{/** Is this one breed? */}</Route>
+            <Route exact path={["/favourites", "/favourites/:id"]}>
+              <CatModal pathOnClose="/favourites" />
+              <FavouriteList />
+            </Route>
             <Route exact path={["/", "/cat/:id"]}>
               <CatsList />
-              <CatModal />
+              <CatModal pathOnClose="/" />
             </Route>
           </Switch>
         </Router>

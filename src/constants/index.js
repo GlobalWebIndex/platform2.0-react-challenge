@@ -52,5 +52,12 @@ export const ENDPOINTS = {
   POST_ONE_FAVOURITE: ({ image_id: imageId, sub_id: subId } = {}) =>
     `/favourites`,
   GET_BREEDS: ({ attach_breed: attachBreed, page, limit } = {}) =>
-    `/breeds?${stringify({ attach_breed: attachBreed, page, limit })}`
+    `/breeds?${stringify({ attach_breed: attachBreed, page, limit })}`,
+  /** BAD API. Workaround:  */
+  GET_ONE_BREED: ({ breed_id: breedId }) =>
+    `/images/search?${stringify({
+      limit: 1,
+      page: 0,
+      breed_id: breedId
+    })}`
 };

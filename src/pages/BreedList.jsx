@@ -25,8 +25,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TableView() {
   const classes = useStyles();
-  const [limit, setLimit] = useState(25);
-  const [page, setPage] = useState(0);
+  // TODO: Handle pagination, page changes etc.
+  // API Doesn't help :( (nor time)
+  const [limit] = useState(25);
+  const [page] = useState(0);
   const [loading, data, error, refetch] = useAPI(
     ENDPOINTS.GET_BREEDS({ limit, page })
   );

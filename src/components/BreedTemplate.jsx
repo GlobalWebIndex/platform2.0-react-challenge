@@ -22,6 +22,8 @@ export default function BreedTemplate({ id, name, catprops }) {
         {name}
       </Typography>
       <CardContent>
+        <Display title="" text={catprops.description} />
+
         <Display title="Temperament" text={catprops.temperament} />
         <Display title="Life span" text={catprops.life_span} />
         <Display title="Alternative names" text={catprops.alt_names} />

@@ -1,13 +1,18 @@
+import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1
+  appBar: {
+    flexGrow: 1,
+    dispay: "flex",
+    flexFlow: "row nowrap",
+    justifyContent: "flex-start",
+    alignItems: "center"
   },
   menuButton: {
     marginRight: theme.spacing(2)
@@ -24,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header() {
   const classes = useStyles();
+  const history = useHistory();
   return (
     <AppBar position="static" className={classes.appBar}>
       <Toolbar>
@@ -35,6 +41,9 @@ export default function Header() {
           />
         </Link>
       </Toolbar>
+      <Button onClick={() => history.push("/")}>Cats</Button>
+      <Button onClick={() => history.push("/breeds")}>Breeds</Button>
+      <Button onClick={() => history.push("/favourites")}>My Favs</Button>
     </AppBar>
   );
 }

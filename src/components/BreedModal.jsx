@@ -12,7 +12,7 @@ export default function BreedCats({ openOnParams, children }) {
   const params = useParams();
   const open = !!openOnParams.map((p) => params?.[p]).find((t) => t);
 
-  const onClose = () => history.push("/");
+  const onClose = () => history.go(-1);
   if (!open) return null;
   return (
     <Dialog open fullWidth onClose={onClose}>

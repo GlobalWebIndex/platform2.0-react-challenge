@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function CatModal() {
+export default function CatModal({ pathOnClose = "/" }) {
   const params = useParams();
   const history = useHistory();
   const { id: catId } = params;
@@ -36,7 +36,7 @@ export default function CatModal() {
     })
   );
   const classes = useStyles();
-  const onClose = () => history.push("/");
+  const onClose = () => history.push(pathOnClose);
   if (!catId) return null;
   return (
     <Dialog open fullWidth onClose={onClose}>

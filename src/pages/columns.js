@@ -9,7 +9,7 @@ export const columns = [
     width: 150
   },
   {
-    field: "Temperament",
+    field: "temperament",
     headerName: "Temperament",
     type: "text",
     flex: 1
