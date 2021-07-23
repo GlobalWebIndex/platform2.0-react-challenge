@@ -1,0 +1,26 @@
+.carousel-caption {
+  position: initial;
+  color: black !important;
+}
+
+html * {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.breed-image {
+  height: 15rem;
+  width: 15rem;
+}
+
+.details-table th {
+  text-align: end;
+}
+
+.alert-notification {
+  position: fixed;
+  top: 1em;
+  right: 1em;
+  width: 30%;
+  height: 15%;
+  z-index: 100000;
+}
