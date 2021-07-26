@@ -14,7 +14,7 @@ const BreedDetail: React.FC = () => {
 
   useEffect(() => {
     setBreed(location.state.breed);
-    setImageUrl(location.state.imageUrl);
+    setImageUrl(location.state?.breed?.image?.url);
   }, [location]);
 
   if (!breed) return <Loading />;

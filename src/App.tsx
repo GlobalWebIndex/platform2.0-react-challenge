@@ -11,7 +11,7 @@ const queryClient = new QueryClient();
 const subs_id = uuid();
 localStorage.setItem(CacheKeys.SUBS_ID, subs_id);
 
-function App() {
+const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <ErrorProvider>

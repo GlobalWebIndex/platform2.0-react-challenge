@@ -19,19 +19,25 @@ const AddToFavorites: React.FC<IAddToFavoritesProps> = ({ imageUrl }) => {
   const add = async () => {
     setIsLoading(true);
     const idToAdd = extractImageFromUrl(imageUrl);
+    if(idToAdd === null || idToAdd === undefined){
+      addNotification({
+        message: "No image id detected",
+        type: BootstrapVariants.WARNING,
+      });
+    }
     const reply = await addToFavorites(idToAdd);
     if (reply.ok) {
       addNotification({
         message: "Cat added to favorites",
         type: BootstrapVariants.SUCCESS,
       });
-      setIsLoading(false);
     } else {
       addNotification({
         message: DEFAULT_ERROR_MESSAGE,
-        type: BootstrapVariants.SUCCESS,
+        type: BootstrapVariants.DANGER,
       });
     }
+    setIsLoading(false);
   };
 
   return (
