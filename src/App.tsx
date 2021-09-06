@@ -1,25 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
+import {
+  BrowserRouter as Router, Route, Switch
+} from "react-router-dom";
 import './App.css';
+import Header from './components/header/Header';
+import { BreedsPage } from './views/Breeds/BreedsPage';
+import { CatsPage } from './views/Cats/CatsPage';
+import { FavoritesPage } from './views/Favorites/FavoritesPage';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      
+      {/* Header Functional Component */}
+      <Header></Header>
+
+      <Switch>
+          {/* Cats page */}
+          <Route exact path="/cats">
+            <CatsPage></CatsPage>
+          </Route>
+
+          {/* Breeds page */}
+          <Route path="/breeds">
+            <BreedsPage></BreedsPage>
+          </Route>
+
+          {/* Favorites page */}
+          <Route path="/favorites">
+            <FavoritesPage></FavoritesPage>
+          </Route>
+        </Switch>
+    </Router>
   );
 }
 
