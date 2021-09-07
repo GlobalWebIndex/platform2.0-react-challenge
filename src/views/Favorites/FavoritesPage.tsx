@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
-interface FavoritesState {
-}
+import { Component } from 'react'
 
-export class FavoritesPage extends Component<{}, FavoritesState> {
+interface FavoritesState {}
+
+export default class FavoritesPage extends Component<{}, FavoritesState> {
   render() {
-    return <p>
-      This is the favorites page
-    </p>
+    return <p>This is the favorites page</p>
   }
 }

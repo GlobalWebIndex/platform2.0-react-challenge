@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
-interface BreedsState {
-}
+import { Component } from 'react'
 
-export class BreedsPage extends Component<{}, BreedsState> {
+interface BreedsState {}
+
+export default class BreedsPage extends Component<{}, BreedsState> {
   render() {
-    return <p>
-      This is the breeds page
-    </p>
+    return <p>This is the breeds page</p>
   }
 }
