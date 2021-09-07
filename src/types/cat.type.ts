@@ -1,5 +1,5 @@
-export interface CatType {
-  breeds: [],
+export type CatType = {
+  breeds: []
   id: string
   url: string
   width: number
