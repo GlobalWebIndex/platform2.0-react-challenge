@@ -1,10 +1,12 @@
+import { FC } from 'react'
+
 type CatProps = {
   id: string
   url: string
   width: number
 }
 
-function Cat({ id, url, width }: CatProps) {
+const Cat: FC<CatProps> = ({ id, url, width }) => {
   const imageWidth = width > 400 ? 400 : width
   return (
     <li key={id}>

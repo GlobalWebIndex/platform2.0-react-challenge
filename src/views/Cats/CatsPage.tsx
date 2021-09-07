@@ -1,52 +1,42 @@
-import { Component } from 'react'
+import { Button } from '@chakra-ui/react'
+import { FC, useEffect, useState } from 'react'
 import CatsApi from '../../api/cats.api'
 import { CatType } from '../../types/cat.type'
+import { SortingOrder } from '../../types/Sorting-order.type'
 import Cat from './Cat'
 
-type CatsState = {
-  cats: CatType[]
-  limit: number
-  page: number
-  order: 'Asc' | 'Desc'
-}
+const CatsPage: FC = () => {
+  const [cats, setCats] = useState<CatType[]>([])
+  const [limit, setLimit] = useState(10)
+  const [order, setOrder] = useState<SortingOrder>('Asc')
+  const [page, setPage] = useState(0)
 
-// TODO: The eslint prefers to have stateless components. This rule had to be included to make this component work
-// "react/prefer-stateless-function": [0, { "ignorePureComponents": true }]
-// Check which component type is better for this case.
-class CatsPage extends Component<{}, CatsState> {
-  constructor(props: any) {
-    super(props)
-    this.state = {
-      cats: [],
-      limit: 10,
-      order: 'Asc',
-      page: 0,
-    }
+  function nextPage() {
+    setPage(it => it + 1)
   }
 
-  componentDidMount() {
-    const { limit, page, order } = this.state
-    CatsApi.getCats<CatType>(limit, page, order, this.setCatsState.bind(this))
-  }
+  useEffect(() => {
+    CatsApi.getCats<CatType>(limit, page, order, catsResponse =>
+      setCats([...cats, ...catsResponse])
+    )
 
-  private setCatsState(cats: CatType[]) {
-    this.setState({ cats })
-  }
+    // clean up. Like we do with componentDidUpdate
+    return () => {}
+  }, [page])
 
-  render() {
-    const { cats } = this.state
-    if (cats.length) {
-      return (
-        <ul>
-          {cats.map(cat => (
-            <Cat id={cat.id} url={cat.url} width={cat.width} />
-          ))}
-        </ul>
-      )
-    }
+  return (
+    <section>
+      <ul>
+        {cats.map(cat => (
+          <Cat id={cat.id} url={cat.url} width={cat.width} />
+        ))}
+      </ul>
 
-    return 'loading...'
-  }
+      <Button colorScheme='blue' onClick={() => nextPage()}>
+        Load more
+      </Button>
+    </section>
+  )
 }
 
 export default CatsPage

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { SortingOrder } from '../types/Sorting-order.type'
 
 export default class CatsApi {
   private static readonly domain: string = 'https://api.thecatapi.com/v1'
@@ -6,7 +7,7 @@ export default class CatsApi {
   static getCats<T>(
     limit: number,
     page: number,
-    order: 'Asc' | 'Desc',
+    order: SortingOrder,
     cb: (data: T[]) => void
   ) {
     return axios
