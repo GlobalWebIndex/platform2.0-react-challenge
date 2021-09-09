@@ -1,40 +1,109 @@
 import { Button } from '@chakra-ui/react'
 import { FC, useEffect, useState } from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
 import CatsApi from '../../api/cats.api'
 import { BreedType } from '../../types/Breed.type'
+import { ImageType } from '../../types/Image.type'
+import LocationUtility from '../../utils/location.utils'
+import CatImages from './CatImages'
 
 const BreedsPage: FC = () => {
-  const [limit, setLimit] = useState(10)
-  const [page, setPage] = useState(0)
+  const [breedsLimit, setBreedsLimit] = useState(10)
+  const [breedsPage, setBreedsPage] = useState(0)
+  const [breedsImagesLimit, setBreedsImagesLimit] = useState(10)
+  const [breedsImagesPage, setBreedsImagesPage] = useState(0)
   const [breeds, setBreeds] = useState<BreedType[]>([])
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [breedImages, setBreedImages] = useState<ImageType[]>([])
+  const history = useHistory()
+  const location = useLocation()
 
   function nextPage() {
-    setPage(it => it + 1)
+    setBreedsPage(it => it + 1)
+  }
+
+  function setSelectedBreedOnUrl(id: string) {
+    history.push({
+      pathname: window.location.pathname,
+      search: `?breedId=${id}`,
+    })
+  }
+
+  function onModalClose() {
+    history.push({ pathname: window.location.pathname })
+  }
+
+  // TODO: change the name
+  function listenToBreedIdAndOpenModal() {
+    const breedId = LocationUtility.useQuery(location.search).get('breedId')
+
+    // as soon as we have a breedId in the url, the modal appears
+    setIsModalVisible(!!breedId)
+    if (breedId) {
+      CatsApi.getImagesByBreed(
+        breedId,
+        breedsImagesLimit,
+        breedsImagesPage,
+        catResponse => {
+          setBreedImages(catResponse)
+        }
+      )
+    } else {
+      setBreedImages([])
+    }
   }
 
   /**
    * This effect is responsible to load breeds via API
    */
   useEffect(() => {
-    CatsApi.getBreeds(limit, page, breedsResponse =>
+    CatsApi.getBreeds(breedsLimit, breedsPage, breedsResponse =>
       setBreeds([...breeds, ...breedsResponse])
     )
 
     // clean up. Like we do with componentDidUpdate
     return () => {}
-  }, [page])
+  }, [breedsPage])
+
+  /**
+   * This effect is responsible to listen to 'location' changes
+   */
+  useEffect(() => {
+    listenToBreedIdAndOpenModal()
+
+    // clean up. Like we do with componentDidUpdate
+    return () => {}
+  }, [location.search])
 
   return (
     <>
       <ul>
         {breeds.map((breed, index) => (
-          <li>{breed.name}</li>
+          <div
+            key={breed.id}
+            role='button'
+            onClick={() => setSelectedBreedOnUrl(breed.id)}
+            onKeyDown={() => setSelectedBreedOnUrl(breed.id)}
+            tabIndex={index}
+          >
+            <li>
+              {breed.name} - {breed.id}
+            </li>
+          </div>
         ))}
       </ul>
 
       <Button colorScheme='blue' onClick={() => nextPage()}>
         Load more
       </Button>
+
+      {/* Cat images modal - START */}
+      <CatImages
+        images={breedImages!}
+        isOpen={isModalVisible}
+        onClose={() => onModalClose()}
+      />
+      {/* Cat images modal - END */}
     </>
   )
 }

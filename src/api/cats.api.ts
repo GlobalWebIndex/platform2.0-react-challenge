@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { BreedType } from '../types/Breed.type'
-import { CatType } from '../types/cat.type'
+import { CatType } from '../types/Cat.type'
+import { ImageType } from '../types/Image.type'
 import { SortingOrder } from '../types/Sorting-order.type'
 
 export default class CatsApi {
@@ -48,13 +49,21 @@ export default class CatsApi {
       .then(response => cb(response.data))
   }
 
-  static getBreed(breedId: string, cb: (data: BreedType[]) => void) {
+  static getImagesByBreed(
+    breedId: string,
+    limit: number,
+    page: number,
+    cb: (data: ImageType[]) => void
+  ) {
     return axios
-      .get<BreedType[]>(`${this.domain}/images/search?breed_id=${breedId}`, {
-        headers: {
-          'x-api-key': this.API_KEY,
-        },
-      })
+      .get<ImageType[]>(
+        `${this.domain}/images/search?breed_ids=${breedId}&include_breeds=1&limit=${limit}&page=${page}`,
+        {
+          headers: {
+            'x-api-key': this.API_KEY,
+          },
+        }
+      )
       .then(response => cb(response.data))
   }
 }
