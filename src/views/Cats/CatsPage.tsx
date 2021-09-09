@@ -75,8 +75,8 @@ const CatsPage: FC = () => {
       <ul>
         {cats.map((cat, index) => (
           <Cat
+            key={cat.id}
             index={index}
-            id={cat.id}
             url={cat.url}
             width={cat.width}
             onClick={() => setSelectedCatOnUrl(cat.id)}

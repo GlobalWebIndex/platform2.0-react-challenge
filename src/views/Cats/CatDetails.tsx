@@ -12,6 +12,7 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react'
 import { FC } from 'react'
+import { Link } from 'react-router-dom'
 import { CatType } from '../../types/Cat.type'
 
 type CatDetailsProps = {
@@ -38,7 +39,7 @@ const CatDetails: FC<CatDetailsProps> = ({ isOpen, onClose, cat }) => {
             <Box d='flex' alignItems='baseline'>
               {cat.breeds?.map(breed => (
                 <Badge borderRadius='full' px='2' colorScheme='teal'>
-                  {breed.name}
+                  <Link to={`/breeds?breedId=${breed.id}`}>{breed.name}</Link>
                 </Badge>
               ))}
             </Box>
