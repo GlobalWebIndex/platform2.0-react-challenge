@@ -1,18 +1,23 @@
+import { Flex, Stack } from '@chakra-ui/react'
 import { FC } from 'react'
-import { Link } from 'react-router-dom'
+import MenuLinks from './MenuLinks'
 
 const Header: FC = () => (
-  <ul>
-    <li>
-      <Link to='/cats'>Cats</Link>
-    </li>
-    <li>
-      <Link to='/breeds'>Breeds</Link>
-    </li>
-    <li>
-      <Link to='/favorites'>Favorites</Link>
-    </li>
-  </ul>
+  <Flex
+    as='nav'
+    align='center'
+    justify='space-between'
+    w='100%'
+    mb={8}
+    p={8}
+    bg={['primary.500']}
+    color={['primary.700']}
+  >
+    <Stack spacing={8} align='center' direction={['row']}>
+      <div>LOGO</div>
+      <MenuLinks />
+    </Stack>
+  </Flex>
 )
 
 export default Header
