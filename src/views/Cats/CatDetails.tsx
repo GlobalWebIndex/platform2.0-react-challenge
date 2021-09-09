@@ -12,7 +12,7 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react'
 import { FC } from 'react'
-import { CatType } from '../../types/cat.type'
+import { CatType } from '../../types/Cat.type'
 
 type CatDetailsProps = {
   cat: CatType
