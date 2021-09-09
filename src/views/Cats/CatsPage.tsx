@@ -6,12 +6,15 @@ import { CatType } from '../../types/cat.type'
 import { SortingOrder } from '../../types/Sorting-order.type'
 import LocationUtility from '../../utils/location.utils'
 import Cat from './Cat'
+import CatDetails from './CatDetails'
 
 const CatsPage: FC = () => {
   const [cats, setCats] = useState<CatType[]>([])
   const [limit, setLimit] = useState(10)
   const [order, setOrder] = useState<SortingOrder>('Asc')
   const [page, setPage] = useState(0)
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [selectedCat, setSelectedCat] = useState<CatType | null>(null)
   const history = useHistory()
   const location = useLocation()
 
@@ -19,29 +22,37 @@ const CatsPage: FC = () => {
     setPage(it => it + 1)
   }
 
-  function selectCat(id: string) {
+  function setSelectedCatOnUrl(id: string) {
     history.push({
       pathname: window.location.pathname,
       search: `?catId=${id}`,
     })
   }
 
-  function getQueryParamCatId() {
-    return LocationUtility.useQuery(location.search).get('catId')
+  function onModalClose() {
+    history.push({ pathname: window.location.pathname })
   }
 
   // TODO: change the name
   function listenToCatIdAndOpenModal() {
-    const catId = getQueryParamCatId()
+    const catId = LocationUtility.useQuery(location.search).get('catId')
 
-    console.log(catId)
+    // as soon as we have a catId in the url, the modal appears
+    setIsModalVisible(!!catId)
+    if (catId) {
+      CatsApi.getImage(catId, catResponse => {
+        setSelectedCat(catResponse)
+      })
+    } else {
+      setSelectedCat(null)
+    }
   }
 
   /**
-   * This effect is responsible to load API data
+   * This effect is responsible to load images via API
    */
   useEffect(() => {
-    CatsApi.getCats<CatType>(limit, page, order, catsResponse =>
+    CatsApi.getCats(limit, page, order, catsResponse =>
       setCats([...cats, ...catsResponse])
     )
 
@@ -60,7 +71,7 @@ const CatsPage: FC = () => {
   }, [location.search])
 
   return (
-    <section>
+    <>
       <ul>
         {cats.map((cat, index) => (
           <Cat
@@ -68,7 +79,7 @@ const CatsPage: FC = () => {
             id={cat.id}
             url={cat.url}
             width={cat.width}
-            onClick={() => selectCat(cat.id)}
+            onClick={() => setSelectedCatOnUrl(cat.id)}
           />
         ))}
       </ul>
@@ -76,7 +87,15 @@ const CatsPage: FC = () => {
       <Button colorScheme='blue' onClick={() => nextPage()}>
         Load more
       </Button>
-    </section>
+
+      {/* Cat details modal - START */}
+      <CatDetails
+        cat={selectedCat!}
+        isOpen={isModalVisible}
+        onClose={() => onModalClose()}
+      />
+      {/* Cat details modal - END */}
+    </>
   )
 }
 
