@@ -1,4 +1,4 @@
-import { Button } from '@chakra-ui/react'
+import { Button, Center } from '@chakra-ui/react'
 import { FC, useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import CatsApi from '../../api/cats.api'
@@ -6,8 +6,8 @@ import { CatType } from '../../types/Cat.type'
 import { FavoriteType } from '../../types/Favorite.type'
 import { SortingOrder } from '../../types/Sorting-order.type'
 import LocationUtility from '../../utils/location.utils'
-import Cat from './Cat'
 import CatDetails from './CatDetails'
+import CatImages from './CatImages'
 
 const CatsPage: FC = () => {
   const [cats, setCats] = useState<CatType[]>([])
@@ -104,21 +104,22 @@ const CatsPage: FC = () => {
 
   return (
     <>
-      <ul>
-        {cats.map((cat, index) => (
-          <Cat
-            key={cat.id}
-            index={index}
-            url={cat.url}
-            width={cat.width}
-            onClick={() => setSelectedCatOnUrl(cat.id)}
-          />
-        ))}
-      </ul>
+      <CatImages
+        cats={cats}
+        selectCatImage={imageId => setSelectedCatOnUrl(imageId)}
+      />
 
-      <Button colorScheme='blue' onClick={() => nextPage()}>
-        Load more
-      </Button>
+      <Center>
+        <Button
+          mt={5}
+          size='sm'
+          colorScheme='teal'
+          variant='ghost'
+          onClick={() => nextPage()}
+        >
+          Load more
+        </Button>
+      </Center>
 
       {/* Cat details modal - START */}
       {isModalVisible ? (

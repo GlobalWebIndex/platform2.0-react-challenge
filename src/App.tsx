@@ -1,3 +1,4 @@
+import { Box } from '@chakra-ui/react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import './App.css'
 import Header from './components/header/Header'
@@ -10,23 +11,24 @@ function App() {
     <Router>
       {/* Header Functional Component */}
       <Header />
+      <Box mx={10}>
+        <Switch>
+          {/* Cats page */}
+          <Route exact path='/cats'>
+            <CatsPage />
+          </Route>
 
-      <Switch>
-        {/* Cats page */}
-        <Route exact path='/cats'>
-          <CatsPage />
-        </Route>
+          {/* Breeds page */}
+          <Route path='/breeds'>
+            <BreedsPage />
+          </Route>
 
-        {/* Breeds page */}
-        <Route path='/breeds'>
-          <BreedsPage />
-        </Route>
-
-        {/* Favorites page */}
-        <Route path='/favorites'>
-          <FavoritesPage />
-        </Route>
-      </Switch>
+          {/* Favorites page */}
+          <Route path='/favorites'>
+            <FavoritesPage />
+          </Route>
+        </Switch>
+      </Box>
     </Router>
   )
 }
