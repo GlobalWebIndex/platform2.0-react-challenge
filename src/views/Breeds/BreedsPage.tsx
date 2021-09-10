@@ -1,7 +1,7 @@
-import { Button } from '@chakra-ui/react'
 import { FC, useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import CatsApi from '../../api/cats.api'
+import LoadMoreButton from '../../components/LoadMoreButton'
 import { BreedType } from '../../types/Breed.type'
 import { ImageType } from '../../types/Image.type'
 import LocationUtility from '../../utils/location.utils'
@@ -93,9 +93,7 @@ const BreedsPage: FC = () => {
         ))}
       </ul>
 
-      <Button colorScheme='blue' onClick={() => nextPage()}>
-        Load more
-      </Button>
+      <LoadMoreButton onClick={() => nextPage()}>Load more</LoadMoreButton>
 
       {/* Cat images modal - START */}
       <CatImages

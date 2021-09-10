@@ -1,7 +1,7 @@
-import { Button, Center } from '@chakra-ui/react'
 import { FC, useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import CatsApi from '../../api/cats.api'
+import LoadMoreButton from '../../components/LoadMoreButton'
 import { CatType } from '../../types/Cat.type'
 import { FavoriteType } from '../../types/Favorite.type'
 import { SortingOrder } from '../../types/Sorting-order.type'
@@ -109,17 +109,7 @@ const CatsPage: FC = () => {
         selectCatImage={imageId => setSelectedCatOnUrl(imageId)}
       />
 
-      <Center>
-        <Button
-          mt={5}
-          size='sm'
-          colorScheme='teal'
-          variant='ghost'
-          onClick={() => nextPage()}
-        >
-          Load more
-        </Button>
-      </Center>
+      <LoadMoreButton onClick={() => nextPage()}>Load more</LoadMoreButton>
 
       {/* Cat details modal - START */}
       {isModalVisible ? (
