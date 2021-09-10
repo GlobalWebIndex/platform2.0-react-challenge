@@ -34,7 +34,7 @@ const CatsPage: FC = () => {
     })
   }
 
-  function onModalClose() {
+  function closeModal() {
     history.push({ pathname: window.location.pathname })
   }
 
@@ -127,8 +127,8 @@ const CatsPage: FC = () => {
           cat={selectedCat!}
           isFavorite={selectedCatIsFavorite}
           isOpen={isModalVisible}
-          toggleFavorite={imageId => toggleFavorite(imageId)}
-          close={() => onModalClose()}
+          onFavoriteClick={imageId => toggleFavorite(imageId)}
+          onClose={() => closeModal()}
         />
       ) : null}
       {/* Cat details modal - END */}
