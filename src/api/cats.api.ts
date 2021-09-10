@@ -86,6 +86,12 @@ export default class CatsApi {
       .then(response => cb(response.data))
   }
 
+  /**
+   *
+   * @param favoriteId the unique id of the favorite entity
+   * @param cb the callback function
+   * @returns message=SUCCESS
+   */
   static deleteFavoriteById(
     favoriteId: number,
     cb: (data: { message: string }) => void
