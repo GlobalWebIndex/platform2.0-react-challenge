@@ -26,8 +26,7 @@ const CatImages: FC<CatImagesProps> = ({ images, onClickImage }) => (
           }
         }}
       >
-        {/* TODO: The image.width! might be null */}
-        <CatImage key={image.id} url={image.url} width={image.width!} />
+        <CatImage key={image.id} url={image.url} width={image.width} />
       </WrapItem>
     ))}
   </Wrap>

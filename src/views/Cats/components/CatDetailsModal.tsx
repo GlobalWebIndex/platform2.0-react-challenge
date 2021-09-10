@@ -1,7 +1,6 @@
 import {
   Box,
   Center,
-  Image,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -10,11 +9,12 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react'
 import { FC } from 'react'
-import { ImageType } from '../../types/Image.type'
-import BreedsTags from './components/BreedsTags'
-import FavoriteIcon from './components/FavoriteIcon'
+import CatImage from '../../../components/CatImage'
+import { ImageType } from '../../../types/Image.type'
+import BreedsTags from './BreedsTags'
+import FavoriteIcon from './FavoriteIcon'
 
-type CatDetailsProps = {
+type CatDetailsModalProps = {
   image: ImageType
   isOpen: boolean
   isFavorite: boolean
@@ -22,7 +22,7 @@ type CatDetailsProps = {
   onClose: () => void
 }
 
-const CatDetails: FC<CatDetailsProps> = ({
+const CatDetailsModal: FC<CatDetailsModalProps> = ({
   isOpen,
   isFavorite,
   image,
@@ -48,7 +48,11 @@ const CatDetails: FC<CatDetailsProps> = ({
             />
 
             <Center>
-              <Image objectFit='contain' src={image?.url} alt='cat' />
+              <CatImage
+                objectFit='contain'
+                url={image?.url}
+                width={image.width}
+              />
             </Center>
 
             <BreedsTags breeds={image.breeds || []} />
@@ -59,4 +63,4 @@ const CatDetails: FC<CatDetailsProps> = ({
   )
 }
 
-export default CatDetails
+export default CatDetailsModal

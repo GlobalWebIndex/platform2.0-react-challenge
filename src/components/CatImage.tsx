@@ -3,13 +3,16 @@ import { FC } from 'react'
 
 type CatImageProps = {
   url: string
-  width: number
+  width?: number
+  // rest props
+  [_: string]: any
 }
 
-const CatImage: FC<CatImageProps> = ({ url, width }) => {
+const CatImage: FC<CatImageProps> = ({ url, width = 400, ...rest }) => {
   const imageWidth = width > 400 ? 400 : width
   return (
     <Image
+      {...rest}
       borderRadius='md'
       loading='lazy'
       src={url}
