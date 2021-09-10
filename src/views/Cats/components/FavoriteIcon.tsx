@@ -9,6 +9,7 @@ export type FavoriteIconProps = {
 }
 
 const FavoriteIcon: FC<FavoriteIconProps> = ({ isFavorite, onClick }) => (
+  // TODO: Responsible to set the position of this component, is the parent.
   <Flex justifyContent='end' alignItems='center'>
     <StarIcon
       alignSelf='flex-end'

@@ -7,8 +7,8 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react'
 import { FC } from 'react'
-import CatImages from '../../components/CatImages'
-import { ImageType } from '../../types/Image.type'
+import CatImages from '../../../components/CatImages'
+import { ImageType } from '../../../types/Image.type'
 
 type CatImagesProps = {
   images: ImageType[]

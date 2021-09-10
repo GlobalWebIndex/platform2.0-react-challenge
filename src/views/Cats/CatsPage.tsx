@@ -7,7 +7,7 @@ import { FavoriteType } from '../../types/Favorite.type'
 import { ImageType } from '../../types/Image.type'
 import { SortingOrder } from '../../types/Sorting-order.type'
 import LocationUtility from '../../utils/location.utils'
-import CatDetails from './CatDetails'
+import CatDetailsModal from './components/CatDetailsModal'
 
 const CatsPage: FC = () => {
   const [images, setImages] = useState<ImageType[]>([])
@@ -114,7 +114,7 @@ const CatsPage: FC = () => {
 
       {/* Cat details modal - START */}
       {isModalVisible ? (
-        <CatDetails
+        <CatDetailsModal
           image={selectedImage!}
           isFavorite={selectedImageIsFavorite}
           isOpen={isModalVisible}

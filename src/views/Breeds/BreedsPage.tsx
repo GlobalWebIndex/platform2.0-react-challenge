@@ -6,7 +6,7 @@ import LoadMoreButton from '../../components/LoadMoreButton'
 import { BreedType } from '../../types/Breed.type'
 import { ImageType } from '../../types/Image.type'
 import LocationUtility from '../../utils/location.utils'
-import CatImagesModal from './CatImagesModal'
+import CatImagesModal from './components/CatImagesModal'
 
 const BreedsPage: FC = () => {
   const [breedsLimit, setBreedsLimit] = useState(10)
