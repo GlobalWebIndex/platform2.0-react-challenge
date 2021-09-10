@@ -1,32 +1,33 @@
 import { Wrap, WrapItem } from '@chakra-ui/react'
 import { FC } from 'react'
-import { CatType } from '../../types/Cat.type'
+import { ImageType } from '../../types/Image.type'
 import Cat from './Cat'
 
 type CatImagesProps = {
-  cats: CatType[]
-  selectCatImage: (imageId: string) => void
+  images: ImageType[]
+  selectImage: (imageId: string) => void
 }
 
-const CatImages: FC<CatImagesProps> = ({ cats, selectCatImage }) => (
+const CatImages: FC<CatImagesProps> = ({ images, selectImage }) => (
   <Wrap spacing='30px'>
-    {cats.map((cat, index) => (
+    {images.map((image, index) => (
       <WrapItem
-        key={cat.id}
+        key={image.id}
         p={1}
         tabIndex={index}
         alignItems='center'
         border='1px'
         borderRadius='md'
         cursor='pointer'
-        onClick={() => selectCatImage(cat.id)}
+        onClick={() => selectImage(image.id)}
         onKeyDown={e => {
           if (e.code === 'Enter') {
-            selectCatImage(cat.id)
+            selectImage(image.id)
           }
         }}
       >
-        <Cat key={cat.id} url={cat.url} width={cat.width} />
+        {/* TODO: The image.width! might be null */}
+        <Cat key={image.id} url={image.url} width={image.width!} />
       </WrapItem>
     ))}
   </Wrap>

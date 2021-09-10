@@ -10,12 +10,12 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react'
 import { FC } from 'react'
-import { CatType } from '../../types/Cat.type'
+import { ImageType } from '../../types/Image.type'
 import BreedsTags from './components/BreedsTags'
 import FavoriteIcon from './components/FavoriteIcon'
 
 type CatDetailsProps = {
-  cat: CatType
+  image: ImageType
   isOpen: boolean
   isFavorite: boolean
   onFavoriteClick: (imageId: string) => void
@@ -25,11 +25,11 @@ type CatDetailsProps = {
 const CatDetails: FC<CatDetailsProps> = ({
   isOpen,
   isFavorite,
-  cat,
+  image,
   onClose,
   onFavoriteClick,
 }) => {
-  if (!cat) {
+  if (!image) {
     return null
   }
 
@@ -42,16 +42,16 @@ const CatDetails: FC<CatDetailsProps> = ({
         <ModalBody>
           <Box p={2} alignItems='center' border='1px' borderRadius='md'>
             <FavoriteIcon
-              imageId={cat.id}
+              imageId={image.id}
               isFavorite={isFavorite}
-              onClick={() => onFavoriteClick(cat.id)}
+              onClick={() => onFavoriteClick(image.id)}
             />
 
             <Center>
-              <Image objectFit='contain' src={cat?.url} alt='cat' />
+              <Image objectFit='contain' src={image?.url} alt='cat' />
             </Center>
 
-            <BreedsTags breeds={cat.breeds} />
+            <BreedsTags breeds={image.breeds || []} />
           </Box>
         </ModalBody>
       </ModalContent>

@@ -2,23 +2,24 @@ import { FC, useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import CatsApi from '../../api/cats.api'
 import LoadMoreButton from '../../components/LoadMoreButton'
-import { CatType } from '../../types/Cat.type'
 import { FavoriteType } from '../../types/Favorite.type'
+import { ImageType } from '../../types/Image.type'
 import { SortingOrder } from '../../types/Sorting-order.type'
 import LocationUtility from '../../utils/location.utils'
 import CatDetails from './CatDetails'
 import CatImages from './CatImages'
 
 const CatsPage: FC = () => {
-  const [cats, setCats] = useState<CatType[]>([])
+  const [images, setImages] = useState<ImageType[]>([])
   const [limit, setLimit] = useState(10)
   const [order, setOrder] = useState<SortingOrder>('Asc')
   const [page, setPage] = useState(0)
   const [isModalVisible, setIsModalVisible] = useState(false)
 
-  const [selectedCat, setSelectedCat] = useState<CatType | null>()
-  const [selectedCatFavorite, setSelectedCatFavorite] = useState<FavoriteType>()
-  const [selectedCatIsFavorite, setSelectedCatIsFavorite] =
+  const [selectedImage, setSelectedImage] = useState<ImageType | null>()
+  const [selectedImageFavorite, setSelectedImageFavorite] =
+    useState<FavoriteType>()
+  const [selectedImageIsFavorite, setSelectedImageIsFavorite] =
     useState<boolean>(false)
   const history = useHistory()
   const location = useLocation()
@@ -30,7 +31,7 @@ const CatsPage: FC = () => {
   function setSelectedCatOnUrl(id: string) {
     history.push({
       pathname: window.location.pathname,
-      search: `?catId=${id}`,
+      search: `?imageId=${id}`,
     })
   }
 
@@ -40,42 +41,42 @@ const CatsPage: FC = () => {
 
   // TODO: change the name
   function listenToCatIdAndOpenModal() {
-    const catId = LocationUtility.useQuery(location.search).get('catId')
+    const imageId = LocationUtility.useQuery(location.search).get('imageId')
 
-    // as soon as we have a catId in the url, the modal appears
-    setIsModalVisible(!!catId)
-    if (catId) {
-      CatsApi.getImage(catId, catResponse => {
-        setSelectedCat(catResponse)
+    // as soon as we have a imageId in the url, the modal appears
+    setIsModalVisible(!!imageId)
+    if (imageId) {
+      CatsApi.getImage(imageId, catResponse => {
+        setSelectedImage(catResponse)
       })
 
       // If the response of this API call has length > 0, means that the selected image is a favorite one
-      CatsApi.getFavoriteByImageId(catId, favoriteResponse => {
-        setSelectedCatFavorite(favoriteResponse?.[0])
-        setSelectedCatIsFavorite(!!favoriteResponse.length)
+      CatsApi.getFavoriteByImageId(imageId, favoriteResponse => {
+        setSelectedImageFavorite(favoriteResponse?.[0])
+        setSelectedImageIsFavorite(!!favoriteResponse.length)
       })
     } else {
-      setSelectedCat(null)
+      setSelectedImage(null)
     }
   }
 
   function toggleFavorite(imageId: string) {
-    if (selectedCatFavorite) {
-      CatsApi.deleteFavoriteById(selectedCatFavorite.id, favoriteResponse => {
-        setSelectedCatFavorite(undefined)
-        setSelectedCatIsFavorite(!(favoriteResponse.message === 'SUCCESS'))
+    if (selectedImageFavorite) {
+      CatsApi.deleteFavoriteById(selectedImageFavorite.id, favoriteResponse => {
+        setSelectedImageFavorite(undefined)
+        setSelectedImageIsFavorite(!(favoriteResponse.message === 'SUCCESS'))
       })
     } else {
       CatsApi.saveFavorite(imageId, favoriteResponse => {
         // set the SelectedCatFavorite to allow the user toggle immediately the favorite off
-        setSelectedCatFavorite({
+        setSelectedImageFavorite({
           id: favoriteResponse.id,
           image: {
             id: imageId,
             url: '',
           },
         })
-        setSelectedCatIsFavorite(favoriteResponse.message === 'SUCCESS')
+        setSelectedImageIsFavorite(favoriteResponse.message === 'SUCCESS')
       })
     }
   }
@@ -84,8 +85,8 @@ const CatsPage: FC = () => {
    * This effect is responsible to load images via API
    */
   useEffect(() => {
-    CatsApi.getCats(limit, page, order, catsResponse =>
-      setCats([...cats, ...catsResponse])
+    CatsApi.getImages(limit, page, order, catsResponse =>
+      setImages([...images, ...catsResponse])
     )
 
     // clean up. Like we do with componentDidUpdate
@@ -105,8 +106,8 @@ const CatsPage: FC = () => {
   return (
     <>
       <CatImages
-        cats={cats}
-        selectCatImage={imageId => setSelectedCatOnUrl(imageId)}
+        images={images}
+        selectImage={imageId => setSelectedCatOnUrl(imageId)}
       />
 
       <LoadMoreButton onClick={() => nextPage()}>Load more</LoadMoreButton>
@@ -114,8 +115,8 @@ const CatsPage: FC = () => {
       {/* Cat details modal - START */}
       {isModalVisible ? (
         <CatDetails
-          cat={selectedCat!}
-          isFavorite={selectedCatIsFavorite}
+          image={selectedImage!}
+          isFavorite={selectedImageIsFavorite}
           isOpen={isModalVisible}
           onFavoriteClick={imageId => toggleFavorite(imageId)}
           onClose={() => closeModal()}

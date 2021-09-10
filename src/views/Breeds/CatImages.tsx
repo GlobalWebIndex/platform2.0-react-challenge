@@ -38,7 +38,7 @@ const CatImages: FC<CatImagesProps> = ({ isOpen, onClose, images }) => {
         <ModalCloseButton />
         <ModalBody>
           {images?.map(image => (
-            <Link to={`/cats?catId=${image.id}`}>
+            <Link to={`/cats?imageId=${image.id}`}>
               <Image objectFit='cover' src={image?.url} alt='cat' />
             </Link>
           ))}
