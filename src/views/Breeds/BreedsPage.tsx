@@ -1,3 +1,4 @@
+import { Center, Wrap, WrapItem } from '@chakra-ui/react'
 import { FC, useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import CatsApi from '../../api/cats.api'
@@ -77,21 +78,21 @@ const BreedsPage: FC = () => {
 
   return (
     <>
-      <ul>
+      <Wrap spacing='30px'>
         {breeds.map((breed, index) => (
-          <div
+          <WrapItem
             key={breed.id}
             role='button'
             onClick={() => setSelectedBreedOnUrl(breed.id)}
             onKeyDown={() => setSelectedBreedOnUrl(breed.id)}
             tabIndex={index}
           >
-            <li>
-              {breed.name} - {breed.id}
-            </li>
-          </div>
+            <Center w='180px' h='80px' bg='red.200' borderRadius='md'>
+              {breed.name}
+            </Center>
+          </WrapItem>
         ))}
-      </ul>
+      </Wrap>
 
       <LoadMoreButton onClick={() => nextPage()}>Load more</LoadMoreButton>
 
