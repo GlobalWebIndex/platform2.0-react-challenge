@@ -3,6 +3,7 @@ import { FC, useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import CatsApi from '../../api/cats.api'
 import { CatType } from '../../types/Cat.type'
+import { FavoriteType } from '../../types/Favorite.type'
 import { SortingOrder } from '../../types/Sorting-order.type'
 import LocationUtility from '../../utils/location.utils'
 import Cat from './Cat'
@@ -14,7 +15,11 @@ const CatsPage: FC = () => {
   const [order, setOrder] = useState<SortingOrder>('Asc')
   const [page, setPage] = useState(0)
   const [isModalVisible, setIsModalVisible] = useState(false)
-  const [selectedCat, setSelectedCat] = useState<CatType | null>(null)
+
+  const [selectedCat, setSelectedCat] = useState<CatType | null>()
+  const [selectedCatFavorite, setSelectedCatFavorite] = useState<FavoriteType>()
+  const [selectedCatIsFavorite, setSelectedCatIsFavorite] =
+    useState<boolean>(false)
   const history = useHistory()
   const location = useLocation()
 
@@ -43,8 +48,35 @@ const CatsPage: FC = () => {
       CatsApi.getImage(catId, catResponse => {
         setSelectedCat(catResponse)
       })
+
+      // If the response of this API call has length > 0, means that the selected image is a favorite one
+      CatsApi.getFavoriteByImageId(catId, favoriteResponse => {
+        setSelectedCatFavorite(favoriteResponse?.[0])
+        setSelectedCatIsFavorite(!!favoriteResponse.length)
+      })
     } else {
       setSelectedCat(null)
+    }
+  }
+
+  function toggleFavorite(imageId: string) {
+    if (selectedCatFavorite) {
+      CatsApi.deleteFavoriteById(selectedCatFavorite.id, favoriteResponse => {
+        setSelectedCatFavorite(undefined)
+        setSelectedCatIsFavorite(!(favoriteResponse.message === 'SUCCESS'))
+      })
+    } else {
+      CatsApi.saveFavorite(imageId, favoriteResponse => {
+        // set the SelectedCatFavorite to allow the user toggle immediately the favorite off
+        setSelectedCatFavorite({
+          id: favoriteResponse.id,
+          image: {
+            id: imageId,
+            url: '',
+          },
+        })
+        setSelectedCatIsFavorite(favoriteResponse.message === 'SUCCESS')
+      })
     }
   }
 
@@ -89,11 +121,15 @@ const CatsPage: FC = () => {
       </Button>
 
       {/* Cat details modal - START */}
-      <CatDetails
-        cat={selectedCat!}
-        isOpen={isModalVisible}
-        onClose={() => onModalClose()}
-      />
+      {isModalVisible ? (
+        <CatDetails
+          cat={selectedCat!}
+          isFavorite={selectedCatIsFavorite}
+          isOpen={isModalVisible}
+          toggleFavorite={imageId => toggleFavorite(imageId)}
+          close={() => onModalClose()}
+        />
+      ) : null}
       {/* Cat details modal - END */}
     </>
   )

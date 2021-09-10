@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { BreedType } from '../types/Breed.type'
 import { CatType } from '../types/Cat.type'
+import { FavoriteType } from '../types/Favorite.type'
 import { ImageType } from '../types/Image.type'
 import { SortingOrder } from '../types/Sorting-order.type'
 
@@ -64,6 +65,69 @@ export default class CatsApi {
           },
         }
       )
+      .then(response => cb(response.data))
+  }
+
+  static getFavorites(cb: (data: FavoriteType[]) => void) {
+    return axios
+      .get<FavoriteType[]>(`${this.domain}/favourites/`, {
+        headers: {
+          'x-api-key': this.API_KEY,
+        },
+      })
+      .then(response => cb(response.data))
+  }
+
+  static getFavoriteById(favoriteId: number, cb: (data: FavoriteType) => void) {
+    return axios
+      .get<FavoriteType>(`${this.domain}/favourites/?${favoriteId}`, {
+        headers: {
+          'x-api-key': this.API_KEY,
+        },
+      })
+      .then(response => cb(response.data))
+  }
+
+  static deleteFavoriteById(
+    favoriteId: number,
+    cb: (data: { message: string }) => void
+  ) {
+    return axios
+      .delete<{ message: string }>(`${this.domain}/favourites/${favoriteId}`, {
+        headers: {
+          'x-api-key': this.API_KEY,
+        },
+      })
+      .then(response => cb(response.data))
+  }
+
+  static saveFavorite(
+    imageId: string,
+    cb: (data: { message: string; id: number }) => void
+  ) {
+    return axios
+      .post<{ message: string; id: number }>(
+        `${this.domain}/favourites`,
+        { image_id: imageId, sub_id: imageId },
+        {
+          headers: {
+            'x-api-key': this.API_KEY,
+          },
+        }
+      )
+      .then(response => cb(response.data))
+  }
+
+  static getFavoriteByImageId(
+    imageId: string,
+    cb: (data: FavoriteType[]) => void
+  ) {
+    return axios
+      .get<FavoriteType[]>(`${this.domain}/favourites/?sub_id=${imageId}`, {
+        headers: {
+          'x-api-key': this.API_KEY,
+        },
+      })
       .then(response => cb(response.data))
   }
 }

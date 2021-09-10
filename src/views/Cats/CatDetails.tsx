@@ -1,3 +1,4 @@
+import { StarIcon } from '@chakra-ui/icons'
 import {
   Badge,
   Box,
@@ -18,20 +19,36 @@ import { CatType } from '../../types/Cat.type'
 type CatDetailsProps = {
   cat: CatType
   isOpen: boolean
-  onClose: () => void
+  isFavorite: boolean
+  toggleFavorite: (imageId: string) => void
+  close: () => void
 }
 
-const CatDetails: FC<CatDetailsProps> = ({ isOpen, onClose, cat }) => {
+const CatDetails: FC<CatDetailsProps> = ({
+  isOpen,
+  isFavorite,
+  cat,
+  close,
+  toggleFavorite,
+}) => {
   if (!cat) {
     return null
   }
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={close}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Paw Image Details</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
+          <StarIcon
+            w={8}
+            h={8}
+            color={isFavorite ? 'red.500' : 'gray:50'}
+            onClick={() => toggleFavorite(cat.id)}
+          />
+
           <Image objectFit='cover' src={cat?.url} alt='cat' />
 
           {/* Breeds list - START */}
@@ -48,7 +65,7 @@ const CatDetails: FC<CatDetailsProps> = ({ isOpen, onClose, cat }) => {
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme='blue' mr={3} onClick={onClose}>
+          <Button colorScheme='blue' mr={3} onClick={close}>
             Close
           </Button>
         </ModalFooter>
