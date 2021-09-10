@@ -1,12 +1,12 @@
 import { Image } from '@chakra-ui/react'
 import { FC } from 'react'
 
-type CatProps = {
+type CatImageProps = {
   url: string
   width: number
 }
 
-const Cat: FC<CatProps> = ({ url, width }) => {
+const CatImage: FC<CatImageProps> = ({ url, width }) => {
   const imageWidth = width > 400 ? 400 : width
   return (
     <Image
@@ -19,4 +19,4 @@ const Cat: FC<CatProps> = ({ url, width }) => {
   )
 }
 
-export default Cat
+export default CatImage

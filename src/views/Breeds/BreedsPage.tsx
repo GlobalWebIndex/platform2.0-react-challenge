@@ -6,7 +6,7 @@ import LoadMoreButton from '../../components/LoadMoreButton'
 import { BreedType } from '../../types/Breed.type'
 import { ImageType } from '../../types/Image.type'
 import LocationUtility from '../../utils/location.utils'
-import CatImages from './CatImages'
+import CatImagesModal from './CatImagesModal'
 
 const BreedsPage: FC = () => {
   const [breedsLimit, setBreedsLimit] = useState(10)
@@ -32,6 +32,13 @@ const BreedsPage: FC = () => {
 
   function onModalClose() {
     history.push({ pathname: window.location.pathname })
+  }
+
+  function navigateToCatImagesPage(imageId: string) {
+    history.push({
+      pathname: '/cats',
+      search: `?imageId=${imageId}`,
+    })
   }
 
   // TODO: change the name
@@ -97,10 +104,13 @@ const BreedsPage: FC = () => {
       <LoadMoreButton onClick={() => nextPage()}>Load more</LoadMoreButton>
 
       {/* Cat images modal - START */}
-      <CatImages
+      <CatImagesModal
         images={breedImages!}
         isOpen={isModalVisible}
         onClose={() => onModalClose()}
+        onClickImage={imageId => {
+          navigateToCatImagesPage(imageId)
+        }}
       />
       {/* Cat images modal - END */}
     </>

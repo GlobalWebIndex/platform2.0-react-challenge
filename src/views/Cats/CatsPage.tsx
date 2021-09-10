@@ -1,13 +1,13 @@
 import { FC, useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import CatsApi from '../../api/cats.api'
+import CatImages from '../../components/CatImages'
 import LoadMoreButton from '../../components/LoadMoreButton'
 import { FavoriteType } from '../../types/Favorite.type'
 import { ImageType } from '../../types/Image.type'
 import { SortingOrder } from '../../types/Sorting-order.type'
 import LocationUtility from '../../utils/location.utils'
 import CatDetails from './CatDetails'
-import CatImages from './CatImages'
 
 const CatsPage: FC = () => {
   const [images, setImages] = useState<ImageType[]>([])
@@ -107,7 +107,7 @@ const CatsPage: FC = () => {
     <>
       <CatImages
         images={images}
-        selectImage={imageId => setSelectedCatOnUrl(imageId)}
+        onClickImage={imageId => setSelectedCatOnUrl(imageId)}
       />
 
       <LoadMoreButton onClick={() => nextPage()}>Load more</LoadMoreButton>

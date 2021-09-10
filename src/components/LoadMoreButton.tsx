@@ -1,7 +1,7 @@
 import { Button, Center } from '@chakra-ui/react'
 import { FC } from 'react'
 
-export type LoadMoreButtonProps = {
+type LoadMoreButtonProps = {
   onClick: () => void
 }
 
