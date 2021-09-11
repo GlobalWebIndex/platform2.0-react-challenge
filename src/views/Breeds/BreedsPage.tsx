@@ -42,34 +42,31 @@ const BreedsPage: FC = () => {
   }
 
   // TODO: change the name
-  function listenToBreedIdAndOpenModal() {
+  async function listenToBreedIdAndOpenModal() {
     const breedId = LocationUtility.useQuery(location.search).get('breedId')
 
     // as soon as we have a breedId in the url, the modal appears
     setIsModalVisible(!!breedId)
     if (breedId) {
-      CatsApi.getImagesByBreed(
-        breedId,
-        breedsImagesLimit,
-        breedsImagesPage,
-        catResponse => {
-          setBreedImages(catResponse)
-        }
-      )
+      const getImagesByBreedResponse = await CatsApi.getImagesByBreed(breedId, breedsImagesLimit, breedsImagesPage)
+      setBreedImages(getImagesByBreedResponse.data)
     } else {
       setBreedImages([])
     }
+  }
+
+  async function getBreeds() {
+    const getBreedsResponse = await CatsApi.getBreeds(breedsLimit, breedsPage)
+    setBreeds([...breeds, ...getBreedsResponse.data])
   }
 
   /**
    * This effect is responsible to load breeds via API
    */
   useEffect(() => {
-    CatsApi.getBreeds(breedsLimit, breedsPage, breedsResponse =>
-      setBreeds([...breeds, ...breedsResponse])
-    )
+    getBreeds()
 
-    // clean up. Like we do with componentDidUpdate
+    // clean up
     return () => {}
   }, [breedsPage])
 

@@ -8,13 +8,13 @@ const FavoritesPage: FC = () => {
   const [favorites, setFavorites] = useState<FavoriteType[]>([])
   const [images, setImages] = useState<ImageType[]>([])
 
-  function removeFavorite(favoriteId: number) {
-    CatsApi.deleteFavoriteById(favoriteId, favoriteResponse => {
-      if (favoriteResponse.message === 'SUCCESS') {
-        const filteredFavorites = favorites.filter(it => it.id !== favoriteId)
-        addFavoritesToState(filteredFavorites)
-      }
-    })
+  async function removeFavorite(favoriteId: number) {
+    const favoriteResponse = await CatsApi.deleteFavoriteById(favoriteId)
+
+    if (favoriteResponse.data.message === 'SUCCESS') {
+      const filteredFavorites = favorites.filter(it => it.id !== favoriteId)
+      addFavoritesToState(filteredFavorites)
+    }
   }
 
   function addFavoritesToState(favoritesToAdd: FavoriteType[]) {
@@ -22,16 +22,19 @@ const FavoritesPage: FC = () => {
     setImages(favoritesToAdd.map(favorite => favorite.image))
   }
 
+  async function getFavorites() {
+    const favoritesResponse = await CatsApi.getFavorites()
+
+    const favoritesArray = [...favorites, ...favoritesResponse.data]
+    addFavoritesToState(favoritesArray)
+  }
+
   /**
    * This effect is responsible to load breeds via API
    */
   useEffect(() => {
-    CatsApi.getFavorites(favoritesResponse => {
-      const favoritesArray = [...favorites, ...favoritesResponse]
-      addFavoritesToState(favoritesArray)
-    })
-
-    // clean up. Like we do with componentDidUpdate
+    getFavorites()
+    // clean up
     return () => {}
   }, [])
 
