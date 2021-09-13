@@ -21,19 +21,27 @@ const CatsPage: FC = () => {
   const history = useHistory()
   const location = useLocation()
 
-  function nextPage() {
+  const nextPage = () => {
     setPage(it => it + 1)
   }
 
-  function setSelectedCatOnUrl(id: string) {
+  const setSelectedCatOnUrl = (id: string) => {
     history.push({
       pathname: window.location.pathname,
       search: `?imageId=${id}`,
     })
   }
 
-  function closeModal() {
+  const closeModal = () => {
     history.push({ pathname: window.location.pathname })
+  }
+
+  const toggleFavorite = (imageId: string) => {
+    if (selectedImageFavorite) {
+      removeFavorite(selectedImageFavorite.id)
+    } else {
+      setFavorite(imageId)
+    }
   }
 
   async function selectCatImage() {
@@ -75,14 +83,6 @@ const CatsPage: FC = () => {
     })
   }
 
-  async function toggleFavorite(imageId: string) {
-    if (selectedImageFavorite) {
-      removeFavorite(selectedImageFavorite.id)
-    } else {
-      setFavorite(imageId)
-    }
-  }
-
   async function getImages() {
     const catsResponse = await CatsApi.getImages(limit, page, order)
     setImages([...images, ...catsResponse.data])
@@ -110,9 +110,9 @@ const CatsPage: FC = () => {
 
   return (
     <>
-      <CatImages images={images} onClickImage={imageId => setSelectedCatOnUrl(imageId)} />
+      <CatImages images={images} onClickImage={setSelectedCatOnUrl} />
 
-      <LoadMoreButton onClick={() => nextPage()}>Load more</LoadMoreButton>
+      <LoadMoreButton onClick={nextPage}>Load more</LoadMoreButton>
 
       {/* Cat details modal - START */}
       {isModalVisible ? (
@@ -120,8 +120,8 @@ const CatsPage: FC = () => {
           image={selectedImage!}
           isFavorite={!!selectedImageFavorite}
           isOpen={isModalVisible}
-          onFavoriteClick={imageId => toggleFavorite(imageId)}
-          onClose={() => closeModal()}
+          onFavoriteClick={toggleFavorite}
+          onClose={closeModal}
         />
       ) : null}
       {/* Cat details modal - END */}
