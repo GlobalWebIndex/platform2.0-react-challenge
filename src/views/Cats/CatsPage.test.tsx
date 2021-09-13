@@ -1,7 +1,23 @@
-import { render } from '@testing-library/react';
-import React from 'react';
-import { CatsPage } from './CatsPage';
+import { render } from '@testing-library/react'
+import CatsPage from './CatsPage'
 
-test('renders cats page', () => {
-  render(<CatsPage />);
-});
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useLocation: jest.fn().mockReturnValue({
+    pathname: '/another-route',
+    search: '',
+    hash: '',
+    state: null,
+    key: '',
+  }),
+  useHistory: jest.fn().mockReturnValue([]),
+}))
+
+describe('Cats Page component', () => {
+  beforeAll(() => {})
+
+  test('renders cats page', () => {
+    const wrapper = render(<CatsPage />)
+    expect(wrapper).toMatchSnapshot()
+  })
+})
