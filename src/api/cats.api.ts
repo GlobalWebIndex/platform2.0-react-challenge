@@ -72,6 +72,15 @@ export default class CatsApi {
     })
   }
 
+  /**
+   * This method sends a POST verb message with two fields:
+   * "image_id" and "sub_id"
+   *
+   * In the "sub_id" field I keep the "image_id" so that I can query, later, a favorite entity by searching with "image_id".
+   * The method that does this is the getFavoriteByImageId()
+   * @param imageId
+   * @returns
+   */
   static saveFavorite(imageId: string): Promise<
     AxiosResponse<{
       message: string
