@@ -20,7 +20,7 @@ const CatImage: FC<CatImageProps> = ({ image, isFavorite = false, showFavoriteAc
         {showFavoriteAction ? (
           <FavoriteIcon imageId={image.id} isFavorite={isFavorite!} onClick={() => onFavoriteClick?.(image.id)} />
         ) : null}
-        <Image {...rest} borderRadius='md' loading='lazy' src={image.url} alt='a cat' width={`${imageWidth}px`} />
+        <Image data-cy='cat-image' {...rest} borderRadius='md' loading='lazy' src={image.url} alt='a cat' width={`${imageWidth}px`} />
       </Flex>
     </>
   )

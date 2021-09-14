@@ -3,7 +3,7 @@ import { FC } from 'react'
 
 const Logo: FC = () => (
   <Box>
-    <Text fontSize='lg' fontWeight='bold'>
+    <Text data-cy='app-logo' fontSize='lg' fontWeight='bold'>
       The Cat App
     </Text>
   </Box>
