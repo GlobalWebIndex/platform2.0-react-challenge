@@ -1,18 +1,8 @@
-import {
-  Box,
-  Center,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
-} from '@chakra-ui/react'
+import { Center, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react'
 import { FC } from 'react'
 import CatImage from '../../../components/CatImage'
 import { ImageType } from '../../../types/Image.type'
 import BreedsTags from './BreedsTags'
-import FavoriteIcon from './FavoriteIcon'
 
 type CatDetailsModalProps = {
   image: ImageType
@@ -22,13 +12,7 @@ type CatDetailsModalProps = {
   onClose: () => void
 }
 
-const CatDetailsModal: FC<CatDetailsModalProps> = ({
-  isOpen,
-  isFavorite,
-  image,
-  onClose,
-  onFavoriteClick,
-}) => {
+const CatDetailsModal: FC<CatDetailsModalProps> = ({ isOpen, isFavorite, image, onClose, onFavoriteClick }) => {
   if (!image) {
     return null
   }
@@ -40,23 +24,12 @@ const CatDetailsModal: FC<CatDetailsModalProps> = ({
         <ModalHeader>Paw Image</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Box p={2} alignItems='center' border='1px' borderRadius='md'>
-            <FavoriteIcon
-              imageId={image.id}
-              isFavorite={isFavorite}
-              onClick={() => onFavoriteClick(image.id)}
-            />
-
-            <Center>
-              <CatImage
-                objectFit='contain'
-                url={image?.url}
-                width={image.width}
-              />
-            </Center>
-
-            <BreedsTags breeds={image.breeds || []} />
-          </Box>
+          <Center p={2} border='1px' borderRadius='md'>
+            <Flex direction='column'>
+              <CatImage objectFit='contain' image={image} isFavorite={isFavorite} showFavoriteAction onFavoriteClick={onFavoriteClick} />
+              <BreedsTags breeds={image.breeds || []} />
+            </Flex>
+          </Center>
         </ModalBody>
       </ModalContent>
     </Modal>

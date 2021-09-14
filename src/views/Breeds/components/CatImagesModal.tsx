@@ -1,11 +1,4 @@
-import {
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
-} from '@chakra-ui/react'
+import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react'
 import { FC } from 'react'
 import CatImages from '../../../components/CatImages'
 import { ImageType } from '../../../types/Image.type'
@@ -14,15 +7,10 @@ type CatImagesProps = {
   images: ImageType[]
   isOpen: boolean
   onClose: () => void
-  onClickImage: (imageId: string) => void
+  onImageClick: (imageId: string) => void
 }
 
-const CatImagesModal: FC<CatImagesProps> = ({
-  isOpen,
-  images,
-  onClose,
-  onClickImage,
-}) => {
+const CatImagesModal: FC<CatImagesProps> = ({ isOpen, images, onClose, onImageClick }) => {
   if (!images?.length) {
     return null
   }
@@ -40,10 +28,7 @@ const CatImagesModal: FC<CatImagesProps> = ({
         <ModalHeader>{breedName}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <CatImages
-            images={images}
-            onClickImage={imageId => onClickImage(imageId)}
-          />
+          <CatImages showFavoriteAction={false} images={images} onImageClick={imageId => onImageClick(imageId)} />
         </ModalBody>
       </ModalContent>
     </Modal>

@@ -5,28 +5,38 @@ import CatImage from './CatImage'
 
 type CatImagesProps = {
   images: ImageType[]
-  onClickImage: (imageId: string) => void
+  showFavoriteAction: boolean
+  isFavorite?: boolean
+  onImageClick?: (imageId: string) => void
+  onFavoriteClick?: (imageId: string) => void
 }
 
-const CatImages: FC<CatImagesProps> = ({ images, onClickImage }) => (
+const CatImages: FC<CatImagesProps> = ({ images, showFavoriteAction, isFavorite = false, onImageClick, onFavoriteClick }) => (
   <Wrap spacing='30px'>
     {images.map((image, index) => (
       <WrapItem
         key={image.id}
         p={1}
-        tabIndex={index}
+        tabIndex={index + 1}
         alignItems='center'
         border='1px'
         borderRadius='md'
         cursor='pointer'
-        onClick={() => onClickImage(image.id)}
+        height='100%'
+        onClick={() => onImageClick?.(image.id)}
         onKeyDown={e => {
           if (e.code === 'Enter') {
-            onClickImage(image.id)
+            onImageClick?.(image.id)
           }
         }}
       >
-        <CatImage key={image.id} url={image.url} width={image.width} />
+        <CatImage
+          key={image.id}
+          showFavoriteAction={showFavoriteAction}
+          isFavorite={isFavorite}
+          image={image}
+          onFavoriteClick={onFavoriteClick}
+        />
       </WrapItem>
     ))}
   </Wrap>

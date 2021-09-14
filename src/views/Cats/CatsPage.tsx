@@ -110,7 +110,7 @@ const CatsPage: FC = () => {
 
   return (
     <>
-      <CatImages images={images} onClickImage={setSelectedCatOnUrl} />
+      <CatImages showFavoriteAction={false} images={images} onImageClick={setSelectedCatOnUrl} />
 
       <LoadMoreButton onClick={nextPage}>Load more</LoadMoreButton>
 

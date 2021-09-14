@@ -101,14 +101,16 @@ const BreedsPage: FC = () => {
       <LoadMoreButton onClick={() => nextPage()}>Load more</LoadMoreButton>
 
       {/* Cat images modal - START */}
-      <CatImagesModal
-        images={breedImages!}
-        isOpen={isModalVisible}
-        onClose={() => onModalClose()}
-        onClickImage={imageId => {
-          navigateToCatImagesPage(imageId)
-        }}
-      />
+      {isModalVisible ? (
+        <CatImagesModal
+          images={breedImages!}
+          isOpen={isModalVisible}
+          onClose={() => onModalClose()}
+          onImageClick={imageId => {
+            navigateToCatImagesPage(imageId)
+          }}
+        />
+      ) : null}
       {/* Cat images modal - END */}
     </>
   )

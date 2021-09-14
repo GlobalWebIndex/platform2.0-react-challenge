@@ -43,7 +43,9 @@ const FavoritesPage: FC = () => {
       {images.length ? (
         <CatImages
           images={images}
-          onClickImage={imageId => {
+          showFavoriteAction
+          isFavorite
+          onFavoriteClick={imageId => {
             const favoriteId = favorites.find(it => it.image.id === imageId)?.id
             if (favoriteId) {
               removeFavorite(favoriteId)
@@ -51,7 +53,7 @@ const FavoritesPage: FC = () => {
           }}
         />
       ) : (
-        "It seems that you didn't find your favorite image yet :( "
+        <p>It seems that you didn&apos;t find your favorite image yet :( </p>
       )}
     </>
   )
