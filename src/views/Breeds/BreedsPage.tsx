@@ -9,10 +9,10 @@ import LocationUtility from '../../utils/location.utils'
 import CatImagesModal from './components/CatImagesModal'
 
 const BreedsPage: FC = () => {
-  const [breedsLimit, setBreedsLimit] = useState(10)
+  const [breedsLimit] = useState(10)
   const [breedsPage, setBreedsPage] = useState(0)
-  const [breedsImagesLimit, setBreedsImagesLimit] = useState(10)
-  const [breedsImagesPage, setBreedsImagesPage] = useState(0)
+  const [breedsImagesLimit] = useState(10)
+  const [breedsImagesPage] = useState(0)
   const [breeds, setBreeds] = useState<BreedType[]>([])
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [breedImages, setBreedImages] = useState<ImageType[]>([])
