@@ -12,11 +12,17 @@ const FavoriteIcon: FC<FavoriteIconProps> = ({ isFavorite, onClick }) => (
     data-testid='favorite-icon'
     alignSelf='flex-end'
     cursor='pointer'
+    tabIndex={0}
     w={5}
     h={5}
     mb={2}
     color={isFavorite ? 'red.500' : 'gray:50'}
     onClick={onClick}
+    onKeyDown={e => {
+      if (e.code === 'Enter') {
+        onClick()
+      }
+    }}
   />
 )
 

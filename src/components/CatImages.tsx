@@ -17,7 +17,7 @@ const CatImages: FC<CatImagesProps> = ({ images, showFavoriteAction, isFavorite 
       <WrapItem
         key={image.id}
         p={1}
-        tabIndex={index + 1}
+        tabIndex={0}
         alignItems='center'
         border='1px'
         borderRadius='md'

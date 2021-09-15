@@ -88,8 +88,12 @@ const BreedsPage: FC = () => {
             key={breed.id}
             role='button'
             onClick={() => setSelectedBreedOnUrl(breed.id)}
-            onKeyDown={() => setSelectedBreedOnUrl(breed.id)}
-            tabIndex={index}
+            onKeyDown={e => {
+              if (e.code === 'Enter') {
+                setSelectedBreedOnUrl(breed.id)
+              }
+            }}
+            tabIndex={0}
           >
             <Center w='180px' h='80px' bg='red.200' borderRadius='md'>
               {breed.name}
