@@ -22,6 +22,8 @@ The application doesn't have an increased code coverage of e2e tests. It has the
 
 The application size is small enough to accommodate a redux pattern. I have a WIP branch where I can present it upon request.
 
+---
+
 ## Exercise: CatLover
 
 Create an Elm or React application for cat lovers which is going to build upon thecatapi.com and will have 3 views.
