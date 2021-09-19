@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useCallback } from "react";
 import axios from "axios";
 
 const instance = axios.create({
@@ -6,21 +6,22 @@ const instance = axios.create({
   headers: { "x-api-key": process.env.REACT_APP_API_KEY },
 });
 
-export const useAxios = (config, skipDataFetching) => {
+export const useAxios = () => {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (typeof skipDataFetching === "undefined" || !skipDataFetching) {
-      setLoading(true);
-      instance
-        .request(config)
-        .then((res) => setResponse(res.data))
-        .catch((err) => setError("err"))
-        .finally(() => setLoading(false));
-    }
-  }, [config, skipDataFetching]);
+  const fetchData = useCallback((config) => {
+    setLoading(true);
+    instance
+      .request(config)
+      .then((res) => {
+        console.log(res.config.url, res.status);
+        setResponse(res.data);
+      })
+      .catch((err) => setError(err))
+      .finally(() => setLoading(false));
+  }, []);
 
-  return [response, error, loading];
+  return [response, error, loading, fetchData];
 };

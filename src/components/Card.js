@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "@emotion/styled";
 import { FiHeart } from "react-icons/fi";
-import { Button } from "semantic-ui-react";
+import { Link, useLocation } from "react-router-dom";
 
 const CardContainer = styled.div`
   height: 250px;
@@ -32,15 +32,22 @@ const Overlay = styled.div`
 
 const buttonStyles = {
   width: "90%",
+  height: 38,
+  lineHeight: "38px",
   position: "absolute",
   bottom: "10px",
   left: "50%",
   transform: "translate(-50%)",
   zIndex: "20",
+  color: "white",
+  border: "2px solid white",
+  borderRadius: 10,
+  textAlign: "center",
 };
 
 export default function Card({ card, favourite }) {
   const [active, setActive] = useState(false);
+  const location = useLocation();
 
   return (
     <CardContainer
@@ -64,13 +71,15 @@ export default function Card({ card, favourite }) {
               }}
             />
           )}
-          <Button
-            inverted
-            onClick={() => console.log("info")}
+          <Link
+            to={{
+              pathname: `/images/${card.id}`,
+              state: { background: location },
+            }}
             style={buttonStyles}
           >
             Info
-          </Button>
+          </Link>
         </>
       )}
     </CardContainer>

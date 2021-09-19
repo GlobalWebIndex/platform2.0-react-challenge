@@ -1,5 +1,4 @@
-import styled from "@emotion/styled";
-import { Segment, Dimmer, Loader } from "semantic-ui-react";
+import { Dimmer, Loader } from "semantic-ui-react";
 
 const styles = {
   position: "fixed",
@@ -16,7 +15,7 @@ export default function OverlayLoader({ active, children }) {
   return (
     <Dimmer.Dimmable dimmed={active}>
       <Dimmer active={active} style={styles}>
-        <Loader indeterminate>Preparing Files</Loader>
+        <Loader indeterminate>Loading</Loader>
       </Dimmer>
       {children}
     </Dimmer.Dimmable>

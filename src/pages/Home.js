@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import styled from "@emotion/styled";
 import { useStateAndLS } from "../hooks/useStateAndLS";
 import { useAxios } from "../hooks/useAxios";
@@ -27,16 +27,17 @@ const config = { url, params };
 
 export default function Home() {
   const [images, setImages, clearImages] = useStateAndLS("images", []);
-  const [skipDataFetching, setSkipDataFetching] = useState(images.length > 0);
-  const [response, error, loading] = useAxios(config, skipDataFetching);
+  const [response, error, loading, fetchData] = useAxios();
 
   useEffect(() => {
     if (response) setImages((prev) => [...prev, ...response]);
   }, [response, setImages]);
 
   useEffect(() => {
-    if (!skipDataFetching) setSkipDataFetching(true);
-  }, [skipDataFetching]);
+    if (!images.length > 0) {
+      fetchData(config);
+    }
+  }, [images, fetchData]);
 
   return (
     <>
@@ -44,18 +45,17 @@ export default function Home() {
       <OverlayLoader active={loading}>
         <CardsContainer>
           {images.map((img) => (
-            <Card card={img} />
+            <Card card={img} key={img.id} />
           ))}
         </CardsContainer>
         <ButtonContainer>
-          <Button fluid primary onClick={() => setSkipDataFetching(false)}>
+          <Button fluid primary onClick={() => fetchData(config)}>
             load more
           </Button>
           <Button
             fluid
             secondary
             onClick={() => {
-              setSkipDataFetching();
               clearImages();
             }}
           >
