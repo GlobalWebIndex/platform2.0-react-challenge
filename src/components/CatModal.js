@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useAxios } from "../hooks/useAxios";
+import useCopyURL from "../hooks/useCopyURL";
 import styled from "@emotion/styled";
 import { Modal } from "semantic-ui-react";
 import OverlayLoader from "./OverlayLoader";
@@ -56,7 +57,7 @@ const iconStyles = { width: "100%", height: "100%", strokeWidth: 1.5 };
 export default function CatModal() {
   const { push } = useHistory();
   const { id } = useParams();
-  const [copied, setCopied] = useState(false);
+  const [copied, copy] = useCopyURL();
   const [data, error, loading, fetchData] = useAxios();
   const [favourites, favouritesError, favouritesLoading, fetchFavourites] =
     useAxios();
@@ -76,11 +77,6 @@ export default function CatModal() {
     fetchFavourite(config);
   };
 
-  const hanldeCopyToCLipboard = () => {
-    setCopied(true);
-    navigator.clipboard.writeText(window.location.href);
-  };
-
   useEffect(() => {
     // fetch image info
     fetchData({ url: `/images/${id}` });
@@ -97,14 +93,6 @@ export default function CatModal() {
       fetchFavourites({ url: `/favourites/` });
     }
   }, [favourite, fetchFavourites]);
-
-  useEffect(() => {
-    let timer;
-    if (copied) {
-      timer = setTimeout(() => setCopied(false), 1500);
-    }
-    return () => clearTimeout(timer);
-  }, [copied]);
 
   return (
     <Modal
@@ -148,7 +136,7 @@ export default function CatModal() {
                     <FiCopy
                       color="white"
                       style={iconStyles}
-                      onClick={() => hanldeCopyToCLipboard()}
+                      onClick={() => copy()}
                     />
                   </Tool>
                 </Toolkit>

@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Breeds from "./pages/Breeds";
 import Favourites from "./pages/Favourites";
 import CatModal from "./components/CatModal";
+import BreedModal from "./components/BreedModal";
 import "semantic-ui-css/semantic.min.css";
 
 const Navigation = styled.div`
@@ -41,6 +42,7 @@ function App() {
         <Route path="/favourites" component={Favourites} />
       </Switch>
       {background && <Route path="/images/:id" component={CatModal} />}
+      {background && <Route path="/breeds/:name" component={BreedModal} />}
     </div>
   );
 }

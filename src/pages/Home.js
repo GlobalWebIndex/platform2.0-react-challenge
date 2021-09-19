@@ -2,18 +2,9 @@ import { useEffect } from "react";
 import styled from "@emotion/styled";
 import { useStateAndLS } from "../hooks/useStateAndLS";
 import { useAxios } from "../hooks/useAxios";
-import Card from "../components/Card";
 import OverlayLoader from "../components/OverlayLoader";
 import { Button } from "semantic-ui-react";
-
-const CardsContainer = styled.div`
-  max-width: 1500px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 250px);
-  grid-gap: 15px;
-  justify-content: center;
-  margin: 10px auto;
-`;
+import Gallery from "../components/Gallery";
 
 const ButtonContainer = styled.div`
   width: 30%;
@@ -43,11 +34,7 @@ export default function Home() {
     <>
       {/* TODO handle error */}
       <OverlayLoader active={loading}>
-        <CardsContainer>
-          {images.map((img) => (
-            <Card card={img} key={img.id} />
-          ))}
-        </CardsContainer>
+        <Gallery cards={images} />
         <ButtonContainer>
           <Button fluid primary onClick={() => fetchData(config)}>
             load more

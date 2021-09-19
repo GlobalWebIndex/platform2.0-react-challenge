@@ -33,7 +33,7 @@ const Overlay = styled.div`
 const buttonStyles = {
   width: "90%",
   height: 38,
-  lineHeight: "38px",
+  lineHeight: "32px",
   position: "absolute",
   bottom: "10px",
   left: "50%",
@@ -43,6 +43,7 @@ const buttonStyles = {
   border: "2px solid white",
   borderRadius: 10,
   textAlign: "center",
+  fontSize: 16,
 };
 
 export default function Card({ card, favourite }) {
@@ -54,7 +55,10 @@ export default function Card({ card, favourite }) {
       onMouseEnter={() => setActive(true)}
       onMouseLeave={() => setActive(false)}
     >
-      <Image src={card.url} alt={card.breeds[0]?.alt_names} />
+      <Image
+        src={card.url || card.image?.url}
+        alt={(card.breeds && card.breeds[0]?.alt_names) || card.alt_names}
+      />
       {active && (
         <>
           <Overlay active onClick={() => console.log(card)} />
@@ -73,12 +77,14 @@ export default function Card({ card, favourite }) {
           )}
           <Link
             to={{
-              pathname: `/images/${card.id}`,
+              pathname: card.name
+                ? `/breeds/${card.name}`
+                : `/images/${card.id}`,
               state: { background: location },
             }}
             style={buttonStyles}
           >
-            Info
+            {card.name || "Info"}
           </Link>
         </>
       )}
