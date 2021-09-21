@@ -1,6 +1,5 @@
 import { useState } from "react";
 import styled from "@emotion/styled";
-import { FiHeart } from "react-icons/fi";
 import { Link, useLocation } from "react-router-dom";
 
 const CardContainer = styled.div`
@@ -46,45 +45,28 @@ const buttonStyles = {
   fontSize: 16,
 };
 
-export default function Card({ card, favourite }) {
+export default function Card({ card, name }) {
   const [active, setActive] = useState(false);
   const location = useLocation();
+  const { imgUrl, imgAlt, imgLink } = card;
 
   return (
     <CardContainer
       onMouseEnter={() => setActive(true)}
       onMouseLeave={() => setActive(false)}
     >
-      <Image
-        src={card.url || card.image?.url}
-        alt={(card.breeds && card.breeds[0]?.alt_names) || card.alt_names}
-      />
+      <Image src={imgUrl} alt={imgAlt} />
       {active && (
         <>
-          <Overlay active onClick={() => console.log(card)} />
-          {favourite && (
-            <FiHeart
-              color="red"
-              style={{
-                width: 25,
-                height: 25,
-                position: "absolute",
-                zIndex: 20,
-                top: 10,
-                right: 10,
-              }}
-            />
-          )}
+          <Overlay active />
           <Link
             to={{
-              pathname: card.name
-                ? `/breeds/${card.name}`
-                : `/images/${card.id}`,
+              pathname: imgLink,
               state: { background: location },
             }}
             style={buttonStyles}
           >
-            {card.name || "Info"}
+            {name || "Info"}
           </Link>
         </>
       )}
