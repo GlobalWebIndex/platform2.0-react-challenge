@@ -44,7 +44,7 @@ export default function Gallery({ cards }) {
         <Card
           card={selectAttributes(card, index)}
           name={card.name}
-          key={card.id}
+          key={`${card.id}${index}`}
         />
       ))}
     </CardsContainer>
