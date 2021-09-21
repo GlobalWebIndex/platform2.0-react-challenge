@@ -19,7 +19,7 @@ const BreedInfo = styled.div`
 
 const modalStyles = { width: "auto", height: "auto" };
 
-export default function BreedModal() {
+export default function BreedModal({ background }) {
   const { push } = useHistory();
   const { name } = useParams();
   const location = useLocation();
@@ -38,7 +38,7 @@ export default function BreedModal() {
 
   return (
     <Modal
-      onClose={() => push("/breeds")}
+      onClose={() => push(background.pathname)}
       open={!!name}
       styles={modalStyles}
       content={

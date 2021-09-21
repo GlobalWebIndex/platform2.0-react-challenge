@@ -54,7 +54,7 @@ const modalStyles = { width: "auto", height: "auto" };
 
 const iconStyles = { width: "100%", height: "100%", strokeWidth: 1.5 };
 
-export default function CatModal() {
+export default function CatModal({ background }) {
   const { push } = useHistory();
   const { id } = useParams();
   const [copied, copy] = useCopyURL();
@@ -96,7 +96,7 @@ export default function CatModal() {
 
   return (
     <Modal
-      onClose={() => push("/")}
+      onClose={() => push(background.pathname)}
       open={id}
       styles={modalStyles}
       content={

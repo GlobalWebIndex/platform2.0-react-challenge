@@ -41,8 +41,18 @@ function App() {
         <Route path="/breeds" component={Breeds} />
         <Route path="/favourites" component={Favourites} />
       </Switch>
-      {background && <Route path="/images/:id" component={CatModal} />}
-      {background && <Route path="/breeds/:name" component={BreedModal} />}
+      {background && (
+        <>
+          <Route
+            path="/images/:id"
+            component={() => <CatModal background={background} />}
+          />
+          <Route
+            path="/breeds/:name"
+            component={() => <BreedModal background={background} />}
+          />
+        </>
+      )}
     </div>
   );
 }
