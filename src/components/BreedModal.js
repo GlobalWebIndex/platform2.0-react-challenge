@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { Link, useParams, useHistory, useLocation } from "react-router-dom";
 import { useAxios } from "../hooks/useAxios";
 import styled from "@emotion/styled";
 import { Modal } from "semantic-ui-react";
@@ -22,6 +22,8 @@ const modalStyles = { width: "auto", height: "auto" };
 export default function BreedModal() {
   const { push } = useHistory();
   const { name } = useParams();
+  const location = useLocation();
+
   const [breed, error, loading, fetchBreed] = useAxios();
   const [images, imagesError, imagesLoading, fetchImages] = useAxios();
 
@@ -49,6 +51,7 @@ export default function BreedModal() {
                     maxWidth: 700,
                     display: "grid",
                     gridTemplateColumns: "repeat(auto-fill, 150px)",
+                    gridTemplateRows: 150,
                     gridGap: 15,
                     justifyContent: "center",
                     margin: 10,
@@ -56,7 +59,17 @@ export default function BreedModal() {
                   }}
                 >
                   {images?.map((img) => (
-                    <Image src={img.url} alt={img.id} />
+                    <div style={{ position: "relative", maxHeight: 150 }}>
+                      <Link
+                        to={{
+                          pathname: `/images/${img.id}`,
+                          state: { background: location },
+                        }}
+                      >
+                        <Image src={img.url} alt={img.id} />
+                        {img.name}
+                      </Link>
+                    </div>
                   ))}
                 </div>
                 <BreedInfo>
