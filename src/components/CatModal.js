@@ -96,7 +96,7 @@ export default function CatModal({ background }) {
 
   return (
     <Modal
-      onClose={() => push(background.pathname)}
+      onClose={() => push(background.pathname || "/")}
       open={id}
       styles={modalStyles}
       content={
