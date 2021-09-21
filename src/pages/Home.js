@@ -1,9 +1,9 @@
-import { useContext } from "react";
+import { useEffect } from "react";
 import styled from "@emotion/styled";
-import { useFetchAndSave } from "../hooks/useFetchAndSave";
 import OverlayLoader from "../components/OverlayLoader";
 import { Button } from "semantic-ui-react";
 import Gallery from "../components/Gallery";
+import { useFetchAndSave } from "../hooks/useFetchAndSave";
 
 const ButtonContainer = styled.div`
   width: 30%;
@@ -11,26 +11,35 @@ const ButtonContainer = styled.div`
   margin: 0 auto;
 `;
 
+const config = {
+  url: "/images/search",
+  params: { limit: 10, order: "Rand", include_breeds: true },
+};
+
 export default function Home() {
-  const imagesData = useFetchAndSave("images", {
-    url: "/images/search",
-    params: { limit: 10, order: "Rand", include_breeds: true },
-  });
-  const [images, error, loading, fetch, clearImages] = imagesData;
+  const [images, error, loading, fetch, reset] = useFetchAndSave(
+    "images",
+    config
+  );
+
+  useEffect(() => {
+    if (!images) fetch(config);
+  }, [images, fetch]);
+
   return (
     <>
       {/* TODO handle error */}
       <OverlayLoader active={loading}>
         <Gallery cards={images} />
         <ButtonContainer>
-          <Button fluid primary onClick={() => fetch()}>
+          <Button fluid primary onClick={() => fetch(config)}>
             load more
           </Button>
           <Button
             fluid
             secondary
             onClick={() => {
-              clearImages();
+              reset();
             }}
           >
             reset
