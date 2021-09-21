@@ -1,7 +1,6 @@
-import { useEffect } from "react";
+import { useContext } from "react";
 import styled from "@emotion/styled";
-import { useStateAndLS } from "../hooks/useStateAndLS";
-import { useAxios } from "../hooks/useAxios";
+import { useFetchAndSave } from "../hooks/useFetchAndSave";
 import OverlayLoader from "../components/OverlayLoader";
 import { Button } from "semantic-ui-react";
 import Gallery from "../components/Gallery";
@@ -12,31 +11,19 @@ const ButtonContainer = styled.div`
   margin: 0 auto;
 `;
 
-const url = "/images/search";
-const params = { limit: 10, order: "Rand", include_breeds: true };
-const config = { url, params };
-
 export default function Home() {
-  const [images, setImages, clearImages] = useStateAndLS("images", []);
-  const [response, error, loading, fetchData] = useAxios();
-
-  useEffect(() => {
-    if (response) setImages((prev) => [...prev, ...response]);
-  }, [response, setImages]);
-
-  useEffect(() => {
-    if (!images.length > 0) {
-      fetchData(config);
-    }
-  }, [images, fetchData]);
-
+  const imagesData = useFetchAndSave("images", {
+    url: "/images/search",
+    params: { limit: 10, order: "Rand", include_breeds: true },
+  });
+  const [images, error, loading, fetch, clearImages] = imagesData;
   return (
     <>
       {/* TODO handle error */}
       <OverlayLoader active={loading}>
         <Gallery cards={images} />
         <ButtonContainer>
-          <Button fluid primary onClick={() => fetchData(config)}>
+          <Button fluid primary onClick={() => fetch()}>
             load more
           </Button>
           <Button

@@ -1,17 +1,9 @@
-import { useEffect } from "react/cjs/react.development";
-import { useAxios } from "../hooks/useAxios";
+import { useContext } from "react";
+import { useFetchAndSave } from "../hooks/useFetchAndSave";
 import Gallery from "../components/Gallery";
 
 export default function Breeds() {
-  const [breeds, error, loading, fetchBreeds] = useAxios();
-
-  useEffect(() => {
-    if (!breeds) fetchBreeds({ url: "/breeds" });
-  }, [breeds, fetchBreeds]);
-
-  useEffect(() => {
-    console.log({ breeds });
-  });
+  const [breeds] = useFetchAndSave("breeds", { url: "/breeds" });
 
   return (
     <>
