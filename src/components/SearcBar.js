@@ -15,7 +15,7 @@ export default function Searchbar({ data, setterCB, placeholder }) {
   useEffect(() => {
     if (searchQuery) {
       const proccessedData = data.filter((item) =>
-        item.name.includes(searchQuery.toLowerCase())
+        item.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
       setterCB(proccessedData);
     } else {
