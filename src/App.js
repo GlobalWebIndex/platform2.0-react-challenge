@@ -97,7 +97,6 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route path="/breeds" component={Breeds} />
         <Route path="/favourites" component={Favourites} />
-        <Redirect to="/" />
       </Switch>
       {background && (
         <>
