@@ -4,20 +4,75 @@ import { useAxios } from "../hooks/useAxios";
 import styled from "@emotion/styled";
 import { Modal } from "semantic-ui-react";
 import OverlayLoader from "./OverlayLoader";
+import mq from "../helpers";
+
+const ModalContent = styled.div`
+  width: 100%;
+  display: flex;
+  ${mq({
+    height: ["auto", 500],
+    padding: [10, 10, 0],
+    flexDirection: ["column", "row"],
+    justifyContent: ["flex-start", "center"],
+    alignItems: ["center"],
+  })}
+`;
+
+const ImageGrid = styled.div`
+  width: 100%;
+  max-width: 520px;
+  display: grid;
+  grid-gap: 10px;
+  justify-content: center;
+  overflow-y: scroll;
+  ${mq({
+    gridTemplateColumns: [
+      "repeat(auto-fill, 110px)",
+      "repeat(auto-fill, 150px)",
+    ],
+    gridTemplateRows: [110, 150],
+    height: [220, 450],
+  })}
+`;
 
 const Image = styled.img`
-  height: 150px;
-  width: 150px;
   object-fit: cover;
   background: black;
+  ${mq({
+    width: [110, 150],
+    height: [110, 150],
+  })}
 `;
 
 const BreedInfo = styled.div`
-  width: 425px;
-  padding: 5px 25px;
+  ${mq({
+    padding: [10, 25],
+    margin: [10],
+    width: ["100%", "100%", 250],
+    height: [200, 500],
+    overflowY: ["scroll", "hidden"],
+  })}
+  h1 {
+    ${mq({
+      fontSize: [16, 18],
+      margin: "10px 0",
+    })}
+  }
+  p {
+    ${mq({
+      fontSize: [12, 14],
+      margin: "10px 0",
+    })}
+  }
 `;
 
-const modalStyles = { width: "auto", height: "auto" };
+const modalStyles = mq({
+  width: ["90%"],
+  maxWidth: 800,
+  height: ["auto"],
+  overflow: "hidden",
+  padding: [0, "0 10px"],
+})[0];
 
 export default function BreedModal({ background }) {
   const { push } = useHistory();
@@ -40,24 +95,13 @@ export default function BreedModal({ background }) {
     <Modal
       onClose={() => push(background.pathname)}
       open={!!name}
-      styles={modalStyles}
+      style={modalStyles}
       content={
         <OverlayLoader active={loading || imagesLoading}>
-          <div style={{ display: "flex", height: 500 }}>
+          <ModalContent>
             {breed && (
               <>
-                <div
-                  style={{
-                    maxWidth: 700,
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fill, 150px)",
-                    gridTemplateRows: 150,
-                    gridGap: 15,
-                    justifyContent: "center",
-                    margin: 10,
-                    overflowY: "scroll",
-                  }}
-                >
+                <ImageGrid>
                   {images?.map((img) => (
                     <div style={{ position: "relative", maxHeight: 150 }}>
                       <Link
@@ -71,7 +115,7 @@ export default function BreedModal({ background }) {
                       </Link>
                     </div>
                   ))}
-                </div>
+                </ImageGrid>
                 <BreedInfo>
                   <h1>{breed[0].name}</h1>
                   <p>{breed[0].description}</p>
@@ -84,7 +128,7 @@ export default function BreedModal({ background }) {
                 </BreedInfo>
               </>
             )}
-          </div>
+          </ModalContent>
         </OverlayLoader>
       }
     />

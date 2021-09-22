@@ -141,10 +141,7 @@ export default function CatModal({ background }) {
               <>
                 <div style={{ position: "relative" }}>
                   <Image src={data.url} alt="cat" />
-                  <Toolkit
-                    position={data.breeds && "33%"}
-                    translate={data.breeds && "-33%"}
-                  >
+                  <Toolkit>
                     <Tool>
                       {favouriteLoading || favouritesLoading ? (
                         <Loader />
