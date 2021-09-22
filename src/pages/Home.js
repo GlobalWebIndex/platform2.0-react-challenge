@@ -4,11 +4,19 @@ import OverlayLoader from "../components/OverlayLoader";
 import { Button } from "semantic-ui-react";
 import Gallery from "../components/Gallery";
 import { useFetchAndSave } from "../hooks/useFetchAndSave";
+import mq from "../helpers";
 
 const ButtonContainer = styled.div`
-  width: 30%;
   max-width: 280px;
   margin: 0 auto;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%);
+  display: flex;
+  ${mq({
+    width: ["85%", "40%"],
+  })}
 `;
 
 const config = {
