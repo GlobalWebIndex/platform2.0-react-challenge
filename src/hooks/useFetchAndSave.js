@@ -9,7 +9,7 @@ export const useFetchAndSave = (name, config) => {
   const fetch = useCallback(() => fetchValues(config), [config, fetchValues]);
 
   useEffect(() => {
-    if (response) setValues((prev) => [...prev, ...response]);
+    if (response) setValues(response);
   }, [response, setValues]);
 
   useEffect(() => {

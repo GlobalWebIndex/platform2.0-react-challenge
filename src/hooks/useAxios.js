@@ -6,7 +6,7 @@ const instance = axios.create({
   headers: { "x-api-key": process.env.REACT_APP_API_KEY },
 });
 
-export const useAxios = (config, defaultValue) => {
+export const useAxios = (config) => {
   const initialValues = {
     response: null,
     error: null,
@@ -53,7 +53,7 @@ export const useAxios = (config, defaultValue) => {
       .finally(() => dispatch({ type: "COMPLETE" }));
   }, []);
 
-  const reset = () => dispatch({ type: "RESET" });
+  const reset = useCallback(() => dispatch({ type: "RESET" }), []);
 
   return [state.response, state.error, state.loading, fetchData, reset];
 };
