@@ -7,12 +7,25 @@ import { Modal } from "semantic-ui-react";
 import OverlayLoader from "./OverlayLoader";
 import { FiHeart, FiCopy } from "react-icons/fi";
 import { Loader } from "semantic-ui-react";
+import mq from "../helpers";
+
+const ModalContent = styled.div`
+  display: flex;
+  ${mq({
+    height: ["auto", 374],
+    flexDirection: ["column", "row"],
+    justifyContent: ["center"],
+    alignItems: ["center"],
+  })}
+`;
 
 const Image = styled.img`
-  height: 500px;
-  width: 500px;
   object-fit: cover;
   background: black;
+  ${mq({
+    width: [250, 375],
+    height: [250, 375],
+  })}
 `;
 
 const Toolkit = styled.div`
@@ -21,18 +34,34 @@ const Toolkit = styled.div`
   position: absolute;
   zindex: 20;
   bottom: 10px;
-  left: ${(props) => `${props.position || "50%"}`};
+  left: 50%;
   border-radius: 50px;
   background: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  transform: ${(props) => `translate(${props.translate || "-50%"})`};
+  transform: translate(-50%);
 `;
 
 const BreedInfo = styled.div`
-  width: 500px;
-  padding: 25px;
+  ${mq({
+    padding: [10, 25],
+    width: [250, 250],
+    height: [200, 375],
+    overflowY: ["scroll", "hidden"],
+  })}
+  h1 {
+    ${mq({
+      fontSize: [16, 18],
+      margin: "10px 0",
+    })}
+  }
+  p {
+    ${mq({
+      fontSize: [12, 14],
+      margin: "10px 0",
+    })}
+  }
 `;
 
 const Tool = styled.div`
@@ -50,7 +79,11 @@ const Msg = styled.div`
   padding: 2px 5px;
 `;
 
-const modalStyles = { width: "auto", height: "auto" };
+const modalStyles = mq({
+  width: ["auto"],
+  height: ["auto"],
+  overflow: "hidden",
+})[0];
 
 const iconStyles = { width: "100%", height: "100%", strokeWidth: 1.5 };
 
@@ -59,8 +92,13 @@ export default function CatModal({ background }) {
   const { id } = useParams();
   const [copied, copy] = useCopyURL();
   const [data, error, loading, fetchData] = useAxios();
-  const [favourites, favouritesError, favouritesLoading, fetchFavourites] =
-    useAxios();
+  const [
+    favourites,
+    favouritesError,
+    favouritesLoading,
+    fetchFavourites,
+    resetFavourites,
+  ] = useAxios();
   const [favourite, favouriteError, favouriteLoading, fetchFavourite] =
     useAxios();
 
@@ -79,8 +117,8 @@ export default function CatModal({ background }) {
 
   useEffect(() => {
     // fetch image info
-    fetchData({ url: `/images/${id}` });
-  }, [fetchData, id]);
+    if (!data) fetchData({ url: `/images/${id}` });
+  }, [data, fetchData, id]);
 
   useEffect(() => {
     // fetch all favourites
@@ -90,21 +128,48 @@ export default function CatModal({ background }) {
   useEffect(() => {
     // refetch favourites if image's favourite status changes
     if (favourite?.message === "SUCCESS") {
-      fetchFavourites({ url: `/favourites/` });
+      resetFavourites();
     }
-  }, [favourite, fetchFavourites]);
+  }, [favourite, resetFavourites]);
 
   return (
     <Modal
       onClose={() => push(background.pathname || "/")}
       open={id}
-      styles={modalStyles}
+      style={modalStyles}
       content={
         <OverlayLoader active={loading}>
-          <div style={{ display: "flex", height: 500 }}>
+          <ModalContent>
             {data && (
               <>
-                <Image src={data.url} alt="cat" />
+                <div style={{ position: "relative" }}>
+                  <Image src={data.url} alt="cat" />
+                  <Toolkit
+                    position={data.breeds && "33%"}
+                    translate={data.breeds && "-33%"}
+                  >
+                    <Tool>
+                      {favouriteLoading || favouritesLoading ? (
+                        <Loader />
+                      ) : (
+                        <FiHeart
+                          color={isFavourite ? "red" : "white"}
+                          fill={isFavourite ? "red" : "transparent"}
+                          style={iconStyles}
+                          onClick={() => handleFavourite()}
+                        />
+                      )}
+                    </Tool>
+                    <Tool>
+                      {copied && <Msg>copied</Msg>}
+                      <FiCopy
+                        color="white"
+                        style={iconStyles}
+                        onClick={() => copy()}
+                      />
+                    </Tool>
+                  </Toolkit>
+                </div>
                 <BreedInfo>
                   {data.breeds ? (
                     <>
@@ -115,34 +180,9 @@ export default function CatModal({ background }) {
                     <h3>Breed info not uvailable</h3>
                   )}
                 </BreedInfo>
-                <Toolkit
-                  position={data.breeds && "33%"}
-                  translate={data.breeds && "-33%"}
-                >
-                  <Tool>
-                    {favouriteLoading || favouritesLoading ? (
-                      <Loader />
-                    ) : (
-                      <FiHeart
-                        color={isFavourite ? "red" : "white"}
-                        fill={isFavourite ? "red" : "transparent"}
-                        style={iconStyles}
-                        onClick={() => handleFavourite()}
-                      />
-                    )}
-                  </Tool>
-                  <Tool>
-                    {copied && <Msg>copied</Msg>}
-                    <FiCopy
-                      color="white"
-                      style={iconStyles}
-                      onClick={() => copy()}
-                    />
-                  </Tool>
-                </Toolkit>
               </>
             )}
-          </div>
+          </ModalContent>
         </OverlayLoader>
       }
     />
