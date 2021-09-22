@@ -5,6 +5,7 @@ import { Button } from "semantic-ui-react";
 import Gallery from "../components/Gallery";
 import { useFetchAndSave } from "../hooks/useFetchAndSave";
 import mq from "../helpers";
+import ErrorModal from "../components/ErrorModal";
 
 const ButtonContainer = styled.div`
   max-width: 280px;
@@ -36,7 +37,6 @@ export default function Home() {
 
   return (
     <>
-      {/* TODO handle error */}
       <OverlayLoader active={loading}>
         <Gallery cards={images} />
         <ButtonContainer>
@@ -53,6 +53,7 @@ export default function Home() {
             reset
           </Button>
         </ButtonContainer>
+        <ErrorModal active={error} />
       </OverlayLoader>
     </>
   );

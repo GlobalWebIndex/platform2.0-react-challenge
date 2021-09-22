@@ -9,6 +9,7 @@ import OverlayLoader from "./OverlayLoader";
 import { FiHeart, FiCopy } from "react-icons/fi";
 import { Loader } from "semantic-ui-react";
 import mq from "../helpers";
+import ErrorModal from "./ErrorModal";
 
 const ModalContent = styled.div`
   display: flex;
@@ -130,55 +131,60 @@ export default function CatModal({ background }) {
   }, [favourite, resetFavourites]);
 
   return (
-    <Modal
-      onClose={() => push(background.pathname || "/")}
-      open={!!id}
-      style={modalStyles}
-      content={
-        <OverlayLoader active={loading}>
-          <ModalContent>
-            {data && (
-              <>
-                <div style={{ position: "relative" }}>
-                  <Image src={data.url} alt="cat" />
-                  <Toolkit>
-                    <Tool>
-                      {favouriteLoading || favouritesLoading ? (
-                        <Loader />
+    <>
+      {(!favouriteError || !favouritesError) && (
+        <Modal
+          onClose={() => push(background.pathname || "/")}
+          open={!!id}
+          style={modalStyles}
+          content={
+            <OverlayLoader active={loading}>
+              <ModalContent>
+                {data && (
+                  <>
+                    <div style={{ position: "relative" }}>
+                      <Image src={data.url} alt="cat" />
+                      <Toolkit>
+                        <Tool>
+                          {favouriteLoading || favouritesLoading ? (
+                            <Loader />
+                          ) : (
+                            <FiHeart
+                              color={isFavourite ? "red" : "white"}
+                              fill={isFavourite ? "red" : "transparent"}
+                              style={iconStyles}
+                              onClick={() => handleFavourite()}
+                            />
+                          )}
+                        </Tool>
+                        <Tool>
+                          {copied && <Msg>copied</Msg>}
+                          <FiCopy
+                            color="white"
+                            style={iconStyles}
+                            onClick={() => copy()}
+                          />
+                        </Tool>
+                      </Toolkit>
+                    </div>
+                    <BreedInfo>
+                      {data.breeds ? (
+                        <>
+                          <h1>{data.breeds[0]?.name}</h1>
+                          <p>{data.breeds[0]?.description}</p>
+                        </>
                       ) : (
-                        <FiHeart
-                          color={isFavourite ? "red" : "white"}
-                          fill={isFavourite ? "red" : "transparent"}
-                          style={iconStyles}
-                          onClick={() => handleFavourite()}
-                        />
+                        <h3>Breed info not uvailable</h3>
                       )}
-                    </Tool>
-                    <Tool>
-                      {copied && <Msg>copied</Msg>}
-                      <FiCopy
-                        color="white"
-                        style={iconStyles}
-                        onClick={() => copy()}
-                      />
-                    </Tool>
-                  </Toolkit>
-                </div>
-                <BreedInfo>
-                  {data.breeds ? (
-                    <>
-                      <h1>{data.breeds[0]?.name}</h1>
-                      <p>{data.breeds[0]?.description}</p>
-                    </>
-                  ) : (
-                    <h3>Breed info not uvailable</h3>
-                  )}
-                </BreedInfo>
-              </>
-            )}
-          </ModalContent>
-        </OverlayLoader>
-      }
-    />
+                    </BreedInfo>
+                  </>
+                )}
+              </ModalContent>
+            </OverlayLoader>
+          }
+        />
+      )}
+      {(favouriteError || favouritesError) && <ErrorModal active={error} />}
+    </>
   );
 }

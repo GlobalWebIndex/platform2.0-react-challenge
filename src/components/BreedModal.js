@@ -5,6 +5,7 @@ import styled from "@emotion/styled";
 import { Modal } from "semantic-ui-react";
 import OverlayLoader from "./OverlayLoader";
 import mq from "../helpers";
+import ErrorModal from "./ErrorModal";
 
 const ModalContent = styled.div`
   width: 100%;
@@ -92,45 +93,50 @@ export default function BreedModal({ background }) {
   }, [breed, fetchImages, images]);
 
   return (
-    <Modal
-      onClose={() => push(background.pathname)}
-      open={!!name}
-      style={modalStyles}
-      content={
-        <OverlayLoader active={loading || imagesLoading}>
-          <ModalContent>
-            {breed && (
-              <>
-                <ImageGrid>
-                  {images?.map((img) => (
-                    <div style={{ position: "relative", maxHeight: 150 }}>
-                      <Link
-                        to={{
-                          pathname: `/images/${img.id}`,
-                          state: { background: location },
-                        }}
-                      >
-                        <Image src={img.url} alt={img.id} />
-                        {img.name}
-                      </Link>
-                    </div>
-                  ))}
-                </ImageGrid>
-                <BreedInfo>
-                  <h1>{breed[0].name}</h1>
-                  <p>{breed[0].description}</p>
-                  <p>
-                    <b>Origin:</b> {breed[0].origin}
-                  </p>
-                  <p>
-                    <b>Temperament:</b> {breed[0].temperament}
-                  </p>
-                </BreedInfo>
-              </>
-            )}
-          </ModalContent>
-        </OverlayLoader>
-      }
-    />
+    <>
+      {(!error || !imagesError) && (
+        <Modal
+          onClose={() => push(background.pathname)}
+          open={!!name}
+          style={modalStyles}
+          content={
+            <OverlayLoader active={loading || imagesLoading}>
+              <ModalContent>
+                {breed && (
+                  <>
+                    <ImageGrid>
+                      {images?.map((img) => (
+                        <div style={{ position: "relative", maxHeight: 150 }}>
+                          <Link
+                            to={{
+                              pathname: `/images/${img.id}`,
+                              state: { background: location },
+                            }}
+                          >
+                            <Image src={img.url} alt={img.id} />
+                            {img.name}
+                          </Link>
+                        </div>
+                      ))}
+                    </ImageGrid>
+                    <BreedInfo>
+                      <h1>{breed[0].name}</h1>
+                      <p>{breed[0].description}</p>
+                      <p>
+                        <b>Origin:</b> {breed[0].origin}
+                      </p>
+                      <p>
+                        <b>Temperament:</b> {breed[0].temperament}
+                      </p>
+                    </BreedInfo>
+                  </>
+                )}
+              </ModalContent>
+            </OverlayLoader>
+          }
+        />
+      )}
+      {error || (imagesError && <ErrorModal active={error} />)}
+    </>
   );
 }
