@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styled from "@emotion/styled";
 import { Link, useLocation } from "react-router-dom";
-
 const CardContainer = styled.div`
   height: 250px;
   width: 250px;
@@ -16,60 +15,47 @@ const Image = styled.img`
   width: 250px;
   object-fit: cover;
   border-radius: 10px;
-  background: black;
+  &:hover {
+    transition: all 200ms ease;
+  }
 `;
 
-const Overlay = styled.div`
+const Label = styled.div`
+  width: 100%;
+  height: 38px;
   position: absolute;
-  top: 0;
-  right: 0;
   bottom: 0;
-  left: 0;
-  z-index: 10;
-  background: ${(props) => `rgba(0, 0, 0, ${props.active ? 0.4 : 0})`};
+  zindex: 20;
+  background: #000;
+  color: white;
+  line-height: 32px;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
 `;
-
-const buttonStyles = {
-  width: "90%",
-  height: 38,
-  lineHeight: "32px",
-  position: "absolute",
-  bottom: "10px",
-  left: "50%",
-  transform: "translate(-50%)",
-  zIndex: "20",
-  color: "white",
-  border: "2px solid white",
-  borderRadius: 10,
-  textAlign: "center",
-  fontSize: 16,
-};
 
 export default function Card({ card, name }) {
-  const [active, setActive] = useState(false);
   const location = useLocation();
   const { imgUrl, imgAlt, imgLink } = card;
+  const [imageError, setImageError] = useState(false);
 
   return (
-    <CardContainer
-      onMouseEnter={() => setActive(true)}
-      onMouseLeave={() => setActive(false)}
+    <Link
+      to={{
+        pathname: imgLink,
+        state: { background: location },
+      }}
     >
-      <Image src={imgUrl} alt={imgAlt} />
-      {active && (
-        <>
-          <Overlay active />
-          <Link
-            to={{
-              pathname: imgLink,
-              state: { background: location },
-            }}
-            style={buttonStyles}
-          >
-            {name || "Info"}
-          </Link>
-        </>
-      )}
-    </CardContainer>
+      <CardContainer>
+        {!imageError && (
+          <Image
+            src={imgUrl}
+            alt={imgAlt}
+            onError={() => setImageError(true)}
+          />
+        )}
+        {name && <Label>{name}</Label>}
+      </CardContainer>
+    </Link>
   );
 }
