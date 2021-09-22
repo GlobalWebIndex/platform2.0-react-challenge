@@ -10,6 +10,14 @@ import { FaCat } from "react-icons/fa";
 import mq from "./helpers";
 import "semantic-ui-css/semantic.min.css";
 
+const HeaderContainer = styled.div`
+  width: 100%;
+  background: #eeeeee;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+`;
+
 const Header = styled.div`
   width: 90%;
   max-width: 1500px;
@@ -67,22 +75,24 @@ function App() {
 
   return (
     <div style={{ background: "#eeeeee", minHeight: "100vh" }}>
-      <Header>
-        <Logo>
-          <FaCat style={logoIconStyles} />
-        </Logo>
-        <Navigation>
-          <NavLink exact to="/" activeStyle={activeStyle}>
-            Home
-          </NavLink>
-          <NavLink to="/breeds" activeStyle={activeStyle}>
-            Breeds
-          </NavLink>
-          <NavLink to="/favourites" activeStyle={activeStyle}>
-            Favourites
-          </NavLink>
-        </Navigation>
-      </Header>
+      <HeaderContainer>
+        <Header>
+          <Logo>
+            <FaCat style={logoIconStyles} />
+          </Logo>
+          <Navigation>
+            <NavLink exact to="/" activeStyle={activeStyle}>
+              Home
+            </NavLink>
+            <NavLink to="/breeds" activeStyle={activeStyle}>
+              Breeds
+            </NavLink>
+            <NavLink to="/favourites" activeStyle={activeStyle}>
+              Favourites
+            </NavLink>
+          </Navigation>
+        </Header>
+      </HeaderContainer>
       <Switch location={background || location}>
         <Route exact path="/" component={Home} />
         <Route path="/breeds" component={Breeds} />
