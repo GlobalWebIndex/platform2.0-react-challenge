@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useAxios } from "../hooks/useAxios";
+import Context from "../context/AppContext";
 import useCopyURL from "../hooks/useCopyURL";
 import styled from "@emotion/styled";
 import { Modal } from "semantic-ui-react";
@@ -92,13 +93,14 @@ export default function CatModal({ background }) {
   const { id } = useParams();
   const [copied, copy] = useCopyURL();
   const [data, error, loading, fetchData] = useAxios();
-  const [
-    favourites,
-    favouritesError,
-    favouritesLoading,
-    fetchFavourites,
-    resetFavourites,
-  ] = useAxios();
+  const {
+    favouritesData: {
+      favourites,
+      favouritesLoading,
+      favouritesError,
+      resetFavourites,
+    },
+  } = useContext(Context);
   const [favourite, favouriteError, favouriteLoading, fetchFavourite] =
     useAxios();
 
@@ -121,11 +123,6 @@ export default function CatModal({ background }) {
   }, [data, fetchData, id]);
 
   useEffect(() => {
-    // fetch all favourites
-    if (!favourites) fetchFavourites({ url: `/favourites/` });
-  }, [favourites, fetchFavourites, id]);
-
-  useEffect(() => {
     // refetch favourites if image's favourite status changes
     if (favourite?.message === "SUCCESS") {
       resetFavourites();
@@ -135,7 +132,7 @@ export default function CatModal({ background }) {
   return (
     <Modal
       onClose={() => push(background.pathname || "/")}
-      open={id}
+      open={!!id}
       style={modalStyles}
       content={
         <OverlayLoader active={loading}>

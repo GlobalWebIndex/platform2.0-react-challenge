@@ -1,17 +1,15 @@
-import { useEffect } from "react";
-import { useAxios } from "./../hooks/useAxios";
+import { useContext } from "react";
+import Context from "../context/AppContext";
 import OverlayLoader from "../components/OverlayLoader";
 import Gallery from "../components/Gallery";
 
 export default function Favourites() {
-  const [favourites, error, loading, fetch] = useAxios();
-
-  useEffect(() => {
-    if (!favourites) fetch({ url: "/favourites" });
-  }, [favourites, fetch]);
+  const {
+    favouritesData: { favourites, favouritesLoading },
+  } = useContext(Context);
 
   return (
-    <OverlayLoader active={loading}>
+    <OverlayLoader active={favouritesLoading}>
       <Gallery cards={favourites} />
     </OverlayLoader>
   );
