@@ -46,7 +46,6 @@ export const useAxios = (config) => {
     instance
       .request(config)
       .then((res) => {
-        console.log(res.config.url, res.status, res.data);
         dispatch({ type: "SET_DATA", payload: { response: res.data } });
       })
       .catch((err) => dispatch({ type: "ERROR", payload: { error: err } }))
