@@ -1,4 +1,4 @@
-import { Switch, Route, NavLink } from "react-router-dom";
+import { Switch, Route, NavLink, Redirect } from "react-router-dom";
 import styled from "@emotion/styled";
 import { useLocation } from "react-router";
 import Home from "./pages/Home";
@@ -97,6 +97,7 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route path="/breeds" component={Breeds} />
         <Route path="/favourites" component={Favourites} />
+        <Redirect to="/" />
       </Switch>
       {background && (
         <>
