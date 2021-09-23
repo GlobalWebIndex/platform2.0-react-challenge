@@ -19,7 +19,7 @@ export default function Breeds() {
         placeholder="search breeds"
       />
       <Gallery cards={filteredBreeds} />
-      <ErrorModal active={error} />
+      <ErrorModal active={!!error} />
     </OverlayLoader>
   );
 }

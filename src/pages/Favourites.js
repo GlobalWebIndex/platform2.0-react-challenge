@@ -14,7 +14,7 @@ export default function Favourites() {
       <OverlayLoader active={favouritesLoading}>
         <Gallery cards={favourites} />
       </OverlayLoader>
-      <ErrorModal active={favouritesError} />
+      <ErrorModal active={!!favouritesError} />
     </>
   );
 }

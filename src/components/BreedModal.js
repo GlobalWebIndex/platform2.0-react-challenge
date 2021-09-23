@@ -67,13 +67,13 @@ const BreedInfo = styled.div`
   }
 `;
 
-const modalStyles = mq({
-  width: ["90%"],
+const modalStyles = {
+  width: "90%",
   maxWidth: 800,
-  height: ["auto"],
+  height: "auto",
   overflow: "hidden",
-  padding: [0, "0 10px"],
-})[0];
+  padding: "0 10px",
+};
 
 export default function BreedModal({ background }) {
   const { push } = useHistory();
@@ -106,7 +106,10 @@ export default function BreedModal({ background }) {
                   <>
                     <ImageGrid>
                       {images?.map((img) => (
-                        <div style={{ position: "relative", maxHeight: 150 }}>
+                        <div
+                          key={img.id}
+                          style={{ position: "relative", maxHeight: 150 }}
+                        >
                           <Link
                             to={{
                               pathname: `/images/${img.id}`,
@@ -136,7 +139,7 @@ export default function BreedModal({ background }) {
           }
         />
       )}
-      {error || (imagesError && <ErrorModal active={error} />)}
+      {error || (imagesError && <ErrorModal active={!!error} />)}
     </>
   );
 }

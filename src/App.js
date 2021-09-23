@@ -1,4 +1,4 @@
-import { Switch, Route, NavLink, Redirect } from "react-router-dom";
+import { Switch, Route, NavLink } from "react-router-dom";
 import styled from "@emotion/styled";
 import { useLocation } from "react-router";
 import Home from "./pages/Home";
