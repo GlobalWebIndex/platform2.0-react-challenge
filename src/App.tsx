@@ -1,4 +1,5 @@
 import Breeds from 'components/Breeds/Breeds';
+import Header from 'components/common/Header/Header';
 import Favourites from 'components/Favourites/Favourites';
 import Home from 'components/Home/Home';
 import { Routes } from 'constants/routes';
@@ -10,19 +11,7 @@ function App() {
   return (
     <Router>
       <div className={styles.content}>
-        <nav>
-          <ul>
-            <li>
-              <Link to={Routes.home.index}>Home</Link>
-            </li>
-            <li>
-              <Link to={Routes.breeds.index}>Breeds</Link>
-            </li>
-            <li>
-              <Link to={Routes.favourites.index}>Favourites</Link>
-            </li>
-          </ul>
-        </nav>
+        <Header />
         <Switch>
           <Route path={Routes.favourites.index} exact>
             <Favourites />
