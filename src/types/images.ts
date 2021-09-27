@@ -1,8 +1,4 @@
-export type BreedType = {
-  id: string;
-  name: string;
-  description: string;
-};
+import { BreedType } from './breeds';
 
 export type CategoriesType = {
   id: number;
@@ -14,4 +10,11 @@ export type ImageType = {
   url: string;
   breeds: BreedType[];
   categories: CategoriesType[];
+};
+
+export type ImageRequestType = {
+  order?: 'RANDOM' | 'ASC' | 'DESC';
+  limit?: number;
+  page?: number;
+  breed_id?: string;
 };

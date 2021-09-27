@@ -2,11 +2,12 @@ import ImagesListItem from 'components/common/ImagesListItem/ImagesListItem';
 import ImagesListWrapper from 'components/common/ImagesListWrapper/ImagesListWrapper';
 import Modal from 'components/common/Modal/Modal';
 import Spinner from 'components/common/Spinner/Spinner';
-import { USER_ID } from 'constants/api';
-import React, { useEffect, useState } from 'react';
+import { USER_ID } from 'constants/app';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addFavourite } from 'redux/favourites/actions';
-import { getCats } from 'redux/images/actions';
+import { addFavourite, deleteFavourite, getFavourites } from 'redux/favourites/actions';
+import { allFavouritesSelector, favouritesLoadingSelector } from 'redux/favourites/selectors';
+import { getImages } from 'redux/images/actions';
 import { allImagesSelector, imagesLoadingSelector } from 'redux/images/selectors';
 import { ImageType } from 'types/images';
 import styles from './Home.module.scss';
@@ -18,11 +19,21 @@ const Home = () => {
   const [showModal, setShowModal] = useState(false);
   const [showCopied, setShowCopied] = useState(false);
   const images = useSelector(allImagesSelector);
+  const favourites = useSelector(allFavouritesSelector);
+  const favouritesLoading = useSelector(favouritesLoadingSelector);
   const imagesLoading = useSelector(imagesLoadingSelector);
 
   useEffect(() => {
-    dispatch(getCats());
-  }, [dispatch]);
+    if (images.length === 0) {
+      dispatch(getImages());
+    }
+  }, [dispatch, images.length]);
+
+  useEffect(() => {
+    if (favourites.length === 0) {
+      dispatch(getFavourites());
+    }
+  }, [dispatch, favourites.length]);
 
   const onImageClick = (id: string) => {
     const image = images.find((item) => item.id === id);
@@ -38,12 +49,19 @@ const Home = () => {
 
   const onLoadMore = () => {
     if (!imagesLoading) {
-      dispatch(getCats());
+      dispatch(getImages());
     }
   };
 
   const onFavouriteClick = (id: string) => {
-    dispatch(addFavourite(id, USER_ID));
+    if (!favouritesLoading) {
+      const favourite = favourites.find((item) => item.image.id === id);
+      if (favourite) {
+        dispatch(deleteFavourite(favourite.id));
+      } else {
+        dispatch(addFavourite(id, USER_ID));
+      }
+    }
   };
 
   const onCopyImageRefClick = (url: string) => {
@@ -54,6 +72,14 @@ const Home = () => {
     }, 2000);
   };
 
+  const isFavourite = useMemo(() => {
+    if (selectedImage && favourites.length > 0) {
+      return Boolean(favourites.find((item) => item.image_id === selectedImage.id));
+    }
+
+    return false;
+  }, [favourites, selectedImage]);
+
   if (imagesLoading) {
     return <Spinner />;
   }
@@ -62,7 +88,9 @@ const Home = () => {
     <div className={styles.content}>
       <ImagesListWrapper>
         {images.map((image) => {
-          return <ImagesListItem id={image.id} source={image.url} alt={image.id} onClick={onImageClick} />;
+          return (
+            <ImagesListItem key={image.id} id={image.id} source={image.url} alt={image.id} onClick={onImageClick} />
+          );
         })}
       </ImagesListWrapper>
       <button onClick={onLoadMore}>{imagesLoading ? 'Loading...' : 'Load more'}</button>
@@ -75,6 +103,7 @@ const Home = () => {
             onCopyClick={onCopyImageRefClick}
             onFavouriteClick={onFavouriteClick}
             showCopied={showCopied}
+            isFavourite={isFavourite}
           />
         )}
       </Modal>

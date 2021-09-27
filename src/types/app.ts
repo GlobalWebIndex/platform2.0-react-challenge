@@ -4,6 +4,11 @@ export type DefaultStateType = {
   error: string;
 };
 
+export type DefaultPaginationStateType<T> = DefaultStateType & {
+  page: number;
+  list: T[];
+};
+
 export type ErrorPayload = {
   error: string;
 };

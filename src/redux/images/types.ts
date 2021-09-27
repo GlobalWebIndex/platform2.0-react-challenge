@@ -1,6 +1,6 @@
-import { ErrorPayload, DefaultStateType } from "types/app";
-import { ImageType } from "types/images";
-import * as actionTypes from "./actionTypes";
+import { ErrorPayload, DefaultStateType, DefaultPaginationStateType } from 'types/app';
+import { ImageType } from 'types/images';
+import * as actionTypes from './actionTypes';
 
 /************************* Images *************************/
 export type GetImagesLoadingType = {
@@ -19,11 +19,10 @@ export type GetImagesFailureType = {
   payload: ErrorPayload;
 };
 
-export type GetImagesActionType =
-  | GetImagesLoadingType
-  | GetImagesSuccessType
-  | GetImagesFailureType;
-
-export type ImagesDefaultState = DefaultStateType & {
-  list: ImageType[];
+export type ImagesClearType = {
+  type: typeof actionTypes.IMAGES_CLEAR;
 };
+
+export type GetImagesActionType = GetImagesLoadingType | GetImagesSuccessType | GetImagesFailureType | ImagesClearType;
+
+export type ImagesDefaultState = DefaultPaginationStateType<ImageType>;

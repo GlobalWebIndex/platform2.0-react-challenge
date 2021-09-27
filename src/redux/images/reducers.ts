@@ -1,12 +1,14 @@
-import { combineReducers } from "redux";
-import { GetImagesActionType, ImagesDefaultState } from "./types";
-import * as actionTypes from "./actionTypes";
-import { getFailureState, getLoadingState, getSuccessState } from "utils/redux";
+import { combineReducers } from 'redux';
+import { GetImagesActionType, ImagesDefaultState } from './types';
+import * as actionTypes from './actionTypes';
+import { getFailureState, getLoadingState, getSuccessState } from 'utils/redux';
+import { PAGINATION_DEFAULT_PAGE } from 'constants/app';
 
 const imagesDefaultState: ImagesDefaultState = {
   loading: false,
-  error: "",
+  error: '',
   hasError: false,
+  page: PAGINATION_DEFAULT_PAGE,
   list: [],
 };
 
@@ -20,6 +22,7 @@ const all = (state = imagesDefaultState, action: GetImagesActionType) => {
     case actionTypes.IMAGES_SUCCESS:
       return {
         list: [...state.list, ...action.payload.data],
+        page: state.page + 1,
         ...getSuccessState(),
       };
     case actionTypes.IMAGES_FAILURE:
@@ -27,6 +30,8 @@ const all = (state = imagesDefaultState, action: GetImagesActionType) => {
         ...state,
         ...getFailureState(action.payload.error),
       };
+    case actionTypes.IMAGES_CLEAR:
+      return imagesDefaultState;
     default:
       return state;
   }

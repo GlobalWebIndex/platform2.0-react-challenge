@@ -1,3 +1,4 @@
+import Breeds from 'components/Breeds/Breeds';
 import Favourites from 'components/Favourites/Favourites';
 import Home from 'components/Home/Home';
 import { Routes } from 'constants/routes';
@@ -15,7 +16,7 @@ function App() {
               <Link to={Routes.home.index}>Home</Link>
             </li>
             <li>
-              <Link to="/about">About</Link>
+              <Link to={Routes.breeds.index}>Breeds</Link>
             </li>
             <li>
               <Link to={Routes.favourites.index}>Favourites</Link>
@@ -25,6 +26,9 @@ function App() {
         <Switch>
           <Route path={Routes.favourites.index} exact>
             <Favourites />
+          </Route>
+          <Route path={Routes.breeds.index} exact>
+            <Breeds />
           </Route>
           <Route path={Routes.home.index}>
             <Home />

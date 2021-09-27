@@ -43,3 +43,25 @@ export type AddFavouritesFailureType = {
 };
 
 export type AddFavouritesActionType = AddFavouritesLoadingType | AddFavouritesSuccessType | AddFavouritesFailureType;
+
+/************************* Delete Favourite *************************/
+export type DeleteFavouriteLoadingType = {
+  type: typeof actionTypes.DELETE_FAVOURITE_LOADING;
+};
+
+export type DeleteFavouriteSuccessType = {
+  type: typeof actionTypes.DELETE_FAVOURITE_SUCCESS;
+  payload: {
+    data: FavouriteType[];
+  };
+};
+
+export type DeleteFavouriteFailureType = {
+  type: typeof actionTypes.DELETE_FAVOURITE_FAILURE;
+  payload: ErrorPayload;
+};
+
+export type DeleteFavouriteActionType =
+  | DeleteFavouriteLoadingType
+  | DeleteFavouriteSuccessType
+  | DeleteFavouriteFailureType;
