@@ -1,0 +1,22 @@
+.content {
+  max-width: 1000px;
+  margin: auto;
+}
+
+ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  background-color: lightgray;
+  & > li {
+    height: 50px;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 15px;
+    padding: 0 20px;
+    text-decoration: none;
+    > a {
+      text-decoration: none;
+    }
+  }
+}
