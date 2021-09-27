@@ -1,0 +1,17 @@
+.content {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin: 10px;
+  img {
+    border-radius: 10px;
+    width: 180px;
+    height: 180px;
+  }
+}
+
+.favourite-container {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}

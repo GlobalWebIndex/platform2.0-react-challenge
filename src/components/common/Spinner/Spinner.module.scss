@@ -1,0 +1,11 @@
+.content {
+  display: flex;
+  flex: 1;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  > span {
+    font-size: 22;
+    font-weight: bold;
+  }
+}

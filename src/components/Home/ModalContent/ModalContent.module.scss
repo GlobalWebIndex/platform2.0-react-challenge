@@ -1,0 +1,28 @@
+.content {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  img {
+    align-self: center;
+    height: 200px;
+    width: auto;
+  }
+}
+
+.icons__container {
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+  flex-direction: column;
+  svg {
+    padding-bottom: 10px;
+    align-self: flex-end;
+  }
+  > div {
+    margin-top: 20px;
+    background-color: lightgreen;
+    padding: 10px;
+    border-radius: 5px;
+  }
+}

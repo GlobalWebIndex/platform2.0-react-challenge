@@ -1,0 +1,25 @@
+.modal__wrap {
+  position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  background-color: rgba(31, 32, 41, 0.75);
+}
+
+.modal {
+  padding: 20px;
+  width: 60vw;
+  height: 60%;
+  min-height: 400px;
+  min-width: 400px;
+  margin: 0 auto;
+  border-radius: 4px;
+  background-color: #fff;
+  align-self: center;
+  box-shadow: 0 12px 25px 0 rgba(199, 175, 189, 0.25);
+}
