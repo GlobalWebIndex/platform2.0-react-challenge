@@ -1,17 +1,18 @@
 .modal__wrap {
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
   z-index: 100;
   background-color: rgba(31, 32, 41, 0.75);
 }
 
 .modal {
+  position: fixed;
   padding: 20px;
   width: 60vw;
   height: 60%;
