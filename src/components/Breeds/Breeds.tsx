@@ -2,8 +2,10 @@ import ImagesListItem from 'components/common/ImagesListItem/ImagesListItem';
 import ImagesListWrapper from 'components/common/ImagesListWrapper/ImagesListWrapper';
 import Modal from 'components/common/Modal/Modal';
 import Spinner from 'components/common/Spinner/Spinner';
+import { Routes } from 'constants/routes';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import { getBreeds } from 'redux/breeds/actions';
 import { allBreedsSelector, breedsLoadingSelector } from 'redux/breeds/selectors';
 import { clearImages, getImages } from 'redux/images/actions';
@@ -12,6 +14,7 @@ import { BreedType } from 'types/breeds';
 import ModalContent from './ModalContent/ModalContent';
 
 const Breeds = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [selectedBreed, setSelectedBreed] = useState<BreedType>();
@@ -30,6 +33,10 @@ const Breeds = () => {
     dispatch(clearImages());
     dispatch(getImages({ order: 'ASC', breed_id: id }));
     setShowModal(true);
+  };
+
+  const onImageClick = (id: string) => {
+    history.push(`${Routes.home.index}${id}`);
   };
 
   const onModalClose = () => {
@@ -59,7 +66,7 @@ const Breeds = () => {
         })}
       </ImagesListWrapper>
       <Modal show={showModal} onClose={onModalClose}>
-        <ModalContent breed={selectedBreed} images={images} />
+        <ModalContent breed={selectedBreed} images={images} onImageClick={onImageClick} />
       </Modal>
     </>
   );

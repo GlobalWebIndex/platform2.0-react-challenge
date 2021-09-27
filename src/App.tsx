@@ -4,7 +4,7 @@ import Favourites from 'components/Favourites/Favourites';
 import Home from 'components/Home/Home';
 import { Routes } from 'constants/routes';
 import React from 'react';
-import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import styles from './App.module.scss';
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
           <Route path={Routes.breeds.index} exact>
             <Breeds />
           </Route>
-          <Route path={Routes.home.index}>
+          <Route path={`${Routes.home.index}:id?`}>
             <Home />
           </Route>
         </Switch>

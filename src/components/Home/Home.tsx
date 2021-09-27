@@ -3,8 +3,10 @@ import ImagesListWrapper from 'components/common/ImagesListWrapper/ImagesListWra
 import Modal from 'components/common/Modal/Modal';
 import Spinner from 'components/common/Spinner/Spinner';
 import { USER_ID } from 'constants/app';
+import { Routes } from 'constants/routes';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router';
 import { addFavourite, deleteFavourite, getFavourites } from 'redux/favourites/actions';
 import { allFavouritesSelector, favouritesLoadingSelector } from 'redux/favourites/selectors';
 import { getImages } from 'redux/images/actions';
@@ -14,7 +16,9 @@ import styles from './Home.module.scss';
 import ModalContent from './ModalContent/ModalContent';
 
 const Home = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
+  const { id } = useParams<{ id?: string }>() ?? {};
   const [selectedImage, setSelectedImage] = useState<ImageType>();
   const [showModal, setShowModal] = useState(false);
   const [showCopied, setShowCopied] = useState(false);
@@ -22,6 +26,16 @@ const Home = () => {
   const favourites = useSelector(allFavouritesSelector);
   const favouritesLoading = useSelector(favouritesLoadingSelector);
   const imagesLoading = useSelector(imagesLoadingSelector);
+
+  useEffect(() => {
+    if (id) {
+      const image = images.find((item) => item.id === id);
+      if (image) {
+        setSelectedImage(image);
+        setShowModal(true);
+      }
+    }
+  }, [id, images]);
 
   useEffect(() => {
     if (images.length === 0) {
@@ -43,6 +57,9 @@ const Home = () => {
   };
 
   const onModalClose = () => {
+    if (id) {
+      history.push(Routes.home.index);
+    }
     setSelectedImage(undefined);
     setShowModal(false);
   };
