@@ -1,0 +1,21 @@
+@import "src/assets/scss/helpers";
+
+.gc-cat-card {
+  margin: rem(8);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    box-shadow: 10px 5px 5px #999999;
+  }
+
+  &__modal-footer {
+    display: flex;
+    flex-direction: column;
+
+    .p-inputgroup button {
+      width: rem(40);
+    }
+  }
+}

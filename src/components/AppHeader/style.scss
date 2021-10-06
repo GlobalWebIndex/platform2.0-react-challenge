@@ -1,0 +1,14 @@
+@import "src/assets/scss/helpers";
+
+.gc-header {
+  position: fixed;
+  top: rem(8);
+  right: rem(8);
+  left: rem(8);
+  z-index: 1;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}

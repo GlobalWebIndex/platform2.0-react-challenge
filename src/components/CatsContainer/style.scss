@@ -1,0 +1,11 @@
+@import "src/assets/scss/helpers";
+
+.gc-container {
+  &__toolbar {
+    position: fixed;
+    right: rem(8);
+    left: rem(8);
+    bottom: rem(8);
+    z-index: 1;
+  }
+}

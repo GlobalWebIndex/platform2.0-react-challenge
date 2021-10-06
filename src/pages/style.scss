@@ -1,0 +1,17 @@
+@import "src/assets/scss/helpers";
+
+.gc-page {
+  margin-top: rem(80);
+}
+
+.gc-container {
+  margin: rem(8) 0;
+  display: flex;
+  flex-direction: column;
+
+  &__cat-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

@@ -1,19 +1,26 @@
-# GlobalWebIndex Engineering Challenge
-## Exercise: CatLover
-Create an Elm or React application for cat lovers which is going to build upon thecatapi.com and will have 3 views. 
-The first view displays a list of 10 random cat images and a button to load more. Clicking on any of those images opens a modal view with the image and the information about the cat’s breed if available. This would be a link to the second view below - the breed detail. The modal should also contain a form to mark the image as your favourite (a part of the third view as well). Make sure you can copy-paste the url of the modal and send it to your friends - they should see the same image as you can see. 
+# MEOW Project for GWI
+This project was based on Create React App. 
 
-The second view displays a list of cat breeds. Each breed opens a modal again with a list of cat images of that breed. Each of those images must be a link to the image detail from the previous point. 
+CRA provides a good set of defaults for React, especially with how complex the modern front-end has become.
 
-The third view allows you do the following things:
-* Display your favourite cats 
-* Remove an image from your favourites (use any UX option you like)
+# Libraries reasoning
 
-You can find the API documentation here: https://docs.thecatapi.com/ 
-We give you a lot of freedom in technologies and ways of doing things. We only insist on you using React.js or the Elm language. Note that we have omitted a lot of details in this description which we hope you will fill in and thus prove to us that you are aware of industry best practices and that you also follow them. Get creative as much as you want, we WILL appreciate it. You will not be evaluated based on how well you follow these instructions, but based on how sensible your solution will be. In case you are not able to implement something you would normally implement for time reasons, make it clear with a comment. 
+### React Router
+Currently, the most used router option, although not official, for any React based SPA project. 
 
-## Submission
+### Zustand
+Why not Redux? Redux in my opinion requires a lot of boilerplate in order to achieve something simple. Zustand 
+is simple to setup but already used for large applications, while providing, out of the box, many sensible defaults
+and useful pluing e.g. persist.
 
-Just a make a PR to the current repo!
-Good luck, potential colleague! 
+### React Helmet
+Although not SSR based CRA can add all necessary meta tags AND change them while navigating with React Router by using 
+React Helmet. 
 
+### Axios
+Axios is still one of the best available options for ajax requests especially with many features e.g. interceptors.
+
+### PrimeReact
+PrimeReact is a feature complete UI library for React, while the setup is fast.
+
+Any other questions please do not hesitate to reach out.
