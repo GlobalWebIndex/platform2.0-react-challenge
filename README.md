@@ -1,19 +1,28 @@
-# GlobalWebIndex Engineering Challenge
-## Exercise: CatLover
-Create an Elm or React application for cat lovers which is going to build upon thecatapi.com and will have 3 views. 
-The first view displays a list of 10 random cat images and a button to load more. Clicking on any of those images opens a modal view with the image and the information about the cat’s breed if available. This would be a link to the second view below - the breed detail. The modal should also contain a form to mark the image as your favourite (a part of the third view as well). Make sure you can copy-paste the url of the modal and send it to your friends - they should see the same image as you can see. 
+# CatLover App
 
-The second view displays a list of cat breeds. Each breed opens a modal again with a list of cat images of that breed. Each of those images must be a link to the image detail from the previous point. 
+## Technology used and dependencies
 
-The third view allows you do the following things:
-* Display your favourite cats 
-* Remove an image from your favourites (use any UX option you like)
+This is an application initialized with the create-react-app.
+The JSS library has been used for styling and the Testing Library (@testing-library/react)
+for the UI testing.
 
-You can find the API documentation here: https://docs.thecatapi.com/ 
-We give you a lot of freedom in technologies and ways of doing things. We only insist on you using React.js or the Elm language. Note that we have omitted a lot of details in this description which we hope you will fill in and thus prove to us that you are aware of industry best practices and that you also follow them. Get creative as much as you want, we WILL appreciate it. You will not be evaluated based on how well you follow these instructions, but based on how sensible your solution will be. In case you are not able to implement something you would normally implement for time reasons, make it clear with a comment. 
+Other 3rd party dependencies used on this application:
 
-## Submission
+- React Router, for defining the application routes,
+- Axios, for making external HTTP requests,
+- Localforage, for storing and retrieving data from the indexDB,
+- React Responsive Carousel, for displaying a carousel on the breed modal,
+- Body Scroll Lock, for disabling the scrolling when the modal is open.
 
-Just a make a PR to the current repo!
-Good luck, potential colleague! 
+## Uncompleted work (due to time constraints)
 
+Next steps in terms of completion of this application:
+
+- Handle the "Not Found" scenarios. Those include the following cases:
+  -- Invalid urls that aren't included on the app's routes,
+  -- Valid urls with invalid parameters. Redirection to a "Not Found" page when the requests for "/images/[id]" or "/breed/[id]" aren't successful.
+
+- Extend Testing in the rest of the components:
+  -- Favourites functionality, including empty state, adding/removing items on both modal and route (UI Testing),
+  -- Extensive UI testing on all nested sub-components to verify that all the available information is in place,
+  -- Unit testing on exported functions of the "src/util/async.js" file
