@@ -1,19 +1,47 @@
-# GlobalWebIndex Engineering Challenge
-## Exercise: CatLover
-Create an Elm or React application for cat lovers which is going to build upon thecatapi.com and will have 3 views. 
-The first view displays a list of 10 random cat images and a button to load more. Clicking on any of those images opens a modal view with the image and the information about the cat’s breed if available. This would be a link to the second view below - the breed detail. The modal should also contain a form to mark the image as your favourite (a part of the third view as well). Make sure you can copy-paste the url of the modal and send it to your friends - they should see the same image as you can see. 
+# Getting Started with Create React App
 
-The second view displays a list of cat breeds. Each breed opens a modal again with a list of cat images of that breed. Each of those images must be a link to the image detail from the previous point. 
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-The third view allows you do the following things:
-* Display your favourite cats 
-* Remove an image from your favourites (use any UX option you like)
+## Available Scripts
 
-You can find the API documentation here: https://docs.thecatapi.com/ 
-We give you a lot of freedom in technologies and ways of doing things. We only insist on you using React.js or the Elm language. Note that we have omitted a lot of details in this description which we hope you will fill in and thus prove to us that you are aware of industry best practices and that you also follow them. Get creative as much as you want, we WILL appreciate it. You will not be evaluated based on how well you follow these instructions, but based on how sensible your solution will be. In case you are not able to implement something you would normally implement for time reasons, make it clear with a comment. 
+In the project directory, you can run:
 
-## Submission
+### `npm start`
+### `npm test`
+### `npm run build`
+### `npm run eject`
 
-Just a make a PR to the current repo!
-Good luck, potential colleague! 
+# Libraries Used
 
+### React Router
+
+React Router is a standard library for routing in React. It enables the navigation among views of various components in a React Application, allows changing the browser URL, and keeps the UI in sync with the URL.
+
+### Axios
+
+Axios is a simple promise based HTTP client for the browser and node.js. Axios provides a simple to use library in a small package with a very extensible interface.
+
+### Material UI
+
+Material-UI is simply a library that allows us to import and use different components to create a user interface in our React applications. This saves a significant amount of time since the developers do not need to write everything from scratch.
+
+### Emotion
+
+Emotion is a high performance, flexible, and performant CSS-in-JS library. Emotion helps us to style our application in a faster way, with a decent and consistent CSS composition.
+
+### Facepaint
+
+While defining media queries in constants is much easier than rewriting media queries each time, they’re still quite verbose since you usually want to change the same property at different breakpoints. facepaint makes this easier by allowing you to define what each css property should be at each media query as an array.
+
+### Lodash
+
+Lodash is a JavaScript library that provides utility functions for common programming tasks using a functional programming paradigm; it builds upon the older underscore. js library. Lodash has several built-in utility functions that make coding in JavaScript easier and cleaner.
+
+### Improvements that could be made (lack of more time)
+
+Originally, due to low complexity of the pages(not much prop drilling), I thought that using state management like Redux would be unnecessary pain to install. Although, I think that using react context and reducers for the favourite cats could be a nice improvement. 
+Another improvement would be the caching of the cats in the home page, so as we would not have unnecessary fetching every time the user went to the home page. This could be made maybe with react-query or SWR but I have never used them before.
+Also, I would like to refactor some pieces of code that are used in many places / break code in smaller pieces (utils folder perhaps) and remove some "any" in typescript.
+Finally, if I hod more time i would make more tests and storybook for every component.
+
+If you have any other questions please do not hesitate to reach out.
