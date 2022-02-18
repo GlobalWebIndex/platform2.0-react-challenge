@@ -10,10 +10,12 @@ const Modal = (props) => {
           <div className={classes.titleCloseBtn}>
             <button onClick={() => props.closeModal(false)}>X</button>
           </div>
-          <div className={classes.title}></div>
+          <div className={classes.centerImg}>
+            <img className={classes.modalCatImg} src={catData.url} alt=""></img>
+          </div>
 
-          <img className={classes.modalCatImg} src={catData.url} alt=""></img>
           <div className={classes.wrapper}>
+            <p>{props.modData.breeds.length > 0 ? 'Has breeds!' : ''}</p>
             <p>
               Cat URL:
               <a href={`${catData.url}`} target={"_blank"}>
@@ -27,7 +29,7 @@ const Modal = (props) => {
               >
                 Cancel
               </button>
-              <button>FAVORITE</button>
+              <button>Favorite</button>
             </div>
           </div>
         </div>

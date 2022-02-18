@@ -2,7 +2,6 @@ import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import NotFound from "./pages/NotFound";
-// import { useMyCatHook } from "./pages/AllCats";
 import LoadingSpinner from "./components/UI/LoadingSpinner";
 import { useMyCatHook } from "./hooks/my-hooks";
 

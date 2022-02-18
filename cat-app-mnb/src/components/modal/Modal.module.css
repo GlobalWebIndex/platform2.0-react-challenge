@@ -14,7 +14,7 @@
   height: auto;
   max-height: 100%;
   width: auto;
-  max-width: 50%;
+  max-width: 100%;
   max-height: 30vw;
 }
 
@@ -53,13 +53,18 @@
   height: 45px;
   margin: 10px;
   border: none;
-  background-color: cornflowerblue;
+  background-color: rgb(246, 249, 255);
   color: white;
   border-radius: 6px;
   font-size: 20px;
   cursor: pointer;
 }
 
-/* .modalContainer .footer button .cancelBtn {
+.cancelBtn {
   background-color: crimson !important;
-} */
+}
+
+.centerImg {
+  display: flex;
+  justify-content: center;
+}
