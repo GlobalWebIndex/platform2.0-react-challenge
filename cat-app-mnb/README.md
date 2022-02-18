@@ -7,11 +7,11 @@
 4. Run 'npm start' in order for the server to run
 
 ## Challenge Requirements
-###Things which were implemented:
+Features which were implemented:
 1. Cat list
 2. Load more button
 3. Modal with URL
 
-###Things which were not implemented:
+Features which were not implemented:
 1. Breeds
 2. Favorites
