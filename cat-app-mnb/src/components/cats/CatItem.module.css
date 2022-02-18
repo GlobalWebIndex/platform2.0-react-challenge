@@ -12,15 +12,6 @@
   cursor: pointer;
 }
 
-.item:last-of-type {
-  border-bottom: none;
-}
-
-.item p {
-  margin: 0;
-  margin-bottom: 0.25rem;
-}
-
 img {
   height: auto;
   max-height: 50%;
