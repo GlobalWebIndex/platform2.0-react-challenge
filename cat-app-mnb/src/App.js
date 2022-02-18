@@ -1,15 +1,15 @@
 import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
-import CatDetail from "./pages/CatDetail";
 import Layout from "./components/layout/Layout";
 import NotFound from "./pages/NotFound";
-import { useMyBeatifulHook } from "./pages/AllCats";
+// import { useMyCatHook } from "./pages/AllCats";
 import LoadingSpinner from "./components/UI/LoadingSpinner";
+import { useMyCatHook } from "./hooks/my-hooks";
 
 const AllCats = React.lazy(() => import("./pages/AllCats"));
 
 function App() {
-  const { status, cats, error, onLoadMore } = useMyBeatifulHook();
+  const { status, cats, error, onLoadMore } = useMyCatHook();
 
   return (
     <Layout>
@@ -28,9 +28,9 @@ function App() {
             </React.Suspense>
           }
         />
-        {/* <Route path="/breeds" element={<Breeds />} /> */}
-        <Route path="/cats/:catId" element={<CatDetail />} />
-        {/* <Route path="/breeds/:breedId" element={<BreedDetail />} /> */}
+        {/* <Route path="/breeds" element={<Breeds />} />
+        <Route path="/breeds/:breedId" element={<BreedDetail />} />
+        <Route path="/favorites" element={<Favorites />} /> */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Layout>
@@ -38,5 +38,3 @@ function App() {
 }
 
 export default App;
-
-//CatDetail could take a property from the cat,

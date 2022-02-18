@@ -1,12 +1,8 @@
 import { useParams, Route } from "react-router-dom";
-import { Fragment } from "react";
-
-import HighlightedCat from "../components/cats/HighlightedCat";
-// import Comments from "../components/comments/Comments";
 
 const DUMMY_CATS = [
-  { id: "q1", author: "Noel", text: "Learnig react is fun" },
-  { id: "q2", author: "Maurice", text: " react is YOOOO" },
+  { id: "c1", url: "https://cdn2.thecatapi.com/images/w6FeZ0g-C.jpg", breeds: [] },
+  { id: "c2", url: "https://cdn2.thecatapi.com/images/6sj.jpg", breeds: [] },
 ];
 
 const CatDetail = () => {
@@ -19,12 +15,9 @@ const CatDetail = () => {
   }
 
   return (
-    <Fragment>
-      <HighlightedCat text={cat.text} author={cat.author} />
-      <Route path={`cats/${cat.id}/comments`}>
-        {/* <Comments /> */}
-      </Route>
-    </Fragment>
+    <>
+      <Route path={`cats/${cat.id}`}></Route>
+    </>
   );
 };
 
