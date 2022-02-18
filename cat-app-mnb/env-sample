@@ -1,0 +1,2 @@
+REACT_APP_CAT_API_KEY = 'your_api_key'
+REACT_APP_CAT_API_URL_ALL_CATS = 'https://api.thecatapi.com/v1/images/search'

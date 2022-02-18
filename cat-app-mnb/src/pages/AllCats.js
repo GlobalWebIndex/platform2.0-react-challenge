@@ -1,45 +1,55 @@
-import { useEffect } from "react";
+import { useEffect, useState, useCallback } from "react";
 import LoadingSpinner from "../components/UI/LoadingSpinner";
 import NoCatsFound from "../components/cats/NoCatsFound";
 import CatList from "../components/cats/CatList";
-import useHttp from "../hooks/use-http";
-import { getAllCats } from '../lib/api';
+import Modal from "../components/modal/Modal";
+import classes from "./AllCats.module.css";
 
-// {id: '2cb', breeds: Array(0), url: 'https://cdn2.thecatapi.com/images/2cb.jpg', width: 500, height: 333}
+// should call this from a seperate file and call it with some arguments
+const getAllCats = (page = 1) => {
+  // return fetch(
+  //   `https://api.thecatapi.com/v1/images/search?limit=10&page=${page}&order=DESC`
+  return fetch(
+    `${process.env.REACT_APP_CAT_API_URL_ALL_CATS}?limit=3&page=${page}&order=DESC`
+  ).then((resp) => resp.json());
+};
 
-const DUMMY_CATS = [
-  {
-    breeds: [],
-    id: "a6u",
-    url: "https://cdn2.thecatapi.com/images/a6u.jpg",
-    width: 400,
-    height: 300,
-  },
-
-  {
-    breeds: [],
-    id: "dd2",
-    url: "https://cdn2.thecatapi.com/images/dd2.jpg",
-    width: 740,
-    height: 491,
-  },
-];
-
-
-
-const AllCats = () => {
-  const {
-    sendRequest,
-    status,
-    data: loadedCats,
-    error,
-  } = useHttp(getAllCats, true);
+export function useMyBeatifulHook() {
+  const [status, setStatus] = useState("unstarted");
+  const [cats, setCats] = useState(null);
+  const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(10);
 
   useEffect(() => {
-    sendRequest();
-  }, [sendRequest]);
+    getAllCats(currentPage)
+      .then((data) => {
+        setCats((currentState) => [...(currentState || []), ...data]);
+        setStatus("completed");
+      })
+      .catch((err) => setError(err));
+  }, [currentPage]);
 
-  if (status === "pending") {
+  // when React re-renders, it creates new references (instances), that can lead to irregular behaviour,
+  // using useCallback, helps with re-creating one instance of a function
+  const onLoadMore = useCallback(() => {
+    const nextPage = currentPage + 1;
+
+    setCurrentPage(nextPage);
+  }, [currentPage]);
+
+  return { status, cats, error, onLoadMore };
+}
+
+const AllCats = ({ status, cats, error, onLoadMore }) => {
+  // unstarted -> pending -> error/success
+  const onCatOpenModal = useCallback(() => {
+    setOpenModal(true);
+  }, []);
+
+  const [openModal, setOpenModal] = useState(false);
+  const [modalData, setModalData] = useState("");
+
+  if ((status === "pending") | (status === "unstarted")) {
     return (
       <div className="centered">
         <LoadingSpinner />
@@ -48,15 +58,34 @@ const AllCats = () => {
   }
 
   if (error) {
-    return <p className="centered focused">{error}</p>;
+    return <p className="centered focused ">{error}</p>;
   }
 
-  if (status === "completed" && (!loadedCats || loadedCats.length === 0)) {
+  if (status === "completed" && (!cats || cats.length === 0)) {
     return <NoCatsFound />;
   }
 
-  // return <CatList cats={loadedCats, console.log('loaded cats - Allcats', loadedCats[0])} />;
-  return <CatList cats={DUMMY_CATS} />;
+  // const setModalContent = (data) => {
+  //   // console.log("data setmodatcontent", data);
+  //   setModalData(data);
+  // };
+
+  const setCatSelected = (catData) => {
+    //TODO I should pass the data to the modal so it opens with the cats
+    setModalData(catData);
+    console.log("cat data", catData);
+    setOpenModal(true);
+  };
+
+  return (
+    <div className={classes.mainContainer}>
+      {openModal && <Modal modData={modalData} closeModal={setOpenModal} />}
+      <CatList cats={cats} onCatSelect={setCatSelected} />
+      <button onClick={onLoadMore} className={classes.openModalBtn}>
+        Load More Cats!
+      </button>
+    </div>
+  );
 };
 
 export default AllCats;
