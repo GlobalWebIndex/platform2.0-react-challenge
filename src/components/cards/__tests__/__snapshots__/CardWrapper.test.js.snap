@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<CardWrapper/> renders 1`] = `
+<div>
+  <section
+    class="gridContainer-0-2-1"
+  >
+    <div
+      class="cardItem-0-2-2 cardItem-d0-0-2-6"
+    >
+      <img
+        alt="id abc"
+        class="cardImage-0-2-3"
+        data-testid="card-image"
+        height="311"
+        loading="lazy"
+        src="https://cat.com"
+        width="111"
+      />
+    </div>
+  </section>
+</div>
+`;

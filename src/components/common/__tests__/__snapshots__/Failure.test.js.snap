@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Failure/> renders 1`] = `
+<div>
+  <div>
+    Oops... something must have gone really wrong!
+    <br />
+    What could have happened? Hope all the 🐈 are still fine!
+  </div>
+</div>
+`;

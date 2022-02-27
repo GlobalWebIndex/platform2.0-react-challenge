@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<CardContents/> renders 1`] = `
+<div>
+  <img
+    alt="id abc"
+    class="cardImage-0-2-2"
+    data-testid="card-image"
+    height="311"
+    loading="lazy"
+    src="https://cat.image"
+    width="111"
+  />
+  <div
+    class="cardTitle-0-2-3"
+    data-testid="card-title"
+  >
+    lovely cat
+  </div>
+</div>
+`;

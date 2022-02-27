@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NavBar/> renders 1`] = `
+<div>
+  <div
+    class="nav-0-2-1"
+  >
+    <div
+      class="navHeader-0-2-2"
+    >
+      <div
+        class="navTitle-0-2-3"
+      >
+        <img
+          alt="logo"
+          height="25"
+          src="/logo.png"
+          width="32"
+        />
+        <a
+          class="navTitleText-0-2-4"
+          href="/"
+        >
+          Cat lover
+        </a>
+      </div>
+    </div>
+    <div
+      class="navLinks-0-2-5"
+    >
+      <a
+        aria-current="page"
+        class="navLinkItemActive-0-2-7 navLinkItem-0-2-6"
+        href="/"
+      >
+        Home
+      </a>
+      <a
+        class="navLinkItem-0-2-6"
+        href="/breeds"
+      >
+        Breeds
+      </a>
+      <a
+        class="navLinkItem-0-2-6"
+        href="/favourites"
+      >
+        Favourites
+      </a>
+    </div>
+  </div>
+</div>
+`;

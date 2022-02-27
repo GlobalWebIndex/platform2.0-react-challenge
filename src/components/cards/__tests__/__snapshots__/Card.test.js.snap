@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Card/> renders a card with dedicated link 1`] = `
+<div>
+  <a
+    class="cardItem-0-2-1 cardItem-d0-0-2-5"
+    href="/cat/abc"
+  >
+    <img
+      alt="id abc"
+      class="cardImage-0-2-2"
+      data-testid="card-image"
+      height="111"
+      loading="lazy"
+      src="https://cat.com"
+      width="311"
+    />
+    <div
+      class="cardTitle-0-2-3"
+      data-testid="card-title"
+    >
+      lovely cat
+    </div>
+  </a>
+</div>
+`;
+
+exports[`<Card/> renders a card without dedicated link 1`] = `
+<div>
+  <div
+    class="cardItem-0-2-1 cardItem-d2-0-2-7"
+  >
+    <img
+      alt="id abc"
+      class="cardImage-0-2-2"
+      data-testid="card-image"
+      height="111"
+      loading="lazy"
+      src="https://cat.com"
+      width="311"
+    />
+    <div
+      class="cardTitle-0-2-3"
+      data-testid="card-title"
+    >
+      lovely cat
+    </div>
+  </div>
+</div>
+`;
