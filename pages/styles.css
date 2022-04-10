@@ -1,0 +1,119 @@
+html,
+body {
+  margin: 0;
+}
+
+#__next {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.navigationBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-inline: 20px;
+}
+
+.imageViewerContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    overflow: scroll;
+}
+
+.ReactVirtualized__Grid {
+    overflow: scroll !important;
+}
+
+.gridContainer {
+    /* min-height: 40em; */
+    line-height: 0;
+    column-count: 5;
+    column-gap: 0px;
+}
+.ReactVirtualized__Masonry__innerScrollContainer {
+    column-count: 5;
+    column-gap: 0px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.imageWrapper {
+    width: 20%;
+    max-height: 300px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gridContainer > img {
+    width: 100%;
+    height: auto;
+}
+.more {
+    display: flex;
+    align-self: center;
+    margin-top: 5em
+}
+
+/* ImageModal */
+
+.react-responsive-modal-container {
+    display: flex;
+    justify-content: center;
+}
+
+.react-responsive-modal-modal > img {
+    height: auto;
+    max-width: 400px;
+}
+
+#close {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+/* ImageDetails */
+.imageDetailsContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: beige;
+}
+
+.imageDetailsContainer > img {
+    max-width: 60%;
+    max-height: 300px;
+}
+
+#my-modal-description {
+    text-align: center;
+}
+
+/* favorites */
+.xButton {
+    color: red;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.modal-dialog.modal-dialog-centered.modal-dialog-scrollable {
+    min-width: 50%;
+}
+
+.spinnerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
