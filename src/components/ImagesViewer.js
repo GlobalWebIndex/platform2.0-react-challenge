@@ -52,7 +52,7 @@ const ImagesViewer = (
                         { favoritesPage && image &&
                             <Button className='xButton' onClick={() => deleteFromFavorites(image.id)}>X</Button>
                         }
-                        <img src={favoritesPage || breedsPage? image.image?.url : image.url} style={{maxWidth: '90%', maxHeight: '90%'}} onClick={() => {debugger; setPickedImage(image)}} onLoad={() => onLoad(rowIndex * 5 + columnIndex)}/>
+                        <img src={favoritesPage || breedsPage? image.image?.url : image.url} style={{maxWidth: '90%', maxHeight: '90%'}} onClick={() => { setPickedImage(image)}} onLoad={() => onLoad(rowIndex * 5 + columnIndex)}/>
                     </div>
                 )
             }
