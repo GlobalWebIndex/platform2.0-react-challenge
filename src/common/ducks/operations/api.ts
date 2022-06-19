@@ -23,10 +23,7 @@ import { CommonActionCreators } from 'common/ducks';
  * @param generator
  * @param configuration - ```{ withLoader: boolean }``` An object for configuring the common behavior of the saga
  */
-function composeWithCommons(
-  generator: { context: unknown; fn: (this: unknown, ...args: any[]) => any },
-  { withLoader = true } = {}
-) {
+function composeWithCommons(generator: any, { withLoader = true } = {}) {
   return function* (action: any) {
     try {
       if (withLoader) {
