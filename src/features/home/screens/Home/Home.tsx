@@ -1,21 +1,49 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 import { Dispatch } from 'react';
 
 import { CommonActionCreators } from 'common/ducks';
 import { RootState } from 'state/types';
 import { HomeCatsActionCreators } from 'features/home/ducks';
-import { IHomeScreen } from 'features/home/types';
+import { IHomeScreen, ICat } from 'features/home/types';
+import Card from './Card';
 
-export const Home = ({ catsRequested }: IHomeScreen) => {
+const Wrapper = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const CardsWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const Home = ({ catsRequested, data }: IHomeScreen) => {
   React.useEffect(() => {
     catsRequested({ page: 0, limit: 10 });
   }, [catsRequested]);
 
+  const { data: catsData = [] } = data;
+
   return (
-    <div>
+    <Wrapper>
       <span>I am Home</span>
-    </div>
+      <CardsWrapper>
+        {catsData.map((catItem: ICat) => (
+          <Card key={catItem.id} url={catItem.url} />
+        ))}
+      </CardsWrapper>
+    </Wrapper>
   );
 };
 

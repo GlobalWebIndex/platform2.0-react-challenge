@@ -5,7 +5,7 @@ import { Colors } from 'theme';
 
 const Wrapper = styled.nav`
   width: 300px;
-  min-height: 100vh;
+  min-height: 100%;
   background-color: grey;
   display: flex;
   align-items: center;

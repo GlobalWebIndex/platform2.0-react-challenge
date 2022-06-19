@@ -6,7 +6,10 @@ import ActionCreators from 'features/home/ducks/actionCreators';
 import ActionNames from 'features/home/ducks/actionNames';
 
 function* homeCatsWatcher() {
-  yield takeLatest(ActionNames.FETCH_HOME_CATS_REQUESTED, composeWithCommons(handleHomeCats));
+  yield takeLatest(
+    ActionNames.FETCH_HOME_CATS_REQUESTED,
+    composeWithCommons(handleHomeCats)
+  );
 }
 
 function* handleHomeCats({ action }: any): any {
@@ -20,6 +23,7 @@ function* handleHomeCats({ action }: any): any {
         page,
         limit,
         order,
+        mime_types: 'jpg,png',
       },
     });
 
