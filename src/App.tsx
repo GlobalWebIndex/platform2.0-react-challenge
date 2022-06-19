@@ -1,7 +1,7 @@
 import { Provider as ReduxProvider } from 'react-redux';
 
-import Store from './state/store';
-import Routes from './routes';
+import Store from 'state/store';
+import Routes from 'routes';
 
 function App() {
   return (
