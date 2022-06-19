@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { ICat } from 'features/home/types';
+
 const Wrapper = styled.div`
   background-color: white;
   width: 200px;
@@ -15,13 +17,18 @@ const SImg = styled.img`
 `;
 
 interface Props {
-  url: string;
+  cat: ICat;
+  onSelect: (cat: ICat) => void;
 }
 
-const Card = ({ url }: Props) => {
+const Card = ({ cat, onSelect }: Props) => {
+  const handleClick = () => {
+    onSelect(cat);
+  };
+
   return (
-    <Wrapper>
-      <SImg src={url} alt="a cat" />
+    <Wrapper onClick={handleClick}>
+      <SImg src={cat.url} alt="a cat" />
     </Wrapper>
   );
 };

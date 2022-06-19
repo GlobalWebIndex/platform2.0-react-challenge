@@ -8,6 +8,7 @@ import { RootState } from 'state/types';
 import { HomeCatsActionCreators } from 'features/home/ducks';
 import { IHomeScreen, ICat } from 'features/home/types';
 import Card from './Card';
+import CatDetailsModal from './CatDetailsModal';
 
 const Wrapper = styled.div`
   display: flex;
@@ -29,20 +30,37 @@ const CardsWrapper = styled.div`
 `;
 
 export const Home = ({ catsRequested, data }: IHomeScreen) => {
+  const [selectedCat, setSelectedCat] = React.useState({} as ICat);
+  const [isOpen, setIsOpen] = React.useState(false);
+
   React.useEffect(() => {
     catsRequested({ page: 0, limit: 10 });
   }, [catsRequested]);
 
   const { data: catsData = [] } = data;
 
+  const handleSelectCat = (cat: ICat) => {
+    setSelectedCat(cat);
+    setIsOpen(true);
+  };
+
+  const handleDismiss = () => {
+    setIsOpen(false);
+  };
+
   return (
     <Wrapper>
       <span>I am Home</span>
       <CardsWrapper>
         {catsData.map((catItem: ICat) => (
-          <Card key={catItem.id} url={catItem.url} />
+          <Card key={catItem.id} cat={catItem} onSelect={handleSelectCat} />
         ))}
       </CardsWrapper>
+      <CatDetailsModal
+        selectedCat={selectedCat}
+        isOpen={isOpen}
+        onDismiss={handleDismiss}
+      />
     </Wrapper>
   );
 };
