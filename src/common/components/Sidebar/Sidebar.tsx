@@ -1,6 +1,8 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { Colors } from 'theme';
+
 const Wrapper = styled.nav`
   width: 300px;
   min-height: 100vh;
@@ -25,7 +27,7 @@ const NavItem = styled.div`
 
   & > .active {
     background: blue;
-    color: white;
+    color: ${Colors.white};
   }
 `;
 
@@ -45,7 +47,7 @@ const SLink = styled(NavLink)`
     background: blue;
   }
   &:active {
-    color: white;
+    color: ${Colors.white};
   }
 
   .active {
