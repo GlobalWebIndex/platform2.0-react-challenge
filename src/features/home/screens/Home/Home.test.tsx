@@ -1,12 +1,12 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen } from '@testing-library/react';
 
-import Home from "./Home";
+import Home from './Home';
 
-describe("Home screen", () => {
+describe('Home screen', () => {
   it("will render 'I am Home'", () => {
     render(<Home />);
 
-    const element = screen.getByText("I am Home");
+    const element = screen.getByText('I am Home');
 
     expect(element).toBeTruthy();
   });

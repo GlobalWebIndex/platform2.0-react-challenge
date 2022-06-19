@@ -1,1 +1,1 @@
-export { default, mapStateToProps, mapDispatchToProps } from "./Home";
+export { default } from './Home';
