@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
 
-const rootReducer = combineReducers({});
+import { CommonReducer } from 'common/ducks';
+
+const rootReducer = combineReducers({ common: CommonReducer });
 
 export default rootReducer;

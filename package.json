@@ -33,6 +33,21 @@
     "extends": [
       "react-app",
       "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.ts?(x)"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": [
+            2,
+            {
+              "allowObject": true
+            }
+          ]
+        }
+      }
     ]
   },
   "browserslist": {
