@@ -13,12 +13,14 @@ describe('Home action creators', () => {
   });
 
   it('will return catsSucceeded type and paylod', () => {
-    const mockedData = [{ image: '123' }];
+    const mockedData = [{ image: '123', breeds: [], id: '123', url: 'a_url' }];
 
-    expect(ActionCreators.catsSucceeded(mockedData)).toEqual({
-      type: ActionNames.FETCH_HOME_CATS_SUCCEDED,
-      payload: { data: mockedData },
-    });
+    expect(ActionCreators.catsSucceeded({ data: mockedData, page: 0 })).toEqual(
+      {
+        type: ActionNames.FETCH_HOME_CATS_SUCCEDED,
+        payload: { data: mockedData, page: 0 },
+      }
+    );
   });
 
   it('will return catsFailed type and paylod', () => {

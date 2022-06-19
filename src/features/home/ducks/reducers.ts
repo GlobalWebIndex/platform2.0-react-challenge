@@ -17,6 +17,14 @@ function CatsDataReducer(state = catsReducerInitialState, action: any) {
     }
 
     case ActionNames.FETCH_HOME_CATS_SUCCEDED: {
+      if (action.payload.page > 0) {
+        return {
+          ...action.payload.data,
+          data: [...state.data, ...action.payload.data],
+          status: CONSTANTS.RESPONSE_STATUS.SUCCESS,
+        };
+      }
+
       return {
         data: action.payload.data,
         status: CONSTANTS.RESPONSE_STATUS.SUCCESS,

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Dispatch } from 'react';
 
 import { CommonActionCreators } from 'common/ducks';
+import Constants from 'common/constants';
 import { RootState } from 'state/types';
 import { HomeCatsActionCreators } from 'features/home/ducks';
 import { IHomeScreen, ICat } from 'features/home/types';
@@ -32,10 +33,27 @@ const CardsWrapper = styled.div`
 export const Home = ({ catsRequested, data }: IHomeScreen) => {
   const [selectedCat, setSelectedCat] = React.useState({} as ICat);
   const [isOpen, setIsOpen] = React.useState(false);
+  const [catsListPager, setCatsListPager] = React.useState(
+    Constants.PAGINATION.PAGE
+  );
 
   React.useEffect(() => {
-    catsRequested({ page: 0, limit: 10 });
+    catsRequested({
+      page: Constants.PAGINATION.PAGE,
+      limit: Constants.PAGINATION.LIMIT,
+    });
+
+    setCatsListPager(Constants.PAGINATION.PAGE + 1);
   }, [catsRequested]);
+
+  const handleMoreCatsClick = React.useCallback(() => {
+    catsRequested({
+      page: catsListPager + 1,
+      limit: Constants.PAGINATION.LIMIT,
+    });
+
+    setCatsListPager(catsListPager + 1);
+  }, [catsListPager, catsRequested]);
 
   const { data: catsData = [] } = data;
 
@@ -55,6 +73,7 @@ export const Home = ({ catsRequested, data }: IHomeScreen) => {
         {catsData.map((catItem: ICat) => (
           <Card key={catItem.id} cat={catItem} onSelect={handleSelectCat} />
         ))}
+        <button onClick={handleMoreCatsClick}>Fetch more cats</button>
       </CardsWrapper>
       <CatDetailsModal
         selectedCat={selectedCat}

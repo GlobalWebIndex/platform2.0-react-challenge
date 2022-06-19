@@ -1,4 +1,5 @@
 import ActionNames from './actionNames';
+import { ICat } from '../types';
 
 function getCats({ page, limit }: { page: number; limit: number }) {
   return {
@@ -10,11 +11,12 @@ function getCats({ page, limit }: { page: number; limit: number }) {
   } as const;
 }
 
-function catsSucceeded(data: any[]) {
+function catsSucceeded({ data, page }: { data: ICat[]; page: number }) {
   return {
     type: ActionNames.FETCH_HOME_CATS_SUCCEDED,
     payload: {
       data,
+      page,
     },
   } as const;
 }

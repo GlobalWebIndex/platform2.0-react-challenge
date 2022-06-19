@@ -16,7 +16,7 @@ function* handleHomeCats({ action }: any): any {
   const { payload } = action;
 
   try {
-    const { limit, page, order = 'DESC' } = payload;
+    const { limit, page, order = 'desc' } = payload;
 
     const response = yield call(Services.Api.Data.get, '/images/search', {
       params: {
@@ -27,7 +27,7 @@ function* handleHomeCats({ action }: any): any {
       },
     });
 
-    yield put(ActionCreators.catsSucceeded(response.data));
+    yield put(ActionCreators.catsSucceeded({ data: response.data, page }));
   } catch (error) {
     yield put(ActionCreators.catsFailed());
   }
