@@ -1,19 +1,25 @@
+import React from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+
 import Modal from 'common/components/Modal';
-import { ICat } from 'features/home/types';
 
-interface Props {
-  selectedCat: ICat;
-  isOpen: boolean;
-  onDismiss: () => void;
-}
+const CatDetailsModal = () => {
+  const [isOpen, setIsOpen] = React.useState(true);
 
-const CatDetailsModal = ({ selectedCat, isOpen, onDismiss }: Props) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const handleDismiss = () => {
+    setIsOpen(false);
+    navigate('/');
+  };
+
   return (
     <Modal
       title="a title"
-      body={selectedCat.id}
+      body={id}
       isOpen={isOpen}
-      onDismiss={onDismiss}
+      onDismiss={handleDismiss}
     />
   );
 };

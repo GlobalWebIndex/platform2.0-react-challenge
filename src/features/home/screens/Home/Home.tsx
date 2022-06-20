@@ -1,6 +1,7 @@
 import React, { Dispatch } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 import { CommonActionCreators } from 'common/ducks';
 import Constants from 'common/constants';
@@ -8,7 +9,6 @@ import { RootState } from 'state/types';
 import { HomeCatsActionCreators } from 'features/home/ducks';
 import { IHomeScreen, ICat } from 'features/home/types';
 import Card from './Card';
-import CatDetailsModal from './CatDetailsModal';
 
 const Wrapper = styled.div`
   display: flex;
@@ -30,7 +30,7 @@ const CardsWrapper = styled.div`
   align-content: flex-start;
 `;
 
-const EmptyButton = styled.div`
+const MoreButton = styled.div`
   background-color: red;
   color: white;
   width: 800px;
@@ -42,8 +42,6 @@ const EmptyButton = styled.div`
 `;
 
 export const Home = ({ catsRequested, data }: IHomeScreen) => {
-  const [selectedCat, setSelectedCat] = React.useState({} as ICat);
-  const [isOpen, setIsOpen] = React.useState(false);
   const [catsListPager, setCatsListPager] = React.useState(
     Constants.PAGINATION.PAGE
   );
@@ -71,13 +69,10 @@ export const Home = ({ catsRequested, data }: IHomeScreen) => {
   }, [catsListPager, catsRequested]);
 
   const handleSelectCat = (cat: ICat) => {
-    setSelectedCat(cat);
-    setIsOpen(true);
+    navigate(`cats/${cat.id}`);
   };
 
-  const handleDismiss = () => {
-    setIsOpen(false);
-  };
+  const navigate = useNavigate();
 
   return (
     <Wrapper>
@@ -86,15 +81,11 @@ export const Home = ({ catsRequested, data }: IHomeScreen) => {
         {catsData.map((catItem: ICat) => (
           <Card key={catItem.id} cat={catItem} onSelect={handleSelectCat} />
         ))}
-        <EmptyButton onClick={handleMoreCatsClick}>
+        <MoreButton onClick={handleMoreCatsClick}>
           <span>Fetch more cats</span>
-        </EmptyButton>
+        </MoreButton>
       </CardsWrapper>
-      <CatDetailsModal
-        selectedCat={selectedCat}
-        isOpen={isOpen}
-        onDismiss={handleDismiss}
-      />
+      <Outlet />
     </Wrapper>
   );
 };
