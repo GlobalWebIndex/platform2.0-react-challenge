@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 
 import { Breeds } from './Breeds';
 
@@ -12,8 +13,9 @@ describe('Favorites screen', () => {
         breedsRequested={breedsRequested}
         clearNotificationMessage={clearNotificationMessage}
         notification={{ error: '', success: '' }}
-        data={{ data: [], status: '' }}
-      />
+        data={{ data: [], status: '', cats: [] }}
+      />,
+      { wrapper: MemoryRouter }
     );
 
     const element = screen.getByText('I am Breeds');
@@ -27,8 +29,9 @@ describe('Favorites screen', () => {
         breedsRequested={breedsRequested}
         clearNotificationMessage={clearNotificationMessage}
         notification={{ error: '', success: '' }}
-        data={{ data: [], status: '' }}
-      />
+        data={{ data: [], status: '', cats: [] }}
+      />,
+      { wrapper: MemoryRouter }
     );
 
     expect(breedsRequested).toBeCalledWith({

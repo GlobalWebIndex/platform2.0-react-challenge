@@ -45,6 +45,8 @@ export const Home = ({ catsRequested, data }: IHomeScreen) => {
     Constants.PAGINATION.PAGE
   );
 
+  const navigate = useNavigate();
+
   const { data: catsData = [] } = data;
 
   React.useEffect(() => {
@@ -70,8 +72,6 @@ export const Home = ({ catsRequested, data }: IHomeScreen) => {
   const handleSelectCat = (cat: ICat) => {
     navigate(`cats/${cat.id}`);
   };
-
-  const navigate = useNavigate();
 
   return (
     <Wrapper>

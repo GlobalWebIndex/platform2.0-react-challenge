@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 import { IBreed } from 'features/breeds/types';
 import BreedItem from './BreedItem';
@@ -18,12 +19,19 @@ interface Props {
   breeds: IBreed[];
 }
 
-const BreedslList = ({ breeds }: Props) => (
-  <Wrapper>
-    {breeds.map((breed) => (
-      <BreedItem key={breed.id} breed={breed} onSelect={() => {}} />
-    ))}
-  </Wrapper>
-);
+const BreedslList = ({ breeds }: Props) => {
+  const navigate = useNavigate();
+
+  const handleSelectBreed = (breed: IBreed) => {
+    navigate(`/breeds/${breed.id}`);
+  };
+  return (
+    <Wrapper>
+      {breeds.map((breed) => (
+        <BreedItem key={breed.id} breed={breed} onSelect={handleSelectBreed} />
+      ))}
+    </Wrapper>
+  );
+};
 
 export default BreedslList;

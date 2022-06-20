@@ -1,6 +1,7 @@
+import { MemoryRouter } from 'react-router-dom';
 import { screen, render } from '@testing-library/react';
-import { IBreed } from 'features/breeds/types';
 
+import { IBreed } from 'features/breeds/types';
 import BreedsList from './BreedsList';
 
 describe('BreedsList component', () => {
@@ -18,7 +19,9 @@ describe('BreedsList component', () => {
   ];
 
   it("will render 'description1 and temperament1'", () => {
-    render(<BreedsList breeds={mockedBreeds as IBreed[]} />);
+    render(<BreedsList breeds={mockedBreeds as IBreed[]} />, {
+      wrapper: MemoryRouter,
+    });
 
     const element1 = screen.getByText('description1');
     const element2 = screen.getByText('temperament1');
@@ -28,7 +31,9 @@ describe('BreedsList component', () => {
   });
 
   it("will render 'description2 and temperament2'", () => {
-    render(<BreedsList breeds={mockedBreeds as IBreed[]} />);
+    render(<BreedsList breeds={mockedBreeds as IBreed[]} />, {
+      wrapper: MemoryRouter,
+    });
 
     const element1 = screen.getByText('description2');
     const element2 = screen.getByText('temperament2');

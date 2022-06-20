@@ -1,6 +1,7 @@
 import React, { Dispatch } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { Outlet } from 'react-router-dom';
 
 import { RootState } from 'state/types';
 import Constants from 'common/constants';
@@ -33,6 +34,7 @@ export const Breeds = ({ breedsRequested, data }: IBreedsScreen) => {
     <Wrapper>
       <span>I am Breeds</span>
       <BreedsList breeds={breedsData} />
+      <Outlet />
     </Wrapper>
   );
 };

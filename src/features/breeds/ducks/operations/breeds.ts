@@ -10,6 +10,10 @@ function* homeBreedsWatcher() {
     ActionNames.FETCH_BREEDS_REQUESTED,
     composeWithCommons(handleBreeds)
   );
+  yield takeLatest(
+    ActionNames.FETCH_BREED_CATS_REQUESTED,
+    composeWithCommons(handleBreedCats)
+  );
 }
 
 function* handleBreeds({ action }: any): any {
@@ -29,6 +33,25 @@ function* handleBreeds({ action }: any): any {
     yield put(ActionCreators.breedsSucceeded({ data: response.data }));
   } catch (error) {
     yield put(ActionCreators.breedsFailed());
+  }
+}
+
+function* handleBreedCats({ action }: any): any {
+  const { payload } = action;
+
+  try {
+    const { breedName } = payload;
+
+    const response = yield call(Services.Api.Data.get, '/images/search', {
+      params: {
+        breed_ids: breedName,
+        limit: 8,
+      },
+    });
+
+    yield put(ActionCreators.catsByBreedSucceeded(response.data));
+  } catch (error) {
+    yield put(ActionCreators.catsByBreedFailed());
   }
 }
 

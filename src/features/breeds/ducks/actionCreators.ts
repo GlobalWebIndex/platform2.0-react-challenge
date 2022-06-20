@@ -1,3 +1,4 @@
+import { ICat } from 'features/home/types';
 import ActionNames from './actionNames';
 import { IBreed } from '../types';
 
@@ -27,8 +28,36 @@ function breedsFailed() {
   } as const;
 }
 
+function getCatsByBreed(breedName: string) {
+  return {
+    type: ActionNames.FETCH_BREED_CATS_REQUESTED,
+    payload: {
+      breedName,
+    },
+  } as const;
+}
+
+function catsByBreedSucceeded(data: ICat[]) {
+  return {
+    type: ActionNames.FETCH_BREED_CATS_SUCCEDED,
+    payload: {
+      data,
+    },
+  } as const;
+}
+
+function catsByBreedFailed() {
+  return {
+    type: ActionNames.FETCH_BREED_CATS_FAILED,
+    payload: {},
+  } as const;
+}
+
 export default {
   getBreeds,
   breedsSucceeded,
   breedsFailed,
+  getCatsByBreed,
+  catsByBreedSucceeded,
+  catsByBreedFailed,
 };

@@ -2,7 +2,7 @@ import CommonReducers from './reducers';
 import ActionNames from './actionNames';
 
 describe('Common reducer', () => {
-  const initialState = {
+  const initialState: any = {
     breeds: { data: [], status: '' },
   };
 

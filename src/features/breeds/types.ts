@@ -3,8 +3,18 @@ import {
   mapStateToProps as BreedsMapStateToProps,
 } from './screens/Breeds';
 
+import {
+  mapDispatchToProps as BreedDetailsModalMapDispatchToProps,
+  mapStateToProps as BreedDetailsMapStateToProps,
+} from './screens/Breeds/BreedDetailsModal';
+
 export type IBreedsScreen = {} & ReturnType<typeof BreedsMapDispatchToProps> &
   ReturnType<typeof BreedsMapStateToProps>;
+
+export type IBreedDetailsModal = {} & ReturnType<
+  typeof BreedDetailsModalMapDispatchToProps
+> &
+  ReturnType<typeof BreedDetailsMapStateToProps>;
 
 export interface IBreed {
   alt_names: string;
