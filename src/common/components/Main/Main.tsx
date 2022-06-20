@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 import styled from 'styled-components';
 
+import { Colors } from 'theme';
+
 const Wrapper = styled.main`
   width: 100%;
   height: 100%;
@@ -8,9 +10,14 @@ const Wrapper = styled.main`
   align-items: center;
   justify-content: center;
   overflow: scroll;
+  background: ${Colors.background};
 `;
 
-const Main = ({ children }: { children: ReactNode }) => {
+interface Props {
+  children: ReactNode;
+}
+
+const Main = ({ children }: Props) => {
   return <Wrapper>{children}</Wrapper>;
 };
 

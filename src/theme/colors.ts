@@ -74,6 +74,8 @@ const colors = {
   danger: palette.red[600],
   success: palette.green[600],
   white: palette.white,
+  border: palette.grey[300],
+  background: palette.grey[100],
 };
 
 export default colors;

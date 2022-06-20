@@ -32,6 +32,9 @@ describe('Breeds action creators', () => {
         temperament: 'Active, Energetic, Independent, Intelligent, Gentle',
         weight_imperial: '7  -  10',
         wikipedia_url: 'https://en.wikipedia.org/wiki/Abyssinian_(cat)',
+        image: { id: '1', url: 'A_url' },
+        description:
+          'Intelligent and generous with their affection, a Tonkinese will supervise all activities with curiosity. Loving, social, active, playful, yet content to be a lap cat',
       },
     ];
 

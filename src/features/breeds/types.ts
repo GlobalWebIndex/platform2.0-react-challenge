@@ -24,4 +24,11 @@ export interface IBreed {
   temperament: string;
   weight_imperial: string;
   wikipedia_url: string;
+  description: string;
+  image: {
+    height?: number;
+    id: string;
+    url: string;
+    width?: number;
+  };
 }

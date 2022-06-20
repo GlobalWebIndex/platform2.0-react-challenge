@@ -1,11 +1,23 @@
 import React, { Dispatch } from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 import { RootState } from 'state/types';
 import Constants from 'common/constants';
 import { BreedsActionCreators } from 'features/breeds/ducks';
 import { CommonActionCreators } from 'common/ducks';
-import { IBreedsScreen, IBreed } from 'features/breeds/types';
+import { IBreedsScreen } from 'features/breeds/types';
+import BreedsList from './BreedsList';
+
+const Wrapper = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
 
 export const Breeds = ({ breedsRequested, data }: IBreedsScreen) => {
   const { data: breedsData = [] } = data;
@@ -13,17 +25,15 @@ export const Breeds = ({ breedsRequested, data }: IBreedsScreen) => {
   React.useEffect(() => {
     breedsRequested({
       page: Constants.PAGINATION.PAGE,
-      limit: Constants.PAGINATION.LIMIT,
+      limit: 100,
     });
   }, [breedsRequested]);
 
   return (
-    <div>
+    <Wrapper>
       <span>I am Breeds</span>
-      {breedsData.map((breed: IBreed) => (
-        <span key={breed.id}>{breed.id}</span>
-      ))}
-    </div>
+      <BreedsList breeds={breedsData} />
+    </Wrapper>
   );
 };
 

@@ -32,7 +32,7 @@ describe('Favorites screen', () => {
     );
 
     expect(breedsRequested).toBeCalledWith({
-      limit: 10,
+      limit: 100,
       page: 0,
     });
   });
