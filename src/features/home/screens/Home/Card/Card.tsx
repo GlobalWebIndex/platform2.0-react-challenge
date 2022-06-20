@@ -6,14 +6,16 @@ const Wrapper = styled.div`
   background-color: white;
   width: 200px;
   height: 200px;
+
+  :hover {
+    transform: scale(1.05);
+  }
 `;
 
 const SImg = styled.img`
-  width: 180px;
-  height: 180px;
+  width: 200px;
+  height: 200px;
   object-fit: cover;
-  border: 2px solid red;
-  border-radius: 16px;
 `;
 
 interface Props {

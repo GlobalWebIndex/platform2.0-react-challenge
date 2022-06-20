@@ -23,10 +23,22 @@ const Wrapper = styled.div`
 const CardsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
+  max-width: 800px;
   height: 100%;
   align-items: center;
   justify-content: center;
+  align-content: flex-start;
+`;
+
+const EmptyButton = styled.div`
+  background-color: red;
+  color: white;
+  width: 800px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0 0 12px 12px;
 `;
 
 export const Home = ({ catsRequested, data }: IHomeScreen) => {
@@ -74,7 +86,9 @@ export const Home = ({ catsRequested, data }: IHomeScreen) => {
         {catsData.map((catItem: ICat) => (
           <Card key={catItem.id} cat={catItem} onSelect={handleSelectCat} />
         ))}
-        <button onClick={handleMoreCatsClick}>Fetch more cats</button>
+        <EmptyButton onClick={handleMoreCatsClick}>
+          <span>Fetch more cats</span>
+        </EmptyButton>
       </CardsWrapper>
       <CatDetailsModal
         selectedCat={selectedCat}
