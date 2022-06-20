@@ -50,4 +50,29 @@ describe('Breeds action creators', () => {
       payload: {},
     });
   });
+
+  it('will return getCatsByBreed type and paylod', () => {
+    expect(ActionCreators.getCatsByBreed('breed')).toEqual({
+      type: ActionNames.FETCH_BREED_CATS_REQUESTED,
+      payload: {
+        breedName: 'breed',
+      },
+    });
+  });
+
+  it('will return catsByBreedSucceeded type and paylod', () => {
+    const mockedData = [{ image: '123', breeds: [], id: '123', url: 'a_url' }];
+
+    expect(ActionCreators.catsByBreedSucceeded(mockedData)).toEqual({
+      type: ActionNames.FETCH_BREED_CATS_SUCCEDED,
+      payload: { data: mockedData },
+    });
+  });
+
+  it('will return catsByBreedFailed type and paylod', () => {
+    expect(ActionCreators.catsByBreedFailed()).toEqual({
+      type: ActionNames.FETCH_BREED_CATS_FAILED,
+      payload: {},
+    });
+  });
 });

@@ -53,4 +53,47 @@ describe('Common reducer', () => {
       },
     });
   });
+
+  it('will return the FETCH_BREED_CATS_REQUESTED state', () => {
+    expect(
+      CommonReducers(initialState, {
+        type: ActionNames.FETCH_BREED_CATS_REQUESTED,
+      } as any)
+    ).toEqual({
+      breeds: {
+        data: [],
+        status: 'PENDING',
+      },
+    });
+  });
+
+  it('will return the FETCH_BREED_CATS_SUCCEDED state', () => {
+    expect(
+      CommonReducers(initialState, {
+        type: ActionNames.FETCH_BREED_CATS_SUCCEDED,
+        payload: {
+          data: [{ id: 'abc', image: '123' }],
+        },
+      } as any)
+    ).toEqual({
+      breeds: {
+        cats: [{ id: 'abc', image: '123' }],
+        data: [],
+        status: 'SUCCESS',
+      },
+    });
+  });
+
+  it('will return the FETCH_BREED_CATS_FAILED state', () => {
+    expect(
+      CommonReducers(initialState, {
+        type: ActionNames.FETCH_BREED_CATS_FAILED,
+      } as any)
+    ).toEqual({
+      breeds: {
+        data: [],
+        status: 'FAILURE',
+      },
+    });
+  });
 });
