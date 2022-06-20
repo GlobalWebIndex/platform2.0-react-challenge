@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { Dispatch } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { Dispatch } from 'react';
 
 import { CommonActionCreators } from 'common/ducks';
 import Constants from 'common/constants';

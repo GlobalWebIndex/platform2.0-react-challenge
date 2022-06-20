@@ -1,1 +1,1 @@
-export { default } from './Breeds';
+export { default, mapStateToProps, mapDispatchToProps } from './Breeds';
