@@ -3,12 +3,12 @@ import ActionNames from './actionNames';
 
 describe('Common reducer', () => {
   const initialState = {
-    cats: { data: [], status: '' },
+    cats: { data: [], status: '', details: {} },
   };
 
   it('will return the initial state', () => {
     expect(CommonReducers(initialState, { type: 'a type' } as any)).toEqual({
-      cats: { data: [], status: '' },
+      cats: { data: [], status: '', details: {} },
     });
   });
 
@@ -21,6 +21,7 @@ describe('Common reducer', () => {
       cats: {
         data: [],
         status: 'PENDING',
+        details: {},
       },
     });
   });
@@ -47,6 +48,50 @@ describe('Common reducer', () => {
     ).toEqual({
       cats: {
         data: [],
+        status: 'FAILURE',
+        details: {},
+      },
+    });
+  });
+
+  it('will return the FETCH_CAT_INFO_REQUESTED state', () => {
+    expect(
+      CommonReducers(initialState, {
+        type: ActionNames.FETCH_CAT_INFO_REQUESTED,
+      } as any)
+    ).toEqual({
+      cats: {
+        data: [],
+        details: {},
+        status: 'PENDING',
+      },
+    });
+  });
+
+  it('will return the FETCH_CAT_INFO_SUCCEDED state', () => {
+    expect(
+      CommonReducers(initialState, {
+        type: ActionNames.FETCH_CAT_INFO_SUCCEDED,
+        payload: { data: { image: '123' } },
+      } as any)
+    ).toEqual({
+      cats: {
+        data: [],
+        details: { image: '123' },
+        status: 'SUCCESS',
+      },
+    });
+  });
+
+  it('will return the FETCH_CAT_INFO_FAILED state', () => {
+    expect(
+      CommonReducers(initialState, {
+        type: ActionNames.FETCH_CAT_INFO_FAILED,
+      } as any)
+    ).toEqual({
+      cats: {
+        data: [],
+        details: {},
         status: 'FAILURE',
       },
     });

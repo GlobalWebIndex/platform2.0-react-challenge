@@ -1,1 +1,5 @@
-export { default } from './CatDetailsModal';
+export {
+  default,
+  mapDispatchToProps,
+  mapStateToProps,
+} from './CatDetailsModal';

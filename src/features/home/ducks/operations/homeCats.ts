@@ -10,6 +10,10 @@ function* homeCatsWatcher() {
     ActionNames.FETCH_HOME_CATS_REQUESTED,
     composeWithCommons(handleHomeCats)
   );
+  yield takeLatest(
+    ActionNames.FETCH_CAT_INFO_REQUESTED,
+    composeWithCommons(handleGetCatInfo)
+  );
 }
 
 function* handleHomeCats({ action }: any): any {
@@ -30,6 +34,24 @@ function* handleHomeCats({ action }: any): any {
     yield put(ActionCreators.catsSucceeded({ data: response.data, page }));
   } catch (error) {
     yield put(ActionCreators.catsFailed());
+  }
+}
+
+function* handleGetCatInfo({ action }: any): any {
+  const { payload } = action;
+
+  try {
+    const { id } = payload;
+
+    const response = yield call(Services.Api.Data.get, `/images/${id}`, {
+      params: {
+        mime_types: 'jpg,png',
+      },
+    });
+
+    yield put(ActionCreators.catByIdSucceeded(response.data));
+  } catch (error) {
+    yield put(ActionCreators.catByIdFailed());
   }
 }
 

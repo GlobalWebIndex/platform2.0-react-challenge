@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Outlet, useNavigate } from 'react-router-dom';
 
-import { CommonActionCreators } from 'common/ducks';
 import Constants from 'common/constants';
 import { RootState } from 'state/types';
 import { HomeCatsActionCreators } from 'features/home/ducks';
@@ -92,15 +91,12 @@ export const Home = ({ catsRequested, data }: IHomeScreen) => {
 
 export const mapStateToProps = (state: RootState) => {
   return {
-    notification: state.common.notification,
     data: state.data.home.cats,
   };
 };
 
 export const mapDispatchToProps = (dispatch: Dispatch<any>) => {
   return {
-    clearNotificationMessage: () =>
-      dispatch(CommonActionCreators.clearNotificationMessage()),
     catsRequested: ({ page, limit }: { page: number; limit: number }) =>
       dispatch(
         HomeCatsActionCreators.getCats({

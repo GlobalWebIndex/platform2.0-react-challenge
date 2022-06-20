@@ -28,8 +28,37 @@ function catsFailed() {
   } as const;
 }
 
+function getCatById(id: number | string) {
+  return {
+    type: ActionNames.FETCH_CAT_INFO_REQUESTED,
+    payload: {
+      id,
+    },
+  } as const;
+}
+
+function catByIdSucceeded(data: ICat) {
+  return {
+    type: ActionNames.FETCH_CAT_INFO_SUCCEDED,
+    payload: {
+      data,
+    },
+  } as const;
+}
+
+function catByIdFailed() {
+  return {
+    type: ActionNames.FETCH_CAT_INFO_FAILED,
+    payload: {},
+  } as const;
+}
+
 export default {
   getCats,
   catsSucceeded,
   catsFailed,
+
+  getCatById,
+  catByIdSucceeded,
+  catByIdFailed,
 };

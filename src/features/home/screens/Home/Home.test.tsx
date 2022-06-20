@@ -1,19 +1,15 @@
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 
 import { Home } from './Home';
 
 describe('Home screen', () => {
   const catsRequested = jest.fn();
-  const clearNotificationMessage = jest.fn();
 
   it("will render 'I am Home'", () => {
     render(
-      <Home
-        catsRequested={catsRequested}
-        clearNotificationMessage={clearNotificationMessage}
-        notification={{ error: '', success: '' }}
-        data={{ data: [], status: '' }}
-      />
+      <Home catsRequested={catsRequested} data={{ data: [], status: '' }} />,
+      { wrapper: MemoryRouter }
     );
 
     const element = screen.getByText('I am Home');
@@ -23,12 +19,8 @@ describe('Home screen', () => {
 
   it('will call catsRequested', () => {
     render(
-      <Home
-        catsRequested={catsRequested}
-        clearNotificationMessage={clearNotificationMessage}
-        notification={{ error: '', success: '' }}
-        data={{ data: [], status: '' }}
-      />
+      <Home catsRequested={catsRequested} data={{ data: [], status: '' }} />,
+      { wrapper: MemoryRouter }
     );
 
     expect(catsRequested).toBeCalledWith({

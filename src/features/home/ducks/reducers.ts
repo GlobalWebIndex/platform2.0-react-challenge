@@ -5,6 +5,7 @@ import ActionNames from 'features/home/ducks/actionNames';
 
 const catsReducerInitialState = {
   data: [],
+  details: {},
   status: '',
 };
 function CatsDataReducer(state = catsReducerInitialState, action: any) {
@@ -32,6 +33,28 @@ function CatsDataReducer(state = catsReducerInitialState, action: any) {
     }
 
     case ActionNames.FETCH_HOME_CATS_FAILED: {
+      return {
+        ...state,
+        status: CONSTANTS.RESPONSE_STATUS.FAILURE,
+      };
+    }
+
+    case ActionNames.FETCH_CAT_INFO_REQUESTED: {
+      return {
+        ...state,
+        status: CONSTANTS.RESPONSE_STATUS.PENDING,
+      };
+    }
+
+    case ActionNames.FETCH_CAT_INFO_SUCCEDED: {
+      return {
+        ...state,
+        details: action.payload.data,
+        status: CONSTANTS.RESPONSE_STATUS.SUCCESS,
+      };
+    }
+
+    case ActionNames.FETCH_CAT_INFO_FAILED: {
       return {
         ...state,
         status: CONSTANTS.RESPONSE_STATUS.FAILURE,

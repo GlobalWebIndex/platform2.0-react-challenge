@@ -29,4 +29,29 @@ describe('Home action creators', () => {
       payload: {},
     });
   });
+
+  it('will return getCatById type and paylod', () => {
+    expect(ActionCreators.getCatById(123)).toEqual({
+      type: ActionNames.FETCH_CAT_INFO_REQUESTED,
+      payload: {
+        id: 123,
+      },
+    });
+  });
+
+  it('will return catByIdSucceeded type and paylod', () => {
+    const mockedData = { image: '123', breeds: [], id: '123', url: 'a_url' };
+
+    expect(ActionCreators.catByIdSucceeded(mockedData)).toEqual({
+      type: ActionNames.FETCH_CAT_INFO_SUCCEDED,
+      payload: { data: mockedData },
+    });
+  });
+
+  it('will return catByIdFailed type and paylod', () => {
+    expect(ActionCreators.catByIdFailed()).toEqual({
+      type: ActionNames.FETCH_CAT_INFO_FAILED,
+      payload: {},
+    });
+  });
 });
