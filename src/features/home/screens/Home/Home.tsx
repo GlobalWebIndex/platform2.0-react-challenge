@@ -37,14 +37,18 @@ export const Home = ({ catsRequested, data }: IHomeScreen) => {
     Constants.PAGINATION.PAGE
   );
 
-  React.useEffect(() => {
-    catsRequested({
-      page: Constants.PAGINATION.PAGE,
-      limit: Constants.PAGINATION.LIMIT,
-    });
+  const { data: catsData = [] } = data;
 
-    setCatsListPager(Constants.PAGINATION.PAGE + 1);
-  }, [catsRequested]);
+  React.useEffect(() => {
+    if (catsData.length === 0) {
+      catsRequested({
+        page: Constants.PAGINATION.PAGE,
+        limit: Constants.PAGINATION.LIMIT,
+      });
+
+      setCatsListPager(Constants.PAGINATION.PAGE + 1);
+    }
+  }, [catsRequested, catsData.length]);
 
   const handleMoreCatsClick = React.useCallback(() => {
     catsRequested({
@@ -54,8 +58,6 @@ export const Home = ({ catsRequested, data }: IHomeScreen) => {
 
     setCatsListPager(catsListPager + 1);
   }, [catsListPager, catsRequested]);
-
-  const { data: catsData = [] } = data;
 
   const handleSelectCat = (cat: ICat) => {
     setSelectedCat(cat);

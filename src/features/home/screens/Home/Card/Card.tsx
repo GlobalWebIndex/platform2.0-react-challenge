@@ -11,7 +11,7 @@ const Wrapper = styled.div`
 const SImg = styled.img`
   width: 180px;
   height: 180px;
-  object-fit: contain;
+  object-fit: cover;
   border: 2px solid red;
   border-radius: 16px;
 `;
