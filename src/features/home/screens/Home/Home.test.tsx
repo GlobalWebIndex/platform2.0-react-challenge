@@ -8,7 +8,11 @@ describe('Home screen', () => {
 
   it("will render 'I am Home'", () => {
     render(
-      <Home catsRequested={catsRequested} data={{ data: [], status: '' }} />,
+      <Home
+        data={{ data: [], status: '', details: { data: [], status: '' } }}
+        loading={false}
+        catsRequested={catsRequested}
+      />,
       { wrapper: MemoryRouter }
     );
 
@@ -19,7 +23,11 @@ describe('Home screen', () => {
 
   it('will call catsRequested', () => {
     render(
-      <Home catsRequested={catsRequested} data={{ data: [], status: '' }} />,
+      <Home
+        data={{ data: [], status: '', details: { data: [], status: '' } }}
+        loading={false}
+        catsRequested={catsRequested}
+      />,
       { wrapper: MemoryRouter }
     );
 

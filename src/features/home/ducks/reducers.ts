@@ -2,10 +2,11 @@ import { combineReducers } from 'redux';
 
 import CONSTANTS from 'common/constants';
 import ActionNames from 'features/home/ducks/actionNames';
+import { stat } from 'fs';
 
 const catsReducerInitialState = {
   data: [],
-  details: {},
+  details: { data: {}, status: '' },
   status: '',
 };
 function CatsDataReducer(state = catsReducerInitialState, action: any) {
@@ -20,13 +21,14 @@ function CatsDataReducer(state = catsReducerInitialState, action: any) {
     case ActionNames.FETCH_HOME_CATS_SUCCEDED: {
       if (action.payload.page > 0) {
         return {
-          ...action.payload.data,
+          ...state,
           data: [...state.data, ...action.payload.data],
           status: CONSTANTS.RESPONSE_STATUS.SUCCESS,
         };
       }
 
       return {
+        ...state,
         data: action.payload.data,
         status: CONSTANTS.RESPONSE_STATUS.SUCCESS,
       };
@@ -42,22 +44,30 @@ function CatsDataReducer(state = catsReducerInitialState, action: any) {
     case ActionNames.FETCH_CAT_INFO_REQUESTED: {
       return {
         ...state,
-        status: CONSTANTS.RESPONSE_STATUS.PENDING,
+        details: {
+          data: {},
+          status: CONSTANTS.RESPONSE_STATUS.PENDING,
+        },
       };
     }
 
     case ActionNames.FETCH_CAT_INFO_SUCCEDED: {
       return {
         ...state,
-        details: action.payload.data,
-        status: CONSTANTS.RESPONSE_STATUS.SUCCESS,
+        details: {
+          data: action.payload.data,
+          status: CONSTANTS.RESPONSE_STATUS.SUCCESS,
+        },
       };
     }
 
     case ActionNames.FETCH_CAT_INFO_FAILED: {
       return {
         ...state,
-        status: CONSTANTS.RESPONSE_STATUS.FAILURE,
+        details: {
+          ...state.details,
+          status: CONSTANTS.RESPONSE_STATUS.FAILURE,
+        },
       };
     }
 

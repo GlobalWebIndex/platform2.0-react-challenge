@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 import Constants from 'common/constants';
+import Loader from 'common/components/Loader';
 import { RootState } from 'state/types';
 import { HomeCatsActionCreators } from 'features/home/ducks';
 import { IHomeScreen, ICat } from 'features/home/types';
@@ -23,13 +24,15 @@ const CardsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   max-width: 900px;
-  height: 100%;
+  max-height: 100%;
+  min-height: 50%;
   align-items: center;
   justify-content: center;
   align-content: flex-start;
+  position: relative;
 `;
 
-const MoreButton = styled.div`
+const MoreButton = styled.button`
   background-color: red;
   color: white;
   width: 900px;
@@ -45,7 +48,7 @@ const MoreButton = styled.div`
   }
 `;
 
-export const Home = ({ catsRequested, data }: IHomeScreen) => {
+export const Home = ({ data, loading, catsRequested }: IHomeScreen) => {
   const [catsListPager, setCatsListPager] = React.useState(
     Constants.PAGINATION.PAGE
   );
@@ -85,9 +88,10 @@ export const Home = ({ catsRequested, data }: IHomeScreen) => {
         {catsData.map((catItem: ICat) => (
           <Card key={catItem.id} cat={catItem} onSelect={handleSelectCat} />
         ))}
-        <MoreButton onClick={handleMoreCatsClick}>
+        <MoreButton onClick={handleMoreCatsClick} disabled={loading}>
           <span>Fetch more cats</span>
         </MoreButton>
+        {loading && <Loader />}
       </CardsWrapper>
       <Outlet />
     </Wrapper>
@@ -96,6 +100,7 @@ export const Home = ({ catsRequested, data }: IHomeScreen) => {
 
 export const mapStateToProps = (state: RootState) => {
   return {
+    loading: state.common.ui.loading,
     data: state.data.home.cats,
   };
 };

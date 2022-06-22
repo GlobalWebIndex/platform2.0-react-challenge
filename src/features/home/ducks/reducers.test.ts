@@ -3,12 +3,12 @@ import ActionNames from './actionNames';
 
 describe('Common reducer', () => {
   const initialState = {
-    cats: { data: [], status: '', details: {} },
+    cats: { data: [], status: '', details: { data: {}, status: '' } },
   };
 
   it('will return the initial state', () => {
     expect(CommonReducers(initialState, { type: 'a type' } as any)).toEqual({
-      cats: { data: [], status: '', details: {} },
+      cats: { data: [], status: '', details: { data: {}, status: '' } },
     });
   });
 
@@ -21,7 +21,7 @@ describe('Common reducer', () => {
       cats: {
         data: [],
         status: 'PENDING',
-        details: {},
+        details: { data: {}, status: '' },
       },
     });
   });
@@ -36,6 +36,7 @@ describe('Common reducer', () => {
       cats: {
         data: [{ image: '123' }],
         status: 'SUCCESS',
+        details: { data: {}, status: '' },
       },
     });
   });
@@ -49,7 +50,7 @@ describe('Common reducer', () => {
       cats: {
         data: [],
         status: 'FAILURE',
-        details: {},
+        details: { data: {}, status: '' },
       },
     });
   });
@@ -62,8 +63,8 @@ describe('Common reducer', () => {
     ).toEqual({
       cats: {
         data: [],
-        details: {},
-        status: 'PENDING',
+        details: { data: {}, status: 'PENDING' },
+        status: '',
       },
     });
   });
@@ -77,8 +78,8 @@ describe('Common reducer', () => {
     ).toEqual({
       cats: {
         data: [],
-        details: { image: '123' },
-        status: 'SUCCESS',
+        status: '',
+        details: { data: { image: '123' }, status: 'SUCCESS' },
       },
     });
   });
@@ -91,8 +92,8 @@ describe('Common reducer', () => {
     ).toEqual({
       cats: {
         data: [],
-        details: {},
-        status: 'FAILURE',
+        details: { data: {}, status: 'FAILURE' },
+        status: '',
       },
     });
   });

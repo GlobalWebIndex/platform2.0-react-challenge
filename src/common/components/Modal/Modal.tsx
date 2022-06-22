@@ -42,6 +42,9 @@ const CommonModal = ({ title, body, isOpen = false, onDismiss }: Props) => {
           marginRight: '-50%',
           transform: 'translate(-50%, -50%)',
         },
+        overlay: {
+          backgroundColor: 'rgba(0, 0, 0, 0.3)',
+        },
       }}
       isOpen={isOpen}
       onRequestClose={onDismiss}

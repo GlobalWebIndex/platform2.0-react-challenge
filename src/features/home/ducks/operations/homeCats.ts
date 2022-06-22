@@ -12,7 +12,7 @@ function* homeCatsWatcher() {
   );
   yield takeLatest(
     ActionNames.FETCH_CAT_INFO_REQUESTED,
-    composeWithCommons(handleGetCatInfo)
+    composeWithCommons(handleGetCatInfo, { withLoader: false })
   );
 }
 
