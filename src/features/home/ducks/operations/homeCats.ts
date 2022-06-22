@@ -20,13 +20,12 @@ function* handleHomeCats({ action }: any): any {
   const { payload } = action;
 
   try {
-    const { limit, page, order = 'desc' } = payload;
+    const { limit, page } = payload;
 
     const response = yield call(Services.Api.Data.get, '/images/search', {
       params: {
         page,
         limit,
-        order,
         mime_types: 'jpg,png',
       },
     });

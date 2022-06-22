@@ -70,6 +70,9 @@ const palette = {
 
 const colors = {
   primary: '#de1b76',
+  primaryHover: palette.red[800],
+  secondaryHover: palette.grey[400],
+  dangerHover: palette.red[900],
   warning: palette.orange[600],
   danger: palette.red[600],
   success: palette.green[600],

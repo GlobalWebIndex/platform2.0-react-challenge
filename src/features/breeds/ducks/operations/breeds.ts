@@ -20,13 +20,12 @@ function* handleBreeds({ action }: any): any {
   const { payload } = action;
 
   try {
-    const { limit, page, order = 'desc' } = payload;
+    const { limit, page } = payload;
 
     const response = yield call(Services.Api.Data.get, '/breeds', {
       params: {
         page,
         limit,
-        order,
       },
     });
 

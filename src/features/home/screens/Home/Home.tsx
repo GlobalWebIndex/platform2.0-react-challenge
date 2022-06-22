@@ -25,7 +25,7 @@ const CardsWrapper = styled.div`
   flex-wrap: wrap;
   max-width: 900px;
   max-height: 100%;
-  min-height: 50%;
+  min-height: 400px;
   align-items: center;
   justify-content: center;
   align-content: flex-start;

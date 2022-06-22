@@ -2,7 +2,6 @@ import { combineReducers } from 'redux';
 
 import CONSTANTS from 'common/constants';
 import ActionNames from 'features/home/ducks/actionNames';
-import { stat } from 'fs';
 
 const catsReducerInitialState = {
   data: [],
