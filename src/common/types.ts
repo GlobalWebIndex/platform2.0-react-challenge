@@ -2,7 +2,9 @@ import ActionCreators from './ducks/actionCreators';
 
 /* ----------- ACTION NAMES -------------  */
 
-export type CommonActionNames = ReturnType<typeof ActionCreators.uiLoadingStarted> &
+export type CommonActionNames = ReturnType<
+  typeof ActionCreators.uiLoadingStarted
+> &
   ReturnType<typeof ActionCreators.uiLoadingFinished> &
   ReturnType<typeof ActionCreators.setNotificationMessage> &
   ReturnType<typeof ActionCreators.clearNotificationMessage>;
@@ -16,4 +18,11 @@ export interface IUIState {
 export interface INotificationState {
   error: any;
   success: any;
+}
+
+/* ----------- GENERIC TYPES -------------  */
+
+export interface ILink {
+  to: string;
+  label: string;
 }

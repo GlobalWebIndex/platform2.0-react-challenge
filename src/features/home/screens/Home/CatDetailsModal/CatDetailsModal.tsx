@@ -7,7 +7,7 @@ import { HomeCatsActionCreators } from 'features/home/ducks';
 import Modal from 'common/components/Modal';
 import { ICatDetailsModal } from 'features/home/types';
 
-const CatDetailsModal = ({ getCatById, cat }: ICatDetailsModal) => {
+const CatDetailsModal = ({ getCatById }: ICatDetailsModal) => {
   const [isOpen, setIsOpen] = React.useState(true);
 
   const { id } = useParams();
@@ -27,7 +27,7 @@ const CatDetailsModal = ({ getCatById, cat }: ICatDetailsModal) => {
   return (
     <Modal
       title="a title"
-      body={cat.id}
+      body={id}
       isOpen={isOpen}
       onDismiss={handleDismiss}
     />

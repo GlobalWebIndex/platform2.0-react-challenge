@@ -1,7 +1,8 @@
-import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Colors } from 'theme';
+import { ILink } from 'common/types';
+import Link from 'common/components/Link';
 
 const Wrapper = styled.nav`
   width: 300px;
@@ -30,47 +31,19 @@ const NavItem = styled.div`
     color: ${Colors.white};
   }
 `;
+interface Props {
+  links: ILink[];
+}
 
-const SLink = styled(NavLink)`
-  color: white;
-  text-decoration: none;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &:hover,
-  &:focus {
-    color: white;
-    background: blue;
-  }
-  &:active {
-    color: ${Colors.white};
-  }
-
-  .active {
-    color: red;
-    background: blue;
-  }
-`;
-
-const Sidebar = () => {
+const Sidebar = ({ links }: Props) => {
   return (
     <Wrapper>
       <ListWrapper>
-        <NavItem>
-          <SLink to="/" className={(isActive) => (isActive ? 'active' : '')}>
-            Home
-          </SLink>
-        </NavItem>
-        <NavItem>
-          <SLink to="/breeds">Breeds</SLink>
-        </NavItem>
-        <NavItem>
-          <SLink to="/favorites">Favorites</SLink>
-        </NavItem>
+        {links.map((link) => (
+          <NavItem key={link.label}>
+            <Link to={link.to} label={link.label} />
+          </NavItem>
+        ))}
       </ListWrapper>
     </Wrapper>
   );

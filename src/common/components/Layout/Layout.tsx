@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import Constants from 'common/constants';
+import Header from '../Header';
 import Sidebar from '../Sidebar';
+import MobileMenu from '../MobileMenu';
 import Main from '../Main';
 
 const Wrapper = styled.div`
@@ -13,7 +16,15 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+`;
+
+const Row = styled.div`
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 `;
 
 interface Props {
@@ -28,18 +39,18 @@ const Layout = ({ children }: Props) => {
     /* Inside of a "useEffect" hook add an event listener that updates
        the "width" state variable when the window size changes */
     window.addEventListener('resize', () => setWidth(window.innerWidth));
-
-    /* passing an empty array as the dependencies of the effect will cause this
-       effect to only run when the component mounts, and not each time it updates.
-       We only want the listener to be added once */
   }, []);
 
   const isMobile = width < breakpoint;
 
   return (
     <Wrapper>
-      {!isMobile && <Sidebar />}
-      <Main>{children}</Main>
+      <Header />
+      {isMobile && <MobileMenu links={Constants.ROUTES} />}
+      <Row>
+        {!isMobile && <Sidebar links={Constants.ROUTES} />}
+        <Main>{children}</Main>
+      </Row>
     </Wrapper>
   );
 };

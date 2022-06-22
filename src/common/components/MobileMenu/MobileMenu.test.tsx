@@ -2,11 +2,11 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 import Constants from 'common/constants';
-import Sidebar from './Sidebar';
+import MobileMenu from './MobileMenu';
 
-describe('Sidebar component', () => {
+describe('MobileMenu component', () => {
   it("will render 'Cats'", () => {
-    render(<Sidebar links={Constants.ROUTES} />, { wrapper: MemoryRouter });
+    render(<MobileMenu links={Constants.ROUTES} />, { wrapper: MemoryRouter });
 
     const element = screen.getByText('Cats');
 

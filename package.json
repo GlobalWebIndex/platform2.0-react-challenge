@@ -69,6 +69,9 @@
   "devDependencies": {
     "@types/react-modal": "^3.13.1",
     "@types/styled-components": "^5.1.25",
-    "prettier": "2.7.1"
+    "autoprefixer": "^10.4.7",
+    "postcss": "^8.4.14",
+    "prettier": "2.7.1",
+    "tailwindcss": "^3.1.4"
   }
 }

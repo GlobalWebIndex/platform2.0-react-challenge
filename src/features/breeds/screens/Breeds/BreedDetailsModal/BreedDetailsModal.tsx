@@ -7,10 +7,7 @@ import { BreedsActionCreators } from 'features/breeds/ducks';
 import Modal from 'common/components/Modal';
 import { IBreedDetailsModal } from 'features/breeds/types';
 
-const BreedDetailsModal = ({
-  getCatsByBreedName,
-  breed,
-}: IBreedDetailsModal) => {
+const BreedDetailsModal = ({ getCatsByBreedName }: IBreedDetailsModal) => {
   const [isOpen, setIsOpen] = React.useState(true);
 
   const { breedName } = useParams();
