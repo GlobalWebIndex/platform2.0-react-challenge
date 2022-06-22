@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Constants from 'common/constants';
+import { Sizes } from 'theme';
 import Header from '../Header';
 import Sidebar from '../Sidebar';
 import MobileMenu from '../MobileMenu';
@@ -21,7 +22,7 @@ const Wrapper = styled.div`
 
 const Row = styled.div`
   width: 100%;
-  height: 100%;
+  height: calc(100% - ${Sizes.header.height});
   justify-content: center;
   align-items: center;
   display: flex;
@@ -35,9 +36,9 @@ const Layout = ({ children }: Props) => {
   const [width, setWidth] = React.useState(window.innerWidth);
   const breakpoint = 620;
 
+  // We use this event listener that updates
+  // the "width" state variable when the window size changes
   React.useEffect(() => {
-    /* Inside of a "useEffect" hook add an event listener that updates
-       the "width" state variable when the window size changes */
     window.addEventListener('resize', () => setWidth(window.innerWidth));
   }, []);
 

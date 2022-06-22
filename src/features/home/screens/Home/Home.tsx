@@ -22,7 +22,7 @@ const Wrapper = styled.div`
 const CardsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  max-width: 800px;
+  max-width: 900px;
   height: 100%;
   align-items: center;
   justify-content: center;
@@ -32,12 +32,17 @@ const CardsWrapper = styled.div`
 const MoreButton = styled.div`
   background-color: red;
   color: white;
-  width: 800px;
+  width: 900px;
   height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 0 0 12px 12px;
+
+  :hover {
+    cursor: pointer;
+    background-color: blue;
+  }
 `;
 
 export const Home = ({ catsRequested, data }: IHomeScreen) => {

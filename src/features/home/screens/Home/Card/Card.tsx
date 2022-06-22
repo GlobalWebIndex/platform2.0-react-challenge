@@ -4,17 +4,18 @@ import { ICat } from 'features/home/types';
 
 const Wrapper = styled.div`
   background-color: white;
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
 
   :hover {
     transform: scale(1.05);
+    cursor: pointer;
   }
 `;
 
 const SImg = styled.img`
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
   object-fit: cover;
 `;
 

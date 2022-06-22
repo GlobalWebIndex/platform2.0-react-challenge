@@ -1,7 +1,6 @@
 import { render, screen, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
-import Constants from 'common/constants';
 import Layout from './Layout';
 
 describe('Layout component', () => {

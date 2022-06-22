@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
-import { Colors } from 'theme';
+import { Colors, Sizes } from 'theme';
 
 const Wrapper = styled.header`
   background-color: ${Colors.primary};
+  height: ${Sizes.header.height};
 `;
 
 const Header = () => (

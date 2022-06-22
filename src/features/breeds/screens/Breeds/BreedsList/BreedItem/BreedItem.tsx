@@ -5,7 +5,7 @@ import { IBreed } from 'features/breeds/types';
 
 const Wrapper = styled.div`
   background-color: white;
-  width: 40%;
+  width: 500px;
   height: 200px;
   display: flex;
   flex-wrap: wrap;
