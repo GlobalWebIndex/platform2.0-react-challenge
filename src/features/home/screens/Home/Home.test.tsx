@@ -9,7 +9,12 @@ describe('Home screen', () => {
   it("will render 'I am Home'", () => {
     render(
       <Home
-        data={{ data: [], status: '', details: { data: [], status: '' } }}
+        data={{
+          data: [],
+          status: '',
+          details: { data: [], status: '' },
+          favorite: { status: '' },
+        }}
         loading={false}
         catsRequested={catsRequested}
       />,
@@ -24,7 +29,12 @@ describe('Home screen', () => {
   it('will call catsRequested', () => {
     render(
       <Home
-        data={{ data: [], status: '', details: { data: [], status: '' } }}
+        data={{
+          data: [],
+          status: '',
+          details: { data: [], status: '' },
+          favorite: { status: '' },
+        }}
         loading={false}
         catsRequested={catsRequested}
       />,

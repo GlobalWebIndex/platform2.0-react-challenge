@@ -10,7 +10,7 @@ function assertData() {
     timeout: 0,
     responseType: 'json',
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
     },
     paramsSerializer: (params) => {
       return qs.stringify(params, { arrayFormat: 'repeat' });

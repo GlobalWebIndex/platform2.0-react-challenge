@@ -6,7 +6,7 @@ describe('Favorites screen', () => {
   const favoritesRequested = jest.fn();
   const deleteFavorite = jest.fn();
 
-  it("will render 'I am Favorites'", () => {
+  it("will render 'There are no favorite cats yet'", () => {
     render(
       <Favorites
         data={{ data: [], status: '', delete: { status: '' } }}
@@ -16,7 +16,7 @@ describe('Favorites screen', () => {
       />
     );
 
-    const element = screen.getByText('I am Favorites');
+    const element = screen.getByText('There are no favorite cats yet');
 
     expect(element).toBeTruthy();
   });

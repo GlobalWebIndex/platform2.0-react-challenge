@@ -54,4 +54,27 @@ describe('Home action creators', () => {
       payload: {},
     });
   });
+
+  it('will return markCatFavorite type and paylod', () => {
+    expect(ActionCreators.markCatFavorite({ imageId: '123' })).toEqual({
+      type: ActionNames.MARK_CAT_FAVORITE_REQUESTED,
+      payload: {
+        imageId: '123',
+      },
+    });
+  });
+
+  it('will return markCatFavoriteSucceeded type and paylod', () => {
+    expect(ActionCreators.markCatFavoriteSucceeded()).toEqual({
+      type: ActionNames.MARK_CAT_FAVORITE_SUCCEDED,
+      payload: {},
+    });
+  });
+
+  it('will return markCatFavoriteFailed type and paylod', () => {
+    expect(ActionCreators.markCatFavoriteFailed()).toEqual({
+      type: ActionNames.MARK_CAT_FAVORITE_FAILED,
+      payload: {},
+    });
+  });
 });

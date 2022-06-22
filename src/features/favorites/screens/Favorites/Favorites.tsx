@@ -7,6 +7,7 @@ import ActionCreators from 'features/favorites/ducks/actionCreators';
 import { IFavorite, IFavoritesScreen } from 'features/favorites/types';
 import { RootState } from 'state/types';
 import Loader from 'common/components/Loader';
+import Card from './Card';
 
 const Wrapper = styled.div`
   display: flex;
@@ -53,9 +54,15 @@ export const Favorites = ({
     <Wrapper>
       <CardsWrapper>
         {hasFavorites ? (
-          favoritesData.map((favorite: IFavorite) => (
-            <div key={favorite.id}>{favorite.created_at}</div>
-          ))
+          <CardsWrapper>
+            {favoritesData.map((favorite: IFavorite) => (
+              <Card
+                key={favorite.id}
+                favorite={favorite}
+                onDelete={deleteFavorite}
+              />
+            ))}
+          </CardsWrapper>
         ) : (
           <span>There are no favorite cats yet</span>
         )}

@@ -3,12 +3,22 @@ import ActionNames from './actionNames';
 
 describe('Common reducer', () => {
   const initialState = {
-    cats: { data: [], status: '', details: { data: {}, status: '' } },
+    cats: {
+      data: [],
+      status: '',
+      details: { data: {}, status: '' },
+      favorite: { status: '' },
+    },
   };
 
   it('will return the initial state', () => {
     expect(CommonReducers(initialState, { type: 'a type' } as any)).toEqual({
-      cats: { data: [], status: '', details: { data: {}, status: '' } },
+      cats: {
+        data: [],
+        status: '',
+        details: { data: {}, status: '' },
+        favorite: { status: '' },
+      },
     });
   });
 
@@ -22,6 +32,7 @@ describe('Common reducer', () => {
         data: [],
         status: 'PENDING',
         details: { data: {}, status: '' },
+        favorite: { status: '' },
       },
     });
   });
@@ -37,6 +48,7 @@ describe('Common reducer', () => {
         data: [{ image: '123' }],
         status: 'SUCCESS',
         details: { data: {}, status: '' },
+        favorite: { status: '' },
       },
     });
   });
@@ -51,6 +63,7 @@ describe('Common reducer', () => {
         data: [],
         status: 'FAILURE',
         details: { data: {}, status: '' },
+        favorite: { status: '' },
       },
     });
   });
@@ -65,6 +78,7 @@ describe('Common reducer', () => {
         data: [],
         details: { data: {}, status: 'PENDING' },
         status: '',
+        favorite: { status: '' },
       },
     });
   });
@@ -80,6 +94,7 @@ describe('Common reducer', () => {
         data: [],
         status: '',
         details: { data: { image: '123' }, status: 'SUCCESS' },
+        favorite: { status: '' },
       },
     });
   });
@@ -94,6 +109,53 @@ describe('Common reducer', () => {
         data: [],
         details: { data: {}, status: 'FAILURE' },
         status: '',
+        favorite: { status: '' },
+      },
+    });
+  });
+
+  it('will return the MARK_CAT_FAVORITE_REQUESTED state', () => {
+    expect(
+      CommonReducers(initialState, {
+        type: ActionNames.MARK_CAT_FAVORITE_REQUESTED,
+      } as any)
+    ).toEqual({
+      cats: {
+        data: [],
+        details: { data: {}, status: '' },
+        status: '',
+        favorite: { status: 'PENDING' },
+      },
+    });
+  });
+
+  it('will return the MARK_CAT_FAVORITE_SUCCEDED state', () => {
+    expect(
+      CommonReducers(initialState, {
+        type: ActionNames.MARK_CAT_FAVORITE_SUCCEDED,
+        payload: {},
+      } as any)
+    ).toEqual({
+      cats: {
+        data: [],
+        status: '',
+        details: { data: {}, status: '' },
+        favorite: { status: 'SUCCESS' },
+      },
+    });
+  });
+
+  it('will return the MARK_CAT_FAVORITE_FAILED state', () => {
+    expect(
+      CommonReducers(initialState, {
+        type: ActionNames.MARK_CAT_FAVORITE_FAILED,
+      } as any)
+    ).toEqual({
+      cats: {
+        data: [],
+        details: { data: {}, status: '' },
+        status: '',
+        favorite: { status: 'FAILURE' },
       },
     });
   });

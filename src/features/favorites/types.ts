@@ -9,7 +9,7 @@ export type IFavoritesScreen = {} & ReturnType<
   ReturnType<typeof FavoritesMapStateToProps>;
 
 export interface IFavorite {
-  id: string | number;
+  id: string;
   user_id: string;
   image_id: string;
   sub_id: string;

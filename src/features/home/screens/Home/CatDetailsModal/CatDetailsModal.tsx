@@ -9,7 +9,11 @@ import Modal from 'common/components/Modal';
 import { ICatDetailsModal } from 'features/home/types';
 import Body from './Body';
 
-const CatDetailsModal = ({ cat, getCatById }: ICatDetailsModal) => {
+const CatDetailsModal = ({
+  cat,
+  getCatById,
+  markCatFavorite,
+}: ICatDetailsModal) => {
   const [isOpen, setIsOpen] = React.useState(true);
   const [isLoading, setisLoading] = React.useState(true);
 
@@ -43,7 +47,13 @@ const CatDetailsModal = ({ cat, getCatById }: ICatDetailsModal) => {
   return (
     <Modal
       title="a title"
-      body={<Body loading={isLoading} cat={catData} />}
+      body={
+        <Body
+          loading={isLoading}
+          cat={catData}
+          onMarkCatFavorite={markCatFavorite}
+        />
+      }
       isOpen={isOpen}
       onDismiss={handleDismiss}
     />
@@ -61,6 +71,12 @@ export const mapDispatchToProps = (dispatch: Dispatch<any>) => {
   return {
     getCatById: (id: number | string) =>
       dispatch(HomeCatsActionCreators.getCatById(id)),
+    markCatFavorite: ({ imageId }: { imageId: string }) =>
+      dispatch(
+        HomeCatsActionCreators.markCatFavorite({
+          imageId,
+        })
+      ),
   };
 };
 

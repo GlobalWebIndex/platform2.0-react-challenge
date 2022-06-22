@@ -19,7 +19,7 @@ export type ICatDetailsModal = {} & ReturnType<
 export interface ICat {
   breeds: any[];
   height?: number;
-  id: string | number;
+  id: string;
   url: string;
   width?: number;
 }

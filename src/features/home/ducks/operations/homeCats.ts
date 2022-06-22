@@ -14,6 +14,10 @@ function* homeCatsWatcher() {
     ActionNames.FETCH_CAT_INFO_REQUESTED,
     composeWithCommons(handleGetCatInfo, { withLoader: false })
   );
+  yield takeLatest(
+    ActionNames.MARK_CAT_FAVORITE_REQUESTED,
+    composeWithCommons(handleMarkCatFavorite, { withLoader: false })
+  );
 }
 
 function* handleHomeCats({ action }: any): any {
@@ -51,6 +55,20 @@ function* handleGetCatInfo({ action }: any): any {
     yield put(ActionCreators.catByIdSucceeded(response.data));
   } catch (error) {
     yield put(ActionCreators.catByIdFailed());
+  }
+}
+
+function* handleMarkCatFavorite({ action }: any): any {
+  const { payload } = action;
+
+  try {
+    const { imageId } = payload;
+
+    yield call(Services.Api.Data.post, 'favourites', { image_id: imageId }, {});
+
+    yield put(ActionCreators.markCatFavoriteSucceeded());
+  } catch (error) {
+    yield put(ActionCreators.markCatFavoriteFailed());
   }
 }
 

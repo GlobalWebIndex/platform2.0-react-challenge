@@ -15,7 +15,7 @@ describe('Favorites action creators', () => {
   it('will return favoritesSucceeded type and paylod', () => {
     const mockedData = [
       {
-        id: 833,
+        id: '833',
         user_id: '4',
         image_id: '1ud',
         sub_id: '',

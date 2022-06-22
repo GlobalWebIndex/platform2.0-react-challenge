@@ -53,6 +53,29 @@ function catByIdFailed() {
   } as const;
 }
 
+function markCatFavorite({ imageId }: { imageId: string }) {
+  return {
+    type: ActionNames.MARK_CAT_FAVORITE_REQUESTED,
+    payload: {
+      imageId,
+    },
+  } as const;
+}
+
+function markCatFavoriteSucceeded() {
+  return {
+    type: ActionNames.MARK_CAT_FAVORITE_SUCCEDED,
+    payload: {},
+  } as const;
+}
+
+function markCatFavoriteFailed() {
+  return {
+    type: ActionNames.MARK_CAT_FAVORITE_FAILED,
+    payload: {},
+  } as const;
+}
+
 export default {
   getCats,
   catsSucceeded,
@@ -61,4 +84,8 @@ export default {
   getCatById,
   catByIdSucceeded,
   catByIdFailed,
+
+  markCatFavorite,
+  markCatFavoriteSucceeded,
+  markCatFavoriteFailed,
 };

@@ -26,9 +26,10 @@ const Img = styled.img`
 interface Props {
   loading: boolean;
   cat: ICat;
+  onMarkCatFavorite: ({ imageId }: { imageId: string }) => void;
 }
 
-const Body = ({ cat, loading }: Props) => {
+const Body = ({ cat, loading, onMarkCatFavorite }: Props) => {
   const [buttonText, setButtonText] = React.useState('Copy Url');
 
   const navigate = useNavigate();
@@ -45,6 +46,10 @@ const Body = ({ cat, loading }: Props) => {
 
   const handleBreedClick = (name: string) => {
     navigate(`/breeds/${name}`);
+  };
+
+  const handleFavoriteClick = () => {
+    onMarkCatFavorite({ imageId: cat.id });
   };
 
   return (
@@ -82,7 +87,7 @@ const Body = ({ cat, loading }: Props) => {
           />
         </div>
         <div className="flex items-center justify-center w-1/2 h-12">
-          <IconButton icon="favorite" onClick={() => {}} />
+          <IconButton icon="favorite" onClick={handleFavoriteClick} />
         </div>
       </div>
       {loading && <Loader />}

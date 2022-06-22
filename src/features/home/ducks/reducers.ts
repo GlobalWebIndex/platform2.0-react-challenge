@@ -6,6 +6,7 @@ import ActionNames from 'features/home/ducks/actionNames';
 const catsReducerInitialState = {
   data: [],
   details: { data: {}, status: '' },
+  favorite: { status: '' },
   status: '',
 };
 function CatsDataReducer(state = catsReducerInitialState, action: any) {
@@ -65,6 +66,33 @@ function CatsDataReducer(state = catsReducerInitialState, action: any) {
         ...state,
         details: {
           ...state.details,
+          status: CONSTANTS.RESPONSE_STATUS.FAILURE,
+        },
+      };
+    }
+
+    case ActionNames.MARK_CAT_FAVORITE_REQUESTED: {
+      return {
+        ...state,
+        favorite: {
+          status: CONSTANTS.RESPONSE_STATUS.PENDING,
+        },
+      };
+    }
+
+    case ActionNames.MARK_CAT_FAVORITE_SUCCEDED: {
+      return {
+        ...state,
+        favorite: {
+          status: CONSTANTS.RESPONSE_STATUS.SUCCESS,
+        },
+      };
+    }
+
+    case ActionNames.MARK_CAT_FAVORITE_FAILED: {
+      return {
+        ...state,
+        favorite: {
           status: CONSTANTS.RESPONSE_STATUS.FAILURE,
         },
       };
