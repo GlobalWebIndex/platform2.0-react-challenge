@@ -1,1 +1,1 @@
-export { default } from './Favorites';
+export { default, mapDispatchToProps, mapStateToProps } from './Favorites';

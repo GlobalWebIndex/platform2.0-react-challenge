@@ -1,11 +1,81 @@
-import React from 'react';
+import React, { Dispatch } from 'react';
+import { connect } from 'react-redux';
+import styled from 'styled-components';
 
-const Favorites = () => {
+import Constants from 'common/constants';
+import ActionCreators from 'features/favorites/ducks/actionCreators';
+import { IFavorite, IFavoritesScreen } from 'features/favorites/types';
+import { RootState } from 'state/types';
+import Loader from 'common/components/Loader';
+
+const Wrapper = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const CardsWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 900px;
+  max-height: 100%;
+  min-height: 400px;
+  align-items: center;
+  justify-content: center;
+  align-content: flex-start;
+  position: relative;
+`;
+
+export const Favorites = ({
+  data,
+  loading,
+  favoritesRequested,
+  deleteFavorite,
+}: IFavoritesScreen) => {
+  const { data: favoritesData = [] } = data;
+
+  const hasFavorites = favoritesData.length > 0;
+
+  React.useEffect(() => {
+    if (!hasFavorites) {
+      favoritesRequested({
+        page: Constants.PAGINATION.PAGE,
+        limit: 50,
+      });
+    }
+  }, [favoritesRequested, hasFavorites]);
+
   return (
-    <div>
-      <span>I am Favorites</span>
-    </div>
+    <Wrapper>
+      <CardsWrapper>
+        {hasFavorites ? (
+          favoritesData.map((favorite: IFavorite) => (
+            <div key={favorite.id}>{favorite.created_at}</div>
+          ))
+        ) : (
+          <span>There are no favorite cats yet</span>
+        )}
+        {loading && <Loader />}
+      </CardsWrapper>
+    </Wrapper>
   );
 };
 
-export default Favorites;
+export const mapStateToProps = (state: RootState) => {
+  return {
+    loading: state.common.ui.loading,
+    data: state.data.favorites.favorites,
+  };
+};
+
+export const mapDispatchToProps = (dipatch: Dispatch<any>) => ({
+  favoritesRequested: ({ page, limit }: { page: number; limit: number }) =>
+    dipatch(ActionCreators.getFavorites({ page, limit })),
+  deleteFavorite: (id: string) => dipatch(ActionCreators.deleteFavorite(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Favorites);
