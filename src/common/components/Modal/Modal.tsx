@@ -1,14 +1,8 @@
 import { ReactNode } from 'react';
-import Modal from 'react-modal';
+import { Dialog } from '@headlessui/react';
 import styled from 'styled-components';
 
 import IconButton from '../IconButton';
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
 
 const TitleWrapper = styled.div`
   width: 100%;
@@ -41,37 +35,31 @@ interface Props {
 
 const CommonModal = ({ title, body, isOpen = false, onDismiss }: Props) => {
   return (
-    <Modal
-      style={{
-        content: {
-          minWidth: '300px',
-          minHeight: '400px',
-          maxHeight: '80%',
-          maxWidth: '60%',
-          top: '50%',
-          left: '50%',
-          right: 'auto',
-          bottom: 'auto',
-          marginRight: '-50%',
-          transform: 'translate(-50%, -50%)',
-          borderRadius: '16px',
-        },
-        overlay: {
-          backgroundColor: 'rgba(0, 0, 0, 0.3)',
-        },
-      }}
-      isOpen={isOpen}
-      appElement={document.getElementById('root') || undefined}
-      onRequestClose={onDismiss}
+    <Dialog
+      open={isOpen}
+      static={true}
+      onClose={onDismiss}
+      className="relative z-50"
     >
-      <Wrapper>
-        <TitleWrapper>
-          <Title>{title}</Title>
-          <IconButton icon="close" onClick={onDismiss} />
-        </TitleWrapper>
-        <Body>{body}</Body>
-      </Wrapper>
-    </Modal>
+      <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+      <div className="fixed inset-0 flex items-center justify-center p-4">
+        <div className="flex min-h-full items-center justify-center">
+          <Dialog.Panel className="mx-auto max-w-sm rounded bg-white">
+            <Dialog.Title>
+              <TitleWrapper>
+                <Title>{title}</Title>
+                <IconButton icon="close" onClick={onDismiss} />
+              </TitleWrapper>
+            </Dialog.Title>
+
+            <Body>{body}</Body>
+
+            <button onClick={onDismiss}>Deactivate</button>
+            <button onClick={onDismiss}>Cancel</button>
+          </Dialog.Panel>
+        </div>
+      </div>
+    </Dialog>
   );
 };
 
