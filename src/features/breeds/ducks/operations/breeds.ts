@@ -1,4 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
+import { toast } from 'react-toastify';
 
 import Services from 'services';
 import { composeWithCommons } from 'common/ducks';
@@ -30,8 +31,13 @@ function* handleBreeds({ action }: any): any {
     });
 
     yield put(ActionCreators.breedsSucceeded({ data: response.data, page }));
-  } catch (error) {
+  } catch (error: any) {
     yield put(ActionCreators.breedsFailed());
+
+    yield call(
+      toast.error,
+      error?.response?.data?.message ?? 'Fetch breeds failed!'
+    );
   }
 }
 
@@ -49,8 +55,13 @@ function* handleBreedCats({ action }: any): any {
     });
 
     yield put(ActionCreators.catsByBreedSucceeded(response.data));
-  } catch (error) {
+  } catch (error: any) {
     yield put(ActionCreators.catsByBreedFailed());
+
+    yield call(
+      toast.error,
+      error?.response?.data?.message ?? 'Fetch cats by breed failed!'
+    );
   }
 }
 

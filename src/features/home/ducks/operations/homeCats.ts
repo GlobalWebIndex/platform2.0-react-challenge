@@ -1,4 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
+import { toast } from 'react-toastify';
 
 import Services from 'services';
 import { composeWithCommons } from 'common/ducks';
@@ -35,8 +36,13 @@ function* handleHomeCats({ action }: any): any {
     });
 
     yield put(ActionCreators.catsSucceeded({ data: response.data, page }));
-  } catch (error) {
+  } catch (error: any) {
     yield put(ActionCreators.catsFailed());
+
+    yield call(
+      toast.error,
+      error?.response?.data?.message ?? 'Fetch cats failed!'
+    );
   }
 }
 
@@ -53,8 +59,13 @@ function* handleGetCatInfo({ action }: any): any {
     });
 
     yield put(ActionCreators.catByIdSucceeded(response.data));
-  } catch (error) {
+  } catch (error: any) {
     yield put(ActionCreators.catByIdFailed());
+
+    yield call(
+      toast.error,
+      error?.response?.data?.message ?? 'Get cat info failed!'
+    );
   }
 }
 
@@ -67,8 +78,15 @@ function* handleMarkCatFavorite({ action }: any): any {
     yield call(Services.Api.Data.post, 'favourites', { image_id: imageId }, {});
 
     yield put(ActionCreators.markCatFavoriteSucceeded());
-  } catch (error) {
+
+    yield call(toast.success, 'Cat added as favorite!');
+  } catch (error: any) {
     yield put(ActionCreators.markCatFavoriteFailed());
+
+    yield call(
+      toast.error,
+      error?.response?.data?.message ?? 'Mark cat as favorite failed!'
+    );
   }
 }
 
