@@ -15,23 +15,4 @@ describe('Common action creators', () => {
       payload: {},
     });
   });
-
-  it('will return setNotificationMessage type and paylod', () => {
-    const mockedData = {};
-    const mockedMessageType = 'success';
-
-    expect(
-      ActionCreators.setNotificationMessage(mockedData, mockedMessageType)
-    ).toEqual({
-      type: ActionNames.COMMON_NOTIFICATION_SET_MESSAGE,
-      payload: { messageType: mockedMessageType, data: mockedData },
-    });
-  });
-
-  it('will return clearNotificationMessage type and paylod', () => {
-    expect(ActionCreators.clearNotificationMessage()).toEqual({
-      type: ActionNames.COMMON_NOTIFICATION_CLEAR_MESSAGE,
-      payload: {},
-    });
-  });
 });

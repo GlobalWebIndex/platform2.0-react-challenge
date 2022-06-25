@@ -5,14 +5,11 @@ import { Breeds } from './Breeds';
 
 describe('Favorites screen', () => {
   const breedsRequested = jest.fn();
-  const clearNotificationMessage = jest.fn();
 
   it("will render 'I am Breeds'", () => {
     render(
       <Breeds
         breedsRequested={breedsRequested}
-        clearNotificationMessage={clearNotificationMessage}
-        notification={{ error: '', success: '' }}
         data={{ data: [], status: '', cats: [] }}
         loading={false}
       />,
@@ -28,8 +25,6 @@ describe('Favorites screen', () => {
     render(
       <Breeds
         breedsRequested={breedsRequested}
-        clearNotificationMessage={clearNotificationMessage}
-        notification={{ error: '', success: '' }}
         data={{ data: [], status: '', cats: [] }}
         loading={false}
       />,

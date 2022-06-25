@@ -1,4 +1,5 @@
 import { put, call } from 'redux-saga/effects';
+import { toast } from 'react-toastify';
 
 import { CommonActionCreators } from 'common/ducks';
 
@@ -17,7 +18,6 @@ import { CommonActionCreators } from 'common/ducks';
  * ```
  *
  * - Dispatches loading actions
- * - Displays notifications
  * - Handles 500 errors
  *
  * @param generator
@@ -33,18 +33,9 @@ function composeWithCommons(generator: any, { withLoader = true } = {}) {
       yield call(generator, { action });
     } catch (error: any) {
       if (error.response?.status === 500) {
-        yield put(
-          CommonActionCreators.setNotificationMessage(
-            error.response?.data,
-            'error'
-          )
-        );
-      } else {
-        yield put(
-          CommonActionCreators.setNotificationMessage(
-            error.response?.data,
-            'error'
-          )
+        yield call(
+          toast.error,
+          error?.response?.data?.message ?? 'Something went wrong!'
         );
       }
     } finally {

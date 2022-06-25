@@ -6,7 +6,6 @@ import { Outlet } from 'react-router-dom';
 import { RootState } from 'state/types';
 import Constants from 'common/constants';
 import { BreedsActionCreators } from 'features/breeds/ducks';
-import { CommonActionCreators } from 'common/ducks';
 import { IBreedsScreen } from 'features/breeds/types';
 import MoreButton from 'common/components/MoreButton';
 import BreedsList from './BreedsList';
@@ -63,7 +62,6 @@ export const Breeds = ({ data, loading, breedsRequested }: IBreedsScreen) => {
 
 export const mapStateToProps = (state: RootState) => {
   return {
-    notification: state.common.notification,
     loading: state.common.ui.loading,
     data: state.data.breeds.breeds,
   };
@@ -71,8 +69,6 @@ export const mapStateToProps = (state: RootState) => {
 
 export const mapDispatchToProps = (dispatch: Dispatch<any>) => {
   return {
-    clearNotificationMessage: () =>
-      dispatch(CommonActionCreators.clearNotificationMessage()),
     breedsRequested: ({ page, limit }: { page: number; limit: number }) =>
       dispatch(
         BreedsActionCreators.getBreeds({

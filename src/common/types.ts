@@ -5,21 +5,13 @@ import ActionCreators from './ducks/actionCreators';
 export type CommonActionNames = ReturnType<
   typeof ActionCreators.uiLoadingStarted
 > &
-  ReturnType<typeof ActionCreators.uiLoadingFinished> &
-  ReturnType<typeof ActionCreators.setNotificationMessage> &
-  ReturnType<typeof ActionCreators.clearNotificationMessage>;
+  ReturnType<typeof ActionCreators.uiLoadingFinished>;
 
 /* ----------- STATE TYPES -------------  */
 
 export interface IUIState {
   loading: boolean;
 }
-
-export interface INotificationState {
-  error: any;
-  success: any;
-}
-
 /* ----------- GENERIC TYPES -------------  */
 
 export interface ILink {

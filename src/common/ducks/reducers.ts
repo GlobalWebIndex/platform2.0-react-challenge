@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
 import ActionNames from './actionNames';
-import { CommonActionNames, IUIState, INotificationState } from 'common/types';
+import { CommonActionNames, IUIState } from 'common/types';
 
 const initialUIState: IUIState = {
   loading: false,
@@ -31,39 +31,8 @@ function UIReducer(
   }
 }
 
-const initialNotificationState = {
-  error: {},
-  success: {},
-};
-
-function NotificationReducer(
-  state = initialNotificationState,
-  action: CommonActionNames
-): INotificationState {
-  switch (action.type) {
-    case ActionNames.COMMON_NOTIFICATION_SET_MESSAGE: {
-      const { messageType, data } = action.payload;
-
-      return {
-        ...state,
-        [messageType]: {
-          ...data,
-        },
-      };
-    }
-
-    case ActionNames.COMMON_NOTIFICATION_CLEAR_MESSAGE: {
-      return initialNotificationState;
-    }
-
-    default:
-      return state;
-  }
-}
-
 const CommonReducer = combineReducers({
   ui: UIReducer,
-  notification: NotificationReducer,
 });
 
 export default CommonReducer;
