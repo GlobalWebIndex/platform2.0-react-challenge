@@ -24,11 +24,13 @@ export const Breeds = ({ breedsRequested, data }: IBreedsScreen) => {
   const { data: breedsData = [] } = data;
 
   React.useEffect(() => {
-    breedsRequested({
-      page: Constants.PAGINATION.PAGE,
-      limit: 100,
-    });
-  }, [breedsRequested]);
+    if (breedsData.length === 0) {
+      breedsRequested({
+        page: Constants.PAGINATION.PAGE,
+        limit: 100,
+      });
+    }
+  }, [breedsRequested, breedsData.length]);
 
   return (
     <Wrapper>

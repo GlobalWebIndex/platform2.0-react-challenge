@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { Dialog } from '@headlessui/react';
 import styled from 'styled-components';
 
+import { Colors } from 'theme';
 import IconButton from '../IconButton';
 
 const TitleWrapper = styled.div`
@@ -11,7 +12,8 @@ const TitleWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
-  padding: 0 12px;
+  padding: 8px 8px 8px 24px;
+  border-bottom: 1px solid ${Colors.border};
 `;
 
 const Title = styled.span`
@@ -21,6 +23,8 @@ const Title = styled.span`
 
 const Body = styled.div`
   width: 100%;
+  max-height: 700px;
+  overflow-y: scroll;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -44,7 +48,7 @@ const CommonModal = ({ title, body, isOpen = false, onDismiss }: Props) => {
       <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
       <div className="fixed inset-0 flex items-center justify-center p-4">
         <div className="flex min-h-full items-center justify-center">
-          <Dialog.Panel className="mx-auto max-w-sm rounded bg-white">
+          <Dialog.Panel className="mx-auto rounded bg-white">
             <Dialog.Title>
               <TitleWrapper>
                 <Title>{title}</Title>
@@ -53,9 +57,6 @@ const CommonModal = ({ title, body, isOpen = false, onDismiss }: Props) => {
             </Dialog.Title>
 
             <Body>{body}</Body>
-
-            <button onClick={onDismiss}>Deactivate</button>
-            <button onClick={onDismiss}>Cancel</button>
           </Dialog.Panel>
         </div>
       </div>

@@ -1,8 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 
-import Card from './Card';
+import ImageCard from './ImageCard';
 
-describe('Card component', () => {
+describe('ImageCard component', () => {
   let mockedCat = {
     id: '123',
     url: 'a_url',
@@ -10,7 +10,7 @@ describe('Card component', () => {
   };
 
   it('will render a card', () => {
-    render(<Card cat={mockedCat} onSelect={() => {}} />);
+    render(<ImageCard cat={mockedCat} onSelect={() => {}} />);
 
     const element = screen.getAllByAltText('a cat');
 
@@ -20,7 +20,7 @@ describe('Card component', () => {
   it('will call the onSelect prop on card click', () => {
     const onSelect = jest.fn();
 
-    render(<Card cat={mockedCat} onSelect={onSelect} />);
+    render(<ImageCard cat={mockedCat} onSelect={onSelect} />);
 
     fireEvent(
       screen.getByAltText('a cat'),

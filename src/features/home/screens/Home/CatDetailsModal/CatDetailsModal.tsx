@@ -46,7 +46,7 @@ const CatDetailsModal = ({
 
   return (
     <Modal
-      title="a title"
+      title="Cat details"
       body={
         <Body
           loading={isLoading}

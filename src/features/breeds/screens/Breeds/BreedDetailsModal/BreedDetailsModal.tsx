@@ -5,13 +5,24 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { RootState } from 'state/types';
 import { BreedsActionCreators } from 'features/breeds/ducks';
 import Modal from 'common/components/Modal';
+import Body from './Body';
 import { IBreedDetailsModal } from 'features/breeds/types';
 
-const BreedDetailsModal = ({ getCatsByBreedName }: IBreedDetailsModal) => {
+const BreedDetailsModal = ({
+  breed,
+  loading,
+  getCatsByBreedName,
+}: IBreedDetailsModal) => {
   const [isOpen, setIsOpen] = React.useState(true);
 
-  const { breedName } = useParams();
+  const { breedName = '' } = useParams();
   const navigate = useNavigate();
+
+  const { cats: breedCats = [] } = breed;
+
+  const modalTilte = breedCats[0]?.breeds[0]?.name
+    ? `${breedCats[0]?.breeds[0]?.name} breed cats`
+    : 'Breed cats';
 
   React.useEffect(() => {
     if (breedName) {
@@ -26,8 +37,8 @@ const BreedDetailsModal = ({ getCatsByBreedName }: IBreedDetailsModal) => {
 
   return (
     <Modal
-      title="a title"
-      body={breedName}
+      title={modalTilte}
+      body={<Body cats={breedCats} loading={loading} />}
       isOpen={isOpen}
       onDismiss={handleDismiss}
     />

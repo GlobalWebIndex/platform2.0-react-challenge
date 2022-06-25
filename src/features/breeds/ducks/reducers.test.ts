@@ -62,6 +62,7 @@ describe('Common reducer', () => {
     ).toEqual({
       breeds: {
         data: [],
+        cats: [],
         status: 'PENDING',
       },
     });

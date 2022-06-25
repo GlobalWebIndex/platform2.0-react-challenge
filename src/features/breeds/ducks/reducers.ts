@@ -35,6 +35,7 @@ function BreedsDataReducer(state = breedsReducerInitialState, action: any) {
     case ActionNames.FETCH_BREED_CATS_REQUESTED: {
       return {
         ...state,
+        cats: [],
         status: CONSTANTS.RESPONSE_STATUS.PENDING,
       };
     }

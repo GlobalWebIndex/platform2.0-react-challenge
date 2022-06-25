@@ -17,6 +17,7 @@ const Wrapper = styled.div`
 
   :hover {
     transform: scale(1.05);
+    cursor: pointer;
   }
 `;
 
@@ -63,7 +64,7 @@ const BreedItem = ({ breed, onSelect }: Props) => {
     <Wrapper onClick={handleClick}>
       <SImg src={breed?.image?.url} alt="a breed" />
       <Description>
-        <Title>Description</Title>
+        <Title>{breed?.name}</Title>
         <span>{breed?.description}</span>
         <Subtitle>Temperament</Subtitle>
         <span>{breed?.temperament}</span>

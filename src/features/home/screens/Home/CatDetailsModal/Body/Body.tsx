@@ -9,6 +9,7 @@ import { ICat } from 'features/home/types';
 
 const Wrapper = styled.div`
   height: 500px;
+  max-width: 500px;
   display: flex;
 `;
 
@@ -53,7 +54,7 @@ const Body = ({ cat, loading, onMarkCatFavorite }: Props) => {
   };
 
   return (
-    <Wrapper className="flex items-center justify-center flex-col w-full px-12">
+    <Wrapper className="flex items-center justify-center flex-col px-12">
       <ImgWrapper>
         <Img src={cat.url} alt="a cat" />
       </ImgWrapper>
@@ -68,7 +69,7 @@ const Body = ({ cat, loading, onMarkCatFavorite }: Props) => {
               <span
                 className="px-4 py-2 rounded-full border border-gray-700 text-black-900 font-semibold text-sm flex align-center w-max cursor-pointer active:bg-gray-400 hover:bg-gray-300 transition duration-300 ease"
                 key={breed.id}
-                onClick={() => handleBreedClick(breed.name)}
+                onClick={() => handleBreedClick(breed.id)}
               >
                 {breed.name}
               </span>

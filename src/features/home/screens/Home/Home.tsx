@@ -8,7 +8,7 @@ import Loader from 'common/components/Loader';
 import { RootState } from 'state/types';
 import { HomeCatsActionCreators } from 'features/home/ducks';
 import { IHomeScreen, ICat } from 'features/home/types';
-import Card from './Card';
+import ImageCard from 'common/components/ImageCard';
 
 const Wrapper = styled.div`
   display: flex;
@@ -86,7 +86,11 @@ export const Home = ({ data, loading, catsRequested }: IHomeScreen) => {
       <span>I am Home</span>
       <CardsWrapper>
         {catsData.map((catItem: ICat) => (
-          <Card key={catItem.id} cat={catItem} onSelect={handleSelectCat} />
+          <ImageCard
+            key={catItem.id}
+            cat={catItem}
+            onSelect={handleSelectCat}
+          />
         ))}
         <MoreButton onClick={handleMoreCatsClick} disabled={loading}>
           <span>Fetch more cats</span>
