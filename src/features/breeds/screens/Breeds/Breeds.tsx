@@ -8,34 +8,54 @@ import Constants from 'common/constants';
 import { BreedsActionCreators } from 'features/breeds/ducks';
 import { CommonActionCreators } from 'common/ducks';
 import { IBreedsScreen } from 'features/breeds/types';
+import MoreButton from 'common/components/MoreButton';
 import BreedsList from './BreedsList';
 
 const Wrapper = styled.div`
   display: flex;
   width: 100%;
-  height: 100%;
   padding: 24px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
 
-export const Breeds = ({ breedsRequested, data }: IBreedsScreen) => {
+export const Breeds = ({ data, loading, breedsRequested }: IBreedsScreen) => {
+  const [breedsListPager, setBreedsListPager] = React.useState(
+    Constants.PAGINATION.PAGE
+  );
+
   const { data: breedsData = [] } = data;
 
   React.useEffect(() => {
     if (breedsData.length === 0) {
       breedsRequested({
         page: Constants.PAGINATION.PAGE,
-        limit: 100,
+        limit: Constants.PAGINATION.LIMIT,
       });
+
+      setBreedsListPager(Constants.PAGINATION.PAGE + 1);
     }
   }, [breedsRequested, breedsData.length]);
+
+  const handleMoreBreedsClick = React.useCallback(() => {
+    breedsRequested({
+      page: breedsListPager + 1,
+      limit: Constants.PAGINATION.LIMIT,
+    });
+
+    setBreedsListPager(breedsListPager + 1);
+  }, [breedsListPager, breedsRequested]);
 
   return (
     <Wrapper>
       <span>I am Breeds</span>
       <BreedsList breeds={breedsData} />
+      <MoreButton
+        label="Fetch more breeds"
+        loading={loading}
+        onClick={handleMoreBreedsClick}
+      />
       <Outlet />
     </Wrapper>
   );
@@ -44,6 +64,7 @@ export const Breeds = ({ breedsRequested, data }: IBreedsScreen) => {
 export const mapStateToProps = (state: RootState) => {
   return {
     notification: state.common.notification,
+    loading: state.common.ui.loading,
     data: state.data.breeds.breeds,
   };
 };

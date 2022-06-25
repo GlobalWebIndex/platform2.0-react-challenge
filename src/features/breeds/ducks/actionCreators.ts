@@ -12,11 +12,12 @@ function getBreeds({ page, limit }: { page: number; limit: number }) {
   } as const;
 }
 
-function breedsSucceeded({ data }: { data: IBreed[] }) {
+function breedsSucceeded({ data, page }: { data: IBreed[]; page: number }) {
   return {
     type: ActionNames.FETCH_BREEDS_SUCCEDED,
     payload: {
       data,
+      page,
     },
   } as const;
 }

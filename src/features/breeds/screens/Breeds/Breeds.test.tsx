@@ -14,6 +14,7 @@ describe('Favorites screen', () => {
         clearNotificationMessage={clearNotificationMessage}
         notification={{ error: '', success: '' }}
         data={{ data: [], status: '', cats: [] }}
+        loading={false}
       />,
       { wrapper: MemoryRouter }
     );
@@ -30,12 +31,13 @@ describe('Favorites screen', () => {
         clearNotificationMessage={clearNotificationMessage}
         notification={{ error: '', success: '' }}
         data={{ data: [], status: '', cats: [] }}
+        loading={false}
       />,
       { wrapper: MemoryRouter }
     );
 
     expect(breedsRequested).toBeCalledWith({
-      limit: 100,
+      limit: 10,
       page: 0,
     });
   });

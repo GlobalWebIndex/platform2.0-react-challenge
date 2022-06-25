@@ -18,6 +18,14 @@ function BreedsDataReducer(state = breedsReducerInitialState, action: any) {
     }
 
     case ActionNames.FETCH_BREEDS_SUCCEDED: {
+      if (action.payload.page > 0) {
+        return {
+          ...state,
+          data: [...state.data, ...action.payload.data],
+          status: CONSTANTS.RESPONSE_STATUS.SUCCESS,
+        };
+      }
+
       return {
         ...state,
         data: action.payload.data,

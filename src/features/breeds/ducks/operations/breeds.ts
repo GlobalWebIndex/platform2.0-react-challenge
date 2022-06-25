@@ -29,7 +29,7 @@ function* handleBreeds({ action }: any): any {
       },
     });
 
-    yield put(ActionCreators.breedsSucceeded({ data: response.data }));
+    yield put(ActionCreators.breedsSucceeded({ data: response.data, page }));
   } catch (error) {
     yield put(ActionCreators.breedsFailed());
   }

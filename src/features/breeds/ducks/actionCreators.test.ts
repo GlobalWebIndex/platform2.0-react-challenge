@@ -38,9 +38,11 @@ describe('Breeds action creators', () => {
       },
     ];
 
-    expect(ActionCreators.breedsSucceeded({ data: mockedData })).toEqual({
+    expect(
+      ActionCreators.breedsSucceeded({ data: mockedData, page: 0 })
+    ).toEqual({
       type: ActionNames.FETCH_BREEDS_SUCCEDED,
-      payload: { data: mockedData },
+      payload: { data: mockedData, page: 0 },
     });
   });
 
