@@ -65,12 +65,24 @@ const palette = {
     '800': '#424242',
     '900': '#212121',
   },
+  brand: {
+    '100': '#ee8dba',
+    '200': '#eb76ac',
+    '300': '#e75f9f',
+    '400': '#e44891',
+    '500': '#e13183',
+    '600': '#de1b76',
+    '700': '#c7186a',
+    '800': '#b1155e',
+    '900': '#9B1252',
+  },
   white: '#ffffff',
 };
 
 const colors = {
-  primary: '#de1b76',
-  primaryHover: palette.red[800],
+  primary: palette.brand[600],
+  primaryHover: palette.brand[800],
+  primaryActive: palette.brand[900],
   secondaryHover: palette.grey[400],
   dangerHover: palette.red[900],
   warning: palette.orange[600],

@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   height: 100%;
   position: absolute;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
 `;
@@ -24,7 +24,7 @@ const Row = styled.div`
   width: 100%;
   height: calc(100% - ${Sizes.header.height});
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   display: flex;
 `;
 

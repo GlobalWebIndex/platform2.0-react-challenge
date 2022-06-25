@@ -5,6 +5,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 
 import Constants from 'common/constants';
 import Loader from 'common/components/Loader';
+import MoreButton from 'common/components/MoreButton';
 import { RootState } from 'state/types';
 import { HomeCatsActionCreators } from 'features/home/ducks';
 import { IHomeScreen, ICat } from 'features/home/types';
@@ -17,7 +18,8 @@ const Wrapper = styled.div`
   padding: 24px;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  overflow: scroll;
 `;
 
 const CardsWrapper = styled.div`
@@ -30,22 +32,6 @@ const CardsWrapper = styled.div`
   justify-content: center;
   align-content: flex-start;
   position: relative;
-`;
-
-const MoreButton = styled.button`
-  background-color: red;
-  color: white;
-  width: 900px;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0 0 12px 12px;
-
-  :hover {
-    cursor: pointer;
-    background-color: blue;
-  }
 `;
 
 export const Home = ({ data, loading, catsRequested }: IHomeScreen) => {
@@ -92,9 +78,7 @@ export const Home = ({ data, loading, catsRequested }: IHomeScreen) => {
             onSelect={handleSelectCat}
           />
         ))}
-        <MoreButton onClick={handleMoreCatsClick} disabled={loading}>
-          <span>Fetch more cats</span>
-        </MoreButton>
+        <MoreButton label="Fetch more cats" onClick={handleMoreCatsClick} />
         {loading && <Loader />}
       </CardsWrapper>
       <Outlet />

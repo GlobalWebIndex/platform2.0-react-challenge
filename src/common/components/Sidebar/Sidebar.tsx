@@ -8,10 +8,6 @@ const Wrapper = styled.nav`
   width: 300px;
   min-height: 100%;
   background-color: grey;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-direction: column;
 `;
 
 const ListWrapper = styled.div`

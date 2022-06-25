@@ -22,7 +22,7 @@ interface Props {
 const MobileMenu = ({ links }: Props) => (
   <Wrapper className="flex items-center justify-evenly  bg-gray-800  w-full top-0">
     {links.map((link) => (
-      <LinkWrapper key={link.label} className="text-2xl  w-1/3 h-16">
+      <LinkWrapper key={link.label} className="text-2xl w-1/3 h-16">
         <Link to={link.to} label={link.label} />
       </LinkWrapper>
     ))}
