@@ -5,12 +5,12 @@ import { ILink } from 'common/types';
 import Link from 'common/components/Link';
 
 const Wrapper = styled.header`
-  background-color: ${Colors.warning};
+  background-color: ${Colors.sidebarBackground};
 `;
 
 const LinkWrapper = styled.div`
   & > .active {
-    background: blue;
+    background: ${Colors.linkBackground};
     color: ${Colors.white};
   }
 `;

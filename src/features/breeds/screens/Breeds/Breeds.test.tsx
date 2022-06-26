@@ -3,10 +3,10 @@ import { MemoryRouter } from 'react-router-dom';
 
 import { Breeds } from './Breeds';
 
-describe('Favorites screen', () => {
+describe('Breeds screen', () => {
   const breedsRequested = jest.fn();
 
-  it("will render 'I am Breeds'", () => {
+  it("will render 'List of 🐈🐈🐈🐈 breeds'", () => {
     render(
       <Breeds
         breedsRequested={breedsRequested}
@@ -16,7 +16,7 @@ describe('Favorites screen', () => {
       { wrapper: MemoryRouter }
     );
 
-    const element = screen.getByText('I am Breeds');
+    const element = screen.getByText('List of 🐈🐈🐈🐈 breeds');
 
     expect(element).toBeTruthy();
   });

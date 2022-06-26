@@ -9,6 +9,7 @@ import { BreedsActionCreators } from 'features/breeds/ducks';
 import { IBreedsScreen } from 'features/breeds/types';
 import MoreButton from 'common/components/MoreButton';
 import BreedsList from './BreedsList';
+import PageTitle from 'common/components/PageTitle';
 
 const Wrapper = styled.div`
   display: flex;
@@ -48,7 +49,7 @@ export const Breeds = ({ data, loading, breedsRequested }: IBreedsScreen) => {
 
   return (
     <Wrapper>
-      <span>I am Breeds</span>
+      <PageTitle text="List of 🐈🐈🐈🐈 breeds" />
       <BreedsList breeds={breedsData} />
       <MoreButton
         label="Fetch more breeds"

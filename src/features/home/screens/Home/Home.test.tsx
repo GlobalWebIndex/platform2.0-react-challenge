@@ -6,7 +6,7 @@ import { Home } from './Home';
 describe('Home screen', () => {
   const catsRequested = jest.fn();
 
-  it("will render 'I am Home'", () => {
+  it("will render 'List of 🐈🐈🐈🐈 images'", () => {
     render(
       <Home
         data={{
@@ -21,7 +21,7 @@ describe('Home screen', () => {
       { wrapper: MemoryRouter }
     );
 
-    const element = screen.getByText('I am Home');
+    const element = screen.getByText('List of 🐈🐈🐈🐈 images');
 
     expect(element).toBeTruthy();
   });

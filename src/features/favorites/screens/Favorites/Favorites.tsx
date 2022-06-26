@@ -8,6 +8,7 @@ import { IFavorite, IFavoritesScreen } from 'features/favorites/types';
 import { RootState } from 'state/types';
 import Loader from 'common/components/Loader';
 import Card from './Card';
+import PageTitle from 'common/components/PageTitle';
 
 const Wrapper = styled.div`
   display: flex;
@@ -52,6 +53,7 @@ export const Favorites = ({
 
   return (
     <Wrapper>
+      <PageTitle text="List of 🐈🐈🐈🐈  you 💖💖💖💖" />
       <CardsWrapper>
         {hasFavorites ? (
           <CardsWrapper>

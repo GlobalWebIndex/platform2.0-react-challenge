@@ -29,20 +29,31 @@ function breedsFailed() {
   } as const;
 }
 
-function getCatsByBreed(breedName: string) {
+function getCatsByBreed({
+  breedName,
+  page,
+  limit,
+}: {
+  breedName: string;
+  page: number;
+  limit: number;
+}) {
   return {
     type: ActionNames.FETCH_BREED_CATS_REQUESTED,
     payload: {
       breedName,
+      page,
+      limit,
     },
   } as const;
 }
 
-function catsByBreedSucceeded(data: ICat[]) {
+function catsByBreedSucceeded({ data, page }: { data: ICat[]; page: number }) {
   return {
     type: ActionNames.FETCH_BREED_CATS_SUCCEDED,
     payload: {
       data,
+      page,
     },
   } as const;
 }

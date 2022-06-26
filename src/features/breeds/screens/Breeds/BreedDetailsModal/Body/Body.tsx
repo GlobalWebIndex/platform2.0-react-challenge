@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Loader from 'common/components/Loader';
 import ImageCard from 'common/components/ImageCard';
 import { ICat } from 'features/home/types';
+import MoreButton from 'common/components/MoreButton';
 
 const MatrixWrapper = styled.div`
   display: flex;
@@ -19,14 +20,18 @@ const MatrixWrapper = styled.div`
 
 const Wrapper = styled.div`
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 24px;
 `;
 
 interface Props {
   cats: ICat[];
   loading: boolean;
+  onMoreCatsClick: () => void;
 }
 
-const Body = ({ cats, loading = false }: Props) => {
+const Body = ({ cats, loading = false, onMoreCatsClick }: Props) => {
   const navigate = useNavigate();
 
   const handleSelectCat = (cat: ICat) => {
@@ -44,6 +49,11 @@ const Body = ({ cats, loading = false }: Props) => {
           />
         ))}
       </MatrixWrapper>
+      <MoreButton
+        loading={loading}
+        label="Fetch more cats"
+        onClick={onMoreCatsClick}
+      />
       {loading && <Loader />}
     </Wrapper>
   );

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import { RootState } from 'state/types';
+import Constants from 'common/constants';
 import { BreedsActionCreators } from 'features/breeds/ducks';
 import Modal from 'common/components/Modal';
 import Body from './Body';
@@ -14,6 +15,9 @@ const BreedDetailsModal = ({
   getCatsByBreedName,
 }: IBreedDetailsModal) => {
   const [isOpen, setIsOpen] = React.useState(true);
+  const [catsListPager, setCatsListPager] = React.useState(
+    Constants.PAGINATION.PAGE
+  );
 
   const { breedName = '' } = useParams();
   const navigate = useNavigate();
@@ -26,9 +30,25 @@ const BreedDetailsModal = ({
 
   React.useEffect(() => {
     if (breedName) {
-      getCatsByBreedName(breedName);
+      getCatsByBreedName({
+        breedName,
+        page: Constants.PAGINATION.PAGE,
+        limit: Constants.PAGINATION.LIMIT,
+      });
+
+      setCatsListPager(Constants.PAGINATION.PAGE + 1);
     }
   }, [getCatsByBreedName, breedName]);
+
+  const handleMoreCatsClick = React.useCallback(() => {
+    getCatsByBreedName({
+      breedName,
+      page: catsListPager + 1,
+      limit: Constants.PAGINATION.LIMIT,
+    });
+
+    setCatsListPager(catsListPager + 1);
+  }, [catsListPager, breedName, getCatsByBreedName]);
 
   const handleDismiss = () => {
     setIsOpen(false);
@@ -38,7 +58,13 @@ const BreedDetailsModal = ({
   return (
     <Modal
       title={modalTilte}
-      body={<Body cats={breedCats} loading={loading} />}
+      body={
+        <Body
+          cats={breedCats}
+          loading={loading}
+          onMoreCatsClick={handleMoreCatsClick}
+        />
+      }
       isOpen={isOpen}
       onDismiss={handleDismiss}
     />
@@ -54,8 +80,22 @@ export const mapStateToProps = (state: RootState) => {
 
 export const mapDispatchToProps = (dispatch: Dispatch<any>) => {
   return {
-    getCatsByBreedName: (breedName: string) =>
-      dispatch(BreedsActionCreators.getCatsByBreed(breedName)),
+    getCatsByBreedName: ({
+      breedName,
+      page,
+      limit,
+    }: {
+      breedName: string;
+      page: number;
+      limit: number;
+    }) =>
+      dispatch(
+        BreedsActionCreators.getCatsByBreed({
+          breedName,
+          page,
+          limit,
+        })
+      ),
   };
 };
 

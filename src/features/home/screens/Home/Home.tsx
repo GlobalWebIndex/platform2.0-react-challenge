@@ -10,16 +10,15 @@ import { RootState } from 'state/types';
 import { HomeCatsActionCreators } from 'features/home/ducks';
 import { IHomeScreen, ICat } from 'features/home/types';
 import ImageCard from 'common/components/ImageCard';
+import PageTitle from 'common/components/PageTitle';
 
 const Wrapper = styled.div`
   display: flex;
   width: 100%;
-  height: 100%;
   padding: 24px;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  overflow: scroll;
+  justify-content: center;
 `;
 
 const CardsWrapper = styled.div`
@@ -69,7 +68,7 @@ export const Home = ({ data, loading, catsRequested }: IHomeScreen) => {
 
   return (
     <Wrapper>
-      <span>I am Home</span>
+      <PageTitle text="List of 🐈🐈🐈🐈 images" />
       <CardsWrapper>
         {catsData.map((catItem: ICat) => (
           <ImageCard
@@ -78,7 +77,11 @@ export const Home = ({ data, loading, catsRequested }: IHomeScreen) => {
             onSelect={handleSelectCat}
           />
         ))}
-        <MoreButton label="Fetch more cats" onClick={handleMoreCatsClick} />
+        <MoreButton
+          loading={loading}
+          label="Fetch more cats"
+          onClick={handleMoreCatsClick}
+        />
         {loading && <Loader />}
       </CardsWrapper>
       <Outlet />

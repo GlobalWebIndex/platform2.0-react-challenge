@@ -43,12 +43,19 @@ function BreedsDataReducer(state = breedsReducerInitialState, action: any) {
     case ActionNames.FETCH_BREED_CATS_REQUESTED: {
       return {
         ...state,
-        cats: [],
         status: CONSTANTS.RESPONSE_STATUS.PENDING,
       };
     }
 
     case ActionNames.FETCH_BREED_CATS_SUCCEDED: {
+      if (action.payload.page > 0) {
+        return {
+          ...state,
+          cats: [...state.cats, ...action.payload.data],
+          status: CONSTANTS.RESPONSE_STATUS.SUCCESS,
+        };
+      }
+
       return {
         ...state,
         cats: action.payload.data,

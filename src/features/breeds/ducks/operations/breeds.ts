@@ -45,16 +45,19 @@ function* handleBreedCats({ action }: any): any {
   const { payload } = action;
 
   try {
-    const { breedName } = payload;
+    const { breedName, page, limit } = payload;
 
     const response = yield call(Services.Api.Data.get, '/images/search', {
       params: {
         breed_ids: breedName,
-        limit: 8,
+        page,
+        limit,
       },
     });
 
-    yield put(ActionCreators.catsByBreedSucceeded(response.data));
+    yield put(
+      ActionCreators.catsByBreedSucceeded({ data: response.data, page })
+    );
   } catch (error: any) {
     yield put(ActionCreators.catsByBreedFailed());
 

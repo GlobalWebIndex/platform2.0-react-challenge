@@ -54,10 +54,14 @@ describe('Breeds action creators', () => {
   });
 
   it('will return getCatsByBreed type and paylod', () => {
-    expect(ActionCreators.getCatsByBreed('breed')).toEqual({
+    expect(
+      ActionCreators.getCatsByBreed({ breedName: 'breed', page: 0, limit: 5 })
+    ).toEqual({
       type: ActionNames.FETCH_BREED_CATS_REQUESTED,
       payload: {
         breedName: 'breed',
+        page: 0,
+        limit: 5,
       },
     });
   });
@@ -65,9 +69,11 @@ describe('Breeds action creators', () => {
   it('will return catsByBreedSucceeded type and paylod', () => {
     const mockedData = [{ image: '123', breeds: [], id: '123', url: 'a_url' }];
 
-    expect(ActionCreators.catsByBreedSucceeded(mockedData)).toEqual({
+    expect(
+      ActionCreators.catsByBreedSucceeded({ data: mockedData, page: 0 })
+    ).toEqual({
       type: ActionNames.FETCH_BREED_CATS_SUCCEDED,
-      payload: { data: mockedData },
+      payload: { data: mockedData, page: 0 },
     });
   });
 
