@@ -84,13 +84,18 @@ const colors = {
   primaryHover: palette.brand[800],
   primaryActive: palette.brand[900],
   secondaryHover: palette.grey[400],
-  dangerHover: palette.red[900],
+  secondaryActive: palette.grey[600],
+  dangerHover: palette.red[800],
+  dangerActive: palette.red[900],
   warning: palette.orange[600],
   danger: palette.red[600],
   success: palette.green[600],
   white: palette.white,
   border: palette.grey[300],
   background: palette.grey[100],
+  sidebarBackground: palette.grey[600],
+  linkBackground: palette.blue[800],
+  linkBackgroundHover: palette.blue[600],
 };
 
 export default colors;

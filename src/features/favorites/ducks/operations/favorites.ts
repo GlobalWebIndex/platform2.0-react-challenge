@@ -14,7 +14,7 @@ function* FavoritesWatcher() {
   );
   yield takeLatest(
     ActionNames.DELETE_FAVORITE_REQUESTED,
-    composeWithCommons(handleBreedCats)
+    composeWithCommons(handleDeleteFavorite)
   );
 }
 
@@ -42,7 +42,7 @@ function* handleFavorites({ action }: any): any {
   }
 }
 
-function* handleBreedCats({ action }: any): any {
+function* handleDeleteFavorite({ action }: any): any {
   const { payload } = action;
 
   try {

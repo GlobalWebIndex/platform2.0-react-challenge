@@ -39,12 +39,7 @@ interface Props {
 
 const CommonModal = ({ title, body, isOpen = false, onDismiss }: Props) => {
   return (
-    <Dialog
-      open={isOpen}
-      static={true}
-      onClose={onDismiss}
-      className="relative z-50"
-    >
+    <Dialog open={isOpen} onClose={onDismiss} className="relative z-50">
       <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
       <div className="fixed inset-0 flex items-center justify-center p-4">
         <div className="flex min-h-full items-center justify-center">

@@ -1,47 +1,71 @@
+import { ReactNode } from 'react';
 import styled from 'styled-components';
 import { Colors } from 'theme';
 
 const SButton = styled.button<{ variant?: string }>`
-  width: 100%;
-  height: 100%;
-  background: ${({ variant }) =>
+  width: 10rem;
+  height: 3rem;
+  border-radius: 12px;
+
+  ${({ variant }) =>
     variant === 'primary'
-      ? Colors.primary
+      ? `background: ${Colors.primary};
+         color: ${Colors.white};`
       : variant === 'secondary'
-      ? Colors.white
+      ? `background: ${Colors.white};
+        border: 1px solid ${Colors.border};`
       : variant === 'danger'
-      ? Colors.danger
-      : Colors.primary};
+      ? `background: ${Colors.danger};
+         color: ${Colors.white};`
+      : `background: ${Colors.primary};`}
 
   :hover {
-    background: ${({ variant }) =>
+    ${({ variant }) =>
       variant === 'primary'
-        ? Colors.primaryHover
+        ? `background: ${Colors.primaryHover};`
         : variant === 'secondary'
-        ? Colors.secondaryHover
+        ? `background: ${Colors.secondaryHover};`
         : variant === 'danger'
-        ? Colors.dangerHover
-        : Colors.primary};
+        ? `background: ${Colors.dangerHover};`
+        : `background: ${Colors.primary};`}
+  }
+
+  :active {
+    ${({ variant }) =>
+      variant === 'primary'
+        ? `background: ${Colors.primaryActive};`
+        : variant === 'secondary'
+        ? `background: ${Colors.secondaryActive};`
+        : variant === 'danger'
+        ? `background: ${Colors.dangerActive};`
+        : `background: ${Colors.primary};`};
   }
 `;
 
-interface Props {
-  text: string;
+interface Props extends React.HTMLAttributes<HTMLButtonElement> {
+  label: ReactNode;
   disabled?: boolean;
   variant?: 'primary' | 'secondary' | 'danger';
   children?: React.ReactNode;
   onClick: () => void;
 }
 
-const Button = ({ variant, disabled = false, text, onClick }: Props) => {
+const Button = ({
+  variant,
+  disabled = false,
+  label,
+  onClick,
+  ...restProps
+}: Props) => {
   return (
     <SButton
       variant={variant}
       disabled={disabled}
       onClick={onClick}
       type="button"
+      {...restProps}
     >
-      {text}
+      {label}
     </SButton>
   );
 };

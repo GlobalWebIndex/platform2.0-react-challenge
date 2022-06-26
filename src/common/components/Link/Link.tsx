@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Colors } from 'theme';
 
 const SLink = styled(NavLink)`
-  color: white;
+  color: ${Colors.white};
   text-decoration: none;
   padding: 0;
   width: 100%;
@@ -12,19 +12,18 @@ const SLink = styled(NavLink)`
   display: flex;
   align-items: center;
   justify-content: center;
+  font-weight: 600;
 
-  &:hover,
-  &:focus {
+  &:hover {
     color: white;
-    background: blue;
+    background: ${Colors.linkBackgroundHover};
   }
   &:active {
-    color: ${Colors.white};
+    background: ${Colors.linkBackground};
   }
 
   .active {
-    color: red;
-    background: blue;
+    background: ${Colors.linkBackground};
   }
 `;
 

@@ -5,6 +5,8 @@ import Services from 'services';
 import { composeWithCommons } from 'common/ducks';
 import ActionCreators from 'features/home/ducks/actionCreators';
 import ActionNames from 'features/home/ducks/actionNames';
+import FavoriteActionCreators from 'features/favorites/ducks/actionCreators';
+import Constants from 'common/constants';
 
 function* homeCatsWatcher() {
   yield takeLatest(
@@ -78,6 +80,12 @@ function* handleMarkCatFavorite({ action }: any): any {
     yield call(Services.Api.Data.post, 'favourites', { image_id: imageId }, {});
 
     yield put(ActionCreators.markCatFavoriteSucceeded());
+    yield put(
+      FavoriteActionCreators.getFavorites({
+        page: Constants.PAGINATION.PAGE,
+        limit: Constants.PAGINATION.LIMIT,
+      })
+    );
 
     yield call(toast.success, 'Cat added as favorite!');
   } catch (error: any) {

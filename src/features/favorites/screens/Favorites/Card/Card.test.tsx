@@ -2,8 +2,17 @@ import { render, screen, fireEvent } from '@testing-library/react';
 
 import Card from './Card';
 
+const mock: any = function () {
+  return {
+    observe: jest.fn(),
+    disconnect: jest.fn(),
+  };
+};
+
+window.IntersectionObserver = mock;
+
 describe('Favorites screen', () => {
-  it("will render 'There are no favorite cats yet'", () => {
+  it('will open the modal when delete is clicked', () => {
     const onDelete = jest.fn();
 
     render(
@@ -25,6 +34,6 @@ describe('Favorites screen', () => {
 
     fireEvent.click(screen.getByRole('button'));
 
-    expect(onDelete).toBeCalledWith('833');
+    expect(screen.getByText('Delete favorite')).toBeTruthy();
   });
 });

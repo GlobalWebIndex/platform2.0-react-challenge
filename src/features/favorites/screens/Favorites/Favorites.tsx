@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   padding: 24px;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 `;
 
 const CardsWrapper = styled.div`

@@ -7,7 +7,7 @@ import Link from 'common/components/Link';
 const Wrapper = styled.nav`
   width: 300px;
   min-height: 100%;
-  background-color: grey;
+  background-color: ${Colors.sidebarBackground};
 `;
 
 const ListWrapper = styled.div`
@@ -23,7 +23,7 @@ const NavItem = styled.div`
   height: 50px;
 
   & > .active {
-    background: blue;
+    background: ${Colors.linkBackground};
     color: ${Colors.white};
   }
 `;

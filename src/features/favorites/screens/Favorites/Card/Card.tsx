@@ -1,7 +1,9 @@
+import React from 'react';
 import styled from 'styled-components';
 
 import { IFavorite } from 'features/favorites/types';
 import IconButton from 'common/components/IconButton';
+import Dialog from 'common/components/Dialog';
 import { Colors } from 'theme';
 
 const Wrapper = styled.div`
@@ -31,17 +33,36 @@ interface Props {
 }
 
 const Card = ({ favorite, onDelete }: Props) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+
   const handleDelete = () => {
     onDelete(favorite.id);
+    setIsOpen(false);
   };
+
+  const handleOpenModal = () => {
+    setIsOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
+
   return (
     <Wrapper className="flex flex-col items-center justify-between">
       <ImgWrapper>
         <Img src={favorite?.image?.url} alt="a cat" />
       </ImgWrapper>
       <div className="flex items-center justify-center bg-red-400 w-full h-24">
-        <IconButton icon="delete" onClick={handleDelete} />
+        <IconButton icon="delete" onClick={handleOpenModal} />
       </div>
+      <Dialog
+        title="Delete favorite"
+        description="Are you sure you want to delete this favorite?"
+        isOpen={isOpen}
+        onConfirm={handleDelete}
+        onDismiss={handleCloseModal}
+      />
     </Wrapper>
   );
 };

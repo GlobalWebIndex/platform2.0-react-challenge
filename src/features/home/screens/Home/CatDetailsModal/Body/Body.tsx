@@ -3,12 +3,11 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
 import Loader from 'common/components/Loader';
-import IconButton from 'common/components/IconButton';
 import Button from 'common/components/Button';
 import { ICat } from 'features/home/types';
 
 const Wrapper = styled.div`
-  height: 500px;
+  max-height: 600px;
   max-width: 500px;
   display: flex;
 `;
@@ -59,15 +58,15 @@ const Body = ({ cat, loading, onMarkCatFavorite }: Props) => {
         <Img src={cat.url} alt="a cat" />
       </ImgWrapper>
 
-      <div className="flex items-center justify-center flex-col w-3/4">
-        <span className="flex items-start justify-start flex-col w-full mt-8">
+      <div className="flex items-center justify-center flex-col w-full">
+        <span className="flex items-start justify-start flex-col w-full mt-8 mb-2">
           Breeds info
         </span>
         {hasBreeds ? (
-          <div className="flex flex-wrap justify-center space-x-2">
+          <div className="flex flex-wrap justify-center items-start space-x-2 w-full">
             {cat.breeds.map((breed) => (
               <span
-                className="px-4 py-2 rounded-full border border-gray-700 text-black-900 font-semibold text-sm flex align-center w-max cursor-pointer active:bg-gray-400 hover:bg-gray-300 transition duration-300 ease"
+                className="px-4 py-2 mb-2 rounded-full border border-gray-700 text-black-900 font-semibold text-sm flex align-center w-max cursor-pointer active:bg-gray-400 hover:bg-gray-300 transition duration-300 ease"
                 key={breed.id}
                 onClick={() => handleBreedClick(breed.id)}
               >
@@ -79,16 +78,20 @@ const Body = ({ cat, loading, onMarkCatFavorite }: Props) => {
           <span>No breed info available</span>
         )}
       </div>
-      <div className="flex items-center justify-between row mx-4 mt-8 w-full">
+      <div className="flex items-center justify-between row mx-4 my-8 w-full">
         <div className="flex items-center justify-center w-1/2 h-12">
           <Button
             variant="secondary"
-            text={buttonText}
+            label={buttonText}
             onClick={handleCopyUrl}
           />
         </div>
         <div className="flex items-center justify-center w-1/2 h-12">
-          <IconButton icon="favorite" onClick={handleFavoriteClick} />
+          <Button
+            variant="primary"
+            label={`💙 Mark as favorite`}
+            onClick={handleFavoriteClick}
+          />
         </div>
       </div>
       {loading && <Loader />}
