@@ -40,10 +40,10 @@ const BreedDetailsModal = ({
     }
   }, [getCatsByBreedName, breedName]);
 
-  const handleMoreCatsClick = React.useCallback(() => {
+  const handleRefreshCatsClick = React.useCallback(() => {
     getCatsByBreedName({
       breedName,
-      page: catsListPager + 1,
+      page: catsListPager,
       limit: Constants.PAGINATION.LIMIT,
     });
 
@@ -62,7 +62,7 @@ const BreedDetailsModal = ({
         <Body
           cats={breedCats}
           loading={loading}
-          onMoreCatsClick={handleMoreCatsClick}
+          onRefreshCatsClick={handleRefreshCatsClick}
         />
       }
       isOpen={isOpen}

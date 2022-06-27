@@ -31,6 +31,7 @@ interface Props {
   label: string;
   loadingLabel?: string;
   loading?: boolean;
+  disabled?: boolean;
   onClick: () => void;
 }
 
@@ -38,9 +39,10 @@ const MoreButton = ({
   label,
   loadingLabel = 'Fetching...',
   loading,
+  disabled,
   onClick,
 }: Props) => (
-  <SButton onClick={onClick} disabled={loading}>
+  <SButton onClick={onClick} disabled={loading || disabled}>
     <span>{loading ? loadingLabel : label}</span>
   </SButton>
 );

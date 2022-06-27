@@ -5,6 +5,15 @@ import Loader from 'common/components/Loader';
 import ImageCard from 'common/components/ImageCard';
 import { ICat } from 'features/home/types';
 import MoreButton from 'common/components/MoreButton';
+import Constants from 'common/constants';
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 24px;
+  min-width: 800px;
+`;
 
 const MatrixWrapper = styled.div`
   display: flex;
@@ -18,25 +27,21 @@ const MatrixWrapper = styled.div`
   position: relative;
 `;
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-bottom: 24px;
-`;
-
 interface Props {
   cats: ICat[];
   loading: boolean;
-  onMoreCatsClick: () => void;
+  onRefreshCatsClick: () => void;
 }
 
-const Body = ({ cats, loading = false, onMoreCatsClick }: Props) => {
+const Body = ({ cats, loading = false, onRefreshCatsClick }: Props) => {
   const navigate = useNavigate();
 
   const handleSelectCat = (cat: ICat) => {
     navigate(`/cats/${cat.id}`);
   };
+
+  const areΝοMoreCats =
+    cats.length > 0 && cats.length < Constants.PAGINATION.LIMIT;
 
   return (
     <Wrapper>
@@ -48,13 +53,14 @@ const Body = ({ cats, loading = false, onMoreCatsClick }: Props) => {
             onSelect={handleSelectCat}
           />
         ))}
+        {loading && <Loader />}
       </MatrixWrapper>
       <MoreButton
         loading={loading}
-        label="Fetch more cats"
-        onClick={onMoreCatsClick}
+        disabled={areΝοMoreCats}
+        label={areΝοMoreCats ? 'No more cats to show' : 'Refresh cats'}
+        onClick={onRefreshCatsClick}
       />
-      {loading && <Loader />}
     </Wrapper>
   );
 };
