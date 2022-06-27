@@ -6,7 +6,7 @@ import { RootState } from 'state/types';
 import Constants from 'common/constants';
 import { HomeCatsActionCreators } from 'features/home/ducks';
 import Modal from 'common/components/Modal';
-import { ICatDetailsModal } from 'features/home/types';
+import { ICat, ICatDetailsModal } from 'features/home/types';
 import Body from './Body';
 
 const CatDetailsModal = ({
@@ -50,7 +50,7 @@ const CatDetailsModal = ({
       body={
         <Body
           loading={isLoading}
-          cat={catData}
+          cat={catData as ICat}
           onMarkCatFavorite={markCatFavorite}
         />
       }

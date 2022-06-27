@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import update from 'immutability-helper';
 
 import CONSTANTS from 'common/constants';
 import ActionNames from 'features/favorites/ducks/actionNames';
@@ -14,46 +15,40 @@ function FavoritesDataReducer(
 ) {
   switch (action.type) {
     case ActionNames.FETCH_FAVORITES_REQUESTED: {
-      return {
-        ...state,
-        status: CONSTANTS.RESPONSE_STATUS.PENDING,
-      };
+      return update(state, {
+        status: { $set: CONSTANTS.RESPONSE_STATUS.PENDING },
+      });
     }
 
     case ActionNames.FETCH_FAVORITES_SUCCEDED: {
-      return {
-        ...state,
-        data: action.payload.data,
-        status: CONSTANTS.RESPONSE_STATUS.SUCCESS,
-      };
+      return update(state, {
+        data: { $set: action.payload.data },
+        status: { $set: CONSTANTS.RESPONSE_STATUS.SUCCESS },
+      });
     }
 
     case ActionNames.FETCH_FAVORITES_FAILED: {
-      return {
-        ...state,
-        status: CONSTANTS.RESPONSE_STATUS.FAILURE,
-      };
+      return update(state, {
+        status: { $set: CONSTANTS.RESPONSE_STATUS.FAILURE },
+      });
     }
 
     case ActionNames.DELETE_FAVORITE_REQUESTED: {
-      return {
-        ...state,
-        delete: { status: CONSTANTS.RESPONSE_STATUS.PENDING },
-      };
+      return update(state, {
+        delete: { status: { $set: CONSTANTS.RESPONSE_STATUS.PENDING } },
+      });
     }
 
     case ActionNames.DELETE_FAVORITE_SUCCEDED: {
-      return {
-        ...state,
-        delete: { status: CONSTANTS.RESPONSE_STATUS.SUCCESS },
-      };
+      return update(state, {
+        delete: { status: { $set: CONSTANTS.RESPONSE_STATUS.SUCCESS } },
+      });
     }
 
     case ActionNames.DELETE_FAVORITE_FAILED: {
-      return {
-        ...state,
-        delete: { status: CONSTANTS.RESPONSE_STATUS.FAILURE },
-      };
+      return update(state, {
+        delete: { status: { $set: CONSTANTS.RESPONSE_STATUS.FAILURE } },
+      });
     }
 
     default:

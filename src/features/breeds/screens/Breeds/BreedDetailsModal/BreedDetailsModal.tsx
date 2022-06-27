@@ -8,6 +8,7 @@ import { BreedsActionCreators } from 'features/breeds/ducks';
 import Modal from 'common/components/Modal';
 import Body from './Body';
 import { IBreedDetailsModal } from 'features/breeds/types';
+import { ICat } from 'features/home/types';
 
 const BreedDetailsModal = ({
   breed,
@@ -22,7 +23,7 @@ const BreedDetailsModal = ({
   const { breedName = '' } = useParams();
   const navigate = useNavigate();
 
-  const { cats: breedCats = [] } = breed;
+  const { cats: breedCats = [{ breeds: [{ name: '' }] }] } = breed;
 
   const modalTilte = breedCats[0]?.breeds[0]?.name
     ? `${breedCats[0]?.breeds[0]?.name} breed cats`
@@ -60,7 +61,7 @@ const BreedDetailsModal = ({
       title={modalTilte}
       body={
         <Body
-          cats={breedCats}
+          cats={breedCats as ICat[]}
           loading={loading}
           onRefreshCatsClick={handleRefreshCatsClick}
         />

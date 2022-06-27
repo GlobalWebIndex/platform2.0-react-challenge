@@ -10,6 +10,7 @@ const Wrapper = styled.div`
   max-height: 600px;
   max-width: 500px;
   display: flex;
+  min-width: 400px;
 `;
 
 const ImgWrapper = styled.div`

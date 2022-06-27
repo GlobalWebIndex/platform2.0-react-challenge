@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import update from 'immutability-helper';
 
 import CONSTANTS from 'common/constants';
 import ActionNames from 'features/breeds/ducks/actionNames';
@@ -11,56 +12,49 @@ const breedsReducerInitialState = {
 function BreedsDataReducer(state = breedsReducerInitialState, action: any) {
   switch (action.type) {
     case ActionNames.FETCH_BREEDS_REQUESTED: {
-      return {
-        ...state,
-        status: CONSTANTS.RESPONSE_STATUS.PENDING,
-      };
+      return update(state, {
+        status: { $set: CONSTANTS.RESPONSE_STATUS.PENDING },
+      });
     }
 
     case ActionNames.FETCH_BREEDS_SUCCEDED: {
       if (action.payload.page > 0) {
-        return {
-          ...state,
-          data: [...state.data, ...action.payload.data],
-          status: CONSTANTS.RESPONSE_STATUS.SUCCESS,
-        };
+        return update(state, {
+          data: { $push: action.payload.data },
+          status: { $set: CONSTANTS.RESPONSE_STATUS.SUCCESS },
+        });
       }
 
-      return {
-        ...state,
-        data: action.payload.data,
-        status: CONSTANTS.RESPONSE_STATUS.SUCCESS,
-      };
+      return update(state, {
+        data: { $set: action.payload.data },
+        status: { $set: CONSTANTS.RESPONSE_STATUS.SUCCESS },
+      });
     }
 
     case ActionNames.FETCH_BREEDS_FAILED: {
-      return {
-        ...state,
-        status: CONSTANTS.RESPONSE_STATUS.FAILURE,
-      };
+      return update(state, {
+        status: { $set: CONSTANTS.RESPONSE_STATUS.FAILURE },
+      });
     }
 
     case ActionNames.FETCH_BREED_CATS_REQUESTED: {
-      return {
-        ...state,
-        cats: [],
-        status: CONSTANTS.RESPONSE_STATUS.PENDING,
-      };
+      return update(state, {
+        cats: { $set: [] },
+        status: { $set: CONSTANTS.RESPONSE_STATUS.PENDING },
+      });
     }
 
     case ActionNames.FETCH_BREED_CATS_SUCCEDED: {
-      return {
-        ...state,
-        cats: action.payload.data,
-        status: CONSTANTS.RESPONSE_STATUS.SUCCESS,
-      };
+      return update(state, {
+        cats: { $set: action.payload.data },
+        status: { $set: CONSTANTS.RESPONSE_STATUS.SUCCESS },
+      });
     }
 
     case ActionNames.FETCH_BREED_CATS_FAILED: {
-      return {
-        ...state,
-        status: CONSTANTS.RESPONSE_STATUS.FAILURE,
-      };
+      return update(state, {
+        status: { $set: CONSTANTS.RESPONSE_STATUS.FAILURE },
+      });
     }
 
     default:

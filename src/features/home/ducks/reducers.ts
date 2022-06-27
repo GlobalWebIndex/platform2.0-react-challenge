@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import update from 'immutability-helper';
 
 import CONSTANTS from 'common/constants';
 import ActionNames from 'features/home/ducks/actionNames';
@@ -12,90 +13,73 @@ const catsReducerInitialState = {
 function CatsDataReducer(state = catsReducerInitialState, action: any) {
   switch (action.type) {
     case ActionNames.FETCH_HOME_CATS_REQUESTED: {
-      return {
-        ...state,
-        status: CONSTANTS.RESPONSE_STATUS.PENDING,
-      };
+      return update(state, {
+        status: { $set: CONSTANTS.RESPONSE_STATUS.PENDING },
+      });
     }
 
     case ActionNames.FETCH_HOME_CATS_SUCCEDED: {
       if (action.payload.page > 0) {
-        return {
-          ...state,
-          data: [...state.data, ...action.payload.data],
-          status: CONSTANTS.RESPONSE_STATUS.SUCCESS,
-        };
+        return update(state, {
+          data: { $push: action.payload.data },
+          status: { $set: CONSTANTS.RESPONSE_STATUS.SUCCESS },
+        });
       }
 
-      return {
-        ...state,
-        data: action.payload.data,
-        status: CONSTANTS.RESPONSE_STATUS.SUCCESS,
-      };
+      return update(state, {
+        data: { $set: action.payload.data },
+        status: { $set: CONSTANTS.RESPONSE_STATUS.SUCCESS },
+      });
     }
 
     case ActionNames.FETCH_HOME_CATS_FAILED: {
-      return {
-        ...state,
-        status: CONSTANTS.RESPONSE_STATUS.FAILURE,
-      };
+      return update(state, {
+        status: { $set: CONSTANTS.RESPONSE_STATUS.FAILURE },
+      });
     }
 
     case ActionNames.FETCH_CAT_INFO_REQUESTED: {
-      return {
-        ...state,
+      return update(state, {
         details: {
-          data: {},
-          status: CONSTANTS.RESPONSE_STATUS.PENDING,
+          data: { $set: {} },
+          status: { $set: CONSTANTS.RESPONSE_STATUS.PENDING },
         },
-      };
+      });
     }
 
     case ActionNames.FETCH_CAT_INFO_SUCCEDED: {
-      return {
-        ...state,
+      return update(state, {
         details: {
-          data: action.payload.data,
-          status: CONSTANTS.RESPONSE_STATUS.SUCCESS,
+          data: { $set: action.payload.data },
+          status: { $set: CONSTANTS.RESPONSE_STATUS.SUCCESS },
         },
-      };
+      });
     }
 
     case ActionNames.FETCH_CAT_INFO_FAILED: {
-      return {
-        ...state,
+      return update(state, {
         details: {
-          ...state.details,
-          status: CONSTANTS.RESPONSE_STATUS.FAILURE,
+          $merge: { status: CONSTANTS.RESPONSE_STATUS.FAILURE },
         },
-      };
+      });
     }
 
     case ActionNames.MARK_CAT_FAVORITE_REQUESTED: {
-      return {
-        ...state,
-        favorite: {
-          status: CONSTANTS.RESPONSE_STATUS.PENDING,
-        },
-      };
+      return update(state, {
+        favorite: { status: { $set: CONSTANTS.RESPONSE_STATUS.PENDING } },
+      });
     }
 
     case ActionNames.MARK_CAT_FAVORITE_SUCCEDED: {
-      return {
-        ...state,
-        favorite: {
-          status: CONSTANTS.RESPONSE_STATUS.SUCCESS,
-        },
-      };
+      return update(state, {
+        favorite: { status: { $set: CONSTANTS.RESPONSE_STATUS.SUCCESS } },
+      });
     }
 
     case ActionNames.MARK_CAT_FAVORITE_FAILED: {
-      return {
-        ...state,
-        favorite: {
-          status: CONSTANTS.RESPONSE_STATUS.FAILURE,
-        },
-      };
+      return update(state, {
+        favorite: { status: { $set: CONSTANTS.RESPONSE_STATUS.FAILURE } },
+      });
     }
 
     default:
