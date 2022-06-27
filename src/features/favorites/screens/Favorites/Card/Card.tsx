@@ -53,7 +53,7 @@ const Card = ({ favorite, onDelete }: Props) => {
       <ImgWrapper>
         <Img src={favorite?.image?.url} alt="a cat" />
       </ImgWrapper>
-      <div className="flex items-center justify-center bg-red-400 w-full h-24">
+      <div className="flex items-center justify-center w-full h-24">
         <IconButton icon="delete" onClick={handleOpenModal} />
       </div>
       <Dialog
