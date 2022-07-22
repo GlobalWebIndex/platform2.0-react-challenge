@@ -36,6 +36,6 @@ yarn build
 
 ## Features
 
-Home View with 10 Random Cats
-Breeds View for detailed specification of all Cat Breeds!
-Favorite Cats Mark your Favorite Cats!
+- Home View - View 10 Random Cats with Option to only View Cats with Breeds
+- Breeds View - For detailed specifications of breeds
+- Favorite Cats - Check all the cats that you marked as favorites
