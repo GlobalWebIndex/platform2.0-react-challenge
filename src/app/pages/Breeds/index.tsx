@@ -31,7 +31,10 @@ export function BreedsPage() {
   useToastNotification();
 
   useEffect(() => {
-    dispatch(breedActions.loadBreeds());
+    if (!breeds || breeds.length === 0) {
+      dispatch(breedActions.loadBreeds());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [breedActions, dispatch]);
 
   return (

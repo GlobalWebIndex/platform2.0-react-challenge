@@ -33,7 +33,7 @@ function useToastNotification() {
       toast.success(t(repoSuccessText(success)()));
       dispatch(catActions.catApiSuccess(null));
     }
-  }, [breedsError, error, success]);
+  }, [breedActions, breedsError, catActions, dispatch, error, success, t]);
 }
 
 export default useToastNotification;

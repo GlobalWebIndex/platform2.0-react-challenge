@@ -1,7 +1,6 @@
 import NavigationBar from 'app/components/NavigationBar';
 import * as React from 'react';
 import tw from 'tailwind-styled-components';
-import { Toaster } from 'react-hot-toast';
 
 interface DefaultLayoutProps {
   children: React.ReactNode;
@@ -13,7 +12,6 @@ const DefaultLayout: React.FC<DefaultLayoutProps> = (
   return (
     <>
       <NavigationBar />
-      
       <main className="relative">
         <MainWrapper>{props.children}</MainWrapper>
       </main>

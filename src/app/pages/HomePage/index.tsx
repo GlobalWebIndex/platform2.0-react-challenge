@@ -40,6 +40,7 @@ export function HomePage() {
   let [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
+    dispatch(actions.selectBreed(null));
     dispatch(actions.loadCatImages());
   }, [actions, dispatch]);
 
