@@ -1,0 +1,20 @@
+{
+    "moreInformation": "Πληροφορίες",
+    "breed": "Ράτσα",
+    "home": "Αρχική",
+    "breeds": "Ράτσες",
+    "favorites": "Αγαπημένα",
+    "options": "Ρυθμίσεις",
+    "loadMore": "Επαναφόρτωση",
+    "markFavorite" : "Ορισμός ως Αγαπημένη",
+    "notAvailable" : "Μη διαθέσιμη",
+    "textCopied": "Το κείμενο αντιγράφηκε επιτυχώς!",
+    "catsWithBreedsOnly" : "Μόνο γάτες με ράτσα",
+    "emptyApiToken": "Δεν υπάρχει κλειδί 😞",
+    "emptyResults": "Δεν βρέθηκαν αποτελέσματα 😞",
+    "notFound": "Δεν βρέθηκε το ζητούμενο url 😞",
+    "responseError": "Κάτι πηγε στραβα 😞",
+    "favoriteAdded":"Η γάτα προστέθηκε στης αγαπημένες!",
+    "favoriteDeleted":"Η γάτα διαγράφηκε επιτυχώς!"
+  }
+  

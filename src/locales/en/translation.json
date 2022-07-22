@@ -1,0 +1,19 @@
+{
+  "home": "Home",
+  "breeds": "Breeds",
+  "favorites": "Favorites",
+  "moreInformation": "More Information",
+  "breed": "Breed",
+  "options": "Options",
+  "loadMore": "Load More",
+  "markFavorite" : "Mark Favorite",
+  "notAvailable" : "Not Available",
+  "textCopied": "Text copied successfully!",
+  "catsWithBreedsOnly" : "Cats with Breeds Only",
+  "emptyApiToken": "Empty Api Token 😞",
+  "emptyResults": "No Results were found 😞",
+  "notFound": "The requested url was not found 😞",
+  "responseError": "An error has occurred 😞",
+  "favoriteAdded":"'Cat was successfully added to Favorites!",
+  "favoriteDeleted":"Cat was removed successfully!"
+}
