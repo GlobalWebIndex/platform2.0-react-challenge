@@ -84,7 +84,12 @@ const CatModal: React.FC<CatModalProps> = ({ modalOpen }) => {
                             )}
                         </CardContent>
                         <CardActions>
-                            <Button disabled={isLoading} onClick={handleAddToFavorites} endIcon={addToFavorites.icon}>
+                            <Button
+                                disabled={isLoading}
+                                onClick={handleAddToFavorites}
+                                endIcon={addToFavorites.icon}
+                                color="primary"
+                            >
                                 {isLoading ? 'adding...' : addToFavorites.label}
                             </Button>
                             <CopyToClipboard

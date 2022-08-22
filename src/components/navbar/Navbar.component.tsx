@@ -5,17 +5,39 @@ import { DarkMode, LightMode } from '@mui/icons-material';
 import Logo from '../icons/Logo.component';
 import { StyledButton } from './Navbar.styled';
 import { NavLink } from 'react-router-dom';
+import { PaletteMode } from '@mui/material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { useState } from 'react';
+import OptionsMenu from './optionsMenu/OptionsMenu.component';
 
-const Navbar = () => {
+interface NavbarProps {
+    mode: string | undefined;
+    setMode: React.Dispatch<React.SetStateAction<PaletteMode | undefined>>;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ mode, setMode }) => {
     const navigate = useNavigate();
     const location = useLocation();
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [anchorEl, setAnchorElement] = useState<(EventTarget & HTMLElement) | null>(null);
 
+    const handleOptionsMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorElement(event.currentTarget);
+        setIsMenuOpen(true);
+    };
+
+    const handleCloseMenu = () => {
+        setAnchorElement(null);
+        setIsMenuOpen(false);
+    };
     return (
         <AppBar position="static">
             <Toolbar>
                 <Grid justifyContent={'space-between'} alignItems="center" container>
                     <Grid item>
                         <Button
+                            disableRipple
+                            sx={{ '&:hover': { backgroundColor: 'transparent' } }}
                             startIcon={<Logo style={{ width: 30, height: 30 }} />}
                             color="inherit"
                             onClick={() => navigate('/')}
@@ -27,58 +49,25 @@ const Navbar = () => {
                     </Grid>
                     <Grid item>
                         <Stack direction="row" spacing={2}>
-                            <NavLink
-                                to="/"
-                                style={({ isActive }) => (isActive ? { color: 'red' } : { color: 'green' })}
-                            >
-                                Cats
-                            </NavLink>
-                            <NavLink
-                                to="/breeds"
-                                style={({ isActive }) => (isActive ? { color: 'red' } : { color: 'green' })}
-                            >
-                                Breeds
-                            </NavLink>
-                            <NavLink
-                                to="/favorites"
-                                style={({ isActive }) => (isActive ? { color: 'red' } : { color: 'green' })}
-                            >
-                                Favorites
-                            </NavLink>
-
-                            {/* <StyledButton
-                                active={location.pathname === '/'}
-                                color="inherit"
-                                onClick={() => navigate('/')}
-                            >
-                                Cats
+                            <StyledButton active={location.pathname === '/'} color="inherit">
+                                <NavLink to="/">Cats</NavLink>
                             </StyledButton>
-                            <StyledButton
-                                active={location.pathname === '/breeds'}
-                                color="inherit"
-                                onClick={() => navigate('breeds')}
-                            >
-                                Breeds
+                            <StyledButton active={location.pathname === '/breeds'}>
+                                <NavLink to="/breeds">Breeds</NavLink>
                             </StyledButton>
-                            <StyledButton
-                                active={location.pathname === '/favorites'}
-                                color="inherit"
-                                onClick={() => navigate('favorites')}
-                            >
-                                Favorites
-                            </StyledButton> */}
+                            <StyledButton active={location.pathname === '/favorites'}>
+                                <NavLink to="/favorites">Favorites</NavLink>
+                            </StyledButton>
                         </Stack>
                     </Grid>
-
                     <Grid item>
-                        <Box>
-                            <IconButton color="inherit">
-                                <LightMode />
-                            </IconButton>
-                            <IconButton>
-                                <DarkMode />
-                            </IconButton>
-                        </Box>
+                        <IconButton color="inherit" onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}>
+                            {mode === 'light' ? <DarkMode /> : <LightMode />}
+                        </IconButton>
+                        <IconButton color="inherit" onClick={(event) => handleOptionsMenu(event)}>
+                            <MoreVertIcon />
+                        </IconButton>
+                        <OptionsMenu open={isMenuOpen} anchorEl={anchorEl} onClose={handleCloseMenu} />
                     </Grid>
                 </Grid>
             </Toolbar>

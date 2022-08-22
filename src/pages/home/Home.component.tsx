@@ -10,6 +10,7 @@ import { getFavorites } from '../../api/favorites';
 import CircularProgress from '@mui/material/CircularProgress';
 import { defaultQueryOptions } from '../../utils/contants';
 import Errorcomp from '../../components/errorUI/Error.component';
+import { Box } from '@mui/material';
 
 const Home: React.FC = () => {
     const [page, setPage] = useState<number>(50);
@@ -46,7 +47,7 @@ const Home: React.FC = () => {
     }
 
     return (
-        <>
+        <Box bgcolor={'backgroud.default'}>
             <StyledGrid>
                 {cats
                     ? cats.map((cat) => (
@@ -58,7 +59,7 @@ const Home: React.FC = () => {
             </StyledGrid>
             {selectedCat && <CatModal modalOpen={isHomeModalOpen} />}
             <button onClick={handlePagination}>{isFetching ? 'fetching' : 'load more'}</button>
-        </>
+        </Box>
     );
 };
 
