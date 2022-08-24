@@ -48,6 +48,7 @@ const Home: React.FC = () => {
 
     return (
         <StyledContainer>
+            <h4>hello ci/cd</h4>
             <StyledGrid>
                 {cats
                     ? cats.map((cat) => (
