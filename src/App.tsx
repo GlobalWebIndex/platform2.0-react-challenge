@@ -6,11 +6,11 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import ErrorBoundary from './components/errorboundary/ErrorBoundary.component';
 import { useState } from 'react';
 import { createTheme } from '@mui/material/styles';
-import { CssBaseline, PaletteMode } from '@mui/material';
+import { CssBaseline, PaletteMode, Paper } from '@mui/material';
 
 const App = () => {
     const queryClient = new QueryClient();
-    const [mode, setMode] = useState<PaletteMode | undefined>('dark');
+    const [mode, setMode] = useState<PaletteMode>('dark');
 
     const theme = createTheme({
         palette: {
@@ -23,7 +23,9 @@ const App = () => {
                 <CssBaseline />
                 <AppProvider>
                     <ErrorBoundary>
-                        <AppInner mode={mode} setMode={setMode} />
+                        <Paper sx={{ minHeight: '100vh' }}>
+                            <AppInner mode={mode} setMode={setMode} />
+                        </Paper>
                     </ErrorBoundary>
                 </AppProvider>
             </ThemeProvider>

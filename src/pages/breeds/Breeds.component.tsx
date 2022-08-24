@@ -8,6 +8,8 @@ import { QueryKeys } from '../../utils/enums';
 import Error from '../../components/errorUI/Error.component';
 import CircularProgress from '@mui/material/CircularProgress';
 import { defaultQueryOptions } from '../../utils/contants';
+import { StyledGrid, StyledGridItem } from '../home/Home.styled';
+import { Paper } from '@mui/material';
 
 const Breeds: React.FC = () => {
     const appDispatch = useAppDispatch();
@@ -30,7 +32,7 @@ const Breeds: React.FC = () => {
         setSelectedBreed({ name: breed.name, id: breed.id });
     };
 
-    const handleBreedModal = () => setIsBreedModalOpen(false);
+    const closeBreedModal = () => setIsBreedModalOpen(false);
 
     if (isError) {
         return <Error />;
@@ -40,27 +42,19 @@ const Breeds: React.FC = () => {
     }
 
     return (
-        <>
-            <div>
+        <Paper sx={{ maxWidth: 1200, margin: '0 auto' }}>
+            <StyledGrid>
                 {breeds.map((breed: Breed, index) => {
                     return (
-                        <div
-                            key={index}
-                            style={{ width: '100px', height: '100px' }}
-                            onClick={() => handleItemClick(breed)}
-                        >
-                            <h5>{breed.name}</h5>
-                            <img src={breed?.image?.url} style={{ width: '100%', height: '100%' }} />
-                        </div>
+                        <StyledGridItem key={index} onClick={() => handleItemClick(breed)}>
+                            <h5 style={{ textAlign: 'center' }}>{breed.name}</h5>
+                            <img src={breed?.image?.url} />
+                        </StyledGridItem>
                     );
                 })}
-            </div>
-            <BreedModal
-                modalOpen={isBreedModalOpen}
-                selectedBreed={selectedBreed}
-                breedModalHandler={handleBreedModal}
-            />
-        </>
+            </StyledGrid>
+            <BreedModal modalOpen={isBreedModalOpen} selectedBreed={selectedBreed} onClose={closeBreedModal} />
+        </Paper>
     );
 };
 

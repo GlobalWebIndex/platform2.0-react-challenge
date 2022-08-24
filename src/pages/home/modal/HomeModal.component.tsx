@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Button, Card, CardActions, CardContent, CardMedia, Modal, Typography } from '@mui/material';
+import { Box, Button, Card, CardActions, CardContent, CardMedia, Modal, Typography } from '@mui/material';
 import { IconWithLabel } from '../../../utils/models';
 //TODO: fix styledbox location, mui etc
 import { StyledBox } from '../Home.styled';
@@ -15,12 +15,13 @@ import { catExistsInFavorites, getCatInfo } from '../../../utils/helpers';
 import Rating from '@mui/material/Rating';
 import CopyToClipboard from './copyToClipboard/CopyToClipboard.component';
 import { CHANGING_ICON_DURATION } from '../../../utils/contants';
+import { sxBox } from './HomeModal.styled';
 
-interface CatModalProps {
+interface HomeModalProps {
     modalOpen: boolean;
 }
 
-const CatModal: React.FC<CatModalProps> = ({ modalOpen }) => {
+const HomeModal: React.FC<HomeModalProps> = ({ modalOpen }) => {
     const queryClient = useQueryClient();
     const appDispatch = useAppDispatch();
     const { selectedCat, favorites } = useAppState();
@@ -62,33 +63,42 @@ const CatModal: React.FC<CatModalProps> = ({ modalOpen }) => {
         mutate(selectedCat ? selectedCat.id : '');
     };
 
+    const catName = selectedCat?.breeds ? selectedCat.breeds[0].name : '';
     const catDescription = selectedCat?.breeds ? getCatInfo(selectedCat.breeds[0]).description : '';
 
     return (
         <>
             <Modal open={modalOpen} onClose={() => appDispatch({ type: 'TOGGLE_CAT_MODAL', catModal: false })}>
-                <StyledBox sx={{ width: 800 }}>
+                <StyledBox>
                     <Card>
-                        <CardMedia component="img" image={selectedCat?.url} />
-                        <CardContent>
-                            <Typography>{catDescription}</Typography>
-                            {selectedCat?.breeds ? (
-                                getCatInfo(selectedCat?.breeds[0]).stats.map((item) => (
-                                    <div key={item.name}>
-                                        <Typography component="legend">{item.name}</Typography>
-                                        <Rating value={item.value} readOnly />
-                                    </div>
-                                ))
-                            ) : (
-                                <h3>no info available for this one</h3>
-                            )}
+                        <CardMedia component="img" image={selectedCat?.url} height={394} sx={{ objectFit: 'cover' }} />
+                        <CardContent sx={{ pb: 0, pt: 0, textAlign: 'center' }}>
+                            <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                                {catName}
+                            </Typography>
+                            <Typography sx={{ fontSize: '0.8em' }}>{catDescription}</Typography>
+                            <Box sx={sxBox}>
+                                {selectedCat?.breeds ? (
+                                    getCatInfo(selectedCat?.breeds[0]).stats.map((item) => (
+                                        <div key={item.name}>
+                                            <Typography component="legend" sx={{ textAlign: 'center' }}>
+                                                {item.name}
+                                            </Typography>
+                                            <Rating value={item.value} readOnly />
+                                        </div>
+                                    ))
+                                ) : (
+                                    <h3>no info available for this one</h3>
+                                )}
+                            </Box>
                         </CardContent>
-                        <CardActions>
+                        <CardActions sx={{ justifyContent: 'center' }}>
                             <Button
                                 disabled={isLoading}
                                 onClick={handleAddToFavorites}
                                 endIcon={addToFavorites.icon}
                                 color="primary"
+                                variant="outlined"
                             >
                                 {isLoading ? 'adding...' : addToFavorites.label}
                             </Button>
@@ -106,4 +116,4 @@ const CatModal: React.FC<CatModalProps> = ({ modalOpen }) => {
     );
 };
 
-export default CatModal;
+export default HomeModal;

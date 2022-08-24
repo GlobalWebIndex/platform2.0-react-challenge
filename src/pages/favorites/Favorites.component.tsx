@@ -11,6 +11,7 @@ import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import ListSubheader from '@mui/material/ListSubheader';
 import FavoriteItem from './favorite/Favorite.component';
+import { Typography } from '@mui/material';
 
 const Favorites: React.FC = () => {
     const { favorites } = useAppState();
@@ -28,7 +29,7 @@ const Favorites: React.FC = () => {
             {favorites.length > 0 ? (
                 <ImageList>
                     <ImageListItem>
-                        <ListSubheader>Favorites</ListSubheader>
+                        <Typography variant="subtitle1">Favorites</Typography>
                     </ImageListItem>
                     {favorites.map((favorite) => {
                         return <FavoriteItem key={favorite.id} favorite={favorite} />;

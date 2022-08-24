@@ -1,4 +1,4 @@
-import { ListItemIcon, Menu, MenuItem, Typography } from '@mui/material';
+import { ListItemIcon, Menu, MenuItem, MenuList, Typography } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LiveTvIcon from '@mui/icons-material/LiveTv';
 
@@ -14,18 +14,20 @@ const OptionsMenu: React.FC<OptionsMenuProps> = ({ open, anchorEl, onClose }) =>
 
     return (
         <Menu open={open} anchorEl={anchorEl} onClose={onClose}>
-            <MenuItem onClick={handleLegacyCodeClick}>
-                <ListItemIcon>
-                    <GitHubIcon />
-                </ListItemIcon>
-                <Typography>legacy code</Typography>
-            </MenuItem>
-            <MenuItem onClick={handleLegacyAppClick}>
-                <ListItemIcon>
-                    <LiveTvIcon />
-                </ListItemIcon>
-                <Typography>legacy app</Typography>
-            </MenuItem>
+            <MenuList>
+                <MenuItem onClick={handleLegacyCodeClick}>
+                    <ListItemIcon>
+                        <GitHubIcon />
+                    </ListItemIcon>
+                    <Typography>legacy code</Typography>
+                </MenuItem>
+                <MenuItem onClick={handleLegacyAppClick}>
+                    <ListItemIcon>
+                        <LiveTvIcon />
+                    </ListItemIcon>
+                    <Typography>legacy app</Typography>
+                </MenuItem>
+            </MenuList>
         </Menu>
     );
 };

@@ -11,8 +11,8 @@ import { useState } from 'react';
 import OptionsMenu from './optionsMenu/OptionsMenu.component';
 
 interface NavbarProps {
-    mode: string | undefined;
-    setMode: React.Dispatch<React.SetStateAction<PaletteMode | undefined>>;
+    mode: PaletteMode;
+    setMode: React.Dispatch<React.SetStateAction<PaletteMode>>;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ mode, setMode }) => {
@@ -31,9 +31,14 @@ const Navbar: React.FC<NavbarProps> = ({ mode, setMode }) => {
         setIsMenuOpen(false);
     };
     return (
-        <AppBar position="static">
+        <AppBar position="sticky">
             <Toolbar>
-                <Grid justifyContent={'space-between'} alignItems="center" container>
+                <Grid
+                    justifyContent={'space-between'}
+                    alignItems="center"
+                    container
+                    sx={{ maxWidth: 1200, margin: '0 auto' }}
+                >
                     <Grid item>
                         <Button
                             disableRipple
@@ -49,13 +54,13 @@ const Navbar: React.FC<NavbarProps> = ({ mode, setMode }) => {
                     </Grid>
                     <Grid item>
                         <Stack direction="row" spacing={2}>
-                            <StyledButton active={location.pathname === '/'} color="inherit">
+                            <StyledButton active={location.pathname === '/' ? 1 : 0} color="inherit">
                                 <NavLink to="/">Cats</NavLink>
                             </StyledButton>
-                            <StyledButton active={location.pathname === '/breeds'}>
+                            <StyledButton active={location.pathname === '/breeds' ? 1 : 0}>
                                 <NavLink to="/breeds">Breeds</NavLink>
                             </StyledButton>
-                            <StyledButton active={location.pathname === '/favorites'}>
+                            <StyledButton active={location.pathname === '/favorites' ? 1 : 0}>
                                 <NavLink to="/favorites">Favorites</NavLink>
                             </StyledButton>
                         </Stack>

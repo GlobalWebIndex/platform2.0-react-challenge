@@ -8,22 +8,20 @@ import Home from './home/Home.component';
 import { PaletteMode } from '@mui/material';
 
 interface AppInnerProps {
-    mode: string | undefined;
-    setMode: React.Dispatch<React.SetStateAction<PaletteMode | undefined>>;
+    mode: PaletteMode;
+    setMode: React.Dispatch<React.SetStateAction<PaletteMode>>;
 }
 
 const AppInner: React.FC<AppInnerProps> = ({ mode, setMode }) => {
     return (
         <BrowserRouter>
             <Navbar mode={mode} setMode={setMode} />
-            <Box bgcolor={'Background.default'}>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/breeds" element={<Breeds />} />
-                    <Route path="/favorites" element={<Favorites />} />
-                    <Route path="*" element={<Navigate to="/" />} />
-                </Routes>
-            </Box>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/breeds" element={<Breeds />} />
+                <Route path="/favorites" element={<Favorites />} />
+                <Route path="*" element={<NotFound />} />
+            </Routes>
         </BrowserRouter>
     );
 };

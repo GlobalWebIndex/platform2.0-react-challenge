@@ -13,13 +13,14 @@ import Error from '../../../components/errorUI/Error.component';
 interface CatModalProps {
     modalOpen: boolean;
     selectedBreed: SubBreed;
-    breedModalHandler: () => void;
+    onClose: () => void;
 }
 
-const BreedModal: React.FC<CatModalProps> = ({ modalOpen, selectedBreed, breedModalHandler }) => {
+const BreedModal: React.FC<CatModalProps> = ({ modalOpen, selectedBreed, onClose }) => {
     const appDispatch = useAppDispatch();
     const navigate = useNavigate();
     const { id, name: breedName } = selectedBreed;
+    console.log(selectedBreed);
 
     const {
         data: cats,
@@ -34,14 +35,14 @@ const BreedModal: React.FC<CatModalProps> = ({ modalOpen, selectedBreed, breedMo
         return <CircularProgress />;
     }
 
-    const catClickHandler = (cat: Cat) => {
+    const handleCatClick = (cat: Cat) => {
         appDispatch({ type: 'SET_SELECTED_CAT', cat });
         appDispatch({ type: 'TOGGLE_CAT_MODAL', catModal: true });
         navigate('/');
     };
 
     return (
-        <Modal open={modalOpen} onClose={breedModalHandler}>
+        <Modal open={modalOpen} onClose={onClose}>
             <StyledBox sx={{ width: 200 }}>
                 <Card>
                     <ImageList sx={{ width: 500, height: 450 }}>
@@ -49,7 +50,7 @@ const BreedModal: React.FC<CatModalProps> = ({ modalOpen, selectedBreed, breedMo
                             <ListSubheader component="div">{breedName}</ListSubheader>
                         </ImageListItem>
                         {cats.map((cat) => (
-                            <ImageListItem key={cat.id} onClick={() => catClickHandler(cat)}>
+                            <ImageListItem key={cat.id} onClick={() => handleCatClick(cat)}>
                                 <img src={cat.url} loading="lazy" />
                             </ImageListItem>
                         ))}

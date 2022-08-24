@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { StyledGrid, StyledCat } from './Home.styled';
+import { StyledContainer, StyledGrid, StyledGridItem, sxButton } from './Home.styled';
 import { Cat } from '../../utils/models';
 import { getCats } from '../../api/cats';
 import { useAppDispatch, useAppState } from '../../context/appContext';
-import CatModal from './modal/HomeModal.component';
+import HomeModal from './modal/HomeModal.component';
 import { QueryKeys } from '../../utils/enums';
 import { getFavorites } from '../../api/favorites';
 import CircularProgress from '@mui/material/CircularProgress';
 import { defaultQueryOptions } from '../../utils/contants';
 import Errorcomp from '../../components/errorUI/Error.component';
-import { Box } from '@mui/material';
+import { Button } from '@mui/material';
 
 const Home: React.FC = () => {
     const [page, setPage] = useState<number>(50);
@@ -47,19 +47,21 @@ const Home: React.FC = () => {
     }
 
     return (
-        <Box bgcolor={'backgroud.default'}>
+        <StyledContainer>
             <StyledGrid>
                 {cats
                     ? cats.map((cat) => (
-                          <StyledCat item key={cat.id} onClick={() => handleItemClick(cat)}>
+                          <StyledGridItem item key={cat.id} onClick={() => handleItemClick(cat)}>
                               <img src={cat.url} alt={cat.id} />
-                          </StyledCat>
+                          </StyledGridItem>
                       ))
                     : null}
             </StyledGrid>
-            {selectedCat && <CatModal modalOpen={isHomeModalOpen} />}
-            <button onClick={handlePagination}>{isFetching ? 'fetching' : 'load more'}</button>
-        </Box>
+            {selectedCat && <HomeModal modalOpen={isHomeModalOpen} />}
+            <Button sx={sxButton} onClick={handlePagination}>
+                {isFetching ? 'Fetching...' : 'Load more'}
+            </Button>
+        </StyledContainer>
     );
 };
 
