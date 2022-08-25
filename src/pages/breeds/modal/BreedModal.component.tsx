@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Card, CardActions, ImageList, ImageListItem, ListSubheader, Modal } from '@mui/material';
+import { Card, CardActions, ImageList, ImageListItem, ListSubheader, Modal, Typography } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 //TODO: fix styledbox location, mui etc
 import { StyledBox } from '../../home/Home.styled';
@@ -40,14 +40,21 @@ const BreedModal: React.FC<CatModalProps> = ({ modalOpen, selectedBreed, onClose
         appDispatch({ type: 'TOGGLE_CAT_MODAL', catModal: true });
         navigate('/');
     };
-
+    console.log(cats);
     return (
         <Modal open={modalOpen} onClose={onClose}>
-            <StyledBox sx={{ width: 200 }}>
+            <StyledBox>
                 <Card>
-                    <ImageList sx={{ width: 500, height: 450 }}>
+                    <ImageList gap={16} sx={{ maxHeight: 600, p: 1 }}>
                         <ImageListItem key="Subheader" cols={2}>
-                            <ListSubheader component="div">{breedName}</ListSubheader>
+                            <ListSubheader component="div" sx={{ backgroundColor: 'transparent', textAlign: 'center' }}>
+                                <Typography variant="h5" color="common.white">
+                                    {breedName}
+                                </Typography>
+                                <Typography variant="subtitle2" color="common.white">
+                                    Click any to get more info about this breed!
+                                </Typography>
+                            </ListSubheader>
                         </ImageListItem>
                         {cats.map((cat) => (
                             <ImageListItem key={cat.id} onClick={() => handleCatClick(cat)}>

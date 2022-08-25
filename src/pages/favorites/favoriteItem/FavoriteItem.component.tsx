@@ -8,6 +8,9 @@ import { AxiosError } from 'axios';
 import { useAppDispatch } from '../../../context/appContext';
 import { deleteFavorite } from '../../../api/favorites';
 import { CircularProgress } from '@mui/material';
+import { StyledGridItem } from '../../../components/commonStyled/Common.styled';
+import { useState } from 'react';
+import { GRID_ITEM_LARGE_SIZE } from '../../../utils/contants';
 
 interface FavoriteProps {
     favorite: Favorite;
@@ -17,6 +20,8 @@ const FavoriteItem: React.FC<FavoriteProps> = ({ favorite }) => {
     const { id, created_at, image } = favorite;
     const appDispatch = useAppDispatch();
     const queryClient = useQueryClient();
+    const [showBar, setShowBar] = useState<boolean>(false);
+
     const { mutate, isLoading: isLoading } = useMutation<DeleteResponse, AxiosError, number, (id: number) => void>(
         deleteFavorite,
         {
@@ -36,17 +41,26 @@ const FavoriteItem: React.FC<FavoriteProps> = ({ favorite }) => {
     }
 
     return (
-        <ImageListItem style={{ width: '300px', height: '300px' }}>
-            <img src={image.url} style={{ height: '100%' }} />
-            <ImageListItemBar
-                title={`added at: ${created_at.split('T')[0]}`}
-                actionIcon={
-                    <IconButton onClick={() => handleDeleteItem(id)}>
-                        <DeleteOutlineIcon />
-                    </IconButton>
-                }
-            ></ImageListItemBar>
-        </ImageListItem>
+        <StyledGridItem
+            onMouseOver={() => setShowBar(true)}
+            onMouseOut={() => setShowBar(false)}
+            width={GRID_ITEM_LARGE_SIZE}
+            height={GRID_ITEM_LARGE_SIZE}
+        >
+            <ImageListItem style={{ height: '100%' }}>
+                <img src={image.url} />
+                {showBar ? (
+                    <ImageListItemBar
+                        title={`added at: ${created_at.split('T')[0]}`}
+                        actionIcon={
+                            <IconButton onClick={() => handleDeleteItem(id)}>
+                                <DeleteOutlineIcon />
+                            </IconButton>
+                        }
+                    ></ImageListItemBar>
+                ) : null}
+            </ImageListItem>
+        </StyledGridItem>
     );
 };
 

@@ -23,7 +23,12 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = ({ duration, mainIcon, s
     }, [icon]);
 
     return (
-        <Button variant="outlined" onClick={() => handleCopyToClipboard(textToCopy)} endIcon={<>{icon}</>}>
+        <Button
+            variant="outlined"
+            onClick={() => handleCopyToClipboard(textToCopy)}
+            endIcon={<>{icon}</>}
+            sx={{ textTransform: 'none' }}
+        >
             {textToCopy}
         </Button>
     );

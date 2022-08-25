@@ -26,11 +26,11 @@ const HomeModal: React.FC<HomeModalProps> = ({ modalOpen }) => {
     const appDispatch = useAppDispatch();
     const { selectedCat, favorites } = useAppState();
     const [copyText, setCopyText] = useState<string>('');
-    const [addToFavorites, setAddToFavorites] = useState<IconWithLabel>({
+    const [addToFavoritesButtonContent, setAddToFavoritesButtonContent] = useState<IconWithLabel>({
         label: 'add to favorites',
         icon: <FavoriteBorderIcon />,
     });
-
+    const [buttonDisabled, setButtonDisabled] = useState(false);
     useEffect(() => {
         if (selectedCat) {
             setCopyText(selectedCat.url);
@@ -39,28 +39,37 @@ const HomeModal: React.FC<HomeModalProps> = ({ modalOpen }) => {
 
     useEffect(() => {
         if (selectedCat && catExistsInFavorites(selectedCat, favorites)) {
-            setAddToFavorites({
+            setAddToFavoritesButtonContent({
                 label: 'Added!',
                 icon: <FavoriteIcon />,
+            });
+        } else {
+            setAddToFavoritesButtonContent({
+                label: 'Add to favorites',
+                icon: <FavoriteBorderIcon />,
             });
         }
     }, [selectedCat]);
 
-    const { mutate, isLoading } = useMutation<Response, AxiosError, string, () => void>(
+    const { mutate } = useMutation<Response, AxiosError, string, () => void>(
         () => postFavorites(selectedCat ? selectedCat.id : ''),
         {
             onSuccess: () => {
-                setAddToFavorites({
+                setAddToFavoritesButtonContent({
                     label: 'Added!',
                     icon: <FavoriteIcon />,
                 });
-                queryClient.invalidateQueries(['favorites']);
+
+                queryClient.invalidateQueries(['favorites']).then(() => setButtonDisabled(false));
             },
         },
     );
 
     const handleAddToFavorites = () => {
-        mutate(selectedCat ? selectedCat.id : '');
+        if (selectedCat && !catExistsInFavorites(selectedCat, favorites)) {
+            setButtonDisabled(true);
+            mutate(selectedCat ? selectedCat.id : '');
+        }
     };
 
     const catName = selectedCat?.breeds ? selectedCat.breeds[0].name : '';
@@ -88,19 +97,20 @@ const HomeModal: React.FC<HomeModalProps> = ({ modalOpen }) => {
                                         </div>
                                     ))
                                 ) : (
-                                    <h3>no info available for this one</h3>
+                                    <h3>Info not available for this beauty!</h3>
                                 )}
                             </Box>
                         </CardContent>
                         <CardActions sx={{ justifyContent: 'center' }}>
                             <Button
-                                disabled={isLoading}
+                                disabled={buttonDisabled}
                                 onClick={handleAddToFavorites}
-                                endIcon={addToFavorites.icon}
+                                endIcon={addToFavoritesButtonContent.icon}
                                 color="primary"
                                 variant="outlined"
+                                sx={{ textTransform: 'none' }}
                             >
-                                {isLoading ? 'adding...' : addToFavorites.label}
+                                {buttonDisabled ? 'adding...' : addToFavoritesButtonContent.label}
                             </Button>
                             <CopyToClipboard
                                 textToCopy={selectedCat ? copyText : ''}

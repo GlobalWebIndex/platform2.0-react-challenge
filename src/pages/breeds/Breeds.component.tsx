@@ -6,10 +6,10 @@ import { Breed, SubBreed } from '../../utils/models';
 import BreedModal from './modal/BreedModal.component';
 import { QueryKeys } from '../../utils/enums';
 import Error from '../../components/errorUI/Error.component';
-import CircularProgress from '@mui/material/CircularProgress';
-import { defaultQueryOptions } from '../../utils/contants';
-import { StyledGrid, StyledGridItem } from '../home/Home.styled';
-import { Paper } from '@mui/material';
+import { DEFAULT_QUERY_OPTIONS, GRID_COLUMN_WIDTH_SMALL, GRID_ITEM_SMALL_SIZE } from '../../utils/contants';
+import { StyledContainer, StyledGrid, StyledGridItem } from '../../components/commonStyled/Common.styled';
+import Skeleton from '../../components/skeletons/Skeleton.component';
+import { Box } from '@mui/material';
 
 const Breeds: React.FC = () => {
     const appDispatch = useAppDispatch();
@@ -21,7 +21,7 @@ const Breeds: React.FC = () => {
         isLoading,
         data: breeds,
     } = useQuery([QueryKeys.Breeds], getBreeds, {
-        ...defaultQueryOptions,
+        ...DEFAULT_QUERY_OPTIONS,
         onSuccess: (data: Breed[]) => {
             appDispatch({ type: 'SET_BREED_LIST', breeds: data });
         },
@@ -38,23 +38,29 @@ const Breeds: React.FC = () => {
         return <Error />;
     }
     if (isLoading) {
-        return <CircularProgress />;
+        return <Skeleton title={true} />;
     }
 
     return (
-        <Paper sx={{ maxWidth: 1200, margin: '0 auto' }}>
-            <StyledGrid>
-                {breeds.map((breed: Breed, index) => {
+        <StyledContainer>
+            <StyledGrid columnWidth={GRID_COLUMN_WIDTH_SMALL}>
+                {breeds.map((breed: Breed) => {
                     return (
-                        <StyledGridItem key={index} onClick={() => handleItemClick(breed)}>
+                        <Box key={breed.id}>
                             <h5 style={{ textAlign: 'center' }}>{breed.name}</h5>
-                            <img src={breed?.image?.url} />
-                        </StyledGridItem>
+                            <StyledGridItem
+                                onClick={() => handleItemClick(breed)}
+                                width={GRID_ITEM_SMALL_SIZE}
+                                height={GRID_ITEM_SMALL_SIZE}
+                            >
+                                <img src={breed?.image?.url} />
+                            </StyledGridItem>
+                        </Box>
                     );
                 })}
             </StyledGrid>
             <BreedModal modalOpen={isBreedModalOpen} selectedBreed={selectedBreed} onClose={closeBreedModal} />
-        </Paper>
+        </StyledContainer>
     );
 };
 

@@ -1,44 +1,32 @@
-import { useState } from 'react';
-import { deleteFavorite, getFavorites } from '../../api/favorites';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
-import { DeleteResponse } from '../../utils/models';
-import { QueryKeys } from '../../utils/enums';
-import CircularProgress from '@mui/material/CircularProgress';
-import { useAppDispatch, useAppState } from '../../context/appContext';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
-import ImageListItemBar from '@mui/material/ImageListItemBar';
-import ListSubheader from '@mui/material/ListSubheader';
-import FavoriteItem from './favorite/Favorite.component';
+import { useAppState } from '../../context/appContext';
+import FavoriteItem from './favoriteItem/FavoriteItem.component';
 import { Typography } from '@mui/material';
+import { StyledContainer, StyledGrid } from '../../components/commonStyled/Common.styled';
+import { GRID_COLUMN_WIDTH_LARGE, GRID_ITEM_LARGE_SIZE } from '../../utils/contants';
+import Skeleton from '../../components/skeletons/Skeleton.component';
 
 const Favorites: React.FC = () => {
     const { favorites } = useAppState();
-
     console.log(favorites);
 
-    //maybe content / condition (current view etc)
-
     if (!favorites) {
-        return <h1>'skeleton maybe..?'</h1>;
+        return <Skeleton gridItemSize={GRID_ITEM_LARGE_SIZE} />;
     }
 
     return (
-        <>
+        <StyledContainer>
             {favorites.length > 0 ? (
-                <ImageList>
-                    <ImageListItem>
-                        <Typography variant="subtitle1">Favorites</Typography>
-                    </ImageListItem>
+                <StyledGrid columnWidth={GRID_COLUMN_WIDTH_LARGE}>
                     {favorites.map((favorite) => {
                         return <FavoriteItem key={favorite.id} favorite={favorite} />;
                     })}
-                </ImageList>
+                </StyledGrid>
             ) : (
-                <h3>Looks like you do not have any favorites yet</h3>
+                <Typography variant="h6" sx={{ textAlign: 'center', mt: 12 }}>
+                    Looks like you do not have any favorites yet..
+                </Typography>
             )}
-        </>
+        </StyledContainer>
     );
 };
 
