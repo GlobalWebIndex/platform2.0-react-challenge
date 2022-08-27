@@ -8,4 +8,4 @@ export const axiosInstance = axios.create({
     },
 });
 
-//TODO: maybe interceptors?
+//TODO: interceptors?
