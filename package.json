@@ -66,5 +66,11 @@
         "webpack-cli": "^4.10.0",
         "webpack-dev-server": "^4.9.3",
         "yarn": "^1.22.19"
+    },
+    "react-dotenv": {
+        "whitelist": [
+            "API_KEY",
+            "BASE_URL"
+        ]
     }
 }
