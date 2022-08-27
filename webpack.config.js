@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 require('dotenv').config();
 const dotenv = require('dotenv-webpack');
-const webpack = require('webpack')
+const webpack = require('webpack');
 
 module.exports = {
     entry: path.resolve(__dirname, 'src', 'index.tsx'),
@@ -41,17 +41,19 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js', '.jsx'],
     },
     plugins: [
-        new dotenv(),
+        new dotenv({
+            systemvars: true,
+        }),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, './public/index.html'),
         }),
         new CleanWebpackPlugin(),
-        new webpack.DefinePlugin({
-          'process.env': {
-             'API_KEY': JSON.stringify(process.env.API_KEY)
-             'BASE_URL': JSON.stringify(process.env.BASE_URL)
-          }
-        })
+        // new webpack.DefinePlugin({
+        //   'process.env': {
+        //      'API_KEY': JSON.stringify(process.env.API_KEY)
+        //      'BASE_URL': JSON.stringify(process.env.BASE_URL)
+        //   }
+        // })
     ],
     devServer: {
         static: path.join(__dirname, './src'),
