@@ -1,4 +1,12 @@
-import { AppBar, Box, Button, Grid, IconButton, Toolbar, Typography } from '@mui/material';
+import {
+    AppBar,
+    Box,
+    Button,
+    Grid,
+    IconButton,
+    Toolbar,
+    Typography,
+} from '@mui/material';
 import Stack from '@mui/material/Stack';
 import { useLocation, useNavigate } from 'react-router';
 import { DarkMode, LightMode } from '@mui/icons-material';
@@ -9,6 +17,7 @@ import { PaletteMode } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useState } from 'react';
 import OptionsMenu from './optionsMenu/OptionsMenu.component';
+import theme from '../../styles/theme';
 
 interface NavbarProps {
     mode: PaletteMode;
@@ -19,7 +28,9 @@ const Navbar: React.FC<NavbarProps> = ({ mode, setMode }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [anchorEl, setAnchorElement] = useState<(EventTarget & HTMLElement) | null>(null);
+    const [anchorEl, setAnchorElement] = useState<
+        (EventTarget & HTMLElement) | null
+    >(null);
 
     const handleOptionsMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElement(event.currentTarget);
@@ -42,37 +53,71 @@ const Navbar: React.FC<NavbarProps> = ({ mode, setMode }) => {
                     <Grid item>
                         <Button
                             disableRipple
-                            sx={{ '&:hover': { backgroundColor: 'transparent' } }}
-                            startIcon={<Logo style={{ width: 30, height: 30 }} />}
+                            sx={{
+                                '&:hover': { backgroundColor: 'transparent' },
+                            }}
+                            startIcon={
+                                <Logo style={{ width: 30, height: 30 }} />
+                            }
                             color="inherit"
                             onClick={() => navigate('/')}
                         >
-                            <Typography variant="h6" style={{ textTransform: 'capitalize' }}>
+                            <Typography
+                                variant="h6"
+                                style={{ textTransform: 'capitalize' }}
+                            >
                                 Cats Revisited
                             </Typography>
                         </Button>
                     </Grid>
                     <Grid item>
-                        <Stack direction="row" spacing={2}>
-                            <StyledButton active={location.pathname === '/' ? 1 : 0} color="inherit">
+                        <Stack
+                            direction="row"
+                            spacing={2}
+                        >
+                            <StyledButton
+                                active={location.pathname === '/'}
+                                color="inherit"
+                                theme={theme}
+                            >
                                 <NavLink to="/">Cats</NavLink>
                             </StyledButton>
-                            <StyledButton active={location.pathname === '/breeds' ? 1 : 0}>
+                            <StyledButton
+                                active={location.pathname === '/breeds'}
+                                color="inherit"
+                                theme={theme}
+                            >
                                 <NavLink to="/breeds">Breeds</NavLink>
                             </StyledButton>
-                            <StyledButton active={location.pathname === '/favorites' ? 1 : 0}>
+                            <StyledButton
+                                active={location.pathname === '/favorites'}
+                                color="inherit"
+                                theme={theme}
+                            >
                                 <NavLink to="/favorites">Favorites</NavLink>
                             </StyledButton>
                         </Stack>
                     </Grid>
                     <Grid item>
-                        <IconButton color="inherit" onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}>
+                        <IconButton
+                            color="inherit"
+                            onClick={() =>
+                                setMode(mode === 'light' ? 'dark' : 'light')
+                            }
+                        >
                             {mode === 'light' ? <DarkMode /> : <LightMode />}
                         </IconButton>
-                        <IconButton color="inherit" onClick={(event) => handleOptionsMenu(event)}>
+                        <IconButton
+                            color="inherit"
+                            onClick={(event) => handleOptionsMenu(event)}
+                        >
                             <MoreVertIcon />
                         </IconButton>
-                        <OptionsMenu open={isMenuOpen} anchorEl={anchorEl} onClose={handleCloseMenu} />
+                        <OptionsMenu
+                            open={isMenuOpen}
+                            anchorEl={anchorEl}
+                            onClose={handleCloseMenu}
+                        />
                     </Grid>
                 </Grid>
             </Toolbar>

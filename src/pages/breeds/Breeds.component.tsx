@@ -6,15 +6,26 @@ import { Breed, SubBreed } from '../../utils/models';
 import BreedModal from './modal/BreedModal.component';
 import { QueryKeys } from '../../utils/enums';
 import Error from '../../components/errorUI/Error.component';
-import { DEFAULT_QUERY_OPTIONS, GRID_COLUMN_WIDTH_SMALL, GRID_ITEM_SMALL_SIZE } from '../../utils/contants';
-import { StyledContainer, StyledGrid, StyledGridItem } from '../../components/commonStyled/Common.styled';
-import Skeleton from '../../components/skeletons/Skeleton.component';
+import {
+    DEFAULT_QUERY_OPTIONS,
+    GRID_COLUMN_WIDTH_SMALL,
+    GRID_ITEM_SMALL_SIZE,
+} from '../../utils/contants';
+import {
+    StyledContainer,
+    StyledGrid,
+    StyledGridItem,
+} from '../../components/commonStyled/Common.styled';
+import Skeleton from '../../components/skeleton/Skeleton.component';
 import { Box } from '@mui/material';
 
 const Breeds: React.FC = () => {
     const appDispatch = useAppDispatch();
     const [isBreedModalOpen, setIsBreedModalOpen] = useState<boolean>(false);
-    const [selectedBreed, setSelectedBreed] = useState<SubBreed>({ name: '', id: '' });
+    const [selectedBreed, setSelectedBreed] = useState<SubBreed>({
+        name: '',
+        id: '',
+    });
 
     const {
         isError,
@@ -47,7 +58,9 @@ const Breeds: React.FC = () => {
                 {breeds.map((breed: Breed) => {
                     return (
                         <Box key={breed.id}>
-                            <h5 style={{ textAlign: 'center' }}>{breed.name}</h5>
+                            <h5 style={{ textAlign: 'center' }}>
+                                {breed.name}
+                            </h5>
                             <StyledGridItem
                                 onClick={() => handleItemClick(breed)}
                                 width={GRID_ITEM_SMALL_SIZE}
@@ -59,7 +72,11 @@ const Breeds: React.FC = () => {
                     );
                 })}
             </StyledGrid>
-            <BreedModal modalOpen={isBreedModalOpen} selectedBreed={selectedBreed} onClose={closeBreedModal} />
+            <BreedModal
+                modalOpen={isBreedModalOpen}
+                selectedBreed={selectedBreed}
+                onClose={closeBreedModal}
+            />
         </StyledContainer>
     );
 };

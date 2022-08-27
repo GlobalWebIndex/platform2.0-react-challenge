@@ -15,12 +15,27 @@ interface AppInnerProps {
 const AppInner: React.FC<AppInnerProps> = ({ mode, setMode }) => {
     return (
         <BrowserRouter>
-            <Navbar mode={mode} setMode={setMode} />
+            <Navbar
+                mode={mode}
+                setMode={setMode}
+            />
             <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/breeds" element={<Breeds />} />
-                <Route path="/favorites" element={<Favorites />} />
-                <Route path="*" element={<NotFound />} />
+                <Route
+                    path="/"
+                    element={<Home />}
+                />
+                <Route
+                    path="/breeds"
+                    element={<Breeds />}
+                />
+                <Route
+                    path="/favorites"
+                    element={<Favorites />}
+                />
+                <Route
+                    path="*"
+                    element={<NotFound />}
+                />
             </Routes>
         </BrowserRouter>
     );

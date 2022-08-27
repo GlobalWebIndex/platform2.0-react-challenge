@@ -28,7 +28,6 @@ type Action =
     | { type: 'TOGGLE_CAT_MODAL'; catModal: boolean };
 
 const appReducer = (state: AppState, action: Action) => {
-    console.log(action);
     switch (action.type) {
         case 'SET_CAT_LIST':
             return { ...state, cats: [...state.cats, ...action.cats] };
@@ -37,10 +36,14 @@ const appReducer = (state: AppState, action: Action) => {
         case 'SET_SELECTED_CAT':
             return { ...state, selectedCat: action.cat };
         case 'ADD_TO_FAVORITES':
-            //TODO: Set?
-            return { ...state, favorites: [...state.favorites, action.favorite] };
+            return {
+                ...state,
+                favorites: [...state.favorites, action.favorite],
+            };
         case 'REMOVE_FROM_FAVORITES':
-            const newFavorites = state.favorites.filter((item) => item.id !== action.favoriteId);
+            const newFavorites = state.favorites.filter(
+                (item) => item.id !== action.favoriteId
+            );
             return { ...state, favorites: newFavorites };
         case 'SET_FAVORITE_LIST':
             return { ...state, favorites: action.favorites };
@@ -62,7 +65,9 @@ const AppProvider = ({ children }: AppProviderProps) => {
 
     return (
         <AppStateContext.Provider value={state}>
-            <AppDispatchContext.Provider value={dispatch}>{children}</AppDispatchContext.Provider>
+            <AppDispatchContext.Provider value={dispatch}>
+                {children}
+            </AppDispatchContext.Provider>
         </AppStateContext.Provider>
     );
 };

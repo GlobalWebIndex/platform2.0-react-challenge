@@ -24,7 +24,10 @@ const App = () => {
                 <AppProvider>
                     <ErrorBoundary>
                         <Paper sx={{ minHeight: '100vh' }}>
-                            <AppInner mode={mode} setMode={setMode} />
+                            <AppInner
+                                mode={mode}
+                                setMode={setMode}
+                            />
                         </Paper>
                     </ErrorBoundary>
                 </AppProvider>

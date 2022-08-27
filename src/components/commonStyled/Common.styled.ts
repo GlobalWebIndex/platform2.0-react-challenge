@@ -9,7 +9,9 @@ export const StyledContainer = styled(Box)({
     flexDirection: 'column',
 });
 
-export const StyledGrid = styled(Grid)(({ columnWidth }: { columnWidth: number }) => ({
+export const StyledGrid = styled(Grid, {
+    shouldForwardProp: (prop) => prop !== 'columnWidth',
+})(({ columnWidth }: { columnWidth: number }) => ({
     display: 'grid',
     justifyContent: 'center',
     alignItems: 'center',
@@ -18,22 +20,24 @@ export const StyledGrid = styled(Grid)(({ columnWidth }: { columnWidth: number }
     padding: theme.spacing(6, 4),
 }));
 
-export const StyledGridItem = styled(Grid)(({ width, height }: { width: number; height: number }) => ({
-    width: width,
-    height: height,
-    overflow: 'hidden',
-    '& img': {
-        width: '100%',
-        height: '100%',
-        transition: 'transform 0.3s ease-out',
-    },
-    '& img:hover': {
-        transform: 'scale(1.05)',
-    },
-    border: '2px solid transparent',
-    borderRadius: 4,
-    boxShadow: theme.shadows[6],
-    '&:hover': {
-        border: `2px solid ${theme.palette.primary.main}`,
-    },
-}));
+export const StyledGridItem = styled(Grid)(
+    ({ width, height }: { width: number; height: number }) => ({
+        width: width,
+        height: height,
+        overflow: 'hidden',
+        '& img': {
+            width: '100%',
+            height: '100%',
+            transition: 'transform 0.3s ease-out',
+        },
+        '& img:hover': {
+            transform: 'scale(1.05)',
+        },
+        border: '2px solid transparent',
+        borderRadius: 4,
+        boxShadow: theme.shadows[6],
+        '&:hover': {
+            border: `2px solid ${theme.palette.primary.main}`,
+        },
+    })
+);

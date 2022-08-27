@@ -2,39 +2,48 @@ import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import IconButton from '@mui/material/IconButton';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { DeleteResponse, Favorite } from '../../../utils/models';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
-import { useAppDispatch } from '../../../context/appContext';
-import { deleteFavorite } from '../../../api/favorites';
+import { Favorite } from '../../../utils/models';
 import { CircularProgress } from '@mui/material';
 import { StyledGridItem } from '../../../components/commonStyled/Common.styled';
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
 import { GRID_ITEM_LARGE_SIZE } from '../../../utils/contants';
+import ZoomInIcon from '@mui/icons-material/ZoomIn';
+import ZoomOutIcon from '@mui/icons-material/ZoomOut';
 
 interface FavoriteProps {
     favorite: Favorite;
+    setIsDialogOpen: React.Dispatch<SetStateAction<boolean>>;
+    setDeleteId: React.Dispatch<SetStateAction<number | null>>;
+    isLoading: boolean;
 }
 
-const FavoriteItem: React.FC<FavoriteProps> = ({ favorite }) => {
+const FavoriteItem: React.FC<FavoriteProps> = ({
+    favorite,
+    setIsDialogOpen,
+    isLoading,
+    setDeleteId,
+}) => {
     const { id, created_at, image } = favorite;
-    const appDispatch = useAppDispatch();
-    const queryClient = useQueryClient();
     const [showBar, setShowBar] = useState<boolean>(false);
+    const scale = [1, 1.1, 1.2];
+    const [scaleIndex, setScaleIndex] = useState(scale[0]);
 
-    const { mutate, isLoading: isLoading } = useMutation<DeleteResponse, AxiosError, number, (id: number) => void>(
-        deleteFavorite,
-        {
-            onSuccess: (res, id) => {
-                if (res.message === 'SUCCESS') {
-                    queryClient.invalidateQueries(['favorites']);
-                    appDispatch({ type: 'REMOVE_FROM_FAVORITES', favoriteId: id });
-                }
-            },
-        },
-    );
+    const handleDeleteItem = (id: number) => {
+        setIsDialogOpen(true);
+        setDeleteId(id);
+    };
 
-    const handleDeleteItem = (id: number) => mutate(id);
+    const handleZoomInClick = () => {
+        setScaleIndex((prevValue) =>
+            prevValue < scale.length ? prevValue + 1 : prevValue
+        );
+    };
+
+    const handleZoomOutClick = () => {
+        setScaleIndex((prevValue) =>
+            prevValue > scale[0] ? prevValue - 1 : prevValue
+        );
+    };
 
     if (isLoading) {
         return <CircularProgress />;
@@ -47,15 +56,36 @@ const FavoriteItem: React.FC<FavoriteProps> = ({ favorite }) => {
             width={GRID_ITEM_LARGE_SIZE}
             height={GRID_ITEM_LARGE_SIZE}
         >
-            <ImageListItem style={{ height: '100%' }}>
-                <img src={image.url} />
+            <ImageListItem
+                style={{ height: '100%', overflow: 'hidden', width: '100%' }}
+            >
+                <img
+                    src={image.url}
+                    style={{ transform: `scale(${scaleIndex})` }}
+                />
                 {showBar ? (
                     <ImageListItemBar
-                        title={`added at: ${created_at.split('T')[0]}`}
+                        title={`Added at: ${created_at.split('T')[0]}`}
                         actionIcon={
-                            <IconButton onClick={() => handleDeleteItem(id)}>
-                                <DeleteOutlineIcon />
-                            </IconButton>
+                            <>
+                                <IconButton
+                                    onClick={handleZoomOutClick}
+                                    disabled={scaleIndex === 1}
+                                >
+                                    <ZoomOutIcon />
+                                </IconButton>
+                                <IconButton
+                                    onClick={handleZoomInClick}
+                                    disabled={scaleIndex === 3}
+                                >
+                                    <ZoomInIcon />
+                                </IconButton>
+                                <IconButton
+                                    onClick={() => handleDeleteItem(id)}
+                                >
+                                    <DeleteOutlineIcon />
+                                </IconButton>
+                            </>
                         }
                     ></ImageListItemBar>
                 ) : null}

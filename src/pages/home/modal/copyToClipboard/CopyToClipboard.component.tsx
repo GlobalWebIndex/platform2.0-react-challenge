@@ -8,7 +8,12 @@ interface CopyToClipboardProps {
     secondaryIcon: JSX.Element;
 }
 
-const CopyToClipboard: React.FC<CopyToClipboardProps> = ({ duration, mainIcon, secondaryIcon, textToCopy }) => {
+const CopyToClipboard: React.FC<CopyToClipboardProps> = ({
+    duration,
+    mainIcon,
+    secondaryIcon,
+    textToCopy,
+}) => {
     const [icon, setIcon] = useState(<>{mainIcon}</>);
     const handleCopyToClipboard = (url: string) => {
         setIcon(<>{secondaryIcon}</>);

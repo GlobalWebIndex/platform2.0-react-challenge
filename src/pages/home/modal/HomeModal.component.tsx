@@ -1,5 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Box, Button, Card, CardActions, CardContent, CardMedia, Modal, Typography } from '@mui/material';
+import {
+    Box,
+    Button,
+    Card,
+    CardActions,
+    CardContent,
+    CardMedia,
+    Modal,
+    Typography,
+} from '@mui/material';
 import { IconWithLabel } from '../../../utils/models';
 //TODO: fix styledbox location, mui etc
 import { StyledBox } from '../Home.styled';
@@ -26,10 +35,11 @@ const HomeModal: React.FC<HomeModalProps> = ({ modalOpen }) => {
     const appDispatch = useAppDispatch();
     const { selectedCat, favorites } = useAppState();
     const [copyText, setCopyText] = useState<string>('');
-    const [addToFavoritesButtonContent, setAddToFavoritesButtonContent] = useState<IconWithLabel>({
-        label: 'add to favorites',
-        icon: <FavoriteBorderIcon />,
-    });
+    const [addToFavoritesButtonContent, setAddToFavoritesButtonContent] =
+        useState<IconWithLabel>({
+            label: 'add to favorites',
+            icon: <FavoriteBorderIcon />,
+        });
     const [buttonDisabled, setButtonDisabled] = useState(false);
     useEffect(() => {
         if (selectedCat) {
@@ -60,9 +70,11 @@ const HomeModal: React.FC<HomeModalProps> = ({ modalOpen }) => {
                     icon: <FavoriteIcon />,
                 });
 
-                queryClient.invalidateQueries(['favorites']).then(() => setButtonDisabled(false));
+                queryClient
+                    .invalidateQueries(['favorites'])
+                    .then(() => setButtonDisabled(false));
             },
-        },
+        }
     );
 
     const handleAddToFavorites = () => {
@@ -73,27 +85,52 @@ const HomeModal: React.FC<HomeModalProps> = ({ modalOpen }) => {
     };
 
     const catName = selectedCat?.breeds ? selectedCat.breeds[0].name : '';
-    const catDescription = selectedCat?.breeds ? getCatInfo(selectedCat.breeds[0]).description : '';
+    const catDescription = selectedCat?.breeds
+        ? getCatInfo(selectedCat.breeds[0]).description
+        : '';
 
     return (
         <>
-            <Modal open={modalOpen} onClose={() => appDispatch({ type: 'TOGGLE_CAT_MODAL', catModal: false })}>
+            <Modal
+                open={modalOpen}
+                onClose={() =>
+                    appDispatch({ type: 'TOGGLE_CAT_MODAL', catModal: false })
+                }
+            >
                 <StyledBox>
                     <Card>
-                        <CardMedia component="img" image={selectedCat?.url} height={394} sx={{ objectFit: 'cover' }} />
+                        <CardMedia
+                            component="img"
+                            image={selectedCat?.url}
+                            height={394}
+                            sx={{ objectFit: 'cover' }}
+                        />
                         <CardContent sx={{ pb: 0, pt: 0, textAlign: 'center' }}>
-                            <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                            <Typography
+                                variant="subtitle1"
+                                sx={{ fontWeight: 600 }}
+                            >
                                 {catName}
                             </Typography>
-                            <Typography sx={{ fontSize: '0.8em' }}>{catDescription}</Typography>
+                            <Typography sx={{ fontSize: '0.8em' }}>
+                                {catDescription}
+                            </Typography>
                             <Box sx={sxBox}>
                                 {selectedCat?.breeds ? (
-                                    getCatInfo(selectedCat?.breeds[0]).stats.map((item) => (
+                                    getCatInfo(
+                                        selectedCat?.breeds[0]
+                                    ).stats.map((item) => (
                                         <div key={item.name}>
-                                            <Typography component="legend" sx={{ textAlign: 'center' }}>
+                                            <Typography
+                                                component="legend"
+                                                sx={{ textAlign: 'center' }}
+                                            >
                                                 {item.name}
                                             </Typography>
-                                            <Rating value={item.value} readOnly />
+                                            <Rating
+                                                value={item.value}
+                                                readOnly
+                                            />
                                         </div>
                                     ))
                                 ) : (
@@ -110,7 +147,9 @@ const HomeModal: React.FC<HomeModalProps> = ({ modalOpen }) => {
                                 variant="outlined"
                                 sx={{ textTransform: 'none' }}
                             >
-                                {buttonDisabled ? 'adding...' : addToFavoritesButtonContent.label}
+                                {buttonDisabled
+                                    ? 'adding...'
+                                    : addToFavoritesButtonContent.label}
                             </Button>
                             <CopyToClipboard
                                 textToCopy={selectedCat ? copyText : ''}
