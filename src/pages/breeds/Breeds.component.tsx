@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getBreeds } from '../../api/breeds';
-import { useAppDispatch } from '../../context/appContext';
+import { useAppDispatch, useAppState } from '../../context/appContext';
 import { Breed, SubBreed } from '../../utils/models';
 import BreedModal from './modal/BreedModal.component';
 import { QueryKeys } from '../../utils/enums';
@@ -13,14 +13,16 @@ import {
 } from '../../utils/contants';
 import {
     StyledContainer,
-    StyledGrid,
-    StyledGridItem,
+    StyledImageGrid,
+    StyledImageGridItem,
 } from '../../components/commonStyled/Common.styled';
 import Skeleton from '../../components/skeleton/Skeleton.component';
 import { Box } from '@mui/material';
+import HomeModal from '../home/modal/HomeModal.component';
 
 const Breeds: React.FC = () => {
     const appDispatch = useAppDispatch();
+    const { selectedCat, isHomeModalOpen } = useAppState();
     const [isBreedModalOpen, setIsBreedModalOpen] = useState<boolean>(false);
     const [selectedBreed, setSelectedBreed] = useState<SubBreed>({
         name: '',
@@ -54,29 +56,32 @@ const Breeds: React.FC = () => {
 
     return (
         <StyledContainer>
-            <StyledGrid columnWidth={GRID_COLUMN_WIDTH_SMALL}>
+            <StyledImageGrid columnWidth={GRID_COLUMN_WIDTH_SMALL}>
                 {breeds.map((breed: Breed) => {
                     return (
                         <Box key={breed.id}>
                             <h5 style={{ textAlign: 'center' }}>
                                 {breed.name}
                             </h5>
-                            <StyledGridItem
+                            <StyledImageGridItem
                                 onClick={() => handleItemClick(breed)}
                                 width={GRID_ITEM_SMALL_SIZE}
                                 height={GRID_ITEM_SMALL_SIZE}
                             >
                                 <img src={breed?.image?.url} />
-                            </StyledGridItem>
+                            </StyledImageGridItem>
                         </Box>
                     );
                 })}
-            </StyledGrid>
-            <BreedModal
-                modalOpen={isBreedModalOpen}
-                selectedBreed={selectedBreed}
-                onClose={closeBreedModal}
-            />
+            </StyledImageGrid>
+            {selectedBreed.id ? (
+                <BreedModal
+                    modalOpen={isBreedModalOpen}
+                    selectedBreed={selectedBreed}
+                    onClose={closeBreedModal}
+                />
+            ) : null}
+            {selectedCat && <HomeModal modalOpen={isHomeModalOpen} />}
         </StyledContainer>
     );
 };

@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { Favorite } from '../../../utils/models';
 import { CircularProgress } from '@mui/material';
-import { StyledGridItem } from '../../../components/commonStyled/Common.styled';
+import { StyledImageGridItem } from '../../../components/commonStyled/Common.styled';
 import { SetStateAction, useState } from 'react';
 import { GRID_ITEM_LARGE_SIZE } from '../../../utils/contants';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
@@ -15,15 +15,18 @@ interface FavoriteProps {
     setIsDialogOpen: React.Dispatch<SetStateAction<boolean>>;
     setDeleteId: React.Dispatch<SetStateAction<number | null>>;
     isLoading: boolean;
+    deleteId: number | null;
 }
 
 const FavoriteItem: React.FC<FavoriteProps> = ({
     favorite,
     setIsDialogOpen,
-    isLoading,
     setDeleteId,
+    deleteId,
+    isLoading,
 }) => {
     const { id, created_at, image } = favorite;
+
     const [showBar, setShowBar] = useState<boolean>(false);
     const scale = [1, 1.1, 1.2];
     const [scaleIndex, setScaleIndex] = useState(scale[0]);
@@ -45,12 +48,24 @@ const FavoriteItem: React.FC<FavoriteProps> = ({
         );
     };
 
-    if (isLoading) {
-        return <CircularProgress />;
+    if (isLoading && deleteId === id) {
+        return (
+            <StyledImageGridItem
+                width={GRID_ITEM_LARGE_SIZE}
+                height={GRID_ITEM_LARGE_SIZE}
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+            >
+                <CircularProgress size={'5em'} />
+            </StyledImageGridItem>
+        );
     }
 
     return (
-        <StyledGridItem
+        <StyledImageGridItem
             onMouseOver={() => setShowBar(true)}
             onMouseOut={() => setShowBar(false)}
             width={GRID_ITEM_LARGE_SIZE}
@@ -71,26 +86,29 @@ const FavoriteItem: React.FC<FavoriteProps> = ({
                                 <IconButton
                                     onClick={handleZoomOutClick}
                                     disabled={scaleIndex === 1}
+                                    sx={{ color: 'common.white' }}
                                 >
-                                    <ZoomOutIcon />
+                                    <ZoomOutIcon color="inherit" />
                                 </IconButton>
                                 <IconButton
                                     onClick={handleZoomInClick}
                                     disabled={scaleIndex === 3}
+                                    sx={{ color: 'common.white' }}
                                 >
-                                    <ZoomInIcon />
+                                    <ZoomInIcon color="inherit" />
                                 </IconButton>
                                 <IconButton
                                     onClick={() => handleDeleteItem(id)}
+                                    sx={{ color: 'common.white' }}
                                 >
-                                    <DeleteOutlineIcon />
+                                    <DeleteOutlineIcon color="inherit" />
                                 </IconButton>
                             </>
                         }
                     ></ImageListItemBar>
                 ) : null}
             </ImageListItem>
-        </StyledGridItem>
+        </StyledImageGridItem>
     );
 };
 

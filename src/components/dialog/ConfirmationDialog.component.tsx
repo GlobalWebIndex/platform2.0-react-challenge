@@ -5,7 +5,7 @@ import {
     DialogContent,
     Typography,
 } from '@mui/material';
-import React, { SetStateAction, useEffect, useState } from 'react';
+import React, { SetStateAction } from 'react';
 
 interface IConfirmationDialogProps {
     dialogOpen: boolean;
@@ -18,6 +18,7 @@ export const ConfirmationDialog: React.FC<IConfirmationDialogProps> = ({
     onConfirm,
     setIsDialogOpen,
 }) => {
+    console.log('confirmation dialog');
     const handleConfirmClick = (): void => {
         setIsDialogOpen(false);
         onConfirm();
@@ -44,6 +45,7 @@ export const ConfirmationDialog: React.FC<IConfirmationDialogProps> = ({
                 <Button
                     onClick={handleConfirmClick}
                     color="primary"
+                    variant="contained"
                 >
                     Delete
                 </Button>

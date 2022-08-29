@@ -5,8 +5,8 @@ import {
 } from '../../utils/contants';
 import {
     StyledContainer,
-    StyledGrid,
-    StyledGridItem,
+    StyledImageGrid,
+    StyledImageGridItem,
 } from '../commonStyled/Common.styled';
 import { SkeletonImage, SkeletonTitle } from './Skeleton.styled';
 
@@ -23,30 +23,30 @@ const SkeletonTT: React.FC<SkeletonProps> = ({
 }) => {
     return (
         <StyledContainer>
-            <StyledGrid columnWidth={gridColumnWidth}>
+            <StyledImageGrid columnWidth={gridColumnWidth}>
                 {Array.apply(null, Array(10)).map((_, index) => {
                     return !title ? (
                         <Box key={index}>
-                            <StyledGridItem
+                            <StyledImageGridItem
                                 width={gridItemSize}
                                 height={gridItemSize}
                             >
                                 <SkeletonImage />
-                            </StyledGridItem>
+                            </StyledImageGridItem>
                         </Box>
                     ) : (
                         <Box key={index}>
                             <SkeletonTitle />
-                            <StyledGridItem
+                            <StyledImageGridItem
                                 width={gridItemSize}
                                 height={gridItemSize}
                             >
                                 <SkeletonImage />
-                            </StyledGridItem>
+                            </StyledImageGridItem>
                         </Box>
                     );
                 })}
-            </StyledGrid>
+            </StyledImageGrid>
         </StyledContainer>
     );
 };

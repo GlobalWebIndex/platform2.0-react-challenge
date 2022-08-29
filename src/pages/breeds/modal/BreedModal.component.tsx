@@ -9,13 +9,11 @@ import {
     Typography,
 } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
-//TODO: fix styledbox location, mui etc
 import { StyledBox } from '../../home/Home.styled';
 import { useAppDispatch } from '../../../context/appContext';
 import { getBreed } from '../../../api/breeds';
 import { Cat, SubBreed } from '../../../utils/models';
 import { QueryKeys } from '../../../utils/enums';
-import { useNavigate } from 'react-router';
 import Error from '../../../components/errorUI/Error.component';
 import { sxCircularProgress, sxListSubheader } from './BreedModal.styled';
 
@@ -31,7 +29,6 @@ const BreedModal: React.FC<CatModalProps> = ({
     onClose,
 }) => {
     const appDispatch = useAppDispatch();
-    const navigate = useNavigate();
     const { id, name: breedName } = selectedBreed;
 
     const {
@@ -45,7 +42,7 @@ const BreedModal: React.FC<CatModalProps> = ({
     const handleCatClick = (cat: Cat) => {
         appDispatch({ type: 'SET_SELECTED_CAT', cat });
         appDispatch({ type: 'TOGGLE_CAT_MODAL', catModal: true });
-        navigate('/');
+        onClose();
     };
 
     if (isError) {
@@ -76,16 +73,10 @@ const BreedModal: React.FC<CatModalProps> = ({
                                     component="div"
                                     sx={sxListSubheader}
                                 >
-                                    <Typography
-                                        variant="h5"
-                                        color="common.white"
-                                    >
+                                    <Typography variant="h5">
                                         {breedName}
                                     </Typography>
-                                    <Typography
-                                        variant="subtitle2"
-                                        color="common.white"
-                                    >
+                                    <Typography variant="subtitle2">
                                         Click any to get more info about this
                                         breed!
                                     </Typography>
@@ -103,7 +94,6 @@ const BreedModal: React.FC<CatModalProps> = ({
                                 </ImageListItem>
                             ))}
                         </ImageList>
-                        <CardActions></CardActions>
                     </Card>
                 </StyledBox>
             )}

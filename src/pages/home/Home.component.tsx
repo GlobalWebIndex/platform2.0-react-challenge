@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { sxButton } from './Home.styled';
 import { Cat } from '../../utils/models';
@@ -6,7 +6,6 @@ import { getCats } from '../../api/cats';
 import { useAppDispatch, useAppState } from '../../context/appContext';
 import HomeModal from './modal/HomeModal.component';
 import { QueryKeys } from '../../utils/enums';
-import { getFavorites } from '../../api/favorites';
 import {
     DEFAULT_QUERY_OPTIONS,
     GRID_COLUMN_WIDTH_SMALL,
@@ -17,31 +16,39 @@ import { Button } from '@mui/material';
 import Skeleton from '../../components/skeleton/Skeleton.component';
 import {
     StyledContainer,
-    StyledGrid,
-    StyledGridItem,
+    StyledImageGrid,
+    StyledImageGridItem,
 } from '../../components/commonStyled/Common.styled';
+import { getFavorites } from '../../api/favorites';
 
 const Home: React.FC = () => {
     const [page, setPage] = useState<number>(50);
     const appDispatch = useAppDispatch();
-    const { cats, selectedCat, isHomeModalOpen } = useAppState();
+    const { selectedCat, isHomeModalOpen } = useAppState();
 
-    const { isLoading, isFetching, isError } = useQuery(
-        [QueryKeys.Cats, page],
-        () => getCats(page),
-        {
-            ...DEFAULT_QUERY_OPTIONS,
-            onSuccess: (data) => {
-                appDispatch({ type: 'SET_CAT_LIST', cats: data });
-            },
-        }
-    );
+    const {
+        data: cats,
+        isLoading,
+        isFetching,
+        isError,
+    } = useQuery([QueryKeys.Cats, page], () => getCats(page), {
+        ...DEFAULT_QUERY_OPTIONS,
+        onSuccess: (data) => {
+            appDispatch({ type: 'SET_CAT_LIST', cats: data });
+        },
+    });
 
     useQuery([QueryKeys.Favorites], getFavorites, {
+        ...DEFAULT_QUERY_OPTIONS,
         onSuccess: (data) => {
             appDispatch({
                 type: 'SET_FAVORITE_LIST',
-                favorites: data ? data : [],
+                favorites: data
+                    ? data.map((item) => ({
+                          id: item.id,
+                          imageId: item.image_id,
+                      }))
+                    : [],
             });
         },
     });
@@ -64,10 +71,10 @@ const Home: React.FC = () => {
 
     return (
         <StyledContainer>
-            <StyledGrid columnWidth={GRID_COLUMN_WIDTH_SMALL}>
+            <StyledImageGrid columnWidth={GRID_COLUMN_WIDTH_SMALL}>
                 {cats
                     ? cats.map((cat) => (
-                          <StyledGridItem
+                          <StyledImageGridItem
                               item
                               key={cat.id}
                               onClick={() => handleItemClick(cat)}
@@ -78,10 +85,10 @@ const Home: React.FC = () => {
                                   src={cat.url}
                                   alt={cat.id}
                               />
-                          </StyledGridItem>
+                          </StyledImageGridItem>
                       ))
                     : null}
-            </StyledGrid>
+            </StyledImageGrid>
             {selectedCat && <HomeModal modalOpen={isHomeModalOpen} />}
             <Button
                 sx={sxButton}

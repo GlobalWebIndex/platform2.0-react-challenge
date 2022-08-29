@@ -35,13 +35,13 @@ const OptionsMenu: React.FC<OptionsMenuProps> = ({
                     <ListItemIcon>
                         <GitHubIcon />
                     </ListItemIcon>
-                    <Typography>legacy code</Typography>
+                    <Typography>Legacy Code</Typography>
                 </MenuItem>
                 <MenuItem onClick={handleLegacyAppClick}>
                     <ListItemIcon>
                         <LiveTvIcon />
                     </ListItemIcon>
-                    <Typography>legacy app</Typography>
+                    <Typography>Legacy App</Typography>
                 </MenuItem>
             </MenuList>
         </Menu>

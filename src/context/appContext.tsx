@@ -1,10 +1,10 @@
 import React, { useReducer } from 'react';
-import { Cat, Breed, Favorite } from '../utils/models';
+import { Cat, Breed, FavoriteIds } from '../utils/models';
 
 type AppState = {
     cats: Cat[];
     selectedCat: Cat | null;
-    favorites: Favorite[];
+    favorites: FavoriteIds[];
     breeds: Breed[];
     isHomeModalOpen: boolean;
 };
@@ -21,10 +21,13 @@ type Action =
     | { type: 'CHANGE_GLOBAL_VAR'; updatedVar: string }
     | { type: 'SET_CAT_LIST'; cats: Cat[] }
     | { type: 'SET_SELECTED_CAT'; cat: Cat }
-    | { type: 'ADD_TO_FAVORITES'; favorite: Favorite }
+    | { type: 'ADD_TO_FAVORITES'; favorite: FavoriteIds }
     | { type: 'REMOVE_FROM_FAVORITES'; favoriteId: number }
     | { type: 'SET_BREED_LIST'; breeds: Breed[] }
-    | { type: 'SET_FAVORITE_LIST'; favorites: Favorite[] }
+    | {
+          type: 'SET_FAVORITE_LIST';
+          favorites: FavoriteIds[];
+      }
     | { type: 'TOGGLE_CAT_MODAL'; catModal: boolean };
 
 const appReducer = (state: AppState, action: Action) => {
@@ -41,10 +44,12 @@ const appReducer = (state: AppState, action: Action) => {
                 favorites: [...state.favorites, action.favorite],
             };
         case 'REMOVE_FROM_FAVORITES':
-            const newFavorites = state.favorites.filter(
-                (item) => item.id !== action.favoriteId
-            );
-            return { ...state, favorites: newFavorites };
+            return {
+                ...state,
+                favorites: state.favorites.filter(
+                    (item) => item.id !== action.favoriteId
+                ),
+            };
         case 'SET_FAVORITE_LIST':
             return { ...state, favorites: action.favorites };
         case 'TOGGLE_CAT_MODAL':

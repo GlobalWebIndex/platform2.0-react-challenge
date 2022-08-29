@@ -41,6 +41,8 @@ const Navbar: React.FC<NavbarProps> = ({ mode, setMode }) => {
         setAnchorElement(null);
         setIsMenuOpen(false);
     };
+
+    //TODO:navlink color light mode hover
     return (
         <AppBar position="sticky">
             <Toolbar>
@@ -57,7 +59,7 @@ const Navbar: React.FC<NavbarProps> = ({ mode, setMode }) => {
                                 '&:hover': { backgroundColor: 'transparent' },
                             }}
                             startIcon={
-                                <Logo style={{ width: 30, height: 30 }} />
+                                <Logo style={{ width: 40, height: 40 }} />
                             }
                             color="inherit"
                             onClick={() => navigate('/')}
@@ -66,7 +68,7 @@ const Navbar: React.FC<NavbarProps> = ({ mode, setMode }) => {
                                 variant="h6"
                                 style={{ textTransform: 'capitalize' }}
                             >
-                                Cats Revisited
+                                Cat Lover Revisited
                             </Typography>
                         </Button>
                     </Grid>

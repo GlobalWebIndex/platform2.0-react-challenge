@@ -1,7 +1,14 @@
+import { Typography } from '@mui/material';
+
 const Error = () => {
     return (
         <>
-            <h1>Something went terribly wrong</h1>
+            <Typography
+                sx={{ margin: '24px auto' }}
+                variant="h3"
+            >
+                Something went terribly wrong
+            </Typography>
             <a href="/">go back</a>
         </>
     );

@@ -3,28 +3,44 @@ import FavoriteItem from './favoriteItem/FavoriteItem.component';
 import { Typography } from '@mui/material';
 import {
     StyledContainer,
-    StyledGrid,
+    StyledImageGrid,
 } from '../../components/commonStyled/Common.styled';
 import {
+    DEFAULT_QUERY_OPTIONS,
     GRID_COLUMN_WIDTH_LARGE,
     GRID_ITEM_LARGE_SIZE,
 } from '../../utils/contants';
 import Skeleton from '../../components/skeleton/Skeleton.component';
 import { ConfirmationDialog } from '../../components/dialog/ConfirmationDialog.component';
 import { useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { DeleteResponse } from '../../utils/models';
-import { deleteFavorite } from '../../api/favorites';
+import { deleteFavorite, getFavorites } from '../../api/favorites';
+import { QueryKeys } from '../../utils/enums';
 
 const Favorites: React.FC = () => {
-    const { favorites } = useAppState();
     const queryClient = useQueryClient();
     const appDispatch = useAppDispatch();
     const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
     const [deleteId, setDeleteId] = useState<number | null>(null);
 
-    const { mutate, isLoading } = useMutation<
+    const { data: favorites } = useQuery([QueryKeys.Favorites], getFavorites, {
+        ...DEFAULT_QUERY_OPTIONS,
+        onSuccess: (data) => {
+            appDispatch({
+                type: 'SET_FAVORITE_LIST',
+                favorites: data
+                    ? data.map((item) => ({
+                          id: item.id,
+                          imageId: item.image_id,
+                      }))
+                    : [],
+            });
+        },
+    });
+
+    const { mutate, isLoading, isSuccess } = useMutation<
         DeleteResponse,
         AxiosError,
         number,
@@ -33,7 +49,10 @@ const Favorites: React.FC = () => {
         onSuccess: (res, id) => {
             if (res.message === 'SUCCESS') {
                 queryClient.invalidateQueries(['favorites']);
-                appDispatch({ type: 'REMOVE_FROM_FAVORITES', favoriteId: id });
+                appDispatch({
+                    type: 'REMOVE_FROM_FAVORITES',
+                    favoriteId: id,
+                });
             }
         },
     });
@@ -49,32 +68,35 @@ const Favorites: React.FC = () => {
     return (
         <StyledContainer>
             {favorites.length > 0 ? (
-                <StyledGrid columnWidth={GRID_COLUMN_WIDTH_LARGE}>
+                <StyledImageGrid columnWidth={GRID_COLUMN_WIDTH_LARGE}>
                     {favorites.map((favorite) => {
                         return (
                             <FavoriteItem
                                 key={favorite.id}
                                 favorite={favorite}
+                                deleteId={deleteId}
                                 setDeleteId={setDeleteId}
                                 setIsDialogOpen={setIsDialogOpen}
                                 isLoading={isLoading}
                             />
                         );
                     })}
-                </StyledGrid>
+                </StyledImageGrid>
             ) : (
                 <Typography
                     variant="h6"
                     sx={{ textAlign: 'center', mt: 12 }}
                 >
-                    Looks like you do not have any favorites yet..
+                    Looks like you do not have any favorites.
                 </Typography>
             )}
-            <ConfirmationDialog
-                dialogOpen={isDialogOpen}
-                setIsDialogOpen={setIsDialogOpen}
-                onConfirm={handleDelete}
-            />
+            {deleteId ? (
+                <ConfirmationDialog
+                    dialogOpen={isDialogOpen}
+                    setIsDialogOpen={setIsDialogOpen}
+                    onConfirm={handleDelete}
+                />
+            ) : null}
         </StyledContainer>
     );
 };

@@ -9,7 +9,7 @@ export const StyledContainer = styled(Box)({
     flexDirection: 'column',
 });
 
-export const StyledGrid = styled(Grid, {
+export const StyledImageGrid = styled(Grid, {
     shouldForwardProp: (prop) => prop !== 'columnWidth',
 })(({ columnWidth }: { columnWidth: number }) => ({
     display: 'grid',
@@ -20,7 +20,7 @@ export const StyledGrid = styled(Grid, {
     padding: theme.spacing(6, 4),
 }));
 
-export const StyledGridItem = styled(Grid)(
+export const StyledImageGridItem = styled(Grid)(
     ({ width, height }: { width: number; height: number }) => ({
         width: width,
         height: height,

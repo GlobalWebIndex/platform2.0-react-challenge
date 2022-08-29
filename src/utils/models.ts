@@ -73,7 +73,6 @@ export interface BreedListItem {
 
 export interface Favorite {
     id: number;
-    user_id: string;
     image_id: string;
     sub_id: string;
     created_at: string;
@@ -81,6 +80,11 @@ export interface Favorite {
         id: string;
         url: string;
     };
+}
+
+export interface FavoriteIds {
+    id: number;
+    imageId: string;
 }
 
 export interface DeleteResponse {

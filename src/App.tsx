@@ -32,7 +32,7 @@ const App = () => {
                     </ErrorBoundary>
                 </AppProvider>
             </ThemeProvider>
-            <ReactQueryDevtools initialIsOpen={true} />
+            <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
     );
 };
