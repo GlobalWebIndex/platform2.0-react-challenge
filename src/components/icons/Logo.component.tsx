@@ -1,6 +1,4 @@
-const Logo: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = (
-    props
-) => {
+const Logo: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = (props) => {
     return (
         <svg
             style={props.style}
@@ -12,11 +10,7 @@ const Logo: React.FunctionComponent<React.SVGProps<SVGSVGElement>> = (
             viewBox="0 0 880.000000 770.000000"
             preserveAspectRatio="xMidYMid meet"
         >
-            <g
-                transform="translate(0.000000,770.000000) scale(0.100000,-0.100000)"
-                fill="#fff"
-                stroke="none"
-            >
+            <g transform="translate(0.000000,770.000000) scale(0.100000,-0.100000)" fill="#fff" stroke="none">
                 <path
                     d="M2209 7203 c-247 -523 -375 -950 -441 -1473 -20 -162 -17 -668 6
 -849 l17 -144 -33 -35 c-260 -273 -687 -491 -1063 -542 -44 -6 -82 -14 -86

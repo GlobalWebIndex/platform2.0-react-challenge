@@ -1,15 +1,8 @@
 import { useAppDispatch, useAppState } from '../../context/appContext';
 import FavoriteItem from './favoriteItem/FavoriteItem.component';
 import { Typography } from '@mui/material';
-import {
-    StyledContainer,
-    StyledImageGrid,
-} from '../../components/commonStyled/Common.styled';
-import {
-    DEFAULT_QUERY_OPTIONS,
-    GRID_COLUMN_WIDTH_LARGE,
-    GRID_ITEM_LARGE_SIZE,
-} from '../../utils/contants';
+import { StyledContainer, StyledImageGrid } from '../../components/commonStyledComponents/CommonStyledComponents.styled';
+import { DEFAULT_QUERY_OPTIONS, GRID_COLUMN_WIDTH_LARGE, GRID_ITEM_LARGE_SIZE } from '../../utils/contants';
 import Skeleton from '../../components/skeleton/Skeleton.component';
 import { ConfirmationDialog } from '../../components/dialog/ConfirmationDialog.component';
 import { useState } from 'react';
@@ -18,6 +11,7 @@ import { AxiosError } from 'axios';
 import { DeleteResponse } from '../../utils/models';
 import { deleteFavorite, getFavorites } from '../../api/favorites';
 import { QueryKeys } from '../../utils/enums';
+import Error from '../../components/errorUI/Error.component';
 
 const Favorites: React.FC = () => {
     const queryClient = useQueryClient();
@@ -25,7 +19,11 @@ const Favorites: React.FC = () => {
     const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
     const [deleteId, setDeleteId] = useState<number | null>(null);
 
-    const { data: favorites } = useQuery([QueryKeys.Favorites], getFavorites, {
+    const {
+        data: favorites,
+        isLoading: isGetFavoritesLoading,
+        isError: isGetFavoritesError,
+    } = useQuery([QueryKeys.Favorites], getFavorites, {
         ...DEFAULT_QUERY_OPTIONS,
         onSuccess: (data) => {
             appDispatch({
@@ -40,12 +38,7 @@ const Favorites: React.FC = () => {
         },
     });
 
-    const { mutate, isLoading, isSuccess } = useMutation<
-        DeleteResponse,
-        AxiosError,
-        number,
-        (id: number) => void
-    >(deleteFavorite, {
+    const { mutate, isLoading: isDeleteLoading } = useMutation<DeleteResponse, AxiosError, number, (id: number) => void>(deleteFavorite, {
         onSuccess: (res, id) => {
             if (res.message === 'SUCCESS') {
                 queryClient.invalidateQueries(['favorites']);
@@ -61,13 +54,13 @@ const Favorites: React.FC = () => {
         deleteId ? mutate(deleteId) : null;
     };
 
-    if (!favorites) {
-        return <Skeleton gridItemSize={GRID_ITEM_LARGE_SIZE} />;
-    }
+    console.log(favorites);
 
     return (
         <StyledContainer>
-            {favorites.length > 0 ? (
+            {isGetFavoritesLoading && <Skeleton gridItemSize={GRID_ITEM_LARGE_SIZE} />}
+            {isGetFavoritesError && <Error />}
+            {favorites ? (
                 <StyledImageGrid columnWidth={GRID_COLUMN_WIDTH_LARGE}>
                     {favorites.map((favorite) => {
                         return (
@@ -77,26 +70,17 @@ const Favorites: React.FC = () => {
                                 deleteId={deleteId}
                                 setDeleteId={setDeleteId}
                                 setIsDialogOpen={setIsDialogOpen}
-                                isLoading={isLoading}
+                                isLoading={isDeleteLoading}
                             />
                         );
                     })}
                 </StyledImageGrid>
             ) : (
-                <Typography
-                    variant="h6"
-                    sx={{ textAlign: 'center', mt: 12 }}
-                >
+                <Typography variant="h6" sx={{ textAlign: 'center', mt: 12 }}>
                     Looks like you do not have any favorites.
                 </Typography>
             )}
-            {deleteId ? (
-                <ConfirmationDialog
-                    dialogOpen={isDialogOpen}
-                    setIsDialogOpen={setIsDialogOpen}
-                    onConfirm={handleDelete}
-                />
-            ) : null}
+            {deleteId ? <ConfirmationDialog dialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} onConfirm={handleDelete} /> : null}
         </StyledContainer>
     );
 };

@@ -19,10 +19,7 @@ const Stats: React.FC<StatsProps> = ({ selectedCat }) => {
                         >
                             {item.name}
                         </Typography>
-                        <Rating
-                            value={item.value}
-                            readOnly
-                        />
+                        <Rating value={item.value} readOnly />
                     </div>
                 ))
             ) : (

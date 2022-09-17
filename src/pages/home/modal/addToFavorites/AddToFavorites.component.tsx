@@ -84,6 +84,3 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({}) => {
 };
 
 export default AddToFavorites;
-function useDispatch() {
-    throw new Error('Function not implemented.');
-}

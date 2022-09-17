@@ -15,9 +15,6 @@ export const getCatInfo = (breed: Breed): CatInfo => {
     };
 };
 
-export const catExistsInFavorites = (
-    cat: Cat,
-    list: { id: number; imageId: string }[]
-) => {
+export const catExistsInFavorites = (cat: Cat, list: { id: number; imageId: string }[]) => {
     return list.map((item) => item.imageId).includes(cat.id);
 };

@@ -13,9 +13,7 @@ export const StyledButton = styled(Button, {
     fontSize: '16px',
     color: active ? theme.palette.grey[50] : theme.palette.grey[200],
     borderRadius: 0,
-    borderBottom: active
-        ? `2px  solid ${theme.palette.grey[50]}`
-        : '2px solid transparent',
+    borderBottom: active ? `2px  solid ${theme.palette.grey[50]}` : '2px solid transparent',
     '&:hover': {
         background: 'transparent',
         borderBottom: `2px  solid ${theme.palette.primary.contrastText}`,

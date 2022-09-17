@@ -31,6 +31,7 @@ type Action =
     | { type: 'TOGGLE_CAT_MODAL'; catModal: boolean };
 
 const appReducer = (state: AppState, action: Action) => {
+    console.log(action);
     switch (action.type) {
         case 'SET_CAT_LIST':
             return { ...state, cats: [...state.cats, ...action.cats] };
@@ -46,9 +47,7 @@ const appReducer = (state: AppState, action: Action) => {
         case 'REMOVE_FROM_FAVORITES':
             return {
                 ...state,
-                favorites: state.favorites.filter(
-                    (item) => item.id !== action.favoriteId
-                ),
+                favorites: state.favorites.filter((item) => item.id !== action.favoriteId),
             };
         case 'SET_FAVORITE_LIST':
             return { ...state, favorites: action.favorites };
@@ -60,19 +59,21 @@ const appReducer = (state: AppState, action: Action) => {
 };
 
 type Dispatch = (action: Action) => void;
-type AppProviderProps = { children: React.ReactNode };
+type AppProviderProps = {
+    children: React.ReactNode;
+    optionalContext?: AppState | undefined;
+};
 
 const AppStateContext = React.createContext<AppState | undefined>(undefined);
 const AppDispatchContext = React.createContext<Dispatch | undefined>(undefined);
 
-const AppProvider = ({ children }: AppProviderProps) => {
-    const [state, dispatch] = useReducer(appReducer, defaultState);
+const AppProvider = ({ children, optionalContext }: AppProviderProps) => {
+    const initialState = optionalContext ? optionalContext : defaultState;
+    const [state, dispatch] = useReducer(appReducer, initialState);
 
     return (
         <AppStateContext.Provider value={state}>
-            <AppDispatchContext.Provider value={dispatch}>
-                {children}
-            </AppDispatchContext.Provider>
+            <AppDispatchContext.Provider value={dispatch}>{children}</AppDispatchContext.Provider>
         </AppStateContext.Provider>
     );
 };
