@@ -1,0 +1,14 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Tahoma, sans-serif;
+  font-size: 16px;
+  background: #e5e5e5;
+}
+
+h1 {
+  font-size: 24px;
+}

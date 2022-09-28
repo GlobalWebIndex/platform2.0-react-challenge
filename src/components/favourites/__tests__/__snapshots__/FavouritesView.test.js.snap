@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FavouritesView renders 1`] = `
+<div>
+  <header
+    class="title"
+    data-testid="header"
+  >
+    <h1>
+      Your favourite 🐈 images...
+    </h1>
+  </header>
+  <section
+    class="gridContainer-0-2-1"
+  >
+    <a
+      class="cardItem-0-2-2 cardItem-d0-0-2-6"
+      href="/cat/12"
+    >
+      <img
+        alt="id 12"
+        class="cardImage-0-2-3"
+        data-testid="card-image"
+        loading="lazy"
+        src="https://cat.com"
+      />
+    </a>
+  </section>
+</div>
+`;

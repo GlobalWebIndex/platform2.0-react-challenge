@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NotFound/> renders 1`] = `
+<div>
+  <header
+    class="title"
+    data-testid="header"
+  >
+    <h1>
+      Whoa! This page does not exist!
+    </h1>
+  </header>
+  <div>
+    Not sure how you ended up here but if you really love cats 🐈 and want to see more just
+     
+    <a
+      class="contentLink-0-2-2"
+      href="/"
+    >
+      go back to the homepage
+    </a>
+  </div>
+</div>
+`;
