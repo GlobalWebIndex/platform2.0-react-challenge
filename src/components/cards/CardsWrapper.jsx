@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useStyles } from "./CardsWrapper.style";
 import Card from "./Card";
 
-const CardsWrapper = ({ cardItems }) => {
+function CardsWrapper({ cardItems }) {
   const classes = useStyles();
   return (
     <section className={classes.gridContainer}>
@@ -21,7 +21,7 @@ const CardsWrapper = ({ cardItems }) => {
       ))}
     </section>
   );
-};
+}
 
 CardsWrapper.propTypes = {
   cardItems: PropTypes.array,

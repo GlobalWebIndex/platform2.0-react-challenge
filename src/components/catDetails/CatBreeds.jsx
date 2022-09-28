@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link, useLocation } from "react-router-dom";
 
-const CatBreeds = ({ breeds = [] }) => {
+const CatBreeds = (props) => {
   const location = useLocation();
-
+  let breeds = props.breeds;
   if (!breeds?.length) {
     return null;
   }

@@ -23,7 +23,7 @@ const FavouriteToggler = ({ imageId = "" }) => {
 
   const onToggleFavourite = useCallback(async () => {
     setIsLoading(true);
-
+    let error = true;
     // TODO: Error handling could be definitely improved here!
     if (favourite) {
       await removeFavourite(favourite.id);
@@ -31,6 +31,9 @@ const FavouriteToggler = ({ imageId = "" }) => {
     } else {
       const response = await addFavourite(imageId);
       setFavourite(response);
+    }
+
+    if (error) {
     }
 
     setIsLoading(false);

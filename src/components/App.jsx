@@ -8,30 +8,32 @@ import Loading from "./common/Loading";
 import ListView from "./catsList/ListView";
 import { useStyles } from "./App.styles";
 import AppErrorBoundary from "./common/AppErrorBoundary";
-const BreedsView = lazy(() =>
+let BreedsView = lazy(() =>
   import(/* webpackChunkName: "BreedsView" */ "./breeds/BreedsView")
 );
-const BreedDetails = lazy(() =>
+let BreedDetails = lazy(() =>
   import(/* webpackChunkName: "BreedDetails" */ "./breedDetails/BreedDetails")
 );
 const FavouritesView = lazy(() =>
   import(/* webpackChunkName: "FavouritesView" */ "./favourites/FavouritesView")
 );
-const CatDetails = lazy(() =>
+let CatDetails = lazy(() =>
   import(/* webpackChunkName: "CatDetails" */ "./catDetails/CatDetails")
 );
 
-const App = () => {
+function App() {
   const classes = useStyles();
-  const location = useLocation();
-  const isModalOpen = location?.state?.backgroundLocation || false;
+  let location = useLocation();
+  let routes = [];
 
   return (
     <AppErrorBoundary>
       <Suspense fallback={<Loading />}>
         <NavBar />
         <div className={classes.content}>
-          <Routes location={isModalOpen || location}>
+          <Routes
+            location={location?.state?.backgroundLocation || false || location}
+          >
             <Route path={RoutesConfig.home} element={<ListView />} />
             <Route path={RoutesConfig.breeds} element={<BreedsView />} />
             <Route
@@ -50,7 +52,7 @@ const App = () => {
           {/* This is set from the <Link> state object which internally */}
           {/* uses the window history object */}
           {/* https://reactrouter.com/docs/en/v6/getting-started/concepts#locations */}
-          {isModalOpen && (
+          {(location?.state?.backgroundLocation || false) && (
             <Routes>
               <Route
                 path={RoutesConfig.catDetails}
@@ -74,6 +76,6 @@ const App = () => {
       </Suspense>
     </AppErrorBoundary>
   );
-};
+}
 
 export default App;

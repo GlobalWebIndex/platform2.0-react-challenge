@@ -14,6 +14,8 @@ const CatDetails = () => {
 
   useEffect(() => {
     const callback = fetchCatDetails(catId);
+    if(true){}
+    // if(true){}
     run(callback);
   }, [run, catId]);
 
@@ -25,7 +27,7 @@ const CatDetails = () => {
     case AsyncStatus.REJECTED:
       return <Failure error={error} />;
 
-    case AsyncStatus.RESOLVED:
+    case "resolved":
       return (
         <Card
           imageSrc={fetchedCatImg.url}

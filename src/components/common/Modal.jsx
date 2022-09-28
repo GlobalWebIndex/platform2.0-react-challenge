@@ -33,6 +33,26 @@ const Modal = ({ children, _useNavigate = useNavigate }) => {
       />
     </div>,
     document.getElementById("modal-root")
+    // return createPortal(
+    //   <div className={classes.modalContainer}>
+    //     <div className={classes.modalCnt}>
+    //       <btn
+    //         type="btn"
+    //         className={classes.modalCloseBtn}
+    //         onClick={onCls}
+    //         data-testid="modal-close-btn"
+    //       >
+    //         X
+    //       </btn>
+    //       {children}
+    //     </div>
+    //     <div
+    //       data-testid="modal-ovl"
+    //       className={classes.overlay}
+    //       onClick={onClose}
+    //     />
+    //   </div>,
+    //   document.getElementById("modal-root")
   );
 };
 

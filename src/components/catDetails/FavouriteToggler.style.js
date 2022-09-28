@@ -1,12 +1,13 @@
 import { createUseStyles } from "react-jss";
 
+const white = "#fff";
 export const useStyles = createUseStyles({
   favouriteToggler: {
     marginTop: 15,
   },
   favouriteButton: {
     backgroundColor: "#8b0000",
-    color: "#fff",
+    color: white,
     display: "block",
     textAlign: "center",
     textTransform: "uppercase",
@@ -21,7 +22,7 @@ export const useStyles = createUseStyles({
       backgroundColor: "#3b0000",
     },
     favouriteIcon: {
-      color: "#fff",
+      color: white,
     },
   },
 });

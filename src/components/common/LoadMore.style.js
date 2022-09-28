@@ -3,6 +3,9 @@ import { createUseStyles } from "react-jss";
 export const useStyles = createUseStyles({
   loadMoreWrapper: {
     marginTop: 30,
+    marginBottom: 0,
+    marginLeft: 0,
+    marginRight: 0,
   },
   loadMoreButton: {
     backgroundColor: "#8b0000",

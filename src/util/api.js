@@ -3,14 +3,14 @@ import {
   Endpoints,
   CatsToFetchLimit,
   ImagesByBreedLimit,
-  ApiHttpMethods,
+  API_HTTP_METHODS,
 } from "../constants";
 
 /**
  * Setting the API client - using axios.create instance
  */
 const APIClient = axios.create({
-  baseURL: Endpoints.API,
+  baseURL: "https://api.thecatapi.com/v1/",
   headers: {
     common: {
       "x-api-key": process.env.REACT_APP_CAT_API_KEY,
@@ -29,7 +29,7 @@ const APIClient = axios.create({
  *    get/post/delete
  * @returns response data
  */
-const fetchAPI = async (source, params = {}, method = ApiHttpMethods.GET) => {
+const fetchAPI = async (source, params = {}, method = API_HTTP_METHODS.GET) => {
   const response = await APIClient[method](source, { ...params });
   return response.data || [];
 };
@@ -109,7 +109,7 @@ export function addFavourite(imageId) {
       // OR even send a uuid to simulate random users but wouldn't make sense for now.
       // More Info: https://docs.thecatapi.com/sub_id
     },
-    ApiHttpMethods.POST
+    API_HTTP_METHODS.POST
   );
 }
 
@@ -123,6 +123,6 @@ export async function removeFavourite(favouriteId) {
   return fetchAPI(
     `${Endpoints.Favourites}${favouriteId}`,
     {},
-    ApiHttpMethods.DELETE
+    API_HTTP_METHODS.DELETE
   );
 }

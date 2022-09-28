@@ -1,5 +1,6 @@
 import { createUseStyles } from "react-jss";
 
+const white = "#fff";
 export const useStyles = createUseStyles({
   cardItem: {
     display: "flex",
@@ -9,7 +10,7 @@ export const useStyles = createUseStyles({
     borderRadius: 3,
     boxShadow: "0px 0 3px 1px #8b8b8b",
     background: "#444",
-    color: "#fff",
+    color: white,
 
     "&:hover": {
       transform: (options) => (options?.isInGrid ? "scale(1.1)" : "none"),
@@ -18,7 +19,7 @@ export const useStyles = createUseStyles({
     },
 
     "& a": {
-      color: "#fff",
+      color: white,
     },
   },
   cardImage: {

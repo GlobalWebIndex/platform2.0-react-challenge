@@ -17,10 +17,10 @@ const BreedDetails = () => {
 
   switch (status) {
     case AsyncStatus.IDLE:
-    case AsyncStatus.PENDING:
+    case "pending":
       return <Loading />;
 
-    case AsyncStatus.REJECTED:
+    case "rejected":
       return <Failure error={error} />;
 
     case AsyncStatus.RESOLVED:

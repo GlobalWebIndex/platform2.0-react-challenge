@@ -7,11 +7,16 @@ const Failure = ({ error }) => {
   }
 
   return (
-    <div>
+    <div class="test">
       Oops... something must have gone really wrong!
       <br />
       What could have happened? Hope all the 🐈 are still fine!
     </div>
+  //    <span styles>
+  //    Oops... something must have gone really wrong!
+  //    <br />
+  //    What could have happened? Hope all the 🐈 are still fine!
+  //  </span>
   );
 };
 

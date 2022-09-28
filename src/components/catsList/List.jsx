@@ -14,7 +14,10 @@ const List = () => {
     run(callback, fetchedCats);
   }, [run, page]);
 
-  const onLoadMoreClick = () => setPage(page + 1);
+  function onLoadMoreClick() {
+    setPage(page + 1);
+  }
+
   switch (status) {
     case AsyncStatus.IDLE:
     case AsyncStatus.PENDING:

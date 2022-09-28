@@ -5,7 +5,7 @@ import CardContents from "./CardContents";
 import PropTypes from "prop-types";
 
 const Card = ({ cardLink, isInGrid = false, ...restProps }) => {
-  const classes = useStyles({ isInGrid });
+  let classes = useStyles({ isInGrid });
   const location = useLocation();
 
   return cardLink ? (

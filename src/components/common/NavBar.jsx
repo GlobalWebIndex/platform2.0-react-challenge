@@ -3,10 +3,8 @@ import { Link, NavLink } from "react-router-dom";
 import { Routes as RoutesConfig } from "../../constants";
 import { useStyles } from "./NavBar.styles";
 
-const NavBar = () => {
+const NavBar = (props) => {
   const classes = useStyles();
-  const getLinkItemClassName = (props) =>
-    props.isActive ? classes.navLinkItemActive : classes.navLinkItem;
 
   return (
     <div className={classes.nav}>
@@ -20,13 +18,28 @@ const NavBar = () => {
       </div>
 
       <div className={classes.navLinks}>
-        <NavLink className={getLinkItemClassName} to={RoutesConfig.home}>
+        <NavLink
+          className={
+            props.isActive ? classes.navLinkItemActive : classes.navLinkItem
+          }
+          to={RoutesConfig.home}
+        >
           Home
         </NavLink>
-        <NavLink className={getLinkItemClassName} to={RoutesConfig.breeds}>
+        <NavLink
+          className={
+            props.isActive ? classes.navLinkItemActive : classes.navLinkItem
+          }
+          to={RoutesConfig.breeds}
+        >
           Breeds
         </NavLink>
-        <NavLink className={getLinkItemClassName} to={RoutesConfig.favourites}>
+        <NavLink
+          className={
+            props.isActive ? classes.navLinkItemActive : classes.navLinkItem
+          }
+          to={RoutesConfig.favourites}
+        >
           Favourites
         </NavLink>
       </div>

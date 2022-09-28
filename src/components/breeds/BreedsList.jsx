@@ -5,11 +5,11 @@ import Loading from "../common/Loading";
 import Failure from "../common/Failure";
 import BreedItems from "./BreedItems";
 
-const BreedsList = () => {
-  const { data: fetchedBreeds, status, error, run } = useAsync();
+let BreedsList = () => {
+  let { data: fetchedBreeds, status, error, run } = useAsync();
 
   useEffect(() => {
-    const callback = fetchBreeds();
+    let callback = fetchBreeds();
     run(callback);
   }, [run]);
 

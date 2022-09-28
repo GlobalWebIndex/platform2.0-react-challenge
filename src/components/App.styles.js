@@ -1,6 +1,6 @@
 import { createUseStyles } from "react-jss";
 
-export const useStyles = createUseStyles({
+export let useStyles = createUseStyles({
   content: {
     padding: 20,
     margin: 20,
