@@ -1,34 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import Grid from '../components/Grid'
+import React from 'react'
+import { Link } from 'react-router-dom'
 
-export default function Home() {
-  const [pageNumber, setPageNumber] = useState(1)
-  const [catData, setCatData] = useState([])
-  let apiUrl = `https://api.thecatapi.com/v1/images/search?limit=10&page=${pageNumber}`
-
-  useEffect(() => {
-    fetchData(apiUrl)
-      .then((catArray) => setCatData((prev) => [...prev, ...catArray]))
-      .catch((error) => console.error(error))
-  }, [apiUrl])
-
+function Home() {
   return (
     <div>
-      {catData.length !== 0 && <Grid catData={catData} />}
-
-      <button onClick={(e) => setPageNumber((prev) => prev + 1)}>
-        Load more
-      </button>
+      <h1 className=''>Welcome to Cat App</h1>
+      <img src='cat2.jpg' alt='cat' />
+      <Link to='cats'>
+        <button>Load Cats</button>
+      </Link>
     </div>
   )
 }
 
-function fetchData(url) {
-  return axios
-    .get(url)
-    .then((res) => {
-      return res.data
-    })
-    .catch((err) => console.error(err))
-}
+export default Home
