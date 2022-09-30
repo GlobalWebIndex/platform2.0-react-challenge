@@ -11,10 +11,10 @@ function Home() {
         />
         <a
           href='/cats'
-          className='text-[#F7AB0A] text-2xl border-4 md:text-4xl lg:text-4xl font-semibold cursor-pointer no-underline  border-[#F7AB0A] p-6 pl-10 pr-10 rounded-lg 
+          className='text-[#F7AB0A] text-2xl border-4 md:text-4xl lg:text-4xl font-semibold cursor-pointer no-underline md:border-8 border-[#F7AB0A] p-6 pl-10 pr-10 rounded-lg 
         bshadow relative'
         >
-          Load More
+          Show Cats
         </a>
       </div>
     </div>

@@ -20,7 +20,7 @@ export default function Cats() {
   }
 
   return (
-    <div className='min-h-screen h-full bg-[#363636]'>
+    <div className='min-h-screen h-full bg-[#363636] p-10'>
       {catData.length !== 0 && <Grid catData={catData} />}
       <div className='flex justify-center'>
         <button

@@ -37,6 +37,8 @@ function Grid({ catData }) {
                 url={cat.url}
                 breeds={cat.breeds}
                 id={cat.id}
+                height={cat.height}
+                width={cat.width}
                 openModal={() => setIsOpen(true)}
               />
             </motion.div>
