@@ -1,6 +1,7 @@
 import React from 'react'
 import { createPortal } from 'react-dom'
 import { motion } from 'framer-motion'
+import CatInfo from './CatInfo'
 
 function Modal({ isOpen, setIsOpen, singleCatInfo }) {
   // animation Settings
@@ -36,37 +37,32 @@ function Modal({ isOpen, setIsOpen, singleCatInfo }) {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={() => setIsOpen(false)}
-        className=' absolute top-0 left-0 h-screen w-screen flex justify-center items-center  bg-black/50 z-10'
+        className=' fixed top-0 left-0 bottom-0 right-0  flex justify-center items-center  bg-black/50 z-10'
       >
         <motion.div
           variants={modalAnimation}
           initial='hidden'
           animate='visible'
           exit='exit'
-          className=' flex flex-col items-center z-10 w-[90%] h-[600px] md:w-[700px]  lg:w-[50%] bg-white p-5 rounded overflow-y-scroll'
+          className='p-0  overflow-y-scroll rounded-lg z-10 w-[90%] h-fit max-h-[50vh]  md:w-[700px] lg:w-[50%] bg-white '
         >
-          <div className='border relative'>
-            <img
-              src={singleCatInfo.url}
-              alt={singleCatInfo.id}
-              className='w-9/12  object-cover m-auto'
-            />
-            {singleCatInfo.breeds.length === 0 ? (
-              <p className='border w-full text-center'>
-                This is the cat description
-              </p>
-            ) : (
-              <p className='w-full text-center'>
-                This is a breedThis is a breedThis is a breedThis is a breed
-              </p>
-            )}
+          <div className='relative flex flex-col'>
+            <div className='w-full bg-black'>
+              <img
+                src={singleCatInfo.url}
+                alt={singleCatInfo.id}
+                className='max-w-[300px] object-cover m-auto'
+              />
+            </div>
+
+            <CatInfo breeds={singleCatInfo.breeds} />
 
             <button
               onClick={(e) => {
                 e.stopPropagation()
                 setIsOpen(false)
               }}
-              className='absolute top-0 right-0'
+              className='absolute top-0 right-0 text-white'
             >
               Close
             </button>
