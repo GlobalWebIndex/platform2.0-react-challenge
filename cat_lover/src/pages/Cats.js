@@ -20,9 +20,17 @@ export default function Cats() {
   }
 
   return (
-    <div>
+    <div className='min-h-screen h-full bg-[#363636]'>
       {catData.length !== 0 && <Grid catData={catData} />}
-      <button onClick={() => handleLoadMore(apiUrl)}>Load more</button>
+      <div className='flex justify-center'>
+        <button
+          onClick={() => handleLoadMore(apiUrl)}
+          className='text-[#F7AB0A] text-3xl font-semibold cursor-pointer no-underline border-4 border-[#F7AB0A] p-6 pl-10 pr-10 rounded-lg 
+        bshadow relative mt-24 mb-24'
+        >
+          Load more
+        </button>
+      </div>
     </div>
   )
 }
