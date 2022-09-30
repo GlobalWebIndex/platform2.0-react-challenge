@@ -2,6 +2,7 @@ import React from 'react'
 import { createPortal } from 'react-dom'
 import { motion } from 'framer-motion'
 import CatInfo from './CatInfo'
+import { RiCloseCircleFill } from 'react-icons/ri'
 
 function Modal({ isOpen, setIsOpen, singleCatInfo }) {
   // animation Settings
@@ -32,6 +33,7 @@ function Modal({ isOpen, setIsOpen, singleCatInfo }) {
 
   return createPortal(
     <>
+      {/* backdrop */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -39,6 +41,7 @@ function Modal({ isOpen, setIsOpen, singleCatInfo }) {
         onClick={() => setIsOpen(false)}
         className=' fixed top-0 left-0 bottom-0 right-0  flex justify-center items-center  bg-black/50 z-10'
       >
+        {/* modal container */}
         <motion.div
           variants={modalAnimation}
           initial='hidden'
@@ -46,26 +49,27 @@ function Modal({ isOpen, setIsOpen, singleCatInfo }) {
           exit='exit'
           className='p-0  overflow-y-scroll rounded-lg z-10 w-[90%] h-fit max-h-[50vh]  md:w-[700px] lg:w-[50%] bg-white '
         >
+          {/* inside modal */}
           <div className='relative flex flex-col'>
             <div className='w-full bg-black'>
               <img
                 src={singleCatInfo.url}
                 alt={singleCatInfo.id}
-                className='max-w-[300px] object-cover m-auto'
+                className='max-w-[400px] object-cover m-auto'
               />
             </div>
 
             <CatInfo breeds={singleCatInfo.breeds} />
 
-            <button
+            <div
               onClick={(e) => {
                 e.stopPropagation()
                 setIsOpen(false)
               }}
-              className='absolute top-0 right-0 text-white'
+              className='absolute top-3 right-3 text-white  transition ease-in-out duration-100 hover:cursor-pointer hover:scale-125'
             >
-              Close
-            </button>
+              <RiCloseCircleFill size={30} />
+            </div>
           </div>
         </motion.div>
       </motion.div>
