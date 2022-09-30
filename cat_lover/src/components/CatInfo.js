@@ -37,7 +37,7 @@ function CatInfo({ breeds }) {
         />
       </div>
       <div className='flex justify-center mt-6 mb-4'>
-        <button className='w-[200px] bg-orange-400 text-[#444444] rounded p-2 font-semibold tracking-widest shadow-md transition ease-in-out hover:scale-105 hover:shadow-lg'>
+        <button className='w-[200px] bg-[#F7AB0A] text-[#444444] rounded p-2 font-semibold tracking-widest shadow-md transition ease-in-out hover:scale-105 hover:shadow-lg'>
           <a
             href={breeds[0].wikipedia_url}
             target='_blank'

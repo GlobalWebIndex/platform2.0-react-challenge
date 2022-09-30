@@ -47,7 +47,7 @@ function Modal({ isOpen, setIsOpen, singleCatInfo }) {
           initial='hidden'
           animate='visible'
           exit='exit'
-          className='p-0  overflow-y-scroll rounded-lg z-10 w-[90%] h-fit max-h-[50vh]  md:w-[700px] lg:w-[50%] bg-white '
+          className='p-0  overflow-y-scroll rounded-lg z-10 w-[90%] h-fit max-h-[70vh]  md:w-[700px] lg:w-[50%] bg-white '
         >
           {/* inside modal */}
           <div className='relative flex flex-col'>
@@ -55,7 +55,7 @@ function Modal({ isOpen, setIsOpen, singleCatInfo }) {
               <img
                 src={singleCatInfo.url}
                 alt={singleCatInfo.id}
-                className='max-w-[400px] object-cover m-auto'
+                className='max-w-[400px] w-full object-cover m-auto'
               />
             </div>
 

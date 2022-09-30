@@ -12,7 +12,7 @@ function CatBox({ url, id, openModal }) {
   }
 
   return (
-    <div className='relative'>
+    <div className='relative transition ease-in-out hover:scale-105'>
       <img
         src={url}
         alt='cat'
