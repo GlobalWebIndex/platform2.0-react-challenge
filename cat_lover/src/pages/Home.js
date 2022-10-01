@@ -2,7 +2,7 @@ import React from 'react'
 
 function Home() {
   return (
-    <div className='min-h-screen flex justify-center pt-10  bg-[#363636] text-[#F7AB0A]'>
+    <div className='min-h-screen flex justify-center pt-10  bg-[#363636] text-[#F7AB0A]  '>
       <div className='flex flex-col  items-center'>
         <img
           src='Welcome.svg'

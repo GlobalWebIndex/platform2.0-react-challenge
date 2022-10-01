@@ -73,7 +73,7 @@ function Modal({ isOpen, setIsOpen, idParam }) {
           onClick={(e) => {
             e.stopPropagation()
           }}
-          className='p-0  overflow-y-scroll rounded-lg z-10 w-[90%] h-fit max-h-[70vh]  md:w-[700px] lg:w-[50%] bg-white '
+          className='p-0  scrollbar scrollbar-thin scrollbar-track-gray-400/20 scrollbar-thumb-[#F7AB0A]/80 overflow-y-scroll rounded-lg z-10 w-[90%] h-fit max-h-[70vh]  md:w-[700px] lg:w-[50%] bg-white '
         >
           {/* inside modal */}
           <MetaTags singleCatInfo={singleCatInfo} />

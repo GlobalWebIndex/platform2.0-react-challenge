@@ -21,7 +21,6 @@ function Grid({ catData }) {
 
   return (
     <>
-      <meta name='description' content='Nested component' />
       <div className='myGrid'>
         <AnimatePresence>
           {catData.map((cat) => (
