@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from 'framer-motion'
 import Modal from './Modal'
 
 function Grid({ catData }) {
-  console.log(catData)
   const [isOpen, setIsOpen] = useState(false)
   const [singleCatInfo, setSingleCatInfo] = useState([])
 
@@ -16,11 +15,6 @@ function Grid({ catData }) {
 
   return (
     <>
-      <Modal
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        singleCatInfo={singleCatInfo}
-      />
       <div className='myGrid'>
         <AnimatePresence>
           {catData.map((cat) => (
@@ -44,6 +38,11 @@ function Grid({ catData }) {
             </motion.div>
           ))}
         </AnimatePresence>
+        <Modal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          singleCatInfo={singleCatInfo}
+        />
       </div>
     </>
   )

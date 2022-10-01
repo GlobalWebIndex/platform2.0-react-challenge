@@ -38,7 +38,9 @@ function Modal({ isOpen, setIsOpen, singleCatInfo }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        onClick={() => setIsOpen(false)}
+        onClick={() => {
+          setIsOpen(false)
+        }}
         className=' fixed top-0 left-0 bottom-0 right-0  flex justify-center items-center  bg-black/50 z-10'
       >
         {/* modal container */}
@@ -47,6 +49,9 @@ function Modal({ isOpen, setIsOpen, singleCatInfo }) {
           initial='hidden'
           animate='visible'
           exit='exit'
+          onClick={(e) => {
+            e.stopPropagation()
+          }}
           className='p-0  overflow-y-scroll rounded-lg z-10 w-[90%] h-fit max-h-[70vh]  md:w-[700px] lg:w-[50%] bg-white '
         >
           {/* inside modal */}
