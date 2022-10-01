@@ -81,6 +81,11 @@
     color:#363636;
   }
 
+  .header_button{
+    @apply   md:py-6 md:px-2 rounded-full uppercase text-xs md:text-sm lg:text-lg tracking-widest text-gray-500 
+    transition-all  hover:text-[#F7AB0A]/40
+  }
+
 }
 
 body {

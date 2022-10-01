@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import CatInfo from './CatInfo'
 import { RiCloseCircleFill } from 'react-icons/ri'
@@ -8,6 +9,8 @@ import Loading from './Loading'
 import MetaTags from './MetaTags'
 
 function Modal({ isOpen, setIsOpen, idParam }) {
+  const navigate = useNavigate()
+
   const [isLoading, setIsLoading] = useState(true)
   const [singleCatInfo, setSingleCatInfo] = useState([])
   // animation Settings
@@ -57,6 +60,7 @@ function Modal({ isOpen, setIsOpen, idParam }) {
         exit={{ opacity: 0 }}
         onClick={() => {
           setIsOpen(false)
+          navigate('/cats')
         }}
         className=' fixed top-0 left-0 bottom-0 right-0  flex justify-center items-center  bg-black/50 z-10'
       >
@@ -88,6 +92,7 @@ function Modal({ isOpen, setIsOpen, idParam }) {
               onClick={(e) => {
                 e.stopPropagation()
                 setIsOpen(false)
+                navigate('/cats')
               }}
               className='absolute top-3 right-3 text-white  transition ease-in-out duration-100 hover:cursor-pointer hover:scale-125'
             >

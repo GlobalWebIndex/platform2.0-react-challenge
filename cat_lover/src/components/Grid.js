@@ -15,9 +15,9 @@ function Grid({ catData }) {
 
   useEffect(() => {
     // The following code fixes a bug in which the screen scrolls when the popup is active
-    if (isOpen) document.body.style.overflow = 'hidden'
+    if (isOpen && idParam) document.body.style.overflow = 'hidden'
     else document.body.style.overflow = 'unset'
-  }, [isOpen])
+  }, [isOpen, idParam])
 
   return (
     <>

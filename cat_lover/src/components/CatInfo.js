@@ -8,7 +8,7 @@ import TagList from './TagList'
 function CatInfo({ breeds }) {
   const [isSharedClick, setIsSharedClick] = useState(false)
   if (breeds === undefined || breeds.length === 0) {
-    return <div>There is no data for this cat</div>
+    return
   }
   return (
     <div className='p-5'>
@@ -48,38 +48,6 @@ function CatInfo({ breeds }) {
             className='text-[#444444] cursor-pointer transition ease-in-out hover:scale-110'
           />
         )}
-        {/* <div
-                      onClick={() =>
-                        navigator.clipboard.writeText(
-                          `http://popout.gr${router.asPath}`
-                        )
-                      }
-                      style={{
-                        display: 'flex',
-                        gap: '20px',
-                      }}
-                    >
-                      <p
-                        className={[styles.text_content, styles.hide].join(' ')}
-                      >
-                        Κοινοποίηση
-                      </p>
-                      {isSharedClick ? (
-                        <>
-                          <div
-                            className={styles.checked}
-                            tooltip='Αντιγράφηκε ο σύνδεμος'
-                          />
-                          <FcCheckmark size={25} />
-                        </>
-                      ) : (
-                        <BsShareFill
-                          size={25}
-                          className={styles.clickable}
-                          onClick={() => setIsSharedClick(true)}
-                        />
-                      )}
-                    </div> */}
       </div>
       <div className='flex justify-center mt-6 mb-4'>
         <button className='w-[200px] bg-[#F7AB0A] text-[#444444] rounded p-2 font-semibold tracking-widest shadow-md transition ease-in-out hover:scale-105 hover:shadow-lg'>

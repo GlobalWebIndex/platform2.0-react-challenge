@@ -9,7 +9,9 @@ function MetaTags({ singleCatInfo }) {
         <meta name='title' content={`This cat is ${singleCatInfo.id}`} />
         {/* <!-- Primary Meta Tags --> */}
         <title>
-          {singleCatInfo.name ? singleCatInfo.name : 'Cat Application'}
+          {singleCatInfo.breeds
+            ? singleCatInfo.breeds[0].name
+            : 'Cat Application'}
         </title>
         <meta name='description' content='This cat is for you my friend' />
         {/* <!-- Open Graph / Facebook --> */}
