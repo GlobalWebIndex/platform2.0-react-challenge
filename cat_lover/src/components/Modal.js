@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { motion } from 'framer-motion'
 import CatInfo from './CatInfo'
 import { RiCloseCircleFill } from 'react-icons/ri'
+import axios from 'axios'
+import Loading from './Loading'
+import MetaTags from './MetaTags'
 
-function Modal({ isOpen, setIsOpen, singleCatInfo }) {
+function Modal({ isOpen, setIsOpen, idParam }) {
+  const [isLoading, setIsLoading] = useState(true)
+  const [singleCatInfo, setSingleCatInfo] = useState([])
   // animation Settings
   const modalAnimation = {
     hidden: {
@@ -27,9 +32,21 @@ function Modal({ isOpen, setIsOpen, singleCatInfo }) {
     },
   }
 
+  useEffect(() => {
+    setIsLoading(true)
+    fetchData(idParam)
+      .then((catInfo) => {
+        setSingleCatInfo(catInfo)
+        setIsLoading(false)
+      })
+      .catch((error) => console.error(error))
+  }, [idParam])
+
   console.log({ singleCatInfo })
 
   if (!isOpen) return null
+
+  if (isLoading) return <Loading />
 
   return createPortal(
     <>
@@ -55,6 +72,7 @@ function Modal({ isOpen, setIsOpen, singleCatInfo }) {
           className='p-0  overflow-y-scroll rounded-lg z-10 w-[90%] h-fit max-h-[70vh]  md:w-[700px] lg:w-[50%] bg-white '
         >
           {/* inside modal */}
+          <MetaTags singleCatInfo={singleCatInfo} />
           <div className='relative flex flex-col'>
             <div className='w-full bg-black'>
               <img
@@ -81,6 +99,19 @@ function Modal({ isOpen, setIsOpen, singleCatInfo }) {
     </>,
     document.getElementById('portal')
   )
+}
+
+function fetchData(id) {
+  return axios
+    .get(`https://api.thecatapi.com/v1/images/${id}`, {
+      'x-api-key':
+        'live_8YyLRW15hH59CsNQzXX43v3tIvVE2cMJYLYNGGOvBRJedFvsY8J3oCiliQnuMSoO',
+    })
+    .then((res) => {
+      console.log('Modal', res.data)
+      return res.data
+    })
+    .catch((err) => console.error(err))
 }
 
 export default Modal

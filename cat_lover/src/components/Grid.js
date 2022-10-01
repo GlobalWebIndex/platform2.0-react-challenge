@@ -2,10 +2,16 @@ import React, { useState, useEffect } from 'react'
 import CatBox from './CatBox'
 import { AnimatePresence, motion } from 'framer-motion'
 import Modal from './Modal'
+import { useLocation } from 'react-router-dom'
 
 function Grid({ catData }) {
-  const [isOpen, setIsOpen] = useState(false)
-  const [singleCatInfo, setSingleCatInfo] = useState([])
+  const [isOpen, setIsOpen] = useState(true)
+  const [idParam, setIdParam] = useState()
+  const { search } = useLocation()
+
+  useEffect(() => {
+    setIdParam(new URLSearchParams(search).get('id'))
+  }, [search])
 
   useEffect(() => {
     // The following code fixes a bug in which the screen scrolls when the popup is active
@@ -15,6 +21,7 @@ function Grid({ catData }) {
 
   return (
     <>
+      <meta name='description' content='Nested component' />
       <div className='myGrid'>
         <AnimatePresence>
           {catData.map((cat) => (
@@ -22,9 +29,6 @@ function Grid({ catData }) {
               initial={{ scale: 0 }}
               animate={{ scale: 1, transition: { delay: 0.5, type: 'spring' } }}
               key={cat.id}
-              onClick={() => {
-                setSingleCatInfo(cat)
-              }}
               layout
             >
               <CatBox
@@ -38,11 +42,9 @@ function Grid({ catData }) {
             </motion.div>
           ))}
         </AnimatePresence>
-        <Modal
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          singleCatInfo={singleCatInfo}
-        />
+        {idParam && (
+          <Modal isOpen={isOpen} setIsOpen={setIsOpen} idParam={idParam} />
+        )}
       </div>
     </>
   )

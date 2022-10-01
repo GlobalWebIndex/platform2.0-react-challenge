@@ -7,7 +7,7 @@ import TagList from './TagList'
 
 function CatInfo({ breeds }) {
   const [isSharedClick, setIsSharedClick] = useState(false)
-  if (breeds.length === 0) {
+  if (breeds === undefined || breeds.length === 0) {
     return <div>There is no data for this cat</div>
   }
   return (
