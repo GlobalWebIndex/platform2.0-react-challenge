@@ -11,6 +11,25 @@
     grid-row-gap:2rem;
   }
 
+  .tooltip{
+    position:relative;
+  }
+  .tooltip::after{
+      content: attr(tooltip);
+      position: absolute;
+      top:10px;
+      left:80px;
+      color:white;
+      font-size:12px;
+      width:max-content;
+      padding: 10px;
+      height:fit-content;
+      border-radius: 5px;
+      background: #484848;
+      transform: translate(-50%, -50%);
+        
+}
+
   .bshadow{
     text-shadow: 
     0 0 0.1em hsl(0 0% 100% / 0.3),
