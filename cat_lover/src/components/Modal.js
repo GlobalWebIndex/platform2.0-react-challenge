@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { createPortal } from 'react-dom'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
@@ -7,12 +7,16 @@ import { RiCloseCircleFill } from 'react-icons/ri'
 import axios from 'axios'
 import Loading from './Loading'
 import MetaTags from './MetaTags'
+import { BsHeartFill } from 'react-icons/bs'
+import CatContext from '../context/CatContext'
 
 function Modal({ isOpen, setIsOpen, idParam }) {
   const navigate = useNavigate()
+  const { favoriteCats, setFavoriteCats } = useContext(CatContext)
 
   const [isLoading, setIsLoading] = useState(true)
   const [singleCatInfo, setSingleCatInfo] = useState([])
+
   // animation Settings
   const modalAnimation = {
     hidden: {
@@ -44,6 +48,12 @@ function Modal({ isOpen, setIsOpen, idParam }) {
       })
       .catch((error) => console.error(error))
   }, [idParam])
+
+  const handleClick = (id, url, breeds) => {
+    if (containsId(favoriteCats, id))
+      setFavoriteCats((prev) => prev.filter((item) => item.id !== id))
+    else setFavoriteCats((prev) => [...prev, { id, url, breeds }])
+  }
 
   if (!isOpen) return null
 
@@ -82,6 +92,20 @@ function Modal({ isOpen, setIsOpen, idParam }) {
                 alt={singleCatInfo.id}
                 className='max-w-[400px] w-full object-cover m-auto'
               />
+              <BsHeartFill
+                size={25}
+                className={`text-red-100 transition ease-in-out  absolute top-5 left-5  hover:cursor-pointer hover:scale-125 ${
+                  containsId(favoriteCats, singleCatInfo.id) &&
+                  'text-red-600 z-10'
+                }`}
+                onClick={() =>
+                  handleClick(
+                    singleCatInfo.id,
+                    singleCatInfo.url,
+                    singleCatInfo.breeds
+                  )
+                }
+              />
             </div>
 
             <CatInfo breeds={singleCatInfo.breeds} />
@@ -114,6 +138,13 @@ function fetchData(id) {
       return res.data
     })
     .catch((err) => console.error(err))
+}
+
+function containsId(array, id) {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i].id === id) return true
+  }
+  return false
 }
 
 export default Modal

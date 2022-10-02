@@ -103,7 +103,7 @@ const Carousel = ({ images, name }) => {
             return (
               <div
                 key={index}
-                className='text-center relative w-[300px] h-[300px] snap-start transition ease-in-out duration-250 hover:cursor-pointer hover:scale-105'
+                className='text-center relative w-[300px] h-[300px] snap-start hover:cursor-pointer'
                 onClick={() => navigate('/cats/?id=' + resource.id)}
               >
                 <div

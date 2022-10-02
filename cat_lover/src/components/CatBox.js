@@ -3,13 +3,13 @@ import { BsHeartFill } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 import CatContext from '../context/CatContext'
 
-function CatBox({ url, id, openModal }) {
+function CatBox({ url, id, openModal, breeds }) {
   const { favoriteCats, setFavoriteCats } = useContext(CatContext)
 
   const handleClick = () => {
-    if (favoriteCats.includes(id))
-      setFavoriteCats((prev) => prev.filter((item) => item !== id))
-    else setFavoriteCats((prev) => [...prev, id])
+    if (containsId(favoriteCats, id))
+      setFavoriteCats((prev) => prev.filter((item) => item.id !== id))
+    else setFavoriteCats((prev) => [...prev, { id, url, breeds }])
   }
 
   return (
@@ -25,12 +25,19 @@ function CatBox({ url, id, openModal }) {
       <BsHeartFill
         size={20}
         className={`text-red-100 transition ease-in-out  absolute top-2 right-2  hover:cursor-pointer hover:scale-125 ${
-          favoriteCats.includes(id) && 'text-red-500 z-10'
+          containsId(favoriteCats, id) && 'text-red-500 z-10'
         }`}
         onClick={() => handleClick()}
       />
     </div>
   )
+}
+
+function containsId(array, id) {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i].id === id) return true
+  }
+  return false
 }
 
 export default CatBox

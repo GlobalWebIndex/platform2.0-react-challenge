@@ -6,14 +6,11 @@ const CatContext = createContext()
 // Doing so, we avoid the prop spreading
 
 function CatContextProvider(props) {
-  const [catData, setCatData] = useState([])
   const [favoriteCats, setFavoriteCats] = useState([])
 
   return (
     <CatContext.Provider
       value={{
-        catData,
-        setCatData,
         favoriteCats,
         setFavoriteCats,
       }}

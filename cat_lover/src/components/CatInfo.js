@@ -4,6 +4,7 @@ import { FaCat, FaShareAlt } from 'react-icons/fa'
 import { FcCheckmark } from 'react-icons/fc'
 import { HiOutlineIdentification } from 'react-icons/hi'
 import TagList from './TagList'
+import { Link } from 'react-router-dom'
 
 function CatInfo({ breeds }) {
   const [isSharedClick, setIsSharedClick] = useState(false)
@@ -14,9 +15,11 @@ function CatInfo({ breeds }) {
     <div className='p-5'>
       <div className='flex gap-5 items-center justify-center mb-2'>
         <FaCat size={25} style={{ color: '#444444' }} />
-        <h1 className='text-3xl font-semibold  text-black/80'>
-          {breeds[0].name}
-        </h1>
+        <Link to={`/breeds?id=${breeds[0].id}`}>
+          <h1 className='text-3xl font-semibold  text-black/80 hover:cursor-pointer hover:underline'>
+            {breeds[0].name}
+          </h1>
+        </Link>
       </div>
       <p className='max-w-[90%] text-center m-auto'>
         "{breeds[0].description}"

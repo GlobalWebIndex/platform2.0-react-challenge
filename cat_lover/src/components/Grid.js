@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import Modal from './Modal'
 import { useLocation } from 'react-router-dom'
 
-function Grid({ catData, isLoading }) {
+function Grid({ catData, isLoading = false }) {
   const [isOpen, setIsOpen] = useState(true)
   const [idParam, setIdParam] = useState()
   const { search } = useLocation()
@@ -25,8 +25,13 @@ function Grid({ catData, isLoading }) {
         <AnimatePresence>
           {catData.map((cat) => (
             <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1, transition: { delay: 0.5, type: 'spring' } }}
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: 1,
+                transition: { delay: 0.5, type: 'spring' },
+              }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
               key={cat.id}
               layout
             >

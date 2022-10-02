@@ -16,9 +16,9 @@ function Header() {
       <Link to='/favorites'>
         <button className='header_button'>Favorites</button>
       </Link>
-      <Link to='/favoritesV2'>
+      {/* <Link to='/favoritesV2'>
         <button className='header_button'>Favorites V2</button>
-      </Link>
+      </Link> */}
     </div>
   )
 }

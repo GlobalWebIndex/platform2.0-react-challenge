@@ -1,11 +1,10 @@
-import React, { useEffect, useContext, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Grid from '../components/Grid'
-import CatContext from '../context/CatContext'
 import Loading from '../components/Loading'
 
 export default function Cats() {
-  const { catData, setCatData } = useContext(CatContext)
+  const [catData, setCatData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const apiUrl = `https://api.thecatapi.com/v1/images/search?limit=10&api_key=live_8YyLRW15hH59CsNQzXX43v3tIvVE2cMJYLYNGGOvBRJedFvsY8J3oCiliQnuMSoO`
 
