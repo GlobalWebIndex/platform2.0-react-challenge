@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import Modal from './Modal'
 import { useLocation } from 'react-router-dom'
 
-function Grid({ catData }) {
+function Grid({ catData, isLoading }) {
   const [isOpen, setIsOpen] = useState(true)
   const [idParam, setIdParam] = useState()
   const { search } = useLocation()
@@ -21,7 +21,7 @@ function Grid({ catData }) {
 
   return (
     <>
-      <div className='myGrid'>
+      <div className={`myGrid ${isLoading && 'opacity-40'}`}>
         <AnimatePresence>
           {catData.map((cat) => (
             <motion.div
