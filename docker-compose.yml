@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  app:
+    container_name: cats-prod
+    image: cats-prod
+    ports:
+      - "3001:80"
+
+    build:
+      context: .
