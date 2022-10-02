@@ -1,4 +1,6 @@
 # GlobalWebIndex Engineering Challenge
+
+The app is deployed here https://platform2-0-react-challenge-cat-lover-olol.vercel.app/
 ## Exercise: CatLover
 Create an Elm or React application for cat lovers which is going to build upon thecatapi.com and will have 3 views. 
 The **first** view displays a list of 10 random cat images and a button to load more. Clicking on any of those images opens a modal view with the image and the information about the cat’s breed if available. This would be a link to the second view below - the breed detail. The modal should also contain a form to mark the image as your favourite (a part of the third view as well). Make sure you can copy-paste the URL of the modal and send it to your friends - they should see the same image as you can see. 
