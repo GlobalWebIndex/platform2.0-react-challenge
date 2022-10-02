@@ -3,16 +3,18 @@ import { createPortal } from 'react-dom'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import CatInfo from './CatInfo'
-import { RiCloseCircleFill } from 'react-icons/ri'
 import axios from 'axios'
 import Loading from './Loading'
-import MetaTags from './MetaTags'
+import Carousel from './Carousel'
+// import MetaTags from './MetaTags'
 
-function Modal({ isOpen, setIsOpen, idParam }) {
+function BreedModal({ isOpen, setIsOpen, idParam }) {
   const navigate = useNavigate()
 
   const [isLoading, setIsLoading] = useState(true)
-  const [singleCatInfo, setSingleCatInfo] = useState([])
+  const [breedImages, setBreedImages] = useState([])
+  const [breedInfo, setBreedInfo] = useState([])
+
   // animation Settings
   const modalAnimation = {
     hidden: {
@@ -35,14 +37,29 @@ function Modal({ isOpen, setIsOpen, idParam }) {
     },
   }
 
+  // each time modal renders, it gets breed data from the api
   useEffect(() => {
     setIsLoading(true)
-    fetchData(idParam)
-      .then((catInfo) => {
-        setSingleCatInfo(catInfo)
+    const api_key = {
+      'x-api-key':
+        'live_8YyLRW15hH59CsNQzXX43v3tIvVE2cMJYLYNGGOvBRJedFvsY8J3oCiliQnuMSoO',
+    }
+    // gets me all the images of a specific breed
+    const imagesUrl = `https://api.thecatapi.com/v1/images/search?breed_ids=${idParam}&limit=25`
+    // gets me the info of the specific breed
+    const infoUrl = `https://api.thecatapi.com/v1/breeds/${idParam}`
+    const getImages = axios.get(imagesUrl, api_key)
+    const getInfo = axios.get(infoUrl, api_key)
+    axios.all([getImages, getInfo]).then(
+      axios.spread((...allData) => {
+        const imageData = allData[0].data
+        const infoData = allData[1].data
+
+        setBreedImages(imageData)
+        setBreedInfo(infoData)
         setIsLoading(false)
       })
-      .catch((error) => console.error(error))
+    )
   }, [idParam])
 
   if (!isOpen) return null
@@ -58,11 +75,11 @@ function Modal({ isOpen, setIsOpen, idParam }) {
         exit={{ opacity: 0 }}
         onClick={() => {
           setIsOpen(false)
-          navigate('/cats')
+          navigate('/breeds')
         }}
         className=' fixed top-0 left-0 bottom-0 right-0  flex justify-center items-center  bg-black/50 z-10'
       >
-        {/* modal container */}
+        {/* BreedModal container */}
         <motion.div
           variants={modalAnimation}
           initial='hidden'
@@ -73,29 +90,11 @@ function Modal({ isOpen, setIsOpen, idParam }) {
           }}
           className='p-0  scrollbar scrollbar-thin scrollbar-track-gray-400/20 scrollbar-thumb-[#F7AB0A]/80 overflow-y-scroll rounded-lg z-10 w-[90%] h-fit max-h-[70vh]  md:w-[700px] lg:w-[50%] bg-white '
         >
-          {/* inside modal */}
-          <MetaTags singleCatInfo={singleCatInfo} />
+          {/* inside BreedModal */}
           <div className='relative flex flex-col'>
-            <div className='w-full bg-black'>
-              <img
-                src={singleCatInfo.url}
-                alt={singleCatInfo.id}
-                className='max-w-[400px] w-full object-cover m-auto'
-              />
-            </div>
+            <Carousel images={breedImages} name={breedInfo.name} />
 
-            <CatInfo breeds={singleCatInfo.breeds} />
-
-            <div
-              onClick={(e) => {
-                e.stopPropagation()
-                setIsOpen(false)
-                navigate('/cats')
-              }}
-              className='absolute top-3 right-3 text-white  transition ease-in-out duration-100 hover:cursor-pointer hover:scale-125'
-            >
-              <RiCloseCircleFill size={30} />
-            </div>
+            <CatInfo breeds={[breedInfo]} />
           </div>
         </motion.div>
       </motion.div>
@@ -104,16 +103,4 @@ function Modal({ isOpen, setIsOpen, idParam }) {
   )
 }
 
-function fetchData(id) {
-  return axios
-    .get(`https://api.thecatapi.com/v1/images/${id}`, {
-      'x-api-key':
-        'live_8YyLRW15hH59CsNQzXX43v3tIvVE2cMJYLYNGGOvBRJedFvsY8J3oCiliQnuMSoO',
-    })
-    .then((res) => {
-      return res.data
-    })
-    .catch((err) => console.error(err))
-}
-
-export default Modal
+export default BreedModal
