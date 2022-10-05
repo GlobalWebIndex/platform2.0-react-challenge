@@ -1332,12 +1332,6 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@globalwebindex/platform2-lib@git+ssh://git@github.com/GlobalWebIndex/platform2-lib#v1.1.2":
-  version "1.0.3"
-  resolved "git+ssh://git@github.com/GlobalWebIndex/platform2-lib.git#02181e8f0e0dfb7f95315a5f78a1d96b3f905501"
-  dependencies:
-    axios "^0.27.2"
-
 "@humanwhocodes/config-array@^0.10.4":
   version "0.10.4"
   resolved "https://registry.npmjs.org/@humanwhocodes/config-array/-/config-array-0.10.4.tgz"
