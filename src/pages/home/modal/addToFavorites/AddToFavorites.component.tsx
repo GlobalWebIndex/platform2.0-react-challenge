@@ -16,11 +16,10 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({}) => {
     const appDispatch = useAppDispatch();
     const queryClient = useQueryClient();
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-    const [addToFavoritesButtonContent, setAddToFavoritesButtonContent] =
-        useState<IconWithLabel>({
-            label: 'add to favorites',
-            icon: <FavoriteBorderIcon />,
-        });
+    const [addToFavoritesButtonContent, setAddToFavoritesButtonContent] = useState<IconWithLabel>({
+        label: 'add to favorites',
+        icon: <FavoriteBorderIcon />,
+    });
 
     useEffect(() => {
         if (selectedCat && catExistsInFavorites(selectedCat, favorites)) {
@@ -37,28 +36,28 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({}) => {
         }
     }, [selectedCat]);
 
-    const { mutate, isLoading: isMutationLoading } = useMutation<
-        { message: string; id: number },
-        AxiosError,
-        string,
-        () => void
-    >(() => postFavorites(selectedCat ? selectedCat.id : ''), {
-        onSuccess: (data) => {
-            setAddToFavoritesButtonContent({
-                label: 'Added!',
-                icon: <FavoriteIcon />,
-            });
-            setIsButtonDisabled(true);
-            queryClient.invalidateQueries(['favorites']);
-            appDispatch({
-                type: 'ADD_TO_FAVORITES',
-                favorite: {
-                    id: data.id,
-                    imageId: selectedCat ? selectedCat?.id : '',
-                },
-            });
-        },
-    });
+    const { mutate, isLoading: isMutationLoading } = useMutation<{ message: string; id: number }, AxiosError, string, () => void>(
+        () => postFavorites(selectedCat ? selectedCat.id : ''),
+        {
+            onSuccess: (data) => {
+                if (data.message === 'SUCCESS') {
+                    setAddToFavoritesButtonContent({
+                        label: 'Added!',
+                        icon: <FavoriteIcon />,
+                    });
+                    setIsButtonDisabled(true);
+                    queryClient.invalidateQueries(['favorites']);
+                    appDispatch({
+                        type: 'ADD_TO_FAVORITES',
+                        favorite: {
+                            id: data.id,
+                            imageId: selectedCat ? selectedCat?.id : '',
+                        },
+                    });
+                }
+            },
+        }
+    );
 
     const handleAddToFavorites = () => {
         if (selectedCat && !catExistsInFavorites(selectedCat, favorites)) {
@@ -75,10 +74,9 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({}) => {
             color="primary"
             variant="outlined"
             sx={{ textTransform: 'none' }}
+            data-testid="add-to-favorites-button"
         >
-            {isMutationLoading
-                ? 'adding...'
-                : addToFavoritesButtonContent.label}
+            {isMutationLoading ? 'adding...' : addToFavoritesButtonContent.label}
         </Button>
     );
 };

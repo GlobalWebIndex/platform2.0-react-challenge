@@ -7,6 +7,7 @@ type AppState = {
     favorites: FavoriteIds[];
     breeds: Breed[];
     isHomeModalOpen: boolean;
+    confirmationDialog: boolean;
 };
 
 const defaultState: AppState = {
@@ -15,6 +16,7 @@ const defaultState: AppState = {
     favorites: [],
     breeds: [],
     isHomeModalOpen: false,
+    confirmationDialog: false,
 };
 
 type Action =
@@ -24,14 +26,11 @@ type Action =
     | { type: 'ADD_TO_FAVORITES'; favorite: FavoriteIds }
     | { type: 'REMOVE_FROM_FAVORITES'; favoriteId: number }
     | { type: 'SET_BREED_LIST'; breeds: Breed[] }
-    | {
-          type: 'SET_FAVORITE_LIST';
-          favorites: FavoriteIds[];
-      }
-    | { type: 'TOGGLE_CAT_MODAL'; catModal: boolean };
+    | { type: 'SET_FAVORITE_LIST'; favorites: FavoriteIds[] }
+    | { type: 'TOGGLE_CAT_MODAL'; catModal: boolean }
+    | { type: 'TOGGLE_CONFIRMATION_DIALOG'; dialog: boolean };
 
 const appReducer = (state: AppState, action: Action) => {
-    console.log(action);
     switch (action.type) {
         case 'SET_CAT_LIST':
             return { ...state, cats: [...state.cats, ...action.cats] };
@@ -53,6 +52,8 @@ const appReducer = (state: AppState, action: Action) => {
             return { ...state, favorites: action.favorites };
         case 'TOGGLE_CAT_MODAL':
             return { ...state, isHomeModalOpen: action.catModal };
+        case 'TOGGLE_CONFIRMATION_DIALOG':
+            return { ...state, dialog: action.dialog };
         default:
             return state;
     }

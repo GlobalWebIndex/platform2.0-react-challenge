@@ -1,15 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { Card, ImageList, ImageListItem, ListSubheader, Modal, Typography } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
 import { StyledBox } from '../../home/Home.styled';
 import { useAppDispatch } from '../../../context/appContext';
 import { getBreed } from '../../../api/breeds';
 import { Cat, SubBreed } from '../../../utils/models';
 import { QueryKeys } from '../../../utils/enums';
 import Error from '../../../components/errorUI/Error.component';
-import { sxCircularProgress, sxListSubheader } from './BreedModal.styled';
+import { sxListSubheader } from './BreedModal.styled';
 import { DEFAULT_QUERY_OPTIONS } from '../../../utils/contants';
-import { TestIds } from '../../../utils/testids';
 
 interface CatModalProps {
     modalOpen: boolean;
@@ -21,11 +19,7 @@ const BreedModal: React.FC<CatModalProps> = ({ modalOpen, selectedBreed, onClose
     const appDispatch = useAppDispatch();
     const { id, name: breedName } = selectedBreed;
 
-    const {
-        data: cats,
-        isError,
-        isLoading,
-    } = useQuery([QueryKeys.Breeds, id], () => getBreed(id), {
+    const { data: cats, isError } = useQuery([QueryKeys.Breeds, id], () => getBreed(id), {
         ...DEFAULT_QUERY_OPTIONS,
         enabled: modalOpen,
     });
@@ -39,8 +33,7 @@ const BreedModal: React.FC<CatModalProps> = ({ modalOpen, selectedBreed, onClose
     return (
         <Modal open={modalOpen} onClose={onClose}>
             <>
-                {isLoading && <CircularProgress size={'8em'} sx={sxCircularProgress} data-testid={TestIds.circularProgress} />}
-                <StyledBox>
+                <StyledBox style={{ minWidth: '600px' }}>
                     {isError && <Error />}
                     <Card>
                         <ImageList gap={16} sx={{ maxHeight: 600, p: 1 }}>

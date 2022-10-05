@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { sxButton } from './Home.styled';
 import { Cat } from '../../utils/models';
@@ -11,7 +11,6 @@ import Errorcomp from '../../components/errorUI/Error.component';
 import { Button } from '@mui/material';
 import Skeleton from '../../components/skeleton/Skeleton.component';
 import { StyledContainer, StyledImageGrid, StyledImageGridItem } from '../../components/commonStyledComponents/CommonStyledComponents.styled';
-import { getFavorites } from '../../api/favorites';
 
 interface HomeProps {}
 
@@ -24,21 +23,6 @@ const Home: React.FC<HomeProps> = () => {
         ...DEFAULT_QUERY_OPTIONS,
         onSuccess: (data) => {
             appDispatch({ type: 'SET_CAT_LIST', cats: data });
-        },
-    });
-
-    useQuery([QueryKeys.Favorites], getFavorites, {
-        ...DEFAULT_QUERY_OPTIONS,
-        onSuccess: (data) => {
-            appDispatch({
-                type: 'SET_FAVORITE_LIST',
-                favorites: data
-                    ? data.map((item) => ({
-                          id: item.id,
-                          imageId: item.image_id,
-                      }))
-                    : [],
-            });
         },
     });
 
@@ -58,7 +42,6 @@ const Home: React.FC<HomeProps> = () => {
         return <Skeleton />;
     }
 
-    console.log(cats);
     return (
         <StyledContainer>
             <StyledImageGrid columnWidth={GRID_COLUMN_WIDTH_SMALL}>
@@ -71,7 +54,7 @@ const Home: React.FC<HomeProps> = () => {
                               width={GRID_ITEM_SMALL_SIZE}
                               height={GRID_ITEM_SMALL_SIZE}
                           >
-                              <img src={cat.url} alt={cat.id} data-testid={cat.id} />
+                              <img src={cat.url} alt={cat.id} data-testid="cat" />
                           </StyledImageGridItem>
                       ))
                     : null}

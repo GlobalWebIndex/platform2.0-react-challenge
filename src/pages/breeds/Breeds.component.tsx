@@ -11,6 +11,7 @@ import { StyledContainer, StyledImageGrid, StyledImageGridItem } from '../../com
 import Skeleton from '../../components/skeleton/Skeleton.component';
 import { Box } from '@mui/material';
 import HomeModal from '../home/modal/HomeModal.component';
+import { TestIds } from '../../utils/testids';
 
 const Breeds: React.FC = () => {
     const appDispatch = useAppDispatch();
@@ -51,7 +52,7 @@ const Breeds: React.FC = () => {
             <StyledImageGrid columnWidth={GRID_COLUMN_WIDTH_SMALL}>
                 {breeds.map((breed: Breed) => {
                     return (
-                        <Box key={breed.id}>
+                        <Box key={breed.id} data-testid={TestIds.breedItem}>
                             <h5 style={{ textAlign: 'center' }}>{breed.name}</h5>
                             <StyledImageGridItem onClick={() => handleItemClick(breed)} width={GRID_ITEM_SMALL_SIZE} height={GRID_ITEM_SMALL_SIZE}>
                                 <img src={breed?.image?.url} />

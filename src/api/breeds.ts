@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { Breed, BreedListItem, Cat } from '../utils/models';
+import { Breed, Cat } from '../utils/models';
 import { axiosInstance } from './axios';
 
 export const getBreeds = async (): Promise<Breed> => {
@@ -13,12 +13,9 @@ export const getBreeds = async (): Promise<Breed> => {
 
 export const getBreed = async (id: string): Promise<Cat[]> => {
     try {
-        const response: AxiosResponse = await axiosInstance.get(
-            `images/search?breed_ids=${id}&limit=10`
-        );
+        const response: AxiosResponse = await axiosInstance.get(`images/search?breed_ids=${id}&limit=10`);
         return response.data;
     } catch (error) {
-        console.log(error);
         throw new Error((error as Error).message);
     }
 };

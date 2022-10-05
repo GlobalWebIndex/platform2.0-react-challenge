@@ -6,7 +6,7 @@ describe('Confirmation Dialog', () => {
     const isDialogOpenHandler = jest.fn();
     const onConfirmHandler = jest.fn();
     beforeEach(() => {
-        render(<ConfirmationDialog dialogOpen={true} setIsDialogOpen={isDialogOpenHandler} onConfirm={onConfirmHandler} />);
+        render(<ConfirmationDialog dialogOpen={true} setIsDialogOpen={isDialogOpenHandler} onConfirm={onConfirmHandler} isConfirmationActionLoading={false} />);
     });
 
     it('should be in the document when dialogOpen is true', () => {

@@ -38,7 +38,7 @@ const Favorites: React.FC = () => {
         },
     });
 
-    const { mutate, isLoading: isDeleteLoading } = useMutation<DeleteResponse, AxiosError, number, (id: number) => void>(deleteFavorite, {
+    const { mutate: mutateFavorite, isLoading: isDeleteLoading } = useMutation<DeleteResponse, AxiosError, number, (id: number) => void>(deleteFavorite, {
         onSuccess: (res, id) => {
             if (res.message === 'SUCCESS') {
                 queryClient.invalidateQueries(['favorites']);
@@ -51,16 +51,14 @@ const Favorites: React.FC = () => {
     });
 
     const handleDelete = () => {
-        deleteId ? mutate(deleteId) : null;
+        deleteId ? mutateFavorite(deleteId) : null;
     };
-
-    console.log(favorites);
 
     return (
         <StyledContainer>
             {isGetFavoritesLoading && <Skeleton gridItemSize={GRID_ITEM_LARGE_SIZE} />}
             {isGetFavoritesError && <Error />}
-            {favorites ? (
+            {favorites && favorites.length > 0 ? (
                 <StyledImageGrid columnWidth={GRID_COLUMN_WIDTH_LARGE}>
                     {favorites.map((favorite) => {
                         return (
@@ -80,7 +78,14 @@ const Favorites: React.FC = () => {
                     Looks like you do not have any favorites.
                 </Typography>
             )}
-            {deleteId ? <ConfirmationDialog dialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} onConfirm={handleDelete} /> : null}
+            {deleteId ? (
+                <ConfirmationDialog
+                    dialogOpen={isDialogOpen}
+                    setIsDialogOpen={setIsDialogOpen}
+                    onConfirm={handleDelete}
+                    isConfirmationActionLoading={isDeleteLoading}
+                />
+            ) : null}
         </StyledContainer>
     );
 };

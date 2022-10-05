@@ -6,4 +6,5 @@ export const TestIds = {
     dialogContainer: 'dialog-container',
     dialogDeleteButton: 'dialog-delete-button',
     dialogCancelButton: 'dialog-cancel-button',
+    breedItem: 'breed-item',
 };

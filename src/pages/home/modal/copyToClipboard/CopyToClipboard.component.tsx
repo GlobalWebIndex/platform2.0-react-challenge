@@ -18,17 +18,12 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = ({ url }) => {
     useEffect(() => {
         const timeout = setTimeout(() => {
             setIcon(<ContentCopyIcon />);
-        }, 2000);
+        }, 1500);
         return () => clearTimeout(timeout);
     }, [handleCopyToClipboard]);
 
     return (
-        <Button
-            variant="outlined"
-            onClick={() => handleCopyToClipboard(url)}
-            endIcon={<>{icon}</>}
-            sx={{ textTransform: 'none' }}
-        >
+        <Button variant="outlined" onClick={() => handleCopyToClipboard(url)} endIcon={<>{icon}</>} sx={{ textTransform: 'none' }}>
             {url}
         </Button>
     );

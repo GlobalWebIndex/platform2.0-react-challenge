@@ -4,14 +4,15 @@ import { TestIds } from '../../utils/testids';
 
 interface IConfirmationDialogProps {
     dialogOpen: boolean;
+    isConfirmationActionLoading: boolean;
     onConfirm(): void;
     setIsDialogOpen: React.Dispatch<SetStateAction<boolean>>;
 }
 
-export const ConfirmationDialog: React.FC<IConfirmationDialogProps> = ({ dialogOpen, onConfirm, setIsDialogOpen }) => {
+export const ConfirmationDialog: React.FC<IConfirmationDialogProps> = ({ dialogOpen, isConfirmationActionLoading, onConfirm, setIsDialogOpen }) => {
     const handleConfirmClick = (): void => {
-        setIsDialogOpen(false);
         onConfirm();
+        setIsDialogOpen(false);
     };
 
     const handleCloseClick = (): void => {
@@ -27,8 +28,14 @@ export const ConfirmationDialog: React.FC<IConfirmationDialogProps> = ({ dialogO
                 <Button onClick={handleCloseClick} data-testid={TestIds.dialogCancelButton}>
                     Cancel
                 </Button>
-                <Button onClick={handleConfirmClick} color="primary" variant="contained" data-testid={TestIds.dialogDeleteButton}>
-                    Delete
+                <Button
+                    onClick={handleConfirmClick}
+                    color="primary"
+                    variant="contained"
+                    data-testid={TestIds.dialogDeleteButton}
+                    disabled={isConfirmationActionLoading}
+                >
+                    {isConfirmationActionLoading ? 'Deleting' : 'Delete'}
                 </Button>
             </DialogActions>
         </Dialog>
