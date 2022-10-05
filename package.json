@@ -6,7 +6,6 @@
     "dependencies": {
         "@emotion/react": "^11.9.3",
         "@emotion/styled": "^11.9.3",
-        "@globalwebindex/platform2-lib": "git+ssh://git@github.com/GlobalWebIndex/platform2-lib#v1.1.2",
         "@material-ui/lab": "^4.0.0-alpha.61",
         "@mui/icons-material": "^5.8.4",
         "@mui/material": "^5.9.1",
