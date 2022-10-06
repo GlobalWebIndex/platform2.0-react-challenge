@@ -12,6 +12,7 @@ https://cats-revisited.netlify.app/
 ## Quickstart
 
 Clone this project <br />
+copy paste env.sample content to a .env
 yarn install <br />
 yarn start
 
