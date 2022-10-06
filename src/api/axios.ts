@@ -1,10 +1,10 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
 export const axiosInstance = axios.create({
-    baseURL: process.env._BASE_URL,
+    baseURL: process.env.BASE_URL,
     headers: {
         'Content-Type': 'application/json',
-        'x-api-key': process.env._API_KEY ? process.env._API_KEY : '',
+        'x-api-key': process.env.API_KEY ? process.env.API_KEY : '',
     },
 });
 
