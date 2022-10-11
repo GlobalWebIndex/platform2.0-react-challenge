@@ -1,8 +1,19 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import { Layout } from 'Components/Layout/Layout';
+import { AppProps } from 'next/app';
+import { AppProvider } from 'context/AppProvider';
+import Meta from 'Components/Layout/Meta/Meta';
+import '../styles/globals.css';
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+const CatLover = ({ Component, pageProps }: AppProps) => {
+    return (
+        <AppProvider>
+            <Meta />
+            <Layout>
+                <Component {...pageProps} />   
+            </Layout>
+        </AppProvider>
+        
+    )
 }
 
-export default MyApp
+export default CatLover;
