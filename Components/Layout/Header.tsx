@@ -22,18 +22,20 @@ export const Header = () => {
 
     return (
         <header className="fixed h-[80px] items-center w-full flex py-4 px-8 justify-between z-10 backdrop-blur-lg bg-white/80 dark:bg-black/80">
-            <div>
+            <div className="flex">
+                <div className={`${(showLanguages) && "border-r-[1px] dark:border-r-gray-700 border-r-gray-200 mr-4"}`}>
+                    <GlobeEuropeAfricaIcon onClick={toggleShowLanguages} className="cursor-pointer hover:opacity-80 transition-opacity mr-4" width={24} height={24} />
+                </div>
                 {
-                    (typeof router?.locales !== "undefined" && Array.isArray(router?.locales)) &&
-                    (showLanguages) ? 
+                    (typeof router?.locales !== "undefined" && Array.isArray(router?.locales) && showLanguages) &&
                     router.locales.map((locale, index: number) => {
                         return (
                             (locale !== router.locale) &&
                             <Link href={router.asPath} locale={locale} passHref key={`${locale}-${index}`}>
-                                <a className="mr-8 hover:opacity-80" onClick={toggleShowLanguages} href="#">{t(locale)}</a>
+                                <a className="mr-4 hover:opacity-80" href="#">{t(locale)}</a>
                             </Link>
                         )
-                    }) : <GlobeEuropeAfricaIcon onClick={toggleShowLanguages} className="cursor-pointer hover:opacity-80 transition-opacity" width={24} height={24} />
+                    })
                 }
             </div>
 
