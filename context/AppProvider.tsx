@@ -1,5 +1,5 @@
-import { ContextProps } from "Interfaces/Context/Context";
-import { WithChildrenProps } from "Interfaces/General/WithChildren";
+import { ContextProps } from "interfaces/Context/Context";
+import { WithChildrenProps } from "interfaces/General/WithChildren";
 import { createContext, useState } from "react";
 
 export const AppContext = createContext<ContextProps>({});

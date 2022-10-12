@@ -1,7 +1,7 @@
-import { Layout } from 'Components/Layout/Layout';
+import { Layout } from 'components/Layout/Layout';
 import { AppProps } from 'next/app';
 import { AppProvider } from 'context/AppProvider';
-import Meta from 'Components/Layout/Meta/Meta';
+import Meta from 'components/Layout/Meta/Meta';
 import '../styles/globals.css';
 
 const CatLover = ({ Component, pageProps }: AppProps) => {
