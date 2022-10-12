@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import { useContext } from 'react';
-import { ContextProps } from 'interfaces/Context/Context';
+import { ContextProps } from 'interfaces/context/Context';
 import { AppContext } from 'context/AppProvider';
 import useTranslation from 'next-translate/useTranslation';
 

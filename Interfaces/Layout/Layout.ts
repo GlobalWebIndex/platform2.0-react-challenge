@@ -1,3 +1,3 @@
-import { WithChildrenProps } from "interfaces/General/WithChildren";
+import { WithChildrenProps } from "interfaces/general/WithChildren";
 
 export interface LayoutProps extends WithChildrenProps {};
