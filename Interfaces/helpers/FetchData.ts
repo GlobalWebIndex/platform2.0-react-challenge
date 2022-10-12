@@ -64,6 +64,11 @@ export interface FetchProps {
     showLoader?: boolean;
 
     /**
+    * Api key, if needed
+    */
+    apikey?: string;
+
+    /**
     * Override the entire configuration object
     */
     customConfiguration?: fetchConfigurationProps

@@ -1,6 +1,6 @@
 import { FetchDataProps, FetchProps } from "interfaces/helpers/FetchData";
 
-export const fetchData: FetchDataProps = async ({method = "get", locale = "el-GR", accessToken = false, endpoint, data, serverSideProp, onStart, onEnd, customConfiguration}: FetchProps) => {    
+export const fetchData: FetchDataProps = async ({method = "get", locale = "el-GR", accessToken = false, endpoint, data, serverSideProp, apikey, onStart, onEnd, customConfiguration}: FetchProps) => {    
     //configuration object - can be overriden by the prop
     const config = (customConfiguration) ? customConfiguration : {
         method: method,
@@ -8,7 +8,8 @@ export const fetchData: FetchDataProps = async ({method = "get", locale = "el-GR
             "Content-Type": "application/json",
             "X-Requested-With": "XMLHttpRequest",
             "Accept-Language": locale,
-            ...((accessToken) && { "Authorization": `Bearer ${accessToken}` })
+            ...((accessToken) && { "Authorization": `Bearer ${accessToken}` }),
+            ...((apikey) && { "x-api-key": apikey })
         },
         ...((data) && { body: JSON.stringify(data) }),
     };

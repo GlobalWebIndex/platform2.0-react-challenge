@@ -1,7 +1,7 @@
 module.exports = {
     localeDetection: false,
     locales: ["el", "jp", "en"],
-    defaultLocale: "el",
+    defaultLocale: "en",
     pages: {
         "*": ["common"],
         "rgx:^/cats": ["user"]
