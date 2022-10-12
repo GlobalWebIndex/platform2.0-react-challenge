@@ -1,4 +1,6 @@
 export interface ContextProps {
-    loading?: boolean,
-    setLoading?: (arg: boolean) => void
+    loading: boolean,
+    darkMode: boolean,
+    setDarkMode: (arg: boolean) => void,
+    setLoading: (arg: boolean) => void
 };

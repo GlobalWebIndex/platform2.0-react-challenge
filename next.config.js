@@ -16,6 +16,7 @@ module.exports = withPlugins([nextTranslate, withBundleAnalyzer], {
     },
     reactStrictMode: true,
     experimental: {
+        exprContextCritical: false,
         esmExternals: true
     }
 });
