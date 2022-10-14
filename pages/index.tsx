@@ -23,18 +23,18 @@ const Cats = ({ data }: PageData<CatList>) => {
 
     //clear popup and data
     const handleClosePopup = () => {
-        router.push("/", "/", {shallow: true});
+        router.push("/", "/", { shallow: true });
         setPopupMarkup(null);
     };
 
     //when page is updated, fetch new data, and append to state, updating the UI
     useEffect(() => {
         const loadMoreCats = async () => {
-            const data = await fetchData({endpoint: `${endpoints.getAllCats}?order=${constants.order}&limit=${constants.limit}&size=${constants.size}&page=${page}`, onStart: () => setLoading(true), onEnd:  () => setLoading(false), method: "get"});    
+            const data = await fetchData({ endpoint: `${endpoints.getAllCats}?order=${constants.order}&limit=${constants.limit}&size=${constants.size}&page=${page}`, onStart: () => setLoading(true), onEnd: () => setLoading(false), method: "get" });
             setCats([...data, ...cats]);
         };
 
-        if(page > 0)
+        if (page > 0)
             loadMoreCats();
     }, [page]);
 
@@ -46,23 +46,28 @@ const Cats = ({ data }: PageData<CatList>) => {
             //set a loader, while we wait for data
             setPopupMarkup(<div className="h-full flex items-center justify-center"><Image src="/icons/loader.png" width={48} height={48} loading="eager" /></div>);
 
-            const catDetails: CatImage = await fetchData({endpoint: endpoints.getImage + cat, method: "get"});
+            const catDetails: CatImage = await fetchData({ endpoint: endpoints.getImage + cat, method: "get" });
             const hasBreedInformation = catDetails?.breeds?.length > 0;
 
             const markup = (
-                <div className={`h-full md:grid ${(hasBreedInformation) ? "md:grid-cols-2" : "md:grid-cols-1"}`}>
-                    <div className="relative h-[300px] md:h-auto">
+                <div className={`overflow-y-auto h-full md:grid ${(hasBreedInformation) ? "md:grid-cols-2" : "md:grid-cols-1"}`}>
+                    <div className={`relative ${(hasBreedInformation) && "h-[300px] md:h-auto"} h-full`}>
                         <Image objectFit="cover" layout="fill" src={catDetails.url} height={catDetails.height} width={catDetails.width} loading="lazy" blurDataURL={catDetails.url} />
                     </div>
                     {
-                        (hasBreedInformation) && 
+                        (hasBreedInformation) &&
                         <div className="p-6 md:p-12">
                             <h3 className="text-2xl md:text-4xl mb-4 md:mb-8">{t("index:breeds")}</h3>
                             <ul className="border-t-[1px] pt-4 md:pt-8 border-t-gray-300 dark:border-t-gray-800">
                                 {
                                     catDetails?.breeds?.map((breed) => {
                                         return (
-                                            <li className="text-lg" key={breed.id}><Link href={`/breeds/${breed.id}`}>{breed.name}</Link></li>
+                                            <li className="text-lg" key={breed.id}>
+                                                <h3 className="text-xl mb-4"><Link href={`/breeds/${breed.id}`}>{breed.name}</Link></h3>
+                                                <p>{breed.description}</p>
+
+                                                <Link href={`/breeds/${breed.id}`}><Button className="mt-8" link={{ label: t("index:showmore"), href: "" }} /></Link>
+                                            </li>
                                         )
                                     })
                                 }
@@ -74,37 +79,37 @@ const Cats = ({ data }: PageData<CatList>) => {
             setPopupMarkup(markup);
         };
 
-        if(cat) 
+        if (cat)
             showPopup();
     }, [router.query]);
 
     return (
         <>
             <div className="container mx-auto">
-                <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-0 md:gap-8">
                     {
                         (cats?.length > 0) ?
                             cats.map((cat) => {
                                 return (
                                     (cat?.url && cat?.width && cat?.height) &&
-                                    <div className="mb-8 shadow hover:cursor-pointer h-[400px] w-full relative" key={cat.id}>
-                                        <Link 
-                                            as={`/cat/${cat.id}`} 
+                                    <div className="shadow hover:cursor-pointer h-[400px] w-full relative" key={cat.id}>
+                                        <Link
+                                            as={`/cat/${cat.id}`}
                                             href={`?cat=${cat.id}`}
-                                            shallow 
+                                            shallow
                                             passHref
                                         >
                                             <a>
-                                                <Image 
-                                                    placeholder="blur" 
+                                                <Image
+                                                    placeholder="blur"
                                                     blurDataURL={cat.url}
                                                     loading="lazy"
                                                     className="hover:opacity-60 transition-opacity"
-                                                    layout="fill" 
-                                                    objectFit="cover" 
-                                                    width={cat.width} 
-                                                    height={cat.height} 
-                                                    src={cat.url} 
+                                                    layout="fill"
+                                                    objectFit="cover"
+                                                    width={cat.width}
+                                                    height={cat.height}
+                                                    src={cat.url}
                                                 />
                                             </a>
                                         </Link>
@@ -119,11 +124,11 @@ const Cats = ({ data }: PageData<CatList>) => {
                 </div>
             </div>
             <div className="fixed w-screen bottom-4 md:bottom-12 flex justify-center">
-                <Button disabled={loading} link={{label: t("common:loadmore"), href: ""}} onClick={() => setPage(page + 1)} />
+                <Button disabled={loading} link={{ label: t("common:loadmore"), href: "" }} onClick={() => setPage(page + 1)} />
             </div>
 
             {
-                (popupMarkup) && 
+                (popupMarkup) &&
                 <Popup onClose={handleClosePopup}>{popupMarkup}</Popup>
             }
         </>
@@ -132,5 +137,5 @@ const Cats = ({ data }: PageData<CatList>) => {
 
 export default Cats;
 export const getServerSideProps = async () => {
-    return fetchData({endpoint: `${endpoints.getAllCats}?order=${constants.order}&limit=${constants.limit}&size=${constants.size}&page=0`, method: "get", serverSideProp: "data"});
+    return fetchData({ endpoint: `${endpoints.getAllCats}?order=${constants.order}&limit=${constants.limit}&size=${constants.size}&page=0`, method: "get", serverSideProp: "data" });
 };

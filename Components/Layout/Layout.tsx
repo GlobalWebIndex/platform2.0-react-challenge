@@ -16,7 +16,7 @@ export const Layout = ({ children }: LayoutProps) => {
             <div id="tailwind" className="bg-gray-50 dark:bg-black/95 text-gray-900 dark:text-gray-300 w-full min-h-screen">
                 <Header />
                 <main>
-                    <div className="w-full flex-1 py-[60px] md:py-[120px]">
+                    <div className="w-full flex-1 pt-[60px] md:pt-[120px]">
                         {children}
                     </div>
                 </main>
@@ -25,7 +25,7 @@ export const Layout = ({ children }: LayoutProps) => {
 
             {
                 (loading) && 
-                <div className="fixed w-screen h-screen bg-white/90 dark:bg-black/90 flex items-center justify-center">
+                <div className="fixed z-20 w-screen h-screen bg-white/90 dark:bg-black/90 flex items-center justify-center backdrop-blur-lg">
                     <Image src="/icons/loader.png" width={48} height={48} loading="eager" />
                 </div>
             }

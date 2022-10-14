@@ -1,4 +1,5 @@
 {
-    "breeds": "Breeds",
-    "nocatsfound": "No cats found!"
+    "breeds": "Breed",
+    "nocatsfound": "No cats found!",
+    "showmore": "More information"
 }
