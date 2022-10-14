@@ -3,7 +3,8 @@ module.exports = {
     locales: ["el", "jp", "en"],
     defaultLocale: "en",
     pages: {
-        "*": ["common"],
+        "*": ["common", "menu"],
+        "/": ["common", "index"],
         "rgx:^/404": ["404"]
     }
 };

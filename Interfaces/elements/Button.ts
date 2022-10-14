@@ -7,5 +7,6 @@ export interface ButtonProps {
     link: LinkProps,
     type?: ButtonTypes,
     className?: string,
+    disabled?: boolean,
     onClick?: (arg: MouseEvent<HTMLButtonElement>) => void
 };

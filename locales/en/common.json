@@ -8,5 +8,6 @@
     "el": "Greek",
     "jp": "Japanese",
     "en": "English",
-    "loadmore": "Load more"
+    "loadmore": "Load more",
+    "error": "An application error has occured; Please retry again later."
 }

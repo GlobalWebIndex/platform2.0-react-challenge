@@ -1,3 +1,5 @@
+import { Breeds } from "./Breeds";
+
 export interface Cat {
     id: string,
     url: string,
@@ -6,3 +8,13 @@ export interface Cat {
 };
 
 export type CatList = Cat[];
+
+export interface CatImage extends Cat {
+    categories: [
+        {
+            id: number,
+            name: string
+        }
+    ],
+    breeds: Breeds[]
+};
