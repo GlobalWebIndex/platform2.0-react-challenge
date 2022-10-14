@@ -11,7 +11,7 @@ export const Menu = ({ items, showLanguages }: MenuProps) => {
                 {
                     items.map((item) => {
                         return (
-                            <li>
+                            <li key={item.id}>
                                 <Link href={item.href} aria-current="page" passHref>
                                     <a className="block py-2 md:px-4 rounded hover:opacity-75 transition-opacity">{t(String(item.label))}</a>
                                 </Link>

@@ -4,8 +4,9 @@
     "author": "Nikos Roussounelos",
     "description": "A small scale Next.js app for cat lovers.",
     "keywords": "cats, paws, cuty, yay",
-    "loading": "loading...",
+    "loading": "Φόρτωση...",
     "el": "Ελληνικά",
     "jp": "Ιαπωνικά",
-    "en": "Αγγλικά"
+    "en": "Αγγλικά",
+    "loadmore": "Περισσότερα"
 }
