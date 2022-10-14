@@ -16,6 +16,6 @@ const CatLover = ({ Component, pageProps }: AppProps) => {
         </AppProvider>
         
     )
-}
+};
 
 export default CatLover;

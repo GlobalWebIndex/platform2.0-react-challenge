@@ -1,14 +1,38 @@
-import type { NextPage } from 'next';
-import useTranslation from 'next-translate/useTranslation';
+import { endpoints } from "configuration/endpoints";
+import { fetchData } from "helpers/net/fetchData";
+import { PageData } from "interfaces/general/PageData";
+import { CatList } from "interfaces/pages/Index";
+import Image from "next/image";
 
-const Home: NextPage = () => {
-    const { t } = useTranslation("common");
-
+const Cats = ({ data }: PageData<CatList>) => {
     return (
-        <div className="w-full h-screen pointer-events-none flex items-center justify-center">
-            <h1 className="text-8xl">{t("greeting")}</h1>
+        <div className="container mx-auto">
+            <div className="sm:columns-2 md:columns-3 lg:columns-4 gap-8">
+                {
+                    data.map((cat) => {
+                        return (
+                            <div className="mb-8 shadow hover:cursor-pointer" key={cat.id}>
+                                <Image 
+                                    placeholder="blur" 
+                                    blurDataURL={cat.url}
+                                    className="hover:opacity-60 transition-opacity"
+                                    layout="responsive" 
+                                    objectFit="cover" 
+                                    width={cat.width} 
+                                    height={cat.height} 
+                                    src={cat.url} 
+                                />
+                            </div>
+                        )
+                    })
+                }
+            </div>
         </div>
     )
-}
+};
 
-export default Home
+export default Cats;
+
+export const getServerSideProps = async () => {
+    return fetchData({endpoint: `${endpoints.getAllCats}?order=RANDOM&limit=10&size=thumb`, method: "get", serverSideProp: "data"});
+};

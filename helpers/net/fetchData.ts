@@ -24,15 +24,9 @@ export const fetchData: FetchDataProps = async ({method = "get", locale = "el-GR
         const isJSON = contentType && contentType.indexOf("application/json") !== -1;
         const data = (isJSON) ? await response.json() : response;
 
-        //the user is not authorized, redirect to logout
+        //throw error on every response but a successful one
         if(response?.status !== 200) {
-            return { 
-                redirect: {
-                    destination: '/error',
-                    data: response,
-                    permanent: false
-                } 
-            }
+            throw Error(String(response?.status))
         }
 
         //call the callback function, if provided
@@ -44,18 +38,19 @@ export const fetchData: FetchDataProps = async ({method = "get", locale = "el-GR
             props: {
                 [serverSideProp]: data || {}
             }
-        }: data
+        } : data
     }
-    catch (error: any | ErrorEvent) {
+    catch (error: any | ErrorEvent) {      
         //call the callback function, if provided
         if(typeof onEnd === "function") 
             onEnd(error);
-        
+
         //return the object, server side, or client side, based on prop
         return (serverSideProp) ? {
-            props: {
-                [serverSideProp]: error || {}
-            }
-        }: error;
+            redirect: {
+                destination: `/error/${error?.status || ""}`,
+                permanent: false
+            } 
+        } : null
     }
 };

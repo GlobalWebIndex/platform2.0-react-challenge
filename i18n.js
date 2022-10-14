@@ -4,6 +4,6 @@ module.exports = {
     defaultLocale: "en",
     pages: {
         "*": ["common"],
-        "rgx:^/cats": ["user"]
+        "rgx:^/404": ["404"]
     }
 };

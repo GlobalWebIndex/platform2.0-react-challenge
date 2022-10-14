@@ -9,7 +9,7 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                'noto-serif-jp': ['"Noto Serif JP"', 'serif'],
+                'noto-serif-jp': ['"Noto Serif JP"', 'sans-serif'],
             },
         },
     },
