@@ -20,7 +20,7 @@ export const LanguageSwitcher = ({ showLanguages, setShowLanguages }: LanguageSw
                         router.locales.map((locale, index: number) => {
                             return (
                                 (locale !== router.locale) &&
-                                <Link href={router.asPath} locale={locale} passHref key={`${locale}-${index}`}>
+                                <Link scroll={false} href={router.asPath} locale={locale} passHref key={`${locale}-${index}`}>
                                     <a className="mr-4 hover:opacity-80" href="#">{t(locale)}</a>
                                 </Link>
                             )

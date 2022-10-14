@@ -9,7 +9,7 @@ export const Popup = ({ onClose = () => {}, children }: PopupProps) => {
             
             <div className="relative w-[90%] h-[85%] md:w-2/3 md:h-2/3 bg-white/90 dark:bg-black/90 backdrop-blur-lg z-10">
                 <div className="absolute right-4 top-4 cursor-pointer z-10 bg-white/75 dark:bg-black/75 text-gray-700 dark:text-gray-400 backdrop-blur-lg">
-                    <XMarkIcon className="hover:scale-90 transition-transform" onClick={onClose} width={48} height={48} />
+                    <XMarkIcon className="hover:scale-90 transition-transform" onClick={onClose} width={32} height={32} />
                 </div>
                 {children}
             </div>
