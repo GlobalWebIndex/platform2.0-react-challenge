@@ -15,7 +15,7 @@ export const LanguageSwitcher = ({ showLanguages, setShowLanguages }: LanguageSw
             </div>
             {
                 (typeof router?.locales !== "undefined" && Array.isArray(router?.locales) && showLanguages) &&
-                <div className="absolute left-[40px] w-screen whitespace-nowrap border-l-[1px] dark:border-l-gray-700 border-l-gray-200 pl-4">
+                <div className={`absolute left-[40px] whitespace-nowrap border-l-[1px] dark:border-l-gray-700 border-l-gray-200 pl-4 ${(showLanguages) && "w-screen md:w-[200px]"}`}>
                     {
                         router.locales.map((locale, index: number) => {
                             return (
