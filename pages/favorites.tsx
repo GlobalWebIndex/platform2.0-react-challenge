@@ -30,6 +30,11 @@ const Favorites = ({ data }: PageData<FavoritesListProps>) => {
     return (
         <>
             <div className="container mx-auto">
+                <div className="border-b-[1px] border-b-gray-300 dark:border-b-gray-800 mb-12 pb-4">
+                    <h1 className="text-3xl mb-4">{t("favorites:title")}</h1>
+                    <p className="max-w-[800px]">{t("favorites:description")}</p>
+                </div>
+
                 {
                     (data?.length > 0) ?
                     <div className="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-0 md:gap-8">

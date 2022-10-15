@@ -47,6 +47,11 @@ const Cats = ({ data }: PageData<CatList>) => {
     return (
         <>
             <div className="container mx-auto">
+                <div className="border-b-[1px] border-b-gray-300 dark:border-b-gray-800 mb-12 pb-4">
+                    <h1 className="text-3xl mb-4">{t("index:title")}</h1>
+                    <p className="max-w-[800px]">{t("index:description")}</p>
+                </div>
+
                 <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-0 md:gap-8">
                     {
                         (cats?.length > 0) ?
