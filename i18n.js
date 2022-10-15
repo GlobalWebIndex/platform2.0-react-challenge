@@ -5,6 +5,7 @@ module.exports = {
     pages: {
         "*": ["common", "menu", "breed"],
         "/": ["common", "index"],
+        "/favorites": ["common", "index", "favorites"],
         "rgx:^/breed": ["index"],
         "rgx:^/404": ["404"]
     }

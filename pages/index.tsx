@@ -12,6 +12,7 @@ import { BreedPopup } from "components/elements/BreedPopup";
 import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
 import Link from "next/link";
+import { Favorite } from "components/elements/Favorite";
 
 const Cats = ({ data }: PageData<CatList>) => {
     const { t } = useTranslation();
@@ -24,7 +25,7 @@ const Cats = ({ data }: PageData<CatList>) => {
     //when page is updated, fetch new data, and append to state, updating the UI
     useEffect(() => {
         const loadMoreCats = async () => {
-            const data = await fetchData({ endpoint: `${endpoints.getAllCats}?order=${constants.order}&limit=${constants.limit}&size=${constants.size}&page=${page}`, onStart: () => setLoading(true), onEnd: () => setLoading(false), method: "get" });
+            const data = await fetchData({ endpoint: `${endpoints.getAllCats}?order=${constants.order}&limit=${constants.limit}&size=${constants.size}&page=${page}&include_favourite=1`, onStart: () => setLoading(true), onEnd: () => setLoading(false), method: "get" });
             setCats([...data, ...cats]);
         };
 
@@ -51,8 +52,9 @@ const Cats = ({ data }: PageData<CatList>) => {
                         (cats?.length > 0) ?
                             cats.map((cat) => {
                                 return (
-                                    (cat?.url && cat?.width && cat?.height) &&
-                                    <div className="shadow hover:cursor-pointer h-[400px] w-full relative" key={cat.id}>
+                                    (cat?.url) &&
+                                    <div className="aspect-square shadow hover:cursor-pointer w-full relative" key={cat.id}>
+                                        <Favorite imageId={cat.id} />
                                         <Link as={`/breed/${cat.id}`} href={`?breed=${cat.id}`} shallow passHref>
                                             <a>
                                                 <Image placeholder="blur" blurDataURL={cat.url} loading="lazy" className="hover:opacity-60 transition-opacity" layout="fill" objectFit="cover" src={cat.url} />
@@ -79,5 +81,5 @@ const Cats = ({ data }: PageData<CatList>) => {
 
 export default Cats;
 export const getServerSideProps = async () => {
-    return fetchData({ endpoint: `${endpoints.getAllCats}?order=${constants.order}&limit=${constants.limit}&size=${constants.size}&page=0`, method: "get", serverSideProp: "data" });
+    return fetchData({ endpoint: `${endpoints.getAllCats}?order=${constants.order}&limit=${constants.limit}&size=${constants.size}&page=0&include_favourite=1`, method: "get", serverSideProp: "data" });
 };

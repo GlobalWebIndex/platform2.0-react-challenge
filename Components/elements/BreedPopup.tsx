@@ -5,6 +5,7 @@ import { CatImage } from "interfaces/pages/Index";
 import { fetchData } from "helpers/net/fetchData";
 import { endpoints } from "configuration/endpoints";
 import { Button } from "./Button";
+import { Favorite } from "./Favorite";
 import Link from "next/link";
 import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
@@ -17,8 +18,8 @@ export const BreedPopup = ({ name, onClose }: BreedPopupProps) => {
     useEffect(() => {
         const getData = async () => {
             const breedDetails: CatImage = await fetchData({ endpoint: endpoints.getImage + name, method: "get" });
-            console.log(breedDetails)
             setData(breedDetails);
+            
         };
 
         if(name)
@@ -43,6 +44,7 @@ export const BreedPopup = ({ name, onClose }: BreedPopupProps) => {
                         <div className={`overflow-y-auto h-full md:grid ${(data?.breeds?.length > 0) ? "md:grid-cols-2" : "md:grid-cols-1"}`}>
                             <div className={`relative ${(data?.breeds?.length > 0) && "h-[300px] md:h-auto"} h-full`}>
                                 <Image objectFit="cover" layout="fill" src={data.url} loading="lazy" blurDataURL={data.url} />
+                                <Favorite imageId={data.id} />
                             </div>
                             {
                                 (data?.breeds?.length > 0) &&

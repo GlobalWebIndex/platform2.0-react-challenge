@@ -1,7 +1,7 @@
 import { FetchDataProps, FetchProps } from "interfaces/helpers/FetchData";
 
 export const fetchData: FetchDataProps = async ({method = "get", locale = "el-GR", accessToken = false, endpoint, data, serverSideProp, apikey, onStart, onEnd, customConfiguration}: FetchProps) => {    
-    const clientSide = (typeof window);
+    const clientSide = (typeof window !== "undefined");
 
     //configuration object - can be overriden by the prop
     const config = (customConfiguration) ? customConfiguration : {
