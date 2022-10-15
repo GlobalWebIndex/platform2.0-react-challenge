@@ -13,7 +13,7 @@ export const Layout = ({ children }: LayoutProps) => {
 
     return (
         <div className={`${(darkMode === true) && "dark"} flex w-full ${(router.locale === "jp") ? "font-noto-serif-jp" : "font-roboto"}`}>
-            <div id="tailwind" className="bg-gray-50 dark:bg-black/95 text-gray-900 dark:text-gray-300 w-full min-h-screen">
+            <div id="tailwind" className="bg-gradient-to-br from-gray-100 to-white dark:from-black/95 dark:to-black  text-gray-900 dark:text-gray-300 w-full min-h-screen">
                 <Header />
                 <main>
                     <div className="w-full flex-1 pt-[60px] md:pt-[120px]">

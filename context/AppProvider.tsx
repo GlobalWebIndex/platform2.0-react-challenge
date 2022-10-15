@@ -62,7 +62,7 @@ export const AppProvider = ({ children }: WithChildrenProps) => {
         getData();
     }, []);
 
-    //debugging
+    //save the changes to the cookie
     useEffect(() => {        
         setCookie("favorites", favorites);
     }, [favorites]);
