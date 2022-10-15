@@ -11,7 +11,7 @@ module.exports = withPlugins([nextTranslate, withBundleAnalyzer], {
     mode: 'production',
     swcMinify: true,
     images: {
-        domains: ['cdn2.thecatapi.com', 'cdn1.theimageapi.com'],
+        domains: ['cdn2.thecatapi.com', 'cdn1.theimageapi.com', '25.media.tumblr.com'],
         formats: ['image/avif', 'image/webp']
     },
     reactStrictMode: true,

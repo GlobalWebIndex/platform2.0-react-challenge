@@ -2,30 +2,24 @@ import { Button } from "components/elements/Button";
 import { endpoints } from "configuration/endpoints";
 import { fetchData } from "helpers/net/fetchData";
 import { PageData } from "interfaces/general/PageData";
-import { CatImage, CatList } from "interfaces/pages/Index";
+import { CatList } from "interfaces/pages/Index";
 import { useContext, useEffect, useState } from "react";
 import { ContextProps } from "interfaces/context/Context";
 import { AppContext } from "context/AppProvider";
 import { useRouter } from "next/router";
-import { Popup } from "components/elements/Popup";
 import { constants } from "configuration/constants";
+import { BreedPopup } from "components/elements/BreedPopup";
 import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
 import Link from "next/link";
 
 const Cats = ({ data }: PageData<CatList>) => {
     const { t } = useTranslation();
+    const [breed, setBreed] = useState<null | undefined | string | string[]>(null);
     const [cats, setCats] = useState(data);
     const [page, setPage] = useState(0);
-    const [popupMarkup, setPopupMarkup] = useState<JSX.Element | null>(null);
     const { loading, setLoading } = useContext<ContextProps>(AppContext);
     const router = useRouter();
-
-    //clear popup and data
-    const handleClosePopup = () => {
-        router.push("/", "/", { shallow: true });
-        setPopupMarkup(null);
-    };
 
     //when page is updated, fetch new data, and append to state, updating the UI
     useEffect(() => {
@@ -38,49 +32,15 @@ const Cats = ({ data }: PageData<CatList>) => {
             loadMoreCats();
     }, [page]);
 
-    //check if route contains 'cat' query, and show modal
+    //clear popup and data
+    const handleClosePopup = () => {
+        router.push("/", "/", { shallow: true });
+    };
+
+    //check if route contains 'cat' query, and pass to modal
     useEffect(() => {
-        const { cat } = router.query;
-
-        const showPopup = async () => {
-            //set a loader, while we wait for data
-            setPopupMarkup(<div className="h-full flex items-center justify-center"><Image src="/icons/loader.png" width={48} height={48} loading="eager" /></div>);
-
-            const catDetails: CatImage = await fetchData({ endpoint: endpoints.getImage + cat, method: "get" });
-            const hasBreedInformation = catDetails?.breeds?.length > 0;
-
-            const markup = (
-                <div className={`overflow-y-auto h-full md:grid ${(hasBreedInformation) ? "md:grid-cols-2" : "md:grid-cols-1"}`}>
-                    <div className={`relative ${(hasBreedInformation) && "h-[300px] md:h-auto"} h-full`}>
-                        <Image objectFit="cover" layout="fill" src={catDetails.url} height={catDetails.height} width={catDetails.width} loading="lazy" blurDataURL={catDetails.url} />
-                    </div>
-                    {
-                        (hasBreedInformation) &&
-                        <div className="p-6 md:p-12">
-                            <h3 className="text-2xl md:text-4xl mb-4 md:mb-8">{t("index:breeds")}</h3>
-                            <ul className="border-t-[1px] pt-4 md:pt-8 border-t-gray-300 dark:border-t-gray-800">
-                                {
-                                    catDetails?.breeds?.map((breed) => {
-                                        return (
-                                            <li className="text-lg" key={breed.id}>
-                                                <h3 className="text-xl mb-4"><Link href={`/breeds/${breed.id}`}>{breed.name}</Link></h3>
-                                                <p>{breed.description}</p>
-
-                                                <Link href={`/breeds/${breed.id}`}><Button className="mt-8" link={{ label: t("index:showmore"), href: "" }} /></Link>
-                                            </li>
-                                        )
-                                    })
-                                }
-                            </ul>
-                        </div>
-                    }
-                </div>
-            );
-            setPopupMarkup(markup);
-        };
-
-        if (cat)
-            showPopup();
+        const { breed } = router.query;
+        setBreed(breed);
     }, [router.query]);
 
     return (
@@ -93,24 +53,9 @@ const Cats = ({ data }: PageData<CatList>) => {
                                 return (
                                     (cat?.url && cat?.width && cat?.height) &&
                                     <div className="shadow hover:cursor-pointer h-[400px] w-full relative" key={cat.id}>
-                                        <Link
-                                            as={`/cat/${cat.id}`}
-                                            href={`?cat=${cat.id}`}
-                                            shallow
-                                            passHref
-                                        >
+                                        <Link as={`/breed/${cat.id}`} href={`?breed=${cat.id}`} shallow passHref>
                                             <a>
-                                                <Image
-                                                    placeholder="blur"
-                                                    blurDataURL={cat.url}
-                                                    loading="lazy"
-                                                    className="hover:opacity-60 transition-opacity"
-                                                    layout="fill"
-                                                    objectFit="cover"
-                                                    width={cat.width}
-                                                    height={cat.height}
-                                                    src={cat.url}
-                                                />
+                                                <Image placeholder="blur" blurDataURL={cat.url} loading="lazy" className="hover:opacity-60 transition-opacity" layout="fill" objectFit="cover" src={cat.url} />
                                             </a>
                                         </Link>
                                     </div>
@@ -127,10 +72,7 @@ const Cats = ({ data }: PageData<CatList>) => {
                 <Button disabled={loading} link={{ label: t("common:loadmore"), href: "" }} onClick={() => setPage(page + 1)} />
             </div>
 
-            {
-                (popupMarkup) &&
-                <Popup onClose={handleClosePopup}>{popupMarkup}</Popup>
-            }
+            <BreedPopup name={breed} onClose={handleClosePopup} />
         </>
     )
 };

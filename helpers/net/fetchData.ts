@@ -1,6 +1,8 @@
 import { FetchDataProps, FetchProps } from "interfaces/helpers/FetchData";
 
 export const fetchData: FetchDataProps = async ({method = "get", locale = "el-GR", accessToken = false, endpoint, data, serverSideProp, apikey, onStart, onEnd, customConfiguration}: FetchProps) => {    
+    const clientSide = (typeof window);
+
     //configuration object - can be overriden by the prop
     const config = (customConfiguration) ? customConfiguration : {
         method: method,
@@ -26,7 +28,7 @@ export const fetchData: FetchDataProps = async ({method = "get", locale = "el-GR
 
         //throw error on every response but a successful one
         if(response?.status !== 200) {
-            throw Error(String(response?.status))
+            throw Error(response?.status.toString())
         }
 
         //call the callback function, if provided
@@ -45,12 +47,15 @@ export const fetchData: FetchDataProps = async ({method = "get", locale = "el-GR
         if(typeof onEnd === "function") 
             onEnd(error);
 
-        //return the object, server side, or client side, based on prop
-        return (serverSideProp) ? {
-            redirect: {
-                destination: `/error/${error?.status || ""}`,
-                permanent: false
-            } 
-        } : null
+        //redirect to error page
+        if (clientSide)
+            window.location.href = `/error/${error || ""}`;
+        else
+            return {
+                redirect: {
+                    destination: `/error/${error || ""}`,
+                    permanent: false
+                } 
+            }
     }
 };
