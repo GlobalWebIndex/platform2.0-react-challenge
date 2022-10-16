@@ -11,8 +11,13 @@ module.exports = withPlugins([nextTranslate, withBundleAnalyzer], {
     mode: 'production',
     swcMinify: true,
     images: {
-        domains: ['cdn2.thecatapi.com', 'cdn1.theimageapi.com', '25.media.tumblr.com', '28.media.tumblr.com'],
-        formats: ['image/avif', 'image/webp']
+        formats: ['image/avif', 'image/webp'],
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "**"
+            }
+        ]
     },
     reactStrictMode: true,
     experimental: {
