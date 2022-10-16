@@ -1,0 +1,19 @@
+html, #root, body {
+    margin:0;
+    background-color: #F8EDE3 ;
+}
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.08);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #8A7E6E;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #574B3B;
+  }
