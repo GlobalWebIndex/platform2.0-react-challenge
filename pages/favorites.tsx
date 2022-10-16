@@ -23,9 +23,11 @@ const Favorites = ({ data }: PageData<FavoritesList>) => {
 
     //check if route contains 'breed' query, and pass to modal
     useEffect(() => {
-        const { breed } = router.query;
-        setBreed(breed);
-    }, [router.query]);
+        if (router?.query) {
+            const { breed } = router?.query;
+            setBreed(breed);
+        }
+    }, [router?.query]);
 
     return (
         <>

@@ -46,9 +46,11 @@ const Cats = ({ data }: PageData<CatList>) => {
 
     //check if route contains 'breed' query, and pass to modal
     useEffect(() => {
-        const { breed } = router.query;
-        setBreed(breed);
-    }, [router.query]);
+        if (router?.query) {
+            const { breed } = router?.query;
+            setBreed(breed);
+        }
+    }, [router?.query]);
 
     return (
         <>
@@ -75,7 +77,7 @@ const Cats = ({ data }: PageData<CatList>) => {
                                 )
                             }) :
                             <div>
-                                <h2 className="text-2xl mb-4">{t("index:nocatsfound")}</h2>
+                                <h2 className="text-2xl mb-4" data-testid="no-cats">{t("index:nocatsfound")}</h2>
                                 <p className="text-xl">{t("common:error")}</p>
                             </div>
                     }

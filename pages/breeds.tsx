@@ -28,11 +28,13 @@ const Breeds = ({ data }: BreedsList) => {
 
     //check if route contains 'details' query, and pass to modal
     useEffect(() => {
-        const { details } = router.query;
-        const name = Array.isArray(details) ? details?.[0] : details;
+        if (router?.query) {
+            const { details } = router?.query;
+            const name = Array.isArray(details) ? details?.[0] : details;
 
-        setDetails(data.find((item) => item.id === name));
-    }, [router.query]);
+            setDetails(data.find((item) => item.id === name));
+        }
+    }, [router?.query]);
 
     return (
         <>

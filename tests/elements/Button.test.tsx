@@ -18,8 +18,9 @@ describe('Button', () => {
 
     it("renders correctly", () => {
         const { container } = render(
-            <Button {...{ link }} disabled />
+            <Button {...{ link }} />
         );
+
         expect(container).toMatchSnapshot();
     });
 });
