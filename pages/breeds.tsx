@@ -1,9 +1,14 @@
 import { endpoints } from "configuration/endpoints";
 import { fetchData } from "helpers/net/fetchData";
 import { Breed, BreedsList } from "interfaces/pages/Breeds";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { DetailsPopup } from "components/elements/popup/DetailsPopup";
 import Link from "next/link";
 
 const Breeds = ({ data }: BreedsList) => {
+    const [details, setDetails] = useState<Breed | undefined>(undefined);
+    const router = useRouter();
     const azList = {};
 
     //get all breeds, then create an alphabetic index
@@ -15,6 +20,19 @@ const Breeds = ({ data }: BreedsList) => {
         else
             azList[firstLetter]?.items.push(breed);
     });
+
+    //clear popup and data
+    const handleClosePopup = () => {
+        router.push("/breeds", "/breeds", { shallow: true });
+    };
+
+    //check if route contains 'breed' query, and pass to modal
+    useEffect(() => {
+        const { details } = router.query;
+        const name = Array.isArray(details) ? details?.[0] : details;
+
+        setDetails(data.find((item) => item.id === name));
+    }, [router.query]);
 
     return (
         <>
@@ -29,7 +47,9 @@ const Breeds = ({ data }: BreedsList) => {
                                         azList[azItem].items.map((breed: Breed) => {
                                             return (
                                                 <div className="my-2" key={breed.id}>
-                                                    <Link href="/" passHref><a>{breed.name}</a></Link>
+                                                    <Link as={`/details/${breed.id}`} href={`?details=${breed.id}`} shallow passHref>
+                                                        <a className="hover:opacity-80 transition-opacity">{breed.name}</a>
+                                                    </Link>
                                                 </div>
                                             )
                                         })
@@ -40,6 +60,8 @@ const Breeds = ({ data }: BreedsList) => {
                     }
                 </div>
             </section>
+
+            <DetailsPopup {...{details}} onClose={handleClosePopup} />
         </>
     )
 };

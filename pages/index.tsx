@@ -8,7 +8,7 @@ import { ContextProps } from "interfaces/context/Context";
 import { AppContext } from "context/AppProvider";
 import { useRouter } from "next/router";
 import { constants } from "configuration/constants";
-import { BreedPopup } from "components/elements/BreedPopup";
+import { BreedPopup } from "components/elements/popup/BreedPopup";
 import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
 import Link from "next/link";
@@ -38,7 +38,7 @@ const Cats = ({ data }: PageData<CatList>) => {
         router.push("/", "/", { shallow: true });
     };
 
-    //check if route contains 'cat' query, and pass to modal
+    //check if route contains 'breed' query, and pass to modal
     useEffect(() => {
         const { breed } = router.query;
         setBreed(breed);
