@@ -4,14 +4,14 @@ import { constants } from "configuration/constants";
 import { endpoints } from "configuration/endpoints";
 import { fetchData } from "helpers/net/fetchData";
 import { PageData } from "interfaces/general/PageData";
-import { FavoritesListProps } from "interfaces/pages/Favorites";
+import { FavoritesList } from "interfaces/pages/Favorites";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
 import Link from "next/link";
 
-const Favorites = ({ data }: PageData<FavoritesListProps>) => {
+const Favorites = ({ data }: PageData<FavoritesList>) => {
     const [breed, setBreed] = useState<null | undefined | string | string[]>(null);
     const { t } = useTranslation();
     const router = useRouter();
@@ -29,8 +29,8 @@ const Favorites = ({ data }: PageData<FavoritesListProps>) => {
 
     return (
         <>
-            <div className="container mx-auto">
-                <div className="border-b-[1px] border-b-gray-300 dark:border-b-gray-800 mb-12 pb-4">
+            <div className="container mx-auto md:my-12">
+                <div className="sm:border-b-[1px] sm:border-b-gray-300 sm:dark:border-b-gray-800 mb-12 px-4 py-4">
                     <h1 className="text-3xl mb-4">{t("favorites:title")}</h1>
                     <p className="max-w-[800px]">{t("favorites:description")}</p>
                 </div>

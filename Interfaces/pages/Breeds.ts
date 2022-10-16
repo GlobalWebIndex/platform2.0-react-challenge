@@ -1,4 +1,4 @@
-export interface Breeds {
+export interface Breed {
     weight: {
         imperial: string,
         metric: string
@@ -34,4 +34,8 @@ export interface Breeds {
     natural: number,
     rare: number,
     rex: number
+};
+
+export interface BreedsList {
+    data: Breed[]
 };

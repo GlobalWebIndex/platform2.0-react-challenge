@@ -1,4 +1,4 @@
-import { Breeds } from "./Breeds";
+import { Breed } from "./Breeds";
 
 export interface Cat {
     id: string,
@@ -16,5 +16,5 @@ export interface CatImage extends Cat {
             name: string
         }
     ],
-    breeds: Breeds[]
+    breeds: Breed[]
 };

@@ -1,4 +1,4 @@
-export interface FavoriteProps {
+export interface Favorite {
     id: number,
     user_id?: string,
     image_id?: string,
@@ -10,4 +10,4 @@ export interface FavoriteProps {
     }
 };
 
-export type FavoritesListProps = FavoriteProps[];
+export type FavoritesList = Favorite[];

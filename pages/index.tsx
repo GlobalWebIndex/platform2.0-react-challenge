@@ -25,7 +25,7 @@ const Cats = ({ data }: PageData<CatList>) => {
     //when page is updated, fetch new data, and append to state, updating the UI
     useEffect(() => {
         const loadMoreCats = async () => {
-            const data = await fetchData({ endpoint: `${endpoints.getAllCats}?order=${constants.order}&limit=${constants.limit}&size=${constants.size}&page=${page}&include_favourite=1`, onStart: () => setLoading(true), onEnd: () => setLoading(false), method: "get" });
+            const data = await fetchData({ endpoint: `${endpoints.getAllCats}?order=${constants.order}&limit=${constants.limit}&size=${constants.size}&page=${page}`, onStart: () => setLoading(true), onEnd: () => setLoading(false), method: "get" });
             setCats([...data, ...cats]);
         };
 
@@ -46,8 +46,8 @@ const Cats = ({ data }: PageData<CatList>) => {
 
     return (
         <>
-            <div className="container mx-auto">
-                <div className="border-b-[1px] border-b-gray-300 dark:border-b-gray-800 mb-12 pb-4">
+            <div className="container mx-auto md:my-12">
+                <div className="sm:border-b-[1px] sm:border-b-gray-300 sm:dark:border-b-gray-800 mb-12 px-4 py-4">
                     <h1 className="text-3xl mb-4">{t("index:title")}</h1>
                     <p className="max-w-[800px]">{t("index:description")}</p>
                 </div>
@@ -86,5 +86,5 @@ const Cats = ({ data }: PageData<CatList>) => {
 
 export default Cats;
 export const getServerSideProps = async () => {
-    return fetchData({ endpoint: `${endpoints.getAllCats}?order=${constants.order}&limit=${constants.limit}&size=${constants.size}&page=0&include_favourite=1`, method: "get", serverSideProp: "data" });
+    return fetchData({ endpoint: `${endpoints.getAllCats}?order=${constants.order}&limit=${constants.limit}&size=${constants.size}&page=0`, method: "get", serverSideProp: "data" });
 };
