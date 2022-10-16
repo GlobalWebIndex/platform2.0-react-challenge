@@ -3,7 +3,7 @@ import { forwardRef } from "react";
 import Link from "next/link";
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
-    const { link, type = "button", onClick = () => {}, className = "", disabled } = props;
+    const { link, type = "button", onClick = () => {}, className = "", disabled = false } = props;
     
     return (
         <Link href={link.href}>
