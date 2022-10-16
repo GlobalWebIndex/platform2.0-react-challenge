@@ -25,13 +25,19 @@ const Cats = ({ data }: PageData<CatList>) => {
     //when page is updated, fetch new data, and append to state, updating the UI
     useEffect(() => {
         const loadMoreCats = async () => {
-            const data = await fetchData({ endpoint: `${endpoints.getAllCats}?order=${constants.order}&limit=${constants.limit}&size=${constants.size}&page=${page}`, onStart: () => setLoading(true), onEnd: () => setLoading(false), method: "get" });
+            const data = await fetchData({ endpoint: `${endpoints.getAllCats}?order=${constants.order}&limit=${constants.limit}&size=${constants.size}&page=${page}`, onEnd: () => setLoading(false), method: "get" });
             setCats([...data, ...cats]);
         };
 
         if (page > 0)
             loadMoreCats();
     }, [page]);
+
+    //increase page, therefore triggering call, and blocking multiple presses
+    const handleAddMoreCats = () => {
+        setPage(page + 1);
+        setLoading(true);
+    };
 
     //clear popup and data
     const handleClosePopup = () => {
@@ -76,7 +82,7 @@ const Cats = ({ data }: PageData<CatList>) => {
                 </div>
             </div>
             <div className="fixed w-screen bottom-4 md:bottom-12 flex justify-center z-20">
-                <Button disabled={loading} link={{ label: t("common:loadmore"), href: "" }} onClick={() => setPage(page + 1)} />
+                <Button disabled={loading} link={{ label: t("common:loadmore"), href: "" }} onClick={handleAddMoreCats} />
             </div>
 
             <BreedPopup name={breed} onClose={handleClosePopup} />
