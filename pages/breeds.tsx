@@ -26,7 +26,7 @@ const Breeds = ({ data }: BreedsList) => {
         router.push("/breeds", "/breeds", { shallow: true });
     };
 
-    //check if route contains 'breed' query, and pass to modal
+    //check if route contains 'details' query, and pass to modal
     useEffect(() => {
         const { details } = router.query;
         const name = Array.isArray(details) ? details?.[0] : details;
@@ -61,7 +61,7 @@ const Breeds = ({ data }: BreedsList) => {
                 </div>
             </section>
 
-            <DetailsPopup {...{details}} onClose={handleClosePopup} />
+            <DetailsPopup {...{ details }} onClose={handleClosePopup} />
         </>
     )
 };

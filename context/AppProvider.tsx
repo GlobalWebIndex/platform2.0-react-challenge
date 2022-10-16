@@ -1,21 +1,11 @@
 import { constants } from 'configuration/constants';
+import { initialContext } from 'configuration/dummy';
 import { endpoints } from 'configuration/endpoints';
 import { setCookie } from 'cookies-next';
 import { fetchData } from 'helpers/net/fetchData';
 import { ContextProps, FavoriteItemProps } from "interfaces/context/Context";
 import { WithChildrenProps } from "interfaces/general/WithChildren";
 import { createContext, useEffect, useState } from "react";
-
-//initialize context
-const initialContext = {
-    loading: false,
-    darkMode: true,
-    favorites: [],
-    addToFavorites: () => {},
-    removeFromFavorites: () => {},
-    setLoading: () => {},
-    setDarkMode: () => {}
-};
 
 //create the context
 export const AppContext = createContext<ContextProps>(initialContext);
@@ -30,7 +20,7 @@ export const AppProvider = ({ children }: WithChildrenProps) => {
     const addToFavorites = (favorite: FavoriteItemProps) => {
         const index = favorites.findIndex(element => favorite.favoriteId === element.favoriteId);
 
-        if(index === -1){
+        if (index === -1) {
             const items = [...favorites, favorite];
             setFavorites(items);
         }
@@ -40,9 +30,9 @@ export const AppProvider = ({ children }: WithChildrenProps) => {
     const removeFromFavorites = (favorite: FavoriteItemProps) => {
         const found = favorites.find(element => favorite.favoriteId === element.favoriteId);
 
-        if(found) {
+        if (found) {
             const items = favorites.filter((item) => found !== item);
-            setFavorites(items);   
+            setFavorites(items);
         }
     };
 
@@ -63,7 +53,7 @@ export const AppProvider = ({ children }: WithChildrenProps) => {
     }, []);
 
     //save the changes to the cookie
-    useEffect(() => {        
+    useEffect(() => {
         setCookie("favorites", favorites);
     }, [favorites]);
 

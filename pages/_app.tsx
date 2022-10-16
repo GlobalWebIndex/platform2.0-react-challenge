@@ -10,11 +10,11 @@ const CatLover = ({ Component, pageProps }: AppProps) => {
         <AppProvider>
             <Meta />
             <Layout>
-                <NextNProgress color="#999" height={1} showOnShallow={false} options={{showSpinner: false, parent: '#nprogress-placeholder'}}/>
-                <Component {...pageProps} />   
+                <NextNProgress color="#999" height={1} showOnShallow={false} options={{ showSpinner: false, parent: '#nprogress-placeholder' }} />
+                <Component {...pageProps} />
             </Layout>
         </AppProvider>
-        
+
     )
 };
 

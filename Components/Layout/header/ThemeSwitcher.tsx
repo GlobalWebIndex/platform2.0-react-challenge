@@ -13,9 +13,9 @@ export const ThemeSwitcher = () => {
     return (
         <div>
             {
-                (darkMode) ? 
-                <SunIcon onClick={toggleTheme} className="cursor-pointer hover:opacity-80 transition-opacity" width={24} height={24} /> : 
-                <MoonIcon onClick={toggleTheme} className="cursor-pointer hover:opacity-80 transition-opacity" width={24} height={24} />
+                (darkMode) ?
+                    <SunIcon onClick={toggleTheme} className="cursor-pointer hover:opacity-80 transition-opacity" width={24} height={24} /> :
+                    <MoonIcon onClick={toggleTheme} className="cursor-pointer hover:opacity-80 transition-opacity" width={24} height={24} />
             }
         </div>
     )

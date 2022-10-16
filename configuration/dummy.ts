@@ -1,3 +1,4 @@
+//menu static data
 export const menuData = {
     items: [
         {
@@ -16,4 +17,15 @@ export const menuData = {
             label: "favorites"
         }
     ]
+};
+
+//initialize context
+export const initialContext = {
+    loading: false,
+    darkMode: true,
+    favorites: [],
+    addToFavorites: () => { },
+    removeFromFavorites: () => { },
+    setLoading: () => { },
+    setDarkMode: () => { }
 };

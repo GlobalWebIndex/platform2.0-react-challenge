@@ -24,7 +24,7 @@ export const Layout = ({ children }: LayoutProps) => {
             </div>
 
             {
-                (loading) && 
+                (loading) &&
                 <div className="fixed z-20 w-screen h-screen bg-white/90 dark:bg-black/90 flex items-center justify-center">
                     <Image src="/icons/loader.png" width={48} height={48} loading="eager" alt="loader" />
                 </div>

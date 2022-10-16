@@ -7,7 +7,7 @@ export const Description = ({ alt_names, description, life_span, temperament }: 
     return (
         <>
             <p className="mb-8">{description}</p>
-                                                            
+
             {
                 (alt_names) &&
                 <div className="mb-4 text-sm text-gray-400">

@@ -37,27 +37,27 @@ const Favorites = ({ data }: PageData<FavoritesList>) => {
 
                 {
                     (data?.length > 0) ?
-                    <section className="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-0 md:gap-8">
-                        {
-                            data.map((favorite) => {
-                                return (
-                                    (favorite?.image?.url) &&
-                                    <article className="shadow hover:cursor-pointer aspect-square w-full relative overflow-hidden" key={favorite.id}>
-                                        <Favorite imageId={String(favorite?.image.id)} />
-                                        <Link as={`/breed/${String(favorite?.image.id)}`} href={`?breed=${String(favorite?.image.id)}`} shallow passHref>
-                                            <a>
-                                                <Image placeholder="blur" blurDataURL={favorite.image.url} loading="lazy" className="hover:opacity-60 transition-opacity" layout="fill" objectFit="cover" src={favorite.image.url} alt={favorite.image_id} />
-                                            </a>
-                                        </Link>
-                                    </article>
-                                )
-                            })
-                        }
-                    </section> :
-                    <section>
-                        <h2 className="text-2xl mb-4">{t("index:nocatsfound")}</h2>
-                        <p className="text-xl">{t("favorites:pleaseadd")}</p>
-                    </section>
+                        <section className="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-0 md:gap-8">
+                            {
+                                data.map((favorite) => {
+                                    return (
+                                        (favorite?.image?.url) &&
+                                        <article className="shadow hover:cursor-pointer aspect-square w-full relative overflow-hidden" key={favorite.id}>
+                                            <Favorite imageId={String(favorite?.image.id)} />
+                                            <Link as={`/breed/${String(favorite?.image.id)}`} href={`?breed=${String(favorite?.image.id)}`} shallow passHref>
+                                                <a>
+                                                    <Image placeholder="blur" blurDataURL={favorite.image.url} loading="lazy" className="hover:opacity-60 transition-opacity" layout="fill" objectFit="cover" src={favorite.image.url} alt={favorite.image_id} />
+                                                </a>
+                                            </Link>
+                                        </article>
+                                    )
+                                })
+                            }
+                        </section> :
+                        <section>
+                            <h2 className="text-2xl mb-4">{t("index:nocatsfound")}</h2>
+                            <p className="text-xl">{t("favorites:pleaseadd")}</p>
+                        </section>
                 }
             </div>
 

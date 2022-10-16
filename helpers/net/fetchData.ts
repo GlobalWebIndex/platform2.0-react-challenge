@@ -1,6 +1,6 @@
 import { FetchDataProps, FetchProps } from "interfaces/helpers/FetchData";
 
-export const fetchData: FetchDataProps = async ({method = "get", locale = "el-GR", accessToken = false, endpoint, data, serverSideProp, apikey, onStart, onEnd, customConfiguration}: FetchProps) => {    
+export const fetchData: FetchDataProps = async ({ method = "get", locale = "el-GR", accessToken = false, endpoint, data, serverSideProp, apikey, onStart, onEnd, customConfiguration }: FetchProps) => {
     const clientSide = (typeof window !== "undefined");
 
     //configuration object - can be overriden by the prop
@@ -18,7 +18,7 @@ export const fetchData: FetchDataProps = async ({method = "get", locale = "el-GR
 
     try {
         //call the callback function, if provided
-        if(typeof onStart === "function") 
+        if (typeof onStart === "function")
             onStart();
 
         const response = await fetch(endpoint, config);
@@ -27,12 +27,12 @@ export const fetchData: FetchDataProps = async ({method = "get", locale = "el-GR
         const data = (isJSON) ? await response.json() : response;
 
         //throw error on every response but a successful one
-        if(response?.status !== 200) {
+        if (response?.status !== 200) {
             throw Error(response?.status.toString())
         }
 
         //call the callback function, if provided
-        if(typeof onEnd === "function") 
+        if (typeof onEnd === "function")
             onEnd(data);
 
         //return the response, server side, or client side, based on prop
@@ -42,9 +42,9 @@ export const fetchData: FetchDataProps = async ({method = "get", locale = "el-GR
             }
         } : data
     }
-    catch (error: any | ErrorEvent) {      
+    catch (error: any | ErrorEvent) {
         //call the callback function, if provided
-        if(typeof onEnd === "function") 
+        if (typeof onEnd === "function")
             onEnd(error);
 
         //redirect to error page
@@ -55,7 +55,7 @@ export const fetchData: FetchDataProps = async ({method = "get", locale = "el-GR
                 redirect: {
                     destination: `/error/${error || ""}`,
                     permanent: false
-                } 
+                }
             }
     }
 };

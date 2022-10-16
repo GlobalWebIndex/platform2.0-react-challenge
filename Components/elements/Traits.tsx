@@ -14,7 +14,7 @@ export const Traits = (props: TraitProps) => {
                         <div key={trait + index} className="flex items-center">
                             <span className="text-gray-400 w-1/3">{t(trait)}</span>
                             <span className="text-gray-400 w-2/3 flex">
-                                <span style={{width: `${values[index] * 20}%`}} className={`inline-block h-[20px] bg-gray-200 dark:bg-gray-400 backdrop-blur-lg`} />
+                                <span style={{ width: `${values[index] * 20}%` }} className={`inline-block h-[20px] bg-gray-200 dark:bg-gray-400 backdrop-blur-lg`} />
                             </span>
                         </div>
                     )

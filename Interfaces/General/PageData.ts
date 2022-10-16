@@ -1,3 +1,3 @@
-export interface PageData <T> {
+export interface PageData<T> {
     data: T
 };

@@ -24,7 +24,7 @@ export const DetailsPopup = ({ details, onClose }: DetailsPopupProps) => {
     //get images from that breed and update UI
     useEffect(() => {
         const getImages = async () => {
-            if(details){
+            if (details) {
                 const data = await fetchData({ endpoint: `${endpoints.getAllCats}?breed_id=${details.id}&order=${constants.order}&size=${constants.size}&limit=6` + name, method: "get", apikey: constants.apikey });
                 setImages(data);
             }
