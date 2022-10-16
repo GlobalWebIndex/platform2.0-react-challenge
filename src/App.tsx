@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Router from "./Router/Router";
-import "./App.css";
 import { Grid } from "@mui/material";
-import TopBar from "./components/TopBar/TopBar";
+
 import { CatContext } from "./Context/CatContext";
+import TopBar from "./components/TopBar/TopBar";
 import { Breed, Cat, Favourite } from "./types/types";
 import { getBreedsList, getFavoriteCats, getRandomCats } from "./api/api";
+import "./App.css";
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
