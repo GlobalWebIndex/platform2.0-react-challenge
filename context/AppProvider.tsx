@@ -5,7 +5,6 @@ import { getCookie } from 'cookies-next';
 import { fetchData } from 'helpers/net/fetchData';
 import { ContextProps, FavoriteItemProps } from "interfaces/context/Context";
 import { WithChildrenProps } from "interfaces/general/WithChildren";
-import { useRouter } from 'next/router';
 import { createContext, useEffect, useState } from "react";
 
 //create the context
@@ -16,7 +15,6 @@ export const AppProvider = ({ children }: WithChildrenProps) => {
     const [loading, setLoading] = useState(initialContext.loading);
     const [darkMode, setDarkMode] = useState(initialContext.darkMode);
     const [favorites, setFavorites] = useState<FavoriteItemProps[]>(initialContext.favorites);
-    const router = useRouter();
 
     //add an image to favorites
     const addToFavorites = (favorite: FavoriteItemProps) => {
@@ -59,17 +57,8 @@ export const AppProvider = ({ children }: WithChildrenProps) => {
             setDarkMode(Boolean(darkMode));
         };
 
-        //get language / locale, from user cookie
-        const getLanguage = async () => {
-            const locale = await getCookie("language");
-
-            if (locale && String(locale) !== router.locale)
-                router.push(router.asPath, String(locale));
-        };
-
         getData();
         getTheme();
-        getLanguage();
     }, []);
 
     return (

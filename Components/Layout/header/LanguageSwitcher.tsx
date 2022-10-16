@@ -1,18 +1,12 @@
 import { GlobeEuropeAfricaIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
 import { LanguageSwitcherProps } from "interfaces/layout/LanguageSwitcher";
-import { setCookie } from "cookies-next";
 import Link from "next/link";
 import useTranslation from "next-translate/useTranslation";
 
 export const LanguageSwitcher = ({ showLanguages, setShowLanguages }: LanguageSwitcherProps) => {
     const router = useRouter();
     const { t } = useTranslation("common");
-
-    //save change to language to cookie
-    const handleLanguageChange = (locale: string) => {
-        setCookie("language", locale);
-    };
 
     return (
         <div className="flex relative">
@@ -27,7 +21,7 @@ export const LanguageSwitcher = ({ showLanguages, setShowLanguages }: LanguageSw
                             return (
                                 (locale !== router.locale) &&
                                 <Link scroll={false} href={router.asPath} locale={locale} passHref key={`${locale}-${index}`}>
-                                    <a className="mr-4 hover:opacity-80" href="#" onClick={() => handleLanguageChange(locale)}>{t(locale)}</a>
+                                    <a className="mr-4 hover:opacity-80" href="#">{t(locale)}</a>
                                 </Link>
                             )
                         })
