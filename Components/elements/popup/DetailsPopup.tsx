@@ -1,17 +1,17 @@
-import { DetailsPopupProps } from "interfaces/elements/DetailsPopup";
+import { DetailsPopupProps } from "interfaces/elements/popup/DetailsPopup";
 import { Popup } from "components/elements/popup/Popup";
 import { useEffect, useState } from "react";
 import { fetchData } from "helpers/net/fetchData";
 import { endpoints } from "configuration/endpoints";
 import { constants } from "configuration/constants";
 import { CatImage } from "interfaces/pages/Index";
-import useTranslation from "next-translate/useTranslation";
+import { Traits } from "components/elements/Traits";
+import { Description } from "components/elements/Description";
 import Image from "next/image";
 import Link from "next/link";
 
 export const DetailsPopup = ({ details, onClose }: DetailsPopupProps) => {
     const [images, setImages] = useState<CatImage[] | undefined>();
-    const { t } = useTranslation("breed");
 
     //handle popup close; call provided callback, and remove data
     const handleClosePopup = () => {
@@ -25,9 +25,8 @@ export const DetailsPopup = ({ details, onClose }: DetailsPopupProps) => {
     useEffect(() => {
         const getImages = async () => {
             if(details){
-                const data = await fetchData({ endpoint: `${endpoints.getAllCats}?breed_id=${details.id}&size=${constants.size}&limit=4` + name, method: "get", apikey: constants.apikey });
+                const data = await fetchData({ endpoint: `${endpoints.getAllCats}?breed_id=${details.id}&order=${constants.order}&size=${constants.size}&limit=6` + name, method: "get", apikey: constants.apikey });
                 setImages(data);
-                console.log(data);
             }
         };
 
@@ -39,45 +38,26 @@ export const DetailsPopup = ({ details, onClose }: DetailsPopupProps) => {
             {
                 (details) &&
                 <Popup onClose={handleClosePopup}>
-                    <div className={`overflow-y-auto h-full"}`}>
+                    <div className={`overflow-y-auto h-full overflow-hidden"}`}>
                         <div className="p-6 md:p-12">
                             <h3 className="text-2xl md:text-4xl mb-4 md:mb-8">{details.name}</h3>
                             <section className="border-t-[1px] pt-4 md:pt-8 border-t-gray-300 dark:border-t-gray-800">
+                                <Traits affection_level={details.affection_level} child_friendly={details.child_friendly} dog_friendly={details.dog_friendly} energy_level={details.energy_level} grooming={details.grooming} health_issues={details.health_issues} />
                                 <article className="text-base" key={details.id}>
-                                    {
-                                        (details.alt_names) &&
-                                        <div className="mb-4 text-sm text-gray-400">
-                                            <p>{t("alsoknownas")}</p>
-                                            <p>{details.alt_names}</p>
-                                        </div>
-                                    }
-                                    {
-                                        (details.temperament) &&
-                                        <div className="mb-8 text-sm text-gray-400">
-                                            <p>{t("temperament")}</p>
-                                            <p>{details.temperament}</p>
-                                        </div>
-                                    }
-                                    {
-                                        (details.life_span) &&
-                                        <div className="mb-4 text-sm text-gray-400">
-                                            <p>{t("lifespan")}</p>
-                                            <p>{details.life_span} {t("years")}</p>
-                                        </div>
-                                    }
-
-                                    <p>{details.description}</p>
+                                    <Description description={details.description} alt_names={details.alt_names} life_span={details.life_span} temperament={details.temperament} />
                                 </article>
                             </section>
 
-                            <section className="mt-12 grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                            <section className="mt-12 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
                                 {
                                     (images) &&
                                     images.map((image) => {
                                         return (
                                             <article key={image.id} className="shadow hover:cursor-pointer aspect-square w-full relative overflow-hidden">
-                                                <Link href={`/breed/${image.id}`}>
-                                                    <Image placeholder="blur" src={image.url} layout="fill" objectFit="cover" blurDataURL={image.url} loading="lazy" />
+                                                <Link href={`/breed/${image.id}`} passHref>
+                                                    <a>
+                                                        <Image className="hover:opacity-60 transition-opacity" placeholder="blur" src={image.url} layout="fill" objectFit="cover" blurDataURL={image.url} loading="lazy" />
+                                                    </a>
                                                 </Link>
                                             </article>
                                         )

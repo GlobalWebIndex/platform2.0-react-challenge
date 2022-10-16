@@ -75,7 +75,7 @@ const Cats = ({ data }: PageData<CatList>) => {
                     }
                 </div>
             </div>
-            <div className="fixed w-screen bottom-4 md:bottom-12 flex justify-center">
+            <div className="fixed w-screen bottom-4 md:bottom-12 flex justify-center z-20">
                 <Button disabled={loading} link={{ label: t("common:loadmore"), href: "" }} onClick={() => setPage(page + 1)} />
             </div>
 

@@ -1,11 +1,12 @@
-import { BreedPopupProps } from "interfaces/elements/BreedPopup";
+import { BreedPopupProps } from "interfaces/elements/popup/BreedPopup";
 import { Popup } from "components/elements/popup/Popup";
 import { useEffect, useState } from "react";
 import { CatImage } from "interfaces/pages/Index";
 import { fetchData } from "helpers/net/fetchData";
 import { endpoints } from "configuration/endpoints";
-import { Button } from "../Button";
-import { Favorite } from "../Favorite";
+import { Button } from "components/elements/Button";
+import { Favorite } from "components/elements/Favorite";
+import { Description } from "components/elements/Description";
 import Link from "next/link";
 import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
@@ -55,30 +56,7 @@ export const BreedPopup = ({ name, onClose }: BreedPopupProps) => {
                                                     return (
                                                         <article className="text-base" key={breed.id}>
                                                             <h3 className="text-xl mb-4"><Link href={`/breeds/${breed.id}`}>{breed.name}</Link></h3>
-                                                            {
-                                                                (breed.alt_names) &&
-                                                                <div className="mb-4 text-sm text-gray-400">
-                                                                    <p>{t("alsoknownas")}</p>
-                                                                    <p>{breed.alt_names}</p>
-                                                                </div>
-                                                            }
-                                                            {
-                                                                (breed.temperament) &&
-                                                                <div className="mb-8 text-sm text-gray-400">
-                                                                    <p>{t("temperament")}</p>
-                                                                    <p>{breed.temperament}</p>
-                                                                </div>
-                                                            }
-                                                            {
-                                                                (breed.life_span) &&
-                                                                <div className="mb-4 text-sm text-gray-400">
-                                                                    <p>{t("lifespan")}</p>
-                                                                    <p>{breed.life_span} {t("years")}</p>
-                                                                </div>
-                                                            }
-
-                                                            <p>{breed.description}</p>
-
+                                                            <Description description={breed.description} alt_names={breed.alt_names} life_span={breed.life_span} temperament={breed.temperament} />
                                                             <Link href={`/details/${breed.id}`}><Button className="mt-8" link={{ label: t("index:showmore"), href: "" }} /></Link>
                                                         </article>
                                                     )
