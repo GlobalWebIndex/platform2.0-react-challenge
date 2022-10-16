@@ -1,5 +1,5 @@
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { PopupProps } from "interfaces/elements/Popup";
+import { PopupProps } from "interfaces/elements/popup/Popup";
 import { createPortal } from "react-dom";
 
 export const Popup = ({ onClose = () => { }, children }: PopupProps) => {

@@ -13,3 +13,5 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
         </Link>
     )
 });
+
+Button.displayName = 'Button';
