@@ -62,7 +62,7 @@ const Cats = ({ data }: PageData<CatList>) => {
                                         <Favorite imageId={cat.id} />
                                         <Link as={`/breed/${cat.id}`} href={`?breed=${cat.id}`} shallow passHref>
                                             <a>
-                                                <Image placeholder="blur" blurDataURL={cat.url} loading="lazy" className="hover:opacity-60 transition-opacity" layout="fill" objectFit="cover" src={cat.url} />
+                                                <Image placeholder="blur" blurDataURL={cat.url} loading="lazy" className="hover:opacity-60 transition-opacity" layout="fill" objectFit="cover" src={cat.url} alt={cat.id} />
                                             </a>
                                         </Link>
                                     </div>

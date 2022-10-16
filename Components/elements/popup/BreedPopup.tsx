@@ -43,7 +43,7 @@ export const BreedPopup = ({ name, onClose }: BreedPopupProps) => {
                         (data) ?
                             <div className={`overflow-y-auto h-full md:grid ${(data?.breeds?.length > 0) ? "md:grid-cols-2" : "md:grid-cols-1"}`}>
                                 <div className={`relative ${(data?.breeds?.length > 0) && "h-[300px] md:h-auto"} h-full`}>
-                                    <Image objectFit="cover" layout="fill" src={data.url} loading="lazy" blurDataURL={data.url} />
+                                    <Image objectFit="cover" layout="fill" src={data.url} loading="lazy" blurDataURL={data.url} alt={data.id} />
                                     <Favorite imageId={data.id} />
                                 </div>
                                 {
@@ -66,7 +66,7 @@ export const BreedPopup = ({ name, onClose }: BreedPopupProps) => {
                                     </div>
                                 }
                             </div> :
-                            <div className="h-full flex items-center justify-center"><Image src="/icons/loader.png" width={48} height={48} loading="eager" /></div>
+                            <div className="h-full flex items-center justify-center"><Image src="/icons/loader.png" width={48} height={48} loading="eager" alt="loader" /></div>
                     }
                 </Popup>
             }

@@ -56,7 +56,7 @@ export const DetailsPopup = ({ details, onClose }: DetailsPopupProps) => {
                                             <article key={image.id} className="shadow hover:cursor-pointer aspect-square w-full relative overflow-hidden">
                                                 <Link href={`/breed/${image.id}`} passHref>
                                                     <a>
-                                                        <Image className="hover:opacity-60 transition-opacity" placeholder="blur" src={image.url} layout="fill" objectFit="cover" blurDataURL={image.url} loading="lazy" />
+                                                        <Image className="hover:opacity-60 transition-opacity" placeholder="blur" src={image.url} layout="fill" objectFit="cover" blurDataURL={image.url} loading="lazy" alt={image.id} />
                                                     </a>
                                                 </Link>
                                             </article>

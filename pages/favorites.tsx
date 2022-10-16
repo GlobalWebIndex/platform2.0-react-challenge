@@ -46,7 +46,7 @@ const Favorites = ({ data }: PageData<FavoritesList>) => {
                                         <Favorite imageId={String(favorite?.image.id)} />
                                         <Link as={`/breed/${String(favorite?.image.id)}`} href={`?breed=${String(favorite?.image.id)}`} shallow passHref>
                                             <a>
-                                                <Image placeholder="blur" blurDataURL={favorite.image.url} loading="lazy" className="hover:opacity-60 transition-opacity" layout="fill" objectFit="cover" src={favorite.image.url} />
+                                                <Image placeholder="blur" blurDataURL={favorite.image.url} loading="lazy" className="hover:opacity-60 transition-opacity" layout="fill" objectFit="cover" src={favorite.image.url} alt={favorite.image_id} />
                                             </a>
                                         </Link>
                                     </article>
