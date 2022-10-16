@@ -22,7 +22,7 @@ export const menuData = {
 //initialize context
 export const initialContext = {
     loading: false,
-    darkMode: true,
+    darkMode: false,
     favorites: [],
     addToFavorites: () => { },
     removeFromFavorites: () => { },

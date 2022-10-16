@@ -1,10 +1,11 @@
 import { constants } from 'configuration/constants';
 import { initialContext } from 'configuration/dummy';
 import { endpoints } from 'configuration/endpoints';
-import { setCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
 import { fetchData } from 'helpers/net/fetchData';
 import { ContextProps, FavoriteItemProps } from "interfaces/context/Context";
 import { WithChildrenProps } from "interfaces/general/WithChildren";
+import { useRouter } from 'next/router';
 import { createContext, useEffect, useState } from "react";
 
 //create the context
@@ -15,6 +16,7 @@ export const AppProvider = ({ children }: WithChildrenProps) => {
     const [loading, setLoading] = useState(initialContext.loading);
     const [darkMode, setDarkMode] = useState(initialContext.darkMode);
     const [favorites, setFavorites] = useState<FavoriteItemProps[]>(initialContext.favorites);
+    const router = useRouter();
 
     //add an image to favorites
     const addToFavorites = (favorite: FavoriteItemProps) => {
@@ -36,7 +38,7 @@ export const AppProvider = ({ children }: WithChildrenProps) => {
         }
     };
 
-    //fill data from cookies on mount
+    //fill data, on mount
     useEffect(() => {
         const getData = async () => {
             const data = await fetchData({ endpoint: endpoints.favorite, method: "get", apikey: constants.apikey });
@@ -49,13 +51,27 @@ export const AppProvider = ({ children }: WithChildrenProps) => {
             setFavorites(favoritesData);
         };
 
+        //get theme, from user cookie
+        const getTheme = async () => {
+            const cookieData = await getCookie("darkmode");
+            setDarkMode(Boolean(cookieData));
+        };
+
+        //get language / locale, from user cookie
+        const getLanguage = async () => {
+            const cookieData = await getCookie("language");
+            router.push(router.asPath, String(cookieData));
+        };
+
         getData();
+        getTheme();
+        getLanguage();
     }, []);
 
-    //save the changes to the cookie
     useEffect(() => {
-        setCookie("favorites", favorites);
-    }, [favorites]);
+        if (router?.locale)
+            setCookie("language", router.locale);
+    }, [router.locale]);
 
     return (
         <AppContext.Provider value={{ loading, setLoading, darkMode, setDarkMode, favorites, addToFavorites, removeFromFavorites }}>
