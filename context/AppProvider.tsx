@@ -1,7 +1,7 @@
 import { constants } from 'configuration/constants';
 import { initialContext } from 'configuration/dummy';
 import { endpoints } from 'configuration/endpoints';
-import { getCookie, setCookie } from 'cookies-next';
+import { getCookie } from 'cookies-next';
 import { fetchData } from 'helpers/net/fetchData';
 import { ContextProps, FavoriteItemProps } from "interfaces/context/Context";
 import { WithChildrenProps } from "interfaces/general/WithChildren";
@@ -48,30 +48,29 @@ export const AppProvider = ({ children }: WithChildrenProps) => {
                     favoriteId: item.id
                 }
             });
+
             setFavorites(favoritesData);
         };
 
         //get theme, from user cookie
         const getTheme = async () => {
-            const cookieData = await getCookie("darkmode");
-            setDarkMode(Boolean(cookieData));
+            const darkMode = await getCookie("darkmode");
+
+            setDarkMode(Boolean(darkMode));
         };
 
         //get language / locale, from user cookie
         const getLanguage = async () => {
-            const cookieData = await getCookie("language");
-            router.push(router.asPath, String(cookieData));
+            const locale = await getCookie("language");
+
+            if (locale && String(locale) !== router.locale)
+                router.push(router.asPath, String(locale));
         };
 
         getData();
         getTheme();
         getLanguage();
     }, []);
-
-    useEffect(() => {
-        if (router?.locale)
-            setCookie("language", router.locale);
-    }, [router.locale]);
 
     return (
         <AppContext.Provider value={{ loading, setLoading, darkMode, setDarkMode, favorites, addToFavorites, removeFromFavorites }}>
