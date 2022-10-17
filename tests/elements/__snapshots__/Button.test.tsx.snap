@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button renders correctly 1`] = `
+<div>
+  <button
+    class="disabled:opacity-0 disabled:pointer-events-none bg-gradient-to-br from-gray-200 to-gray-100 dark:from-gray-800 dark:to-gray-900 backdrop-blur-lg px-12 py-2 md:py-3 block "
+    data-testid="button"
+    type="button"
+  >
+    Press me
+  </button>
+</div>
+`;

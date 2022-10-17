@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Description Renders correctly 1`] = `
+<div>
+  <p
+    class="mb-8"
+  >
+    Description
+  </p>
+  <div
+    class="mb-4 text-sm text-gray-400"
+  >
+    <p>
+      alsoknownas
+    </p>
+    <p>
+      Other Names
+    </p>
+  </div>
+  <div
+    class="mb-4 text-sm text-gray-400"
+  >
+    <p>
+      temperament
+    </p>
+    <p>
+      Temperament
+    </p>
+  </div>
+  <div
+    class="mb-4 text-sm text-gray-400"
+  >
+    <p>
+      lifespan
+    </p>
+    <p>
+      Life Span
+       
+      years
+    </p>
+  </div>
+</div>
+`;

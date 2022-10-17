@@ -1,0 +1,13 @@
+{
+    "greeting": "Γειά σας!",
+    "title": "CatLover",
+    "author": "Nikos Roussounelos",
+    "description": "A small scale Next.js app for cat lovers.",
+    "keywords": "cats, paws, cuty, yay",
+    "loading": "Φόρτωση...",
+    "el": "Ελληνικά",
+    "jp": "Ιαπωνικά",
+    "en": "Αγγλικά",
+    "loadmore": "Περισσότερα",
+    "error": "Η εφαρμογή κράσαρε. Παρακαλώ προσπαθήστε αργότερα."
+}

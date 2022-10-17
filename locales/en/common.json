@@ -1,0 +1,13 @@
+{
+    "greeting": "Hello!",
+    "title": "CatLover",
+    "author": "Nikos Roussounelos",
+    "description": "A small scale Next.js app for cat lovers.",
+    "keywords": "cats, paws, cuty, yay",
+    "loading": "loading...",
+    "el": "Greek",
+    "jp": "Japanese",
+    "en": "English",
+    "loadmore": "Load more",
+    "error": "An application error has occured; Please retry again later."
+}
