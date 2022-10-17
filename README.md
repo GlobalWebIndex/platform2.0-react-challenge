@@ -1,6 +1,18 @@
-This is a Cat Lover's App built with React, via Next.js. It features Themes, Language support, Jest testing, cookies for saving state, bundle analyzer for optimization, Typescript, SSR, Image optimizations, Tailwind for styling and more.
+This is an assignment app built with React, via Next.js. It lets users see random cat images via an API, save their favorites, and check information on their breeds.
 
-## NPM Scripts
+## Features 
+
+* Next.js implementation (SSR, routing, Image and Link optimizations, and much more).
+* Cookies for saving user state on refresh.
+* Typescript, for type checking and more sustainable and maintainable codebase.
+* React context, to share state and avoid prop drilling.
+* Jest testing, though due to lack of time, not many were implemented.
+* Tailwind used for theming.
+* Multilingual support
+* Static data like endpoints, and configuration stored in centralised configuration files.
+
+
+### NPM Scripts
 
 To run the development server:
 
