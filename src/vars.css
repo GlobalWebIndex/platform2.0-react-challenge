@@ -1,0 +1,25 @@
+:root {
+  --color-body-background: #fafad2;
+  --color-text: #222a38;
+  --color-modal-background: white;
+  --color-modal-button-background: #dddde5;
+  --color-modal-button-background-hover: #c0c0cb;
+  --color-modal-overlay-background: rbga(250, 250, 210, 0.8);
+  --color-sidebar-background: rgba(255, 215, 0, 0.2);
+  --color-sidebar-menu-item-background: khaki;
+  --color-footer-background: rgba(255, 215, 0, 0.2);
+  --color-table-row-background: rgba(255, 215, 0, 0.2);
+  --color-table-row-background-hover: rgba(255, 215, 0, 0.3);
+  --color-table-row-header-background: rgba(255, 215, 0, 0.6);
+  --color-toolbar-background: rgba(255, 255, 255, 0.3);
+  --color-toggle-button-background: white;
+  --color-tooltip-content-background: rgba(114, 167, 207, 0.75);
+  --color-remove-favourite-background: rgba(255, 255, 255, 0.85);
+  --color-remove-favourite-background-hover: khaki;
+  --color-column-text: white;
+  --color-details-text: white;
+  --color-show-more-text: white;
+  --gradient-show-more-background: linear-gradient(45deg, gold 10%, orange);
+  --gradient-skeleton-background: linear-gradient(135deg,rgba(199, 199, 199, 1) 25%,rgba(255, 255, 255, 1) 50%,rgba(199, 199, 199, 1) 75%);
+}
+
