@@ -1,7 +1,7 @@
 export const config = {
   api: {
     domain: 'https://api.thecatapi.com',
-    key: 'live_sB0L9ntScNIIxnbBEAHvsU6MmeW9Ogn6AYZoSjoGsrlofbV9tvwdc6RUn8oiR6kI',
+    key: String(process.env.REACT_APP_CAT_API_KEY),
     limit: 10,
     version: 'v1'
   }

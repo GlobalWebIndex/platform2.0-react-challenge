@@ -37,7 +37,7 @@ context('My Cat App', () => {
     });
 
     it(`should save an image as 'favourite'`, () => {
-      cy.intercept('POST', '*favourites*', {
+      cy.intercept('POST', '*/favourites*', {
         fixture: 'favourites.json'
       }).as('favourite');
       cy.get('[data-test="favourite"]')
@@ -84,23 +84,38 @@ context('My Cat App', () => {
   describe(`Open the app directly on 'favorites' page`, () => {
     before(() => {
       cy.visit('http://localhost:3000/favourites');
+      cy.intercept('GET', '*/favourites', {
+        fixture: 'favourites.json'
+      }).as('favourites');
+      cy.wait('@favourites');
     });
 
     it('should show a list of favourite images', () => {
       cy.get('[data-test="title"]').should('have.text', 'favourites');
       cy.get('[data-test="favourites"] > *').should('have.length', 12);
     });
+
+    it('should delete a favourite image', () => {
+      cy.intercept('DELETE', /\/favourites\//, {
+        fixture: 'delete-favourite.json'
+      }).as('deletion');
+      cy.get('[data-test="delete"]').last().click();
+      cy.wait('@deletion');
+      cy.intercept('GET', '*/favourites', {
+        fixture: 'favourites-after-deletion.json'
+      }).as('favouritesAfterDeletion');
+      cy.wait('@favouritesAfterDeletion');
+      cy.get('[data-test="favourites"] > *').should('have.length', 11);
+    });
   });
 
   describe(`Open the app directly on an image`, () => {
     before(() => {
-      cy.visit('http://localhost:3000/images/747');
+      cy.visit('http://localhost:3000/images/agwTe5TSe');
     });
 
     it('should show a specific image', () => {
       cy.get('[data-test="cat-image-modal"]').should('be.visible');
-      cy.wait(2000);
-      cy.get('[data-test="original-cat-image"]').should('be.visible');
     });
 
     it('should close modal to show the home page', () => {

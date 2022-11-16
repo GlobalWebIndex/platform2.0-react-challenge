@@ -15,12 +15,16 @@ const Image = styled.div<{ url: string }>`
 
 const Bin = styled.div`
   cursor: pointer;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 
   &::before {
-    content: '';
-    background-image: url('${binIcon}');
-    background-size: 100%;
+    content: url('${binIcon}');
+    display: block;
     width: 16px;
     height: 16px;
     position: absolute;
@@ -31,6 +35,7 @@ const Bin = styled.div`
 
   &::after {
     content: '';
+    display: block;
     background: var(--color-remove-favourite-background);
     box-shadow: 0 0 16px rgba(0, 0, 0, 45%);
     position: absolute;

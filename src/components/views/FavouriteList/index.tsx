@@ -34,6 +34,7 @@ function FavouriteList() {
           <Image url={item.image.url} />
           <Styled.Bin
             role="button"
+            data-test="delete"
             onClick={() => handleRemoveFavourite(item.id)}
           />
         </>

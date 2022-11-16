@@ -1,5 +1,10 @@
 import { Suspense, lazy, useReducer } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate
+} from 'react-router-dom';
 
 import Layout from 'components/parts/Layout';
 import reducer, { ActionType, State } from 'reducers';
@@ -110,7 +115,7 @@ function App() {
                 element={<BreedList onSelectImage={handleSelectImage} />}
               />
               <Route path="favourites" element={<FavouriteList />} />
-              <Route path="*" element={null} />
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>
         </Layout>
