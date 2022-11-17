@@ -1,3 +1,17 @@
+import { useLoaderData } from "react-router-dom";
+import { config } from "../config";
+
+export async function loader() {
+  return await fetch(`${config.url}/breeds`, {
+    headers: config.headers,
+  });
+}
+
 export function Breeds() {
-  return <div className="text-teal-500">Breeds</div>;
+  const data = useLoaderData();
+  return (
+    <div className="text-teal-500">
+      <pre>{JSON.stringify(data, null, " ")}</pre>
+    </div>
+  );
 }
