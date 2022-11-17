@@ -2,7 +2,7 @@ import { Link, Outlet } from "react-router-dom";
 
 export function Root() {
   return (
-    <>
+    <div className="flex flex-col h-screen">
       <header>
         <nav>
           <ul className="flex space-x-4">
@@ -24,9 +24,9 @@ export function Root() {
           </ul>
         </nav>
       </header>
-      <main>
+      <main className="flex flex-1">
         <Outlet />
       </main>
-    </>
+    </div>
   );
 }
