@@ -1,4 +1,4 @@
-import { Link, Outlet, ScrollRestoration } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 export function Root() {
   return (
@@ -27,7 +27,6 @@ export function Root() {
       <main className="flex-1 py-1">
         <Outlet />
       </main>
-      <ScrollRestoration />
     </div>
   );
 }

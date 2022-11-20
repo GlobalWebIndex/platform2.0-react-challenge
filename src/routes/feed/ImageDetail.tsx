@@ -7,20 +7,15 @@ import {
 } from "react-router-dom";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross2Icon, StarIcon, Link2Icon } from "@radix-ui/react-icons";
-import { config } from "../config";
-import type { ImageStore, Actions, Image } from "./router";
-import { useState } from "react";
+import { ImageService } from "../../api";
+import type { ImageStore, Actions, Image } from "../router";
 
 export function loader(store: ImageStore, actions: Actions) {
   return async function ({ params }: LoaderFunctionArgs) {
-    console.log("image loader");
-
     if (!store.byId.has(params.imgId!)) {
-      const result = (await fetch(`${config.url}/images/${params.imgId!}`, {
-        headers: {
-          ...config.headers,
-        },
-      }).then((r) => r.json())) as Image;
+      const result = (await ImageService.getImage(params.imgId!).then((r) =>
+        r.json()
+      )) as Image;
 
       actions.saveImage(result);
     }
@@ -47,7 +42,7 @@ export function ImageDetail() {
               alt={image.id}
               width={image.width}
               height={image.height}
-              className="max-h-[60vh] block object-cover"
+              className="max-h-[75vh] block object-cover"
               src={image.url}
             />
           </div>
@@ -63,7 +58,7 @@ export function ImageDetail() {
                       className="hover:underline text-blue-600 hover:text-blue-700"
                       to={`/breeds/${breed.id}`}
                     >
-                      breeds
+                      detail
                     </Link>
                     <div className="border-l border-cool-gray-800"></div>
                     {breed.wikipedia_url && (
@@ -82,9 +77,6 @@ export function ImageDetail() {
 
                 <div>
                   <div className="space-y-1 px-1">
-                    <Dialog.Description className="text-sm leading-4 text-gray-600">
-                      {breed.description}
-                    </Dialog.Description>
                     <div className="flex space-x-2 text-sm">
                       <div className="text-gray-500 ">Temperament:</div>
                       <div className="text-gray-900 ">{breed.temperament}</div>

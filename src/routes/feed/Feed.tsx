@@ -8,23 +8,17 @@ import {
   useFetcher,
   useLoaderData,
 } from "react-router-dom";
-import { config } from "../config";
-import type { ImageStore, Image, Actions } from "./router";
+import type { ImageStore, Image, Actions } from "../router";
+import { ImageService } from "../../api";
 
-const limit = 10;
 export function loader(store: ImageStore, actions: Actions) {
   return async function ({ request }: LoaderFunctionArgs) {
     const url = new URL(request.url);
     const page = parseInt(url.searchParams.get("page") ?? "1", 10);
     if ((store.ids.size === 0 && page === 1) || page > 1) {
-      const results = (await fetch(
-        `${config.url}/images/search?limit=${limit}&page=${page ?? 1}`,
-        {
-          headers: {
-            ...config.headers,
-          },
-        }
-      ).then((r) => r.json())) as Image[];
+      const results = (await ImageService.getRandomImages(page).then((r) =>
+        r.json()
+      )) as Image[];
       results.forEach((element) => {
         actions.saveImage(element);
       });

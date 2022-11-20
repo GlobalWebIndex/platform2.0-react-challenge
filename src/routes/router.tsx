@@ -7,15 +7,10 @@ import {
 } from "react-router-dom";
 import { proxy } from "valtio";
 import { proxySet, proxyMap } from "valtio/utils";
-import {
-  BreedDetail,
-  breedLoader,
-  Breeds,
-  loader as breedsLoader,
-} from "./Breeds";
+import { Breeds, BreedDetail, breedsLoader, breedLoader } from "./breeds";
 import { Favourites, loader as favoritesLoader } from "./Favorites";
-import { Feed, loader as feedLoader } from "./Feed";
-import { ImageDetail, loader as imageLoader } from "./ImageDetail";
+import { Feed, loader as feedLoader } from "./feed/Feed";
+import { ImageDetail, loader as imageLoader } from "./feed/ImageDetail";
 import { Root } from "./Root";
 
 // the api exposes openapi but doesnt define Schema/Models so you cannot use openapi generator to generate types :(

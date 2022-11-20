@@ -5,13 +5,12 @@ import {
   useLoaderData,
 } from "react-router-dom";
 import { snapshot } from "valtio";
-import { config } from "../config";
-import type { BreedStore, Breed, Actions } from "./router";
+import { config } from "../../config";
+import type { BreedStore, Breed, Actions } from "../router";
 
 function pickBreed(breed: Breed) {
   return { id: breed.id, name: breed.name, origin: breed.origin };
 }
-
 type BreedListItem = ReturnType<typeof pickBreed>;
 
 export function loader(store: BreedStore, actions: Actions) {
@@ -33,30 +32,6 @@ export function loader(store: BreedStore, actions: Actions) {
 
     return breeds;
   };
-}
-
-export function breedLoader(store: BreedStore, actions: Actions) {
-  return async function ({ params }: LoaderFunctionArgs) {
-    if (!store.byId.has(params.breedId!)) {
-      const breed = (await fetch(`${config.url}/breeds/${params.breedId!}`, {
-        headers: config.headers,
-      }).then((r) => r.json())) as Breed;
-      actions.saveBreed(breed);
-    }
-
-    return snapshot(store).byId.get(params.breedId!);
-  };
-}
-export function BreedDetail() {
-  const breed = useLoaderData() as Breed;
-  return (
-    <article className="space-y-4">
-      <header>
-        <h2 className="text-3xl bold">{breed?.name}</h2>
-      </header>
-      <p>{breed?.description}</p>
-    </article>
-  );
 }
 
 export function Breeds() {
