@@ -8,8 +8,9 @@ import {
   useFetcher,
   useLoaderData,
 } from "react-router-dom";
-import type { ImageStore, Image, Actions } from "../router";
-import { ImageService } from "../../api";
+import type { ImageStore, Image as ImageType, Actions } from "../router";
+import { ImageService } from "~/api";
+import { Image, ImageGrid } from "~/components";
 
 export function loader(store: ImageStore, actions: Actions) {
   return async function ({ request }: LoaderFunctionArgs) {
@@ -18,7 +19,7 @@ export function loader(store: ImageStore, actions: Actions) {
     if ((store.ids.size === 0 && page === 1) || page > 1) {
       const results = (await ImageService.getRandomImages(page).then((r) =>
         r.json()
-      )) as Image[];
+      )) as ImageType[];
       results.forEach((element) => {
         actions.saveImage(element);
       });
@@ -32,7 +33,7 @@ export function loader(store: ImageStore, actions: Actions) {
 }
 
 type LoaderData = {
-  images: Image[];
+  images: ImageType[];
   actions: Actions;
 };
 
@@ -50,29 +51,14 @@ export function Feed() {
   }, [fetcher.data]);
 
   return (
-    <div className="grid gap-4 grid-cols-4 m-2">
-      {images.map((img: Image, index: number) => (
-        <Link
-          // since api returns 10 random images we need to use index
-          key={`${img.id}-${index}`}
-          to={img.id}
-          className="h-52 overflow-hidden border rounded-lg shadow-lg hover:shadow-xl hover:scale-105"
-        >
-          <img
-            alt={img.id}
-            className="w-full shadow-lg block roundex-xl h-full object-cover"
-            src={img.url}
-          />
-        </Link>
-      ))}
-      <div className="relative border h-52 rounded-lg shadow-lg">
-        <button
-          onClick={() => fetcher.load(`/feed?page=${page + 1}`)}
-          className="flex items-center justify-center absolute top-0 bottom-0 left-0 right-0"
-        >
-          {fetcher.state === "loading" ? "Loading..." : "Load more"}
-        </button>
-      </div>
+    <div>
+      <ImageGrid
+        images={images}
+        loadMore={{
+          onClick: () => fetcher.load(`/feed?page=${page + 1}`),
+          isLoading: fetcher.state === "loading",
+        }}
+      />
       <Outlet />
     </div>
   );

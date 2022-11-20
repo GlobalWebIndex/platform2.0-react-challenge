@@ -9,7 +9,7 @@ import { proxy } from "valtio";
 import { proxySet, proxyMap } from "valtio/utils";
 import { Breeds, BreedDetail, breedsLoader, breedLoader } from "./breeds";
 import { Favourites, loader as favoritesLoader } from "./Favorites";
-import { Feed, loader as feedLoader } from "./feed/Feed";
+import { Feed, loader as feedLoader } from "./feed/ImageFeed";
 import { ImageDetail, loader as imageLoader } from "./feed/ImageDetail";
 import { Root } from "./Root";
 
