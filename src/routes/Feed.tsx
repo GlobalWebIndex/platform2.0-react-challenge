@@ -1,60 +1,64 @@
 import { useEffect, useState } from "react";
+import { proxy, snapshot } from "valtio";
 import {
   Form,
   Link,
   LoaderFunctionArgs,
   useFetcher,
   useLoaderData,
-  useSearchParams,
-  useSubmit,
 } from "react-router-dom";
 import { config } from "../config";
+import type { ImageStore, Image, ImageActions } from "./router";
 
-type Category = {
-  id: number;
-  name: string;
-};
-type Breed = {};
-type Image = {
-  id: string;
-  url: string;
-  width: number;
-  height: number;
-  breeds: Breed[];
-  categories?: Category[];
-};
+const limit = 10;
+export function loader(store: ImageStore, actions: ImageActions) {
+  return async function ({ request }: LoaderFunctionArgs) {
+    const url = new URL(request.url);
+    const page = parseInt(url.searchParams.get("page") ?? "1", 10);
+    if ((store.ids.size === 0 && page === 1) || page > 1) {
+      const results = (await fetch(
+        `${config.url}/images/search?limit=${limit}&page=${page ?? 1}`,
+        {
+          headers: {
+            ...config.headers,
+          },
+        }
+      ).then((r) => r.json())) as Image[];
+      results.forEach((element) => {
+        actions.saveImage(element);
+      });
+    }
 
-// the requirement is to load 10 random images, don't see the point on loading it on frontend
-// load more functionality would make more sense when fetching in some precise order
-export async function loader({ request }: LoaderFunctionArgs) {
-  const url = new URL(request.url);
-  // page here is useless actually since we are returning random images
-  const page = url.searchParams.get("page") ?? 1;
-  console.log("running loader", request);
-  return await fetch(`${config.url}/images/search?limit=10&page=${page}`, {
-    headers: {
-      ...config.headers,
-    },
-  }).then((r) => r.json());
+    return {
+      images: [...snapshot(store.byId).values()],
+      actions,
+    };
+  };
 }
 
-export function Feed() {
-  const data = useLoaderData() as Image[];
-  const [images, setImages] = useState(data);
-  const [nextPage, setNextPage] = useState(1);
-  const fetcher = useFetcher();
-  useEffect(() => {
-    console.log("fetcher", fetcher.data);
+type LoaderData = {
+  images: Image[];
+  actions: ImageActions;
+};
 
-    fetcher.data && setImages((imgs) => imgs.concat(fetcher.data) as Image[]);
-    setNextPage((np) => np + 1);
-  }, [fetcher]);
+export function Feed() {
+  const { images: initialImages, actions } = useLoaderData() as LoaderData;
+  const fetcher = useFetcher<LoaderData>();
+  const [page, setPage] = useState(1);
+  const [images, setImages] = useState(initialImages);
+
+  useEffect(() => {
+    if (fetcher.data) {
+      setImages(fetcher.data.images);
+      setPage((p) => p + 1);
+    }
+  }, [fetcher.data]);
 
   return (
     <div className="grid gap-4 grid-cols-4 m-2">
       {images.map((img: Image, index: number) => (
         <Link
-          // since api returns 10 random images we need to use index to and live duplicites
+          // since api returns 10 random images we need to use index
           key={`${img.id}-${index}`}
           to={img.id}
           className="h-52 overflow-hidden border rounded-lg shadow-lg hover:shadow-xl hover:scale-105"
@@ -69,10 +73,10 @@ export function Feed() {
 
       <div className="relative border h-52 rounded-lg shadow-lg">
         <button
-          onClick={() => fetcher.load(`/feed?page=${nextPage}`)}
+          onClick={() => fetcher.load(`/feed?page=${page + 1}`)}
           className="flex items-center justify-center absolute top-0 bottom-0 left-0 right-0"
         >
-          Load more
+          {fetcher.state === "loading" ? "Loading..." : "Load more"}
         </button>
       </div>
     </div>
