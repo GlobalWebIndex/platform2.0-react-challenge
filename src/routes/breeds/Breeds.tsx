@@ -60,7 +60,7 @@ export function Breeds() {
             ))}
           </ul>
         </div>
-        <div className="flex-1 px-4">
+        <div className="overflow-auto flex-1 px-4">
           <Outlet />
         </div>
       </div>

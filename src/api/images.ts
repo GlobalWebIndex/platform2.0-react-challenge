@@ -13,3 +13,11 @@ export async function getImage(imgId: string) {
     headers: config.headers,
   });
 }
+
+export async function getImagesForBreed(breedId: string) {
+  return fetch(`${config.url}/images/search?breed_ids=${breedId}&limit=10`, {
+    headers: {
+      ...config.headers,
+    },
+  });
+}

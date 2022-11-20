@@ -115,6 +115,13 @@ export const router = createBrowserRouter([
             path: ":breedId",
             loader: breedLoader(breedStore, actions),
             element: <BreedDetail />,
+            children: [
+              {
+                path: ":imgId",
+                loader: imageLoader(imageStore, actions),
+                element: <ImageDetail />,
+              },
+            ],
           },
         ],
       },

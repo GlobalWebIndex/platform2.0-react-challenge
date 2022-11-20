@@ -41,7 +41,7 @@ export function ImageDetail() {
   return (
     <Modal
       isOpen={params.imgId === image?.id}
-      onOpenChange={() => navigate("/feed")}
+      onOpenChange={() => navigate(-1)}
     >
       <Card>
         <CardBody>
