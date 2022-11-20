@@ -1,3 +1,4 @@
+import { Children } from "react";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -6,7 +7,12 @@ import {
 } from "react-router-dom";
 import { proxy } from "valtio";
 import { proxySet, proxyMap } from "valtio/utils";
-import { Breeds, loader as breedsLoader } from "./Breeds";
+import {
+  BreedDetail,
+  breedLoader,
+  Breeds,
+  loader as breedsLoader,
+} from "./Breeds";
 import { Favourites, loader as favoritesLoader } from "./Favorites";
 import { Feed, loader as feedLoader } from "./Feed";
 import { ImageDetail, loader as imageLoader } from "./ImageDetail";
@@ -15,14 +21,20 @@ import { Root } from "./Root";
 // the api exposes openapi but doesnt define Schema/Models so you cannot use openapi generator to generate types :(
 // I joined the discord and asked creator of the catapi if he can update or expose it on the thedogapi where model definitions are present
 
+type NormalizedStore<T extends { id: string }> = {
+  ids: Set<string>;
+  byId: Map<string, T>;
+};
+
 type Category = {
   id: number;
   name: string;
 };
 
-type Breed = {
+export type Breed = {
   id: string;
   name: string;
+  description: string;
   temperament: string;
   origin: string;
   country_codes: string;
@@ -46,58 +58,80 @@ export type Image = {
 // but to my understanding if redux was modeled after elm, the patterns should work the same
 // so the person reviewing this would appreciate this so it could score me some bonus points.
 // I am just really hoping that he find this funny otherwise I come out as arrogant, which can score me negative points
-export type ImageStore = {
-  ids: Set<string>;
-  byId: Map<string, Image>;
+export type ImageStore = NormalizedStore<Image> & {
   favorites: Set<string>;
 };
+export type BreedStore = NormalizedStore<Breed>;
 
-const store = proxy<ImageStore>({
+const imageStore = proxy<ImageStore>({
   ids: proxySet([]),
+  byId: proxyMap(),
   favorites: proxySet([]),
+});
+
+const breedStore = proxy<BreedStore>({
+  ids: proxySet([]),
   byId: proxyMap(),
 });
 
 const actions = {
   saveImage: (img: Image) => {
-    store.byId.set(img.id, img);
-    store.ids.add(img.id);
+    imageStore.byId.set(img.id, img);
+    imageStore.ids.add(img.id);
+  },
+  saveBreed: (breed: Breed) => {
+    breedStore.byId.set(breed.id, breed);
+    breedStore.ids.add(breed.id);
   },
   toggleFavorite: (img: Image) => {
-    if (store.favorites.has(img.id)) {
-      store.favorites.delete(img.id);
+    if (imageStore.favorites.has(img.id)) {
+      imageStore.favorites.delete(img.id);
     } else {
-      store.favorites.add(img.id);
+      imageStore.favorites.add(img.id);
     }
   },
 };
 
-export type ImageActions = typeof actions;
+export type Actions = typeof actions;
 
-export const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<Root />}>
-      <Route
-        path="feed"
-        loader={feedLoader(store, actions)}
-        element={
-          <>
-            <Feed />
-          </>
-        }
-      >
-        <Route
-          path=":imgId"
-          loader={imageLoader(store, actions)}
-          element={<ImageDetail />}
-        />
-      </Route>
-      <Route path="breeds" loader={breedsLoader} element={<Breeds />} />
-      <Route
-        path="favorites"
-        loader={favoritesLoader}
-        element={<Favourites />}
-      />
-    </Route>
-  )
-);
+function Test() {
+  return <div>hello world</div>;
+}
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    children: [
+      {
+        path: "feed",
+        loader: feedLoader(imageStore, actions),
+        element: <Feed />,
+        children: [
+          {
+            path: ":imgId",
+            loader: imageLoader(imageStore, actions),
+            element: <ImageDetail />,
+          },
+        ],
+      },
+      {
+        path: "breeds",
+        loader: breedsLoader(breedStore, actions),
+        element: <Breeds />,
+        children: [
+          {
+            path: ":breedId",
+            loader: breedLoader(breedStore),
+            element: <BreedDetail />,
+          },
+        ],
+      },
+
+      {
+        path: "favorites",
+        loader: favoritesLoader,
+        element: <Favourites />,
+      },
+    ],
+  },
+]);

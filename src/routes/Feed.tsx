@@ -9,10 +9,10 @@ import {
   useLoaderData,
 } from "react-router-dom";
 import { config } from "../config";
-import type { ImageStore, Image, ImageActions } from "./router";
+import type { ImageStore, Image, Actions } from "./router";
 
 const limit = 10;
-export function loader(store: ImageStore, actions: ImageActions) {
+export function loader(store: ImageStore, actions: Actions) {
   return async function ({ request }: LoaderFunctionArgs) {
     const url = new URL(request.url);
     const page = parseInt(url.searchParams.get("page") ?? "1", 10);
@@ -39,7 +39,7 @@ export function loader(store: ImageStore, actions: ImageActions) {
 
 type LoaderData = {
   images: Image[];
-  actions: ImageActions;
+  actions: Actions;
 };
 
 export function Feed() {
@@ -71,7 +71,6 @@ export function Feed() {
           />
         </Link>
       ))}
-
       <div className="relative border h-52 rounded-lg shadow-lg">
         <button
           onClick={() => fetcher.load(`/feed?page=${page + 1}`)}

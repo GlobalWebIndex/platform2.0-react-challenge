@@ -8,10 +8,10 @@ import {
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross2Icon, StarIcon, Link2Icon } from "@radix-ui/react-icons";
 import { config } from "../config";
-import type { ImageStore, ImageActions, Image } from "./router";
+import type { ImageStore, Actions, Image } from "./router";
 import { useState } from "react";
 
-export function loader(store: ImageStore, actions: ImageActions) {
+export function loader(store: ImageStore, actions: Actions) {
   return async function ({ params }: LoaderFunctionArgs) {
     console.log("image loader");
 
