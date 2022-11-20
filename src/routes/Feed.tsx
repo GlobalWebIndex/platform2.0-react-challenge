@@ -4,6 +4,7 @@ import {
   Form,
   Link,
   LoaderFunctionArgs,
+  Outlet,
   useFetcher,
   useLoaderData,
 } from "react-router-dom";
@@ -79,6 +80,7 @@ export function Feed() {
           {fetcher.state === "loading" ? "Loading..." : "Load more"}
         </button>
       </div>
+      <Outlet />
     </div>
   );
 }

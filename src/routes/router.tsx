@@ -2,12 +2,14 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
+  Routes,
 } from "react-router-dom";
 import { proxy } from "valtio";
 import { proxySet, proxyMap } from "valtio/utils";
 import { Breeds, loader as breedsLoader } from "./Breeds";
 import { Favourites, loader as favoritesLoader } from "./Favorites";
 import { Feed, loader as feedLoader } from "./Feed";
+import { ImageDetail, loader as imageLoader } from "./ImageDetail";
 import { Root } from "./Root";
 
 // the api exposes openapi but doesnt define Schema/Models so you cannot use openapi generator to generate types :(
@@ -17,14 +19,26 @@ type Category = {
   id: number;
   name: string;
 };
-type Breed = {};
+
+type Breed = {
+  id: string;
+  name: string;
+  temperament: string;
+  origin: string;
+  country_codes: string;
+  country_code: string;
+  weight: { imperial: string; metric: string };
+  height: string;
+  life_span: string;
+  wikipedia_url: string;
+};
 
 export type Image = {
   id: string;
   url: string;
   width: number;
   height: number;
-  breeds: any[];
+  breeds: Breed[];
   categories?: any[];
 };
 
@@ -66,8 +80,18 @@ export const router = createBrowserRouter(
       <Route
         path="feed"
         loader={feedLoader(store, actions)}
-        element={<Feed />}
-      />
+        element={
+          <>
+            <Feed />
+          </>
+        }
+      >
+        <Route
+          path=":imgId"
+          loader={imageLoader(store, actions)}
+          element={<ImageDetail />}
+        />
+      </Route>
       <Route path="breeds" loader={breedsLoader} element={<Breeds />} />
       <Route
         path="favorites"
