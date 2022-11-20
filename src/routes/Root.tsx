@@ -3,7 +3,7 @@ import { Link, Outlet, ScrollRestoration } from "react-router-dom";
 export function Root() {
   return (
     <div className="max-w-screen-md mx-auto">
-      <header className="flex justify-center p-4 border-pink-400 border-solid border sticky top-0 z-10 bg-white rounded-md">
+      <header className="h-14 flex justify-center p-4 border-pink-400 border-solid border sticky top-0 z-10 bg-white rounded-md">
         <nav className="">
           <ul className="flex space-x-8">
             <li>
@@ -24,7 +24,7 @@ export function Root() {
           </ul>
         </nav>
       </header>
-      <main className="flex-1 p-12">
+      <main className="flex-1 py-1">
         <Outlet />
       </main>
       <ScrollRestoration />

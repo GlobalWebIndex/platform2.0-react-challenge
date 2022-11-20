@@ -16,7 +16,7 @@ type BreedListItem = ReturnType<typeof pickBreed>;
 
 export function loader(store: BreedStore, actions: Actions) {
   return async function () {
-    if (store.byId.size === 0) {
+    if (store.ids.size === 0) {
       const breeds = (await fetch(`${config.url}/breeds`, {
         headers: config.headers,
       }).then((r) => r.json())) as Breed[];
@@ -26,6 +26,7 @@ export function loader(store: BreedStore, actions: Actions) {
       });
     }
     const breeds = [...snapshot(store.byId).values()].map((breed) => ({
+      id: breed.id,
       name: breed.name,
       origin: breed.origin,
     }));
@@ -34,32 +35,60 @@ export function loader(store: BreedStore, actions: Actions) {
   };
 }
 
-export function breedLoader(store: BreedStore) {
+export function breedLoader(store: BreedStore, actions: Actions) {
   return async function ({ params }: LoaderFunctionArgs) {
-    return store.byId.get(params.breedId!);
+    if (!store.byId.has(params.breedId!)) {
+      const breed = (await fetch(`${config.url}/breeds/${params.breedId!}`, {
+        headers: config.headers,
+      }).then((r) => r.json())) as Breed;
+      actions.saveBreed(breed);
+    }
+
+    return snapshot(store).byId.get(params.breedId!);
   };
 }
 export function BreedDetail() {
   const breed = useLoaderData() as Breed;
-  return <div>{breed.description}</div>;
+  return (
+    <article className="space-y-4">
+      <header>
+        <h2 className="text-3xl bold">{breed?.name}</h2>
+      </header>
+      <p>{breed?.description}</p>
+    </article>
+  );
 }
 
 export function Breeds() {
   const breeds = useLoaderData() as BreedListItem[];
   return (
-    <div className="test">
-      <input placeholder="search" />
-      <ul>
-        {breeds.map(({ id, name, origin }) => (
-          <li key={id}>
-            <Link to={id}>
-              <div className="flex flex-col space-y-1">{name}</div>
-              <div className="text-gray-500 text-sm">{origin}</div>
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <Outlet />
+    <div className="w-full top-0 bottom-0  h-[calc(100vh_-_theme(spacing.32))]">
+      <div className="py-2 w-56  bg-white" placeholder="search">
+        <input
+          className="px-2 py-1 w-full border border-gray-400 rounded"
+          placeholder="Search for breed"
+        />
+      </div>
+      <div className="flex border rounded h-full border-gray-400 py-4">
+        <div className="overflow-auto flex-0 flex-basis-40 border-r pl-2 pr-4 border-gray-400 h-full">
+          <ul className="space-y-2 overflow-hidden">
+            {breeds.map(({ id, name, origin }) => (
+              <li key={id}>
+                <Link
+                  className="flex flex-col  border-b px-2 py-1 border-gray-300"
+                  to={id}
+                >
+                  <div className="">{name}</div>
+                  <div className="text-gray-500 text-sm">{origin}</div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="flex-1 px-4">
+          <Outlet />
+        </div>
+      </div>
     </div>
   );
 }

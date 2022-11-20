@@ -94,9 +94,6 @@ const actions = {
 
 export type Actions = typeof actions;
 
-function Test() {
-  return <div>hello world</div>;
-}
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -115,13 +112,13 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        path: "breeds",
+        path: "breeds/",
         loader: breedsLoader(breedStore, actions),
         element: <Breeds />,
         children: [
           {
             path: ":breedId",
-            loader: breedLoader(breedStore),
+            loader: breedLoader(breedStore, actions),
             element: <BreedDetail />,
           },
         ],

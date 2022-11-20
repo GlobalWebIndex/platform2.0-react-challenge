@@ -33,8 +33,7 @@ export function ImageDetail() {
   const params = useParams();
   const navigate = useNavigate();
   const image = useLoaderData() as Image;
-  console.log("image", image, params, 32);
-  const [open, setOpen] = useState(true);
+
   return (
     <Dialog.Root
       open={params.imgId === image?.id}
@@ -62,8 +61,7 @@ export function ImageDetail() {
                   <div className="flex space-x-1">
                     <Link
                       className="hover:underline text-blue-600 hover:text-blue-700"
-                      //   to={`/breeds/${breed.id}`}
-                      to={`/breeds`}
+                      to={`/breeds/${breed.id}`}
                     >
                       breeds
                     </Link>
