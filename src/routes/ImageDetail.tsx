@@ -57,39 +57,47 @@ export function ImageDetail() {
               <>
                 <div className="flex justify-between items-center">
                   <Dialog.Title className="text-2xl text-gray-900 font-bold mb-2">
+                    {breed.name}
+                  </Dialog.Title>
+                  <div className="flex space-x-1">
                     <Link
-                      className="hover:underline"
+                      className="hover:underline text-blue-600 hover:text-blue-700"
                       //   to={`/breeds/${breed.id}`}
                       to={`/breeds`}
                     >
-                      {breed.name}
+                      breeds
                     </Link>
-                  </Dialog.Title>
-                  {breed.wikipedia_url && (
-                    <a
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href={breed.wikipedia_url}
-                      className="flex items-center mb-2 text-blue-600 hover:text-blue-700 hover:underline"
-                    >
-                      show wiki
-                      <Link2Icon />
-                    </a>
-                  )}
+                    <div className="border-l border-cool-gray-800"></div>
+                    {breed.wikipedia_url && (
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={breed.wikipedia_url}
+                        className="flex items-center text-blue-600 hover:text-blue-700 hover:underline"
+                      >
+                        show wiki
+                        <Link2Icon />
+                      </a>
+                    )}
+                  </div>
                 </div>
+
                 <div>
                   <div className="space-y-1 px-1">
-                    <div className="flex space-x-2">
-                      <div className="text-gray-500">Temperament:</div>
+                    <Dialog.Description className="text-sm leading-4 text-gray-600">
+                      {breed.description}
+                    </Dialog.Description>
+                    <div className="flex space-x-2 text-sm">
+                      <div className="text-gray-500 ">Temperament:</div>
                       <div className="text-gray-900 ">{breed.temperament}</div>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between text-sm">
                       <div className="flex space-x-2">
                         <div className="text-gray-500">Lifespan:</div>
                         <div className="text-gray-900 ">{breed.life_span}</div>
                       </div>
 
-                      <div className="flex space-x-2">
+                      <div className="flex space-x-2 text-sm">
                         <div className="text-gray-500">Weight:</div>
                         <div className="text-gray-900">
                           {breed.weight.metric} kg
@@ -97,7 +105,7 @@ export function ImageDetail() {
                       </div>
                     </div>
 
-                    <div className="flex space-x-2">
+                    <div className="flex space-x-2 text-sm">
                       <div className="text-gray-500">Origin:</div>
                       <div className="text-gray-900">{breed.origin}</div>
                     </div>
