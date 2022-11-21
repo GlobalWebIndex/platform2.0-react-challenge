@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import Modal from 'components/parts/Modal';
 import Image from 'components/parts/Image';
@@ -11,20 +11,24 @@ import Api from 'data/api';
 type Props = {
   selectedImage: Cat.Image | null;
   isFavourite: boolean;
-  onClose: () => void;
-  onToggleFavourite: () => void;
-  onDirectPageLoad?: (selectedImage: Cat.Image) => void;
+  onClose(): void;
+  onToggleFavourite(): void;
+  onOpenAfterPageIsLoaded?: (selectedImage: Cat.Image) => void;
 };
 
 function CatImage(props: Props) {
   const navigate = useNavigate();
+  const location = useLocation();
   const params = useParams();
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
   const tooltipTimeoutRef = useRef(-1);
 
   const handleCloseModal = () => {
     props.onClose();
-    navigate('/');
+
+    // Update the location pathname to index, unless
+    // the image was opened through the 'breeds' view
+    if (!location.pathname.includes('breeds')) navigate('/');
   };
 
   const handleMouseEnterTooltip = () => {
@@ -39,14 +43,17 @@ function CatImage(props: Props) {
     );
   };
 
-  const handleClickTooltipContent = () =>
-    props.selectedImage?.breeds && navigate('/breeds');
+  const handleClickTooltipContent = () => {
+    props.onClose();
+
+    if (props.selectedImage?.breeds) navigate('/breeds');
+  };
 
   useEffect(() => {
     // When an image link is opened
-    if (params.id && props.onDirectPageLoad) {
+    if (params.id && props.onOpenAfterPageIsLoaded) {
       Api.getImage(params.id).then(
-        (selectedImage) => props.onDirectPageLoad?.(selectedImage),
+        (selectedImage) => props.onOpenAfterPageIsLoaded?.(selectedImage),
         console.error
       );
     }

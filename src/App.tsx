@@ -72,55 +72,61 @@ function App() {
     }
   };
 
+  const handleOpenAfterPageIsLoaded = (selectedImage: Cat.Image) => {
+    dispatch({
+      type: ActionType.Select,
+      payload: selectedImage
+    });
+  };
+
+  const catImageProps = {
+    selectedImage: state.selected,
+    isFavourite: !!favourite,
+    onClose: handleCloseModal,
+    onToggleFavourite: handleToggleFavourite
+  };
+
   return (
-    <>
-      <Router>
-        <Layout>
-          <Suspense fallback={null}>
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <CatList onSelectItem={handleSelectImage}>
-                    <CatImage
-                      selectedImage={state.selected}
-                      isFavourite={!!favourite}
-                      onClose={handleCloseModal}
-                      onToggleFavourite={handleToggleFavourite}
-                    />
-                  </CatList>
-                }
-              />
-              <Route
-                path="/images/:id"
-                element={
-                  <CatList onSelectItem={handleSelectImage}>
-                    <CatImage
-                      selectedImage={state.selected}
-                      isFavourite={!!favourite}
-                      onClose={handleCloseModal}
-                      onToggleFavourite={handleToggleFavourite}
-                      onDirectPageLoad={(selectedImage) => {
-                        dispatch({
-                          type: ActionType.Select,
-                          payload: selectedImage
-                        });
-                      }}
-                    />
-                  </CatList>
-                }
-              />
-              <Route
-                path="breeds"
-                element={<BreedList onSelectImage={handleSelectImage} />}
-              />
-              <Route path="favourites" element={<FavouriteList />} />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </Suspense>
-        </Layout>
-      </Router>
-    </>
+    <Router>
+      <Layout>
+        <Suspense fallback={null}>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <CatList onSelectItem={handleSelectImage}>
+                  <CatImage {...catImageProps} />
+                </CatList>
+              }
+            />
+            <Route
+              path="/images/:id"
+              element={
+                <CatList onSelectItem={handleSelectImage}>
+                  <CatImage
+                    {...catImageProps}
+                    onOpenAfterPageIsLoaded={handleOpenAfterPageIsLoaded}
+                  />
+                </CatList>
+              }
+            />
+            <Route
+              path="breeds"
+              element={
+                <BreedList
+                  selectedImage={state.selected}
+                  onSelectImage={handleSelectImage}
+                >
+                  <CatImage {...catImageProps} />
+                </BreedList>
+              }
+            />
+            <Route path="favourites" element={<FavouriteList />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
+      </Layout>
+    </Router>
   );
 }
 

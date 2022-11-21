@@ -29,7 +29,15 @@ function Layout(props: React.PropsWithChildren) {
         <Styled.Stage>{props.children}</Styled.Stage>
       </Styled.Main>
       <Styled.Footer>
-        Samaras Christos / GWI Challenge &copy; 2022
+        Samaras Christos /{' '}
+        <a
+          href="https://github.com/chbardamu/gwi-react-challenge/tree/develop"
+          target="_blank"
+          rel="noreferrer"
+        >
+          GWI Challenge
+        </a>{' '}
+        &copy; 2022
       </Styled.Footer>
     </>
   );

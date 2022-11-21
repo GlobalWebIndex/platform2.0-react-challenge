@@ -15,6 +15,17 @@ function FavouriteList() {
     setUpdateFavs(true);
   };
 
+  const handleRenderItemContent = (item: Cat.FavouriteImage) => (
+    <>
+      <Image url={item.image.url} />
+      <Styled.Bin
+        role="button"
+        data-test="delete"
+        onClick={() => handleRemoveFavourite(item.id)}
+      />
+    </>
+  );
+
   useEffect(() => {
     if (updateFavs) {
       Api.favourites.getAll().then((favs) => {
@@ -29,16 +40,7 @@ function FavouriteList() {
     <List
       data={favs}
       data-test="favourites"
-      onRenderItemContent={(item) => (
-        <>
-          <Image url={item.image.url} />
-          <Styled.Bin
-            role="button"
-            data-test="delete"
-            onClick={() => handleRemoveFavourite(item.id)}
-          />
-        </>
-      )}
+      onRenderItemContent={handleRenderItemContent}
     />
   );
 }

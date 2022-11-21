@@ -19,10 +19,6 @@ function Details(props: Props) {
                 <Styled.Column>Breed</Styled.Column>
                 <Styled.Column>{item.name}</Styled.Column>
               </Styled.Row>
-              {/* <Styled.Row>
-                <Styled.Column>Description</Styled.Column>
-                <Styled.Column>{item.description}</Styled.Column>
-              </Styled.Row> */}
               <Styled.Row>
                 <Styled.Column>Personality</Styled.Column>
                 <Styled.Column>{item.temperament}</Styled.Column>

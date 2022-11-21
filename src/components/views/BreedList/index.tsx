@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState, type PropsWithChildren } from 'react';
 
 import Modal from 'components/parts/Modal';
 import List from 'components/parts/List';
+import Image from 'components/parts/Image';
 import Api from 'data/api';
 
 import { useData } from 'hooks';
@@ -10,11 +10,11 @@ import Cat from 'types';
 import Styled from './styled';
 
 type Props = {
+  selectedImage: Cat.Image | null;
   onSelectImage: (image: Cat.Image) => void;
-};
+} & PropsWithChildren;
 
 function BreedList(props: Props) {
-  const navigate = useNavigate();
   const [isImageListVisible, setIsImageListVisible] = useState(false);
   const [images, setImages] = useState<Cat.Image[]>([]);
   const [selectedBreed, setSelectedBreed] = useState<Cat.Breed>();
@@ -30,6 +30,17 @@ function BreedList(props: Props) {
       setIsImageListVisible(true);
     }, console.error);
   };
+
+  const handleSelectImage = (item: Cat.Image) => {
+    setIsImageListVisible(false);
+    props.onSelectImage(item);
+  };
+
+  useEffect(() => {
+    if (props.selectedImage?.id === '' && images.length > 0) {
+      setIsImageListVisible(true);
+    }
+  }, [props.selectedImage, images]);
 
   return hasData ? (
     <>
@@ -72,18 +83,13 @@ function BreedList(props: Props) {
           {images.length > 0 && (
             <List<Cat.Image>
               data={images}
-              onSelectItem={props.onSelectImage}
-              onRenderItemContent={(props) => (
-                <Styled.Image
-                  role="img"
-                  url={props.url}
-                  onClick={() => navigate(`/images/${props.id}`)}
-                />
-              )}
+              onSelectItem={handleSelectImage}
+              onRenderItemContent={(props) => <Image url={props.url} />}
             />
           )}
         </Styled.BreedList>
       </Modal>
+      {props.children}
     </>
   ) : null;
 }

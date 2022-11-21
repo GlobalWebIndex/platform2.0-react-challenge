@@ -10,7 +10,9 @@ const BreedList = styled.div`
 const Title = styled.h1`
   font-size: 24px;
   padding: 16px;
-  border-bottom: 1px solid #dddde5;
+  background: var(--gradient-modal-title-background);
+  color: var(--color-modal-title);
+  font-weight: 600;
 `;
 
 const Table = styled.div`
@@ -32,6 +34,7 @@ const TableRow = styled.div`
 
   &:first-of-type {
     background: var(--color-table-row-header-background);
+    cursor: default;
     min-height: auto;
     text-transform: uppercase;
     font-size: 14px;

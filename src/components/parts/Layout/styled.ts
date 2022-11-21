@@ -39,6 +39,7 @@ const NavMenu = styled.nav``;
 
 const NavMenuItem = styled.div`
   > * {
+    color: var(--color-sidebar-menu-item);
     display: block;
     margin: 8px -20px;
     padding: 8px 20px;
@@ -46,7 +47,8 @@ const NavMenuItem = styled.div`
     transition: background 100ms linear;
 
     &:hover {
-      background: var(--color-sidebar-menu-item-background);
+      color: var(--color-sidebar-menu-item-hover);
+      background: var(--color-sidebar-menu-item-background-hover);
     }
   }
 `;
@@ -54,12 +56,13 @@ const NavMenuItem = styled.div`
 const Footer = styled.footer`
   background: var(--color-footer-background);
   border-top-left-radius: 4px;
+  box-shadow: 0 0 6px rgb(0, 0, 0, 0.25);
   position: fixed;
   bottom: 0;
   right: 0;
   padding: 8px 16px;
   width: fit-content;
-  font-size: 14px;
+  font-size: 12px;
   letter-spacing: 0.5px;
   z-index: 1;
 `;

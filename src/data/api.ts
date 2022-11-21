@@ -1,5 +1,4 @@
 import config from 'data/config';
-
 import Cat from 'types';
 
 function endpoint(url: string) {
