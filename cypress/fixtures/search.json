@@ -1,0 +1,152 @@
+[
+  {
+    "breeds": [],
+    "id": "853",
+    "url": "https://cdn2.thecatapi.com/images/853.gif",
+    "width": 300,
+    "height": 225
+  },
+  {
+    "breeds": [],
+    "id": "9f9",
+    "url": "https://cdn2.thecatapi.com/images/9f9.jpg",
+    "width": 560,
+    "height": 443
+  },
+  {
+    "breeds": [],
+    "id": "ck1",
+    "url": "https://cdn2.thecatapi.com/images/ck1.jpg",
+    "width": 640,
+    "height": 571
+  },
+  {
+    "breeds": [],
+    "id": "e45",
+    "url": "https://cdn2.thecatapi.com/images/e45.jpg",
+    "width": 638,
+    "height": 444
+  },
+  {
+    "breeds": [],
+    "id": "e9m",
+    "url": "https://cdn2.thecatapi.com/images/e9m.jpg",
+    "width": 590,
+    "height": 523
+  },
+  {
+    "breeds": [],
+    "id": "ea2",
+    "url": "https://cdn2.thecatapi.com/images/ea2.jpg",
+    "width": 500,
+    "height": 336
+  },
+  {
+    "breeds": [
+      {
+        "weight": { "imperial": "7  -  10", "metric": "3 - 5" },
+        "id": "abys",
+        "name": "Abyssinian",
+        "cfa_url": "http://cfa.org/Breeds/BreedsAB/Abyssinian.aspx",
+        "vetstreet_url": "http://www.vetstreet.com/cats/abyssinian",
+        "vcahospitals_url": "https://vcahospitals.com/know-your-pet/cat-breeds/abyssinian",
+        "temperament": "Active, Energetic, Independent, Intelligent, Gentle",
+        "origin": "Egypt",
+        "country_codes": "EG",
+        "country_code": "EG",
+        "description": "The Abyssinian is easy to care for, and a joy to have in your home. They’re affectionate cats and love both people and other animals.",
+        "life_span": "14 - 15",
+        "indoor": 0,
+        "lap": 1,
+        "alt_names": "",
+        "adaptability": 5,
+        "affection_level": 5,
+        "child_friendly": 3,
+        "dog_friendly": 4,
+        "energy_level": 5,
+        "grooming": 1,
+        "health_issues": 2,
+        "intelligence": 5,
+        "shedding_level": 2,
+        "social_needs": 5,
+        "stranger_friendly": 5,
+        "vocalisation": 1,
+        "experimental": 0,
+        "hairless": 0,
+        "natural": 1,
+        "rare": 0,
+        "rex": 0,
+        "suppressed_tail": 0,
+        "short_legs": 0,
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Abyssinian_(cat)",
+        "hypoallergenic": 0,
+        "reference_image_id": "0XYvRd7oD"
+      }
+    ],
+    "id": "p6x60nX6U",
+    "url": "https://cdn2.thecatapi.com/images/p6x60nX6U.jpg",
+    "width": 1032,
+    "height": 774
+  },
+  {
+    "breeds": [
+      {
+        "weight": { "imperial": "12 - 18", "metric": "5 - 8" },
+        "id": "mcoo",
+        "name": "Maine Coon",
+        "cfa_url": "http://cfa.org/Breeds/BreedsKthruR/MaineCoon.aspx",
+        "vetstreet_url": "http://www.vetstreet.com/cats/maine-coon",
+        "vcahospitals_url": "https://vcahospitals.com/know-your-pet/cat-breeds/maine-coon",
+        "temperament": "Adaptable, Intelligent, Loving, Gentle, Independent",
+        "origin": "United States",
+        "country_codes": "US",
+        "country_code": "US",
+        "description": "They are known for their size and luxurious long coat Maine Coons are considered a gentle giant. The good-natured and affable Maine Coon adapts well to many lifestyles and personalities. She likes being with people and has the habit of following them around, but isn’t needy. Most Maine Coons love water and they can be quite good swimmers.",
+        "life_span": "12 - 15",
+        "indoor": 0,
+        "lap": 1,
+        "alt_names": "Coon Cat, Maine Cat, Maine Shag, Snowshoe Cat, American Longhair, The Gentle Giants",
+        "adaptability": 5,
+        "affection_level": 5,
+        "child_friendly": 4,
+        "dog_friendly": 5,
+        "energy_level": 3,
+        "grooming": 3,
+        "health_issues": 3,
+        "intelligence": 5,
+        "shedding_level": 3,
+        "social_needs": 3,
+        "stranger_friendly": 5,
+        "vocalisation": 1,
+        "experimental": 0,
+        "hairless": 0,
+        "natural": 1,
+        "rare": 0,
+        "rex": 0,
+        "suppressed_tail": 0,
+        "short_legs": 0,
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Maine_Coon",
+        "hypoallergenic": 0,
+        "reference_image_id": "OOD3VXAQn"
+      }
+    ],
+    "id": "agwTe5TSe",
+    "url": "https://cdn2.thecatapi.com/images/agwTe5TSe.jpg",
+    "width": 1200,
+    "height": 996
+  },
+  {
+    "breeds": [],
+    "id": "pBxbLSmEb",
+    "url": "https://cdn2.thecatapi.com/images/pBxbLSmEb.jpg",
+    "width": 450,
+    "height": 600
+  },
+  {
+    "breeds": [],
+    "id": "1olh_RkBg",
+    "url": "https://cdn2.thecatapi.com/images/1olh_RkBg.jpg",
+    "width": 337,
+    "height": 600
+  }
+]
