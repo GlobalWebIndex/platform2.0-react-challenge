@@ -11,7 +11,6 @@ export function FavouriteButton({ imgId }: FavouriteButtonProps) {
   const favs = useRouteLoaderData("root") as Favourite[];
   const favourite = favs.find((f) => f.image_id === imgId);
   const isFavourite = !!favourite;
-  console.log("favs", favs);
 
   return (
     <fetcher.Form method="post">

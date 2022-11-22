@@ -1,37 +1,16 @@
-import {
-  Link,
-  LoaderFunctionArgs,
-  Outlet,
-  useLoaderData,
-} from "react-router-dom";
-import { snapshot } from "valtio";
+import { Link, Outlet, useLoaderData } from "react-router-dom";
 import { config } from "../../config";
-import type { BreedStore, Breed, Actions } from "../router";
+import type { Breed } from "../router";
 
 function pickBreed(breed: Breed) {
   return { id: breed.id, name: breed.name, origin: breed.origin };
 }
 type BreedListItem = ReturnType<typeof pickBreed>;
 
-export function loader(store: BreedStore, actions: Actions) {
-  return async function () {
-    if (store.ids.size === 0) {
-      const breeds = (await fetch(`${config.url}/breeds`, {
-        headers: config.headers,
-      }).then((r) => r.json())) as Breed[];
-
-      breeds.forEach((element) => {
-        actions.saveBreed(element);
-      });
-    }
-    const breeds = [...snapshot(store.byId).values()].map((breed) => ({
-      id: breed.id,
-      name: breed.name,
-      origin: breed.origin,
-    }));
-
-    return breeds;
-  };
+export async function loader() {
+  return await fetch(`${config.url}/breeds`, {
+    headers: config.headers,
+  }).then((r) => r.json());
 }
 
 export function Breeds() {

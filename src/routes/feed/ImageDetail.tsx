@@ -5,16 +5,9 @@ import {
   useNavigate,
   useParams,
 } from "react-router-dom";
-import { snapshot } from "valtio";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ImageService, FavouritesService } from "../../api";
-import type {
-  ImageStore,
-  FavouriteStore,
-  Actions,
-  Image as ImageType,
-  Favourite,
-} from "../router";
+import type { Image as ImageType, Favourite } from "../router";
 import {
   Link,
   Info,
@@ -26,44 +19,26 @@ import {
 } from "~/components";
 import { FavouriteButton } from "./FavouriteButton";
 
-export function loader(imageStore: ImageStore, actions: Actions) {
-  return async function ({ params }: LoaderFunctionArgs) {
-    console.log("image detail loader");
-    let result: ImageType | null = null;
-    if (!imageStore.byId.has(params.imgId!)) {
-      result = (await ImageService.getImage(params.imgId!).then((r) =>
-        r.json()
-      )) as ImageType;
-
-      actions.saveImage(result);
-    }
-
-    const imageProxy = imageStore.byId.get(params.imgId!);
-    return {
-      image: imageProxy && snapshot(imageProxy),
-    };
-  };
+export async function loader({ params }: LoaderFunctionArgs) {
+  let result: ImageType | null = null;
+  return await ImageService.getImage(params.imgId!);
 }
 
-export function action(store: ImageStore) {
-  return async function ({ request, params }: ActionFunctionArgs) {
-    const { favourite, id } = Object.fromEntries(await request.formData()) as {
-      favourite: string;
-      id: string;
-    };
-
-    return favourite === "true"
-      ? FavouritesService.addFavourite(id)
-      : FavouritesService.deleteFavourite(id);
+export async function action({ request, params }: ActionFunctionArgs) {
+  const { favourite, id } = Object.fromEntries(await request.formData()) as {
+    favourite: string;
+    id: string;
   };
+
+  return favourite === "true"
+    ? FavouritesService.addFavourite(id)
+    : FavouritesService.deleteFavourite(id);
 }
 
 export function ImageDetail() {
   const params = useParams();
   const navigate = useNavigate();
-  const { image } = useLoaderData() as {
-    image: ImageType;
-  };
+  const image = useLoaderData() as ImageType;
   const breed = image?.breeds?.[0];
 
   return (

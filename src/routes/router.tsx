@@ -5,8 +5,6 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import { proxy } from "valtio";
-import { proxySet, proxyMap, derive, watch } from "valtio/utils";
 import { Breeds, BreedDetail, breedsLoader, breedLoader } from "./breeds";
 import { Favourites, loader as favoritesLoader } from "./favourites/Favorites";
 import { Feed, loader as feedLoader } from "./feed/ImageFeed";
@@ -19,12 +17,6 @@ import { Root } from "./Root";
 
 // the api exposes openapi but doesnt define Schema/Models so you cannot use openapi generator to generate types :(
 // I joined the discord and asked creator of the catapi if he can update or expose it on the thedogapi where model definitions are present
-
-type NormalizedStore<T extends { id: string }> = {
-  ids: Set<string>;
-  byId: Map<string, T>;
-};
-
 export type Favourite = {
   id: string;
   sub_id: string;
@@ -59,55 +51,13 @@ export type Image = {
   isFavourite?: boolean;
 };
 
-// In my real life I am very much against cache normalization it introduces complexity
-// but to my understanding if redux was modeled after elm, the patterns should work the same
-// so the person reviewing this would appreciate this so it could score me some bonus points.
-// I am just really hoping that he find this funny otherwise I come out as arrogant, which can score me negative points
-export type ImageStore = NormalizedStore<Image>;
-export type BreedStore = NormalizedStore<Breed>;
-
-const imageStore = proxy<ImageStore>({
-  ids: proxySet([]),
-  byId: proxyMap(),
-});
-
-const breedStore = proxy<BreedStore>({
-  ids: proxySet([]),
-  byId: proxyMap(),
-});
-export type FavouriteStore = NormalizedStore<Favourite>;
-const favouriteStore = proxy<FavouriteStore>({
-  ids: proxySet([]),
-  byId: proxyMap(),
-});
-
-const createImage = (image: Image) =>
-  derive(
-    {
-      isFavourite: (get) => get(favouriteStore).ids.has(image.id),
-    },
-    {
-      proxy: proxy(image),
-    }
-  );
-
-const actions = {
-  saveImage: (img: Image) => {
-    imageStore.byId.set(img.id, createImage(img));
-    imageStore.ids.add(img.id);
-  },
-  saveBreed: (breed: Breed) => {
-    breedStore.byId.set(breed.id, breed);
-    breedStore.ids.add(breed.id);
-  },
-  saveFavourite: (fav: Favourite) => {
-    favouriteStore.byId.set(fav.image_id, fav);
-    favouriteStore.ids.add(fav.image_id);
-  },
+const imageDetailRoute = {
+  path: ":imgId",
+  loader: imageLoader,
+  action: favoriteAction,
+  shouldRevalidate: () => false,
+  element: <ImageDetail />,
 };
-
-export type Actions = typeof actions;
-
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -117,34 +67,24 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "feed",
-        loader: feedLoader(imageStore, actions),
+        loader: feedLoader,
+        shouldRevalidate: (args) => {
+          console.log("args", args);
+          return false;
+        },
         element: <Feed />,
-        children: [
-          {
-            path: ":imgId",
-            loader: imageLoader(imageStore, actions),
-            action: favoriteAction(imageStore),
-            // shouldRevalidate: () => false,
-            element: <ImageDetail />,
-          },
-        ],
+        children: [imageDetailRoute],
       },
       {
         path: "breeds/",
-        loader: breedsLoader(breedStore, actions),
+        loader: breedsLoader,
         element: <Breeds />,
         children: [
           {
             path: ":breedId",
-            loader: breedLoader(breedStore, actions),
+            loader: breedLoader,
             element: <BreedDetail />,
-            children: [
-              {
-                path: ":imgId",
-                loader: imageLoader(imageStore, actions),
-                element: <ImageDetail />,
-              },
-            ],
+            children: [imageDetailRoute],
           },
         ],
       },
