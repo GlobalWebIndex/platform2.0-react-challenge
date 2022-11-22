@@ -1,13 +1,20 @@
 import {
+  ActionFunctionArgs,
   LoaderFunctionArgs,
   useLoaderData,
   useNavigate,
   useParams,
 } from "react-router-dom";
+import { snapshot } from "valtio";
 import * as Dialog from "@radix-ui/react-dialog";
-import { Cross2Icon, StarIcon, Link2Icon } from "@radix-ui/react-icons";
-import { ImageService } from "../../api";
-import type { ImageStore, Actions, Image as ImageType } from "../router";
+import { ImageService, FavouritesService } from "../../api";
+import type {
+  ImageStore,
+  FavouriteStore,
+  Actions,
+  Image as ImageType,
+  Favourite,
+} from "../router";
 import {
   Link,
   Info,
@@ -17,31 +24,52 @@ import {
   CardFooter,
   CardBody,
 } from "~/components";
+import { FavouriteButton } from "./FavouriteButton";
 
-export function loader(store: ImageStore, actions: Actions) {
+export function loader(imageStore: ImageStore, actions: Actions) {
   return async function ({ params }: LoaderFunctionArgs) {
-    if (!store.byId.has(params.imgId!)) {
-      const result = (await ImageService.getImage(params.imgId!).then((r) =>
+    console.log("image detail loader");
+    let result: ImageType | null = null;
+    if (!imageStore.byId.has(params.imgId!)) {
+      result = (await ImageService.getImage(params.imgId!).then((r) =>
         r.json()
       )) as ImageType;
 
       actions.saveImage(result);
     }
 
-    return store.byId.get(params.imgId!);
+    const imageProxy = imageStore.byId.get(params.imgId!);
+    return {
+      image: imageProxy && snapshot(imageProxy),
+    };
+  };
+}
+
+export function action(store: ImageStore) {
+  return async function ({ request, params }: ActionFunctionArgs) {
+    const { favourite, id } = Object.fromEntries(await request.formData()) as {
+      favourite: string;
+      id: string;
+    };
+
+    return favourite === "true"
+      ? FavouritesService.addFavourite(id)
+      : FavouritesService.deleteFavourite(id);
   };
 }
 
 export function ImageDetail() {
   const params = useParams();
   const navigate = useNavigate();
-  const image = useLoaderData() as ImageType;
-  const breed = image.breeds?.[0];
+  const { image } = useLoaderData() as {
+    image: ImageType;
+  };
+  const breed = image?.breeds?.[0];
 
   return (
     <Modal
       isOpen={params.imgId === image?.id}
-      onOpenChange={() => navigate(-1)}
+      onOpenChange={() => navigate("..")}
     >
       <Card>
         <CardBody>
@@ -92,14 +120,7 @@ export function ImageDetail() {
           </div>
         </CardBody>
         <CardFooter>
-          <Dialog.Close asChild>
-            <button className="bg-emerald-700 hover:bg-emerald-800 rounded py-2 px-3 text-white">
-              <div className="flex space-x-2 items-center">
-                <span>Add to favorites</span>{" "}
-                <StarIcon height={20} width={20} />
-              </div>
-            </button>
-          </Dialog.Close>
+          <FavouriteButton imgId={image.id} />
         </CardFooter>
       </Card>
     </Modal>

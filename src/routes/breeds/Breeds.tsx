@@ -37,13 +37,7 @@ export function loader(store: BreedStore, actions: Actions) {
 export function Breeds() {
   const breeds = useLoaderData() as BreedListItem[];
   return (
-    <div className="w-full top-0 bottom-0  h-[calc(100vh_-_theme(spacing.32))]">
-      <div className="py-2 w-56  bg-white" placeholder="search">
-        <input
-          className="px-2 py-1 w-full border border-gray-400 rounded"
-          placeholder="Search for breed"
-        />
-      </div>
+    <div className="w-full mt-8 h-[calc(100vh_-_theme(spacing.32))]">
       <div className="flex border rounded h-full border-gray-400 py-4">
         <div className="overflow-auto flex-0 flex-basis-40 border-r pl-2 pr-4 border-gray-400 h-full">
           <ul className="space-y-2 overflow-hidden">

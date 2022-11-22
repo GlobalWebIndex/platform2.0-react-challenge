@@ -51,7 +51,7 @@ export function Feed() {
   }, [fetcher.data]);
 
   return (
-    <div>
+    <div className="mt-4">
       <ImageGrid
         images={images}
         loadMore={{

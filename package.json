@@ -9,7 +9,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@radix-ui/colors": "^0.1.8",
     "@radix-ui/react-aspect-ratio": "^1.0.1",
     "@radix-ui/react-dialog": "^1.0.2",
     "@radix-ui/react-icons": "^1.1.1",
@@ -21,6 +20,7 @@
     "valtio": "^1.7.6"
   },
   "devDependencies": {
+    "@radix-ui/colors": "^0.1.8",
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.8",
@@ -30,6 +30,7 @@
     "tailwindcss": "^3.2.4",
     "typescript": "^4.6.4",
     "vite": "^3.2.3",
-    "vite-plugin-svgr": "^2.2.2"
+    "vite-plugin-svgr": "^2.2.2",
+    "windy-radix-palette": "^0.3.0"
   }
 }
