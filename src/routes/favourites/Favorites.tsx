@@ -1,5 +1,5 @@
 import { useRouteLoaderData } from "react-router-dom";
-import { ImageFavouriteGrid, Layout } from "~/components";
+import { ImageFavouriteGrid, Layout } from "~/ui";
 import { Favourite } from "../router";
 
 export function Favourites() {

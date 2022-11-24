@@ -8,15 +8,7 @@ import {
 import * as Dialog from "@radix-ui/react-dialog";
 import { ImageService, FavouritesService } from "../../api";
 import type { Image as ImageType, Favourite } from "../router";
-import {
-  Link,
-  Info,
-  Image,
-  Modal,
-  Card,
-  CardFooter,
-  CardBody,
-} from "~/components";
+import { Link, Info, Image, Modal, Card, CardFooter, CardBody } from "~/ui";
 import { FavouriteButton } from "./FavouriteButton";
 
 export async function loader({ params }: LoaderFunctionArgs) {
@@ -43,7 +35,7 @@ export function ImageDetail() {
   return (
     <Modal
       isOpen={params.imgId === image?.id}
-      onOpenChange={() => navigate("..")}
+      onOpenChange={() => navigate("..", { preventScrollReset: true })}
     >
       <Card>
         <CardBody>

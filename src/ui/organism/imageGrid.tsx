@@ -24,16 +24,17 @@ export function ImageGrid({ images, loadMore }: ImageGridProps) {
           key={`${img.id}-${index}`}
           to={img.id}
           className="block h-48"
+          preventScrollReset
         >
           <Image id={img.id} src={img.url} interaction="clickable" />
         </Link>
       ))}
 
       {loadMore && (
-        <div className="relative border h-48 rounded-lg shadow-lg">
+        <div className="relative active:shadow-inner transition-shadow duration-500 active:scale-95 bg-crimson-4 hover:bg-crimson-5 border h-48 rounded-lg shadow-lg">
           <button
             onClick={loadMore.onClick}
-            className="flex items-center justify-center absolute top-0 bottom-0 left-0 right-0"
+            className="flex items-center w-full h-full justify-center text-crimson-11"
           >
             {loadMore.isLoading ? "Loading..." : "Load more"}
           </button>

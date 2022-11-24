@@ -9,7 +9,7 @@ import {
 import { bootstrap } from "./Layout";
 import { Breeds, BreedDetail, breedsLoader, breedLoader } from "./breeds";
 import { Favourites } from "./favourites/Favorites";
-import { Feed, loader as feedLoader } from "./feed/ImageFeed";
+import { ImageFeed, loader as feedLoader } from "./feed/ImageFeed";
 import {
   ImageDetail,
   loader as imageLoader,
@@ -78,7 +78,7 @@ export const router = createBrowserRouter([
         path: "/",
         loader: feedLoader,
         shouldRevalidate: shouldNotRevalidateOnFavouriteAction,
-        element: <Feed />,
+        element: <ImageFeed />,
         children: [imageDetailRoute],
       },
       {

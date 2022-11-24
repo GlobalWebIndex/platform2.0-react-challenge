@@ -1,5 +1,5 @@
 import { LoaderFunctionArgs, Outlet, useLoaderData } from "react-router-dom";
-import { ImageGrid } from "~/components";
+import { ImageGrid } from "~/ui";
 import { BreedService, ImageService } from "~/api";
 import type { Breed } from "../router";
 

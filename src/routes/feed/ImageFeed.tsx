@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import type { Image } from "../router";
 import { ImageService } from "~/api";
-import { ImageGrid } from "~/components";
+import { ImageGrid } from "~/ui";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
@@ -15,12 +15,13 @@ export async function loader({ request }: LoaderFunctionArgs) {
   return await ImageService.getRandomImages(page);
 }
 
-export function Feed() {
+export function ImageFeed() {
   const initialImages = useLoaderData() as Image[];
   const fetcher = useFetcher<Image[]>();
   const [images, setImages] = useState(initialImages);
 
   useEffect(() => {
+    console.log("fetcher ", fetcher.data);
     if (fetcher.data) {
       setImages((images) =>
         fetcher.data ? images.concat(fetcher.data) : images
@@ -33,7 +34,7 @@ export function Feed() {
       <ImageGrid
         images={images}
         loadMore={{
-          onClick: () => fetcher.load(`/feed`),
+          onClick: () => fetcher.load(`/`),
           isLoading: fetcher.state === "loading",
         }}
       />

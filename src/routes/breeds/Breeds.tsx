@@ -1,6 +1,6 @@
 import { Link, Outlet, useLoaderData } from "react-router-dom";
 import { config } from "../../config";
-import { Layout } from "~/components";
+import { Layout } from "~/ui";
 import type { Breed } from "../router";
 
 function pickBreed(breed: Breed) {

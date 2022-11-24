@@ -1,6 +1,10 @@
 import { InstagramLogoIcon } from "@radix-ui/react-icons";
-import { Outlet, Link as RouterLink } from "react-router-dom";
-import { Link } from "~/components";
+import {
+  Outlet,
+  Link as RouterLink,
+  ScrollRestoration,
+} from "react-router-dom";
+import { Link } from "~/ui";
 
 import { FavouritesService } from "~/api";
 
@@ -41,6 +45,7 @@ export function Layout() {
         <main className="flex-1 py-1 max-w-screen-lg mx-auto">
           <Outlet />
         </main>
+        <ScrollRestoration />
       </div>
     </div>
   );

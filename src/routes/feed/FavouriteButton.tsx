@@ -1,6 +1,6 @@
 import { StarIcon } from "@radix-ui/react-icons";
 import { useFetcher, useRouteLoaderData } from "react-router-dom";
-import { Button } from "~/components";
+import { Button } from "~/ui";
 import { Favourite } from "../router";
 
 type FavouriteButtonProps = {
