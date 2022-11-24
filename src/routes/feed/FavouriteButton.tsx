@@ -24,7 +24,6 @@ export function FavouriteButton({ imgId }: FavouriteButtonProps) {
         name="favourite"
         value={isFavourite ? "false" : "true"}
         intent={isFavourite ? "danger" : "primary"}
-        iconRight={<StarIcon height={20} width={20} />}
       >
         {!isFavourite ? "Add to favorites" : "Remove from favorites"}
       </Button>

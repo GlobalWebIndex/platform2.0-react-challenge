@@ -1,5 +1,6 @@
 import { Link, Outlet, useLoaderData } from "react-router-dom";
 import { config } from "../../config";
+import { Layout } from "~/components";
 import type { Breed } from "../router";
 
 function pickBreed(breed: Breed) {
@@ -16,7 +17,7 @@ export async function loader() {
 export function Breeds() {
   const breeds = useLoaderData() as BreedListItem[];
   return (
-    <div className="w-full mt-8 h-[calc(100vh_-_theme(spacing.32))]">
+    <Layout>
       <div className="flex border rounded h-full border-gray-400 py-4">
         <div className="overflow-auto flex-0 flex-basis-40 border-r pl-2 pr-4 border-gray-400 h-full">
           <ul className="space-y-2 overflow-hidden">
@@ -37,6 +38,6 @@ export function Breeds() {
           <Outlet />
         </div>
       </div>
-    </div>
+    </Layout>
   );
 }

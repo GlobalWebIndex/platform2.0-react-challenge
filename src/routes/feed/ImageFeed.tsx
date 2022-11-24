@@ -18,7 +18,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export function Feed() {
   const initialImages = useLoaderData() as Image[];
   const fetcher = useFetcher<Image[]>();
-  const [page, setPage] = useState(1);
   const [images, setImages] = useState(initialImages);
 
   useEffect(() => {
@@ -26,7 +25,6 @@ export function Feed() {
       setImages((images) =>
         fetcher.data ? images.concat(fetcher.data) : images
       );
-      setPage((p) => p + 1);
     }
   }, [fetcher.data]);
 

@@ -13,8 +13,8 @@ type ButtonProps = {
 const cn = cva("rounded py-2 px-3", {
   variants: {
     intent: {
-      primary: "bg-plum-9 hover:bg-plum-10 text-mauve-1",
-      danger: "bg-red-9 hover:bg-red-10 text-mauve-1",
+      primary: "bg-crimson-9 hover:bg-crimson-10 text-white",
+      danger: "bg-red-9 hover:bg-red-10 text-white",
     },
   },
   defaultVariants: {

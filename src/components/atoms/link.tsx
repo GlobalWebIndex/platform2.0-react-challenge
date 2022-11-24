@@ -25,17 +25,17 @@ export function Link(props: LinkProps) {
         target="_blank"
         rel="noopener noreferrer"
         href={props.href}
-        className="flex items-center text-blue-600 hover:text-blue-700 hover:underline"
+        className="flex items-center text-crimson-11 hover:text-crimson-11 hover:underline"
       >
         {props.children}
-        <Link2Icon />
+        <Link2Icon className="fill-crimson-9" />
       </a>
     );
   }
 
   return (
     <RouterLink
-      className="hover:underline text-blue-600 hover:text-blue-700"
+      className="hover:underline text-crimson-11 hover:text-crimson-11"
       to={props.to!}
     >
       {props.children}

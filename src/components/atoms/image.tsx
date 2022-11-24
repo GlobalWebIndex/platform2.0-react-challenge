@@ -27,7 +27,7 @@ export function Image({ id, interaction = "non", ...props }: ImageProps) {
     <div className={cn}>
       <img
         alt={id}
-        className="shadow-lg h-full block  object-cover"
+        className="shadow-lg h-full w-full aspect-square object-cover"
         {...props}
       />
     </div>

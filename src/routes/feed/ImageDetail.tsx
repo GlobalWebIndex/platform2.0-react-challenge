@@ -20,7 +20,6 @@ import {
 import { FavouriteButton } from "./FavouriteButton";
 
 export async function loader({ params }: LoaderFunctionArgs) {
-  let result: ImageType | null = null;
   return await ImageService.getImage(params.imgId!);
 }
 
@@ -60,17 +59,17 @@ export function ImageDetail() {
             {breed && (
               <>
                 <div className="flex justify-between items-center">
-                  <Dialog.Title className="text-2xl text-gray-900 font-bold mb-2">
+                  <Dialog.Title className="text-2xl text-mauve-9 font-bold mb-2">
                     {breed.name}
                   </Dialog.Title>
                   <div className="flex space-x-1">
                     <Link
-                      className="hover:underline text-blue-600 hover:text-blue-700"
+                      className="hover:underline text-blue-11"
                       to={`/breeds/${breed.id}`}
                     >
                       detail
                     </Link>
-                    <div className="border-l border-cool-gray-800"></div>
+                    <div className="border-l border-mauve-7"></div>
                     {breed.wikipedia_url && (
                       <Link isExternal href={breed.wikipedia_url}>
                         wiki

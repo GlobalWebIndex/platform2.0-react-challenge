@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./index.html", "./src/**/*.{ts,tsx}"],
+  variants: {
+    visibility: ["group-hover"],
+  },
   theme: {
     extend: {
       keyframes: {
