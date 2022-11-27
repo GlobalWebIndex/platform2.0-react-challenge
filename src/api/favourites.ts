@@ -9,7 +9,7 @@ export function getFavourite(favouriteId: string) {
 }
 
 export function getFavourites(page = 0) {
-  return fetch(`${config.url}/favourites?sub_id=marek0017&order=DESC`, {
+  return fetch(`${config.url}/favourites?sub_id=${config.sub_id}&order=DESC`, {
     headers: {
       ...config.headers,
     },
