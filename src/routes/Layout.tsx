@@ -25,19 +25,12 @@ export function Layout() {
               <InstagramLogoIcon />
               <span>Catsta</span>
             </RouterLink>
-            <ul className="flex space-x-4 divide-dark-900">
+            <ul className="flex items-center space-x-4">
               <li>
-                <Link className="text-crimson-12 hover:underline" to="breeds">
-                  Breeds
-                </Link>
+                <Link to="breeds">Breeds</Link>
               </li>
               <li>
-                <Link
-                  className="text-crimson-12 hover:underline"
-                  to="favorites"
-                >
-                  Favorites
-                </Link>
+                <Link to="favorites">Favorites</Link>
               </li>
             </ul>
           </nav>

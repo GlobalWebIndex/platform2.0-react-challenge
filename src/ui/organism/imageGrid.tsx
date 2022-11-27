@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { TrashIcon } from "@radix-ui/react-icons";
 import { Link, useFetcher, useRouteLoaderData } from "react-router-dom";
 import { Image } from "../atoms/image";
+import { IconButton } from "../atoms/button";
 
 type ImageGridProps = {
   images: Array<{
@@ -44,8 +45,23 @@ export function ImageGrid({ images, loadMore }: ImageGridProps) {
   );
 }
 
-export function ImageFavouriteGrid({ images, loadMore }: ImageGridProps) {
+function DeleteAction({ id }: { id: string }) {
   const fetcher = useFetcher();
+  return (
+    <fetcher.Form method="post">
+      <input type="hidden" name="id" value={id} />
+      <IconButton
+        icon="trash"
+        isLoading={fetcher.state === "loading"}
+        name="favourite"
+        value={"false"}
+        className="group-hover:block opacity-0 transition-opacity duration-300 group-hover:opacity-95 top-2 right-2 absolute rounded-full p-1.5 bg-mauve-4"
+      />
+    </fetcher.Form>
+  );
+}
+
+export function ImageFavouriteGrid({ images, loadMore }: ImageGridProps) {
   return (
     <div className="grid gap-4 grid-cols-4 m-2">
       {images.map((img, index: number) => (
@@ -55,17 +71,7 @@ export function ImageFavouriteGrid({ images, loadMore }: ImageGridProps) {
           className="group relative block h-48"
         >
           <Image id={img.id} src={img.url} interaction="non" />
-
-          <fetcher.Form method="post">
-            <input type="hidden" name="id" value={img.id} />
-            <button
-              name="favourite"
-              value={"false"}
-              className="group-hover:block opacity-0 transition-opacity duration-300 group-hover:opacity-95 top-2 right-2 absolute rounded-full p-1.5 bg-mauve-4"
-            >
-              <TrashIcon className="w-6 h-6 text-red-9" />
-            </button>
-          </fetcher.Form>
+          <DeleteAction id={img.id} />
         </div>
       ))}
 

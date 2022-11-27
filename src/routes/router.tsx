@@ -9,16 +9,17 @@ import {
 import { bootstrap } from "./Layout";
 import { Breeds, BreedDetail, breedsLoader, breedLoader } from "./breeds";
 import { Favourites } from "./favourites/Favorites";
-import { ImageFeed, loader as feedLoader } from "./feed/ImageFeed";
+import { ImageFeed, loader as feedLoader } from "./feed/Feed";
 import {
   ImageDetail,
   loader as imageLoader,
   action as favoriteAction,
-} from "./feed/ImageDetail";
+} from "./feed/detail/ImageDetail";
 import { Layout } from "./Layout";
 
 // the api exposes openapi but doesnt define Schema/Models so you cannot use openapi generator to generate types :(
 // I joined the discord and asked creator of the catapi if he can update or expose it on the thedogapi where model definitions are present
+// these types than would be generated outside of this file
 export type Favourite = {
   id: string;
   sub_id: string;
@@ -53,17 +54,15 @@ export type Image = {
   isFavourite?: boolean;
 };
 
-const shouldNotRevalidateOnFavouriteAction: ShouldRevalidateFunction = (
-  args
-) => {
-  return args.formData?.get("favourite") === null;
+const shouldNotRevalidate: ShouldRevalidateFunction = (args) => {
+  return false;
 };
 
 const imageDetailRoute = {
   path: ":imgId",
   loader: imageLoader,
   action: favoriteAction,
-  shouldRevalidate: shouldNotRevalidateOnFavouriteAction,
+  shouldRevalidate: shouldNotRevalidate,
   element: <ImageDetail />,
 };
 
@@ -76,21 +75,27 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
+        id: "imageFeed",
         loader: feedLoader,
-        shouldRevalidate: shouldNotRevalidateOnFavouriteAction,
+        shouldRevalidate: shouldNotRevalidate,
         element: <ImageFeed />,
         children: [imageDetailRoute],
       },
       {
         path: "breeds/",
         loader: breedsLoader,
-        shouldRevalidate: shouldNotRevalidateOnFavouriteAction,
+        shouldRevalidate: shouldNotRevalidate,
         element: <Breeds />,
         children: [
           {
             path: ":breedId",
+            id: "breedDetail",
             loader: breedLoader,
-            shouldRevalidate: shouldNotRevalidateOnFavouriteAction,
+            shouldRevalidate: (args) => {
+              return (
+                args.currentParams["breedId"] !== args.nextParams["breedId"]
+              );
+            },
             element: <BreedDetail />,
             children: [imageDetailRoute],
           },

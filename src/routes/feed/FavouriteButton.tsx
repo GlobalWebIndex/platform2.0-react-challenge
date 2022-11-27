@@ -1,4 +1,3 @@
-import { StarIcon } from "@radix-ui/react-icons";
 import { useFetcher, useRouteLoaderData } from "react-router-dom";
 import { Button } from "~/ui";
 import { Favourite } from "../router";
@@ -24,6 +23,9 @@ export function FavouriteButton({ imgId }: FavouriteButtonProps) {
         name="favourite"
         value={isFavourite ? "false" : "true"}
         intent={isFavourite ? "danger" : "primary"}
+        isLoading={
+          fetcher.state === "loading" || fetcher.state === "submitting"
+        }
       >
         {!isFavourite ? "Add to favorites" : "Remove from favorites"}
       </Button>
